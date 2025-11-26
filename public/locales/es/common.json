@@ -1,0 +1,19 @@
+{
+  "page": {
+    "home": {
+      "welcome": "Bienvenido a Jombo",
+      "from": "Desde",
+      "to": "Hasta",
+      "search": "Buscar",
+      "publish": "Publicar un viaje"
+    },
+    "trips": {
+      "title": "Viajes disponibles",
+      "seat": "Plaza"
+    }
+  },
+  "menu": {
+    "home": "Inicio",
+    "trips": "Viajes"
+  }
+}

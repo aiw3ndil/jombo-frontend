@@ -1,0 +1,19 @@
+{
+  "page": {
+    "home": {
+      "welcome": "Welcome to Jombo",
+      "from": "From",
+      "to": "To",
+      "search": "Search",
+      "publish": "Publish a trip"
+    },
+    "trips": {
+      "title": "Available Trips",
+      "seat": "Seat"
+    }
+  },
+  "menu": {
+    "home": "Home",
+    "trips": "Trips"
+  }
+}

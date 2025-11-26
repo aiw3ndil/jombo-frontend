@@ -1,0 +1,7 @@
+{
+  "title": "Rekisteröidy",
+  "name": "Nimi",
+  "email": "Sähköpostiosoite",
+  "password": "Salasana",
+  "submit": "Luo tili"
+}

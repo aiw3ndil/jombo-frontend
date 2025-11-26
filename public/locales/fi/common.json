@@ -1,0 +1,19 @@
+{
+  "page": {
+    "home": {
+      "welcome": "Tervetuloa Jomboon",
+      "from": "Mistä",
+      "to": "Minne",
+      "search": "Hae",
+      "publish": "Julkaise matka"
+    },
+    "trips": {
+      "title": "Saatavilla olevat matkat",
+      "seat": "Paikka"
+    }
+  },
+  "menu": {
+    "home": "Koti",
+    "trips": "Matkat"
+  }
+}
