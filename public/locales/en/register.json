@@ -3,5 +3,7 @@
   "name": "Name",
   "email": "Email",
   "password": "Password",
-  "submit": "Create Account"
+  "submit": "Create Account",
+  "haveAccount": "Already have an account?",
+  "loginLink": "Log in"
 }

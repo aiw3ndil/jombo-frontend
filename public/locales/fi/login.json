@@ -2,5 +2,8 @@
   "title": "Kirjaudu sisään",
   "email": "Sähköpostiosoite",
   "password": "Salasana",
-  "submit": "Kirjaudu"
+  "submit": "Kirjaudu",
+  "noAccount": "Eikö sinulla ole tiliä?",
+  "registerLink": "Rekisteröidy",
+  "loading": "Ladataan..."
 }

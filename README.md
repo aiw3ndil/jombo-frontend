@@ -34,3 +34,15 @@ You can check out [the Next.js GitHub repository](https://github.com/vercel/next
 The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
 
 Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+
+## API / Auth configuration
+
+This project can connect to a Ruby on Rails API for authentication. Configure the following environment variables in a `.env.local` file at the project root:
+
+```
+NEXT_PUBLIC_API_BASE_URL=http://localhost:3001
+NEXT_PUBLIC_API_LOGIN_PATH=/api/v1/login
+NEXT_PUBLIC_API_REGISTER_PATH=/api/v1/register
+```
+
+Adjust the paths to match your Rails API endpoints. The frontend expects the login/register endpoints to return JSON containing at least a `token` (JWT or similar) and optionally a `user` object. The token will be stored in `localStorage` under `auth_token`.

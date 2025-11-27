@@ -3,5 +3,7 @@
   "name": "Nimi",
   "email": "Sähköpostiosoite",
   "password": "Salasana",
-  "submit": "Luo tili"
+  "submit": "Luo tili",
+  "haveAccount": "Onko sinulla jo tili?",
+  "loginLink": "Kirjaudu"
 }
