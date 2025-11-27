@@ -1,6 +1,6 @@
 "use client";
 import { useTranslation } from "@/src/app/hooks/useTranslation";
-import useAuth from "@/src/app/hooks/useAuth";
+import { useAuth } from "@/src/app/contexts/AuthContext";
 import { useState, FormEvent } from "react";
 import { useRouter, useParams } from "next/navigation";
 import Link from "next/link";
@@ -19,6 +19,7 @@ export default function Login() {
     e.preventDefault();
     try {
       await login(email, password);
+      router.refresh();
       router.push(`/${lang}`);
     } catch (err) {
       // error is managed by hook

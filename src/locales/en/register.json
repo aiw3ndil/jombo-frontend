@@ -3,5 +3,6 @@
   "name": "Name",
   "email": "Email",
   "password": "Password",
+  "passwordConfirmation": "Confirm Password",
   "submit": "Create Account"
 }

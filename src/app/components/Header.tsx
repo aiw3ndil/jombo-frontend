@@ -2,7 +2,7 @@
 import Link from "next/link";
 import { useState, useEffect } from "react";
 import LanguageSwitcher from "./LanguageSwitcher";
-import useAuth from "../hooks/useAuth";
+import { useAuth } from "../contexts/AuthContext";
 
 export default function Header({ lang }: { lang: string }) {
   const { user, logout } = useAuth();
@@ -11,16 +11,23 @@ export default function Header({ lang }: { lang: string }) {
   console.log('🟡 Header: user state:', user);
 
   useEffect(() => {
+    if (!isDropdownOpen) return;
+
     const handleClickOutside = (e: MouseEvent) => {
       const target = e.target as HTMLElement;
       if (!target.closest('.user-dropdown')) {
         setIsDropdownOpen(false);
       }
     };
-    if (isDropdownOpen) {
+
+    // Pequeño delay para evitar que el click que abre el dropdown lo cierre inmediatamente
+    setTimeout(() => {
       document.addEventListener("click", handleClickOutside);
-      return () => document.removeEventListener("click", handleClickOutside);
-    }
+    }, 0);
+
+    return () => {
+      document.removeEventListener("click", handleClickOutside);
+    };
   }, [isDropdownOpen]);
 
   return (
@@ -66,7 +73,7 @@ export default function Header({ lang }: { lang: string }) {
         ) : (
           <Link
             href={`/${lang}/login`}
-            className="bg-white text-blue-700 px-3 py-1 rounded-lg hover:bg-black/5"
+            className="bg-white text-blue-700 px-3 py-1 rounded-lg hover:bg-blue-50 transition-colors"
           >
             Login
           </Link>

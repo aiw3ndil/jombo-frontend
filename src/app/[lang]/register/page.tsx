@@ -14,11 +14,12 @@ export default function Register({ params }: { params: { lang: string } }) {
   const [name, setName] = useState("");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
+  const [passwordConfirmation, setPasswordConfirmation] = useState("");
 
   const handleSubmit = async (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     try {
-      await register(name, email, password);
+      await register(name, email, password, passwordConfirmation);
       router.push(`/${lang}`);
     } catch (err) {
       // errors are surfaced from hook
@@ -52,6 +53,15 @@ export default function Register({ params }: { params: { lang: string } }) {
             type="password"
             value={password}
             onChange={(e) => setPassword(e.target.value)}
+            className="border p-2 w-full rounded"
+          />
+        </div>
+        <div>
+          <label className="block mb-1">{t("passwordConfirmation") || "Confirm Password"}</label>
+          <input
+            type="password"
+            value={passwordConfirmation}
+            onChange={(e) => setPasswordConfirmation(e.target.value)}
             className="border p-2 w-full rounded"
           />
         </div>

@@ -50,22 +50,25 @@ export function useAuth() {
     }
   }, []);
 
-  const register = useCallback(async (name: string, email: string, password: string) => {
-    setLoading(true);
-    setError(null);
-    try {
-      const data = await authApi.register(name, email, password);
-      // Después del registro, obtener los datos del usuario desde /me
-      const userData = await authApi.fetchMe();
-      setUser(userData);
-      return data;
-    } catch (err: any) {
-      setError(err?.message || "Register error");
-      throw err;
-    } finally {
-      setLoading(false);
-    }
-  }, []);
+  const register = useCallback(
+    async (name: string, email: string, password: string, passwordConfirmation: string) => {
+      setLoading(true);
+      setError(null);
+      try {
+        const data = await authApi.register(name, email, password, passwordConfirmation);
+        // Después del registro, obtener los datos del usuario desde /me
+        const userData = await authApi.fetchMe();
+        setUser(userData);
+        return data;
+      } catch (err: any) {
+        setError(err?.message || "Register error");
+        throw err;
+      } finally {
+        setLoading(false);
+      }
+    },
+    []
+  );
 
   const logout = useCallback(async () => {
     try {

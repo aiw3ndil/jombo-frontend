@@ -74,8 +74,8 @@ export async function login(email: string, password: string) {
   return result;
 }
 
-export async function register(name: string, email: string, password: string) {
-  return requestJson(REGISTER_PATH, { user: { name, email, password } });
+export async function register(name: string, email: string, password: string, passwordConfirmation: string) {
+  return requestJson(REGISTER_PATH, { user: { name, email, password, password_confirmation: passwordConfirmation } });
 }
 
 export async function fetchMe(): Promise<any> {

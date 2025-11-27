@@ -1,6 +1,6 @@
 "use client";
 import { useTranslation } from "@/src/app/hooks/useTranslation";
-import useAuth from "@/src/app/hooks/useAuth";
+import { useAuth } from "@/src/app/contexts/AuthContext";
 import { useState, FormEvent } from "react";
 import { useRouter, useParams } from "next/navigation";
 import Link from "next/link";
@@ -15,11 +15,13 @@ export default function Register() {
   const [name, setName] = useState("");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
+  const [passwordConfirmation, setPasswordConfirmation] = useState("");
 
   const handleSubmit = async (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     try {
-      await register(name, email, password);
+      await register(name, email, password, passwordConfirmation);
+      router.refresh();
       router.push(`/${lang}`);
     } catch (err) {
       // error is managed by hook
@@ -58,6 +60,16 @@ export default function Register() {
             required
             value={password}
             onChange={(e) => setPassword(e.target.value)}
+            className="border p-2 w-full rounded"
+          />
+        </div>
+        <div>
+          <label className="block mb-1">{t("passwordConfirmation") || "Confirmar contraseña"}</label>
+          <input
+            type="password"
+            required
+            value={passwordConfirmation}
+            onChange={(e) => setPasswordConfirmation(e.target.value)}
             className="border p-2 w-full rounded"
           />
         </div>
