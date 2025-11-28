@@ -2,7 +2,7 @@
 
 import { createContext, useContext, useCallback, useEffect, useState, ReactNode } from "react";
 import { useRouter } from "next/navigation";
-import * as authApi from "../lib/api/auth";
+import * as authApi from "@/app/lib/api/auth";
 
 type User = Record<string, any> | null;
 
@@ -51,8 +51,18 @@ export function AuthProvider({ children }: { children: ReactNode }) {
     try {
       console.log('🟢 AuthContext: Logging in...');
       const data = await authApi.login(email, password);
-      console.log('🟢 AuthContext: Login successful, fetching user data...');
-      await refreshUser();
+      console.log('🟢 AuthContext: Login successful, data:', data);
+      
+      // Si el login devuelve el usuario directamente, usarlo
+      if (data.user) {
+        console.log('🟢 AuthContext: Setting user from login response:', data.user);
+        setUser(data.user);
+      } else {
+        // Si no, intentar cargar desde /me
+        console.log('🟢 AuthContext: Fetching user from /me...');
+        await refreshUser();
+      }
+      
       return data;
     } catch (err: any) {
       console.error('🟢 AuthContext: Login error:', err);
@@ -69,7 +79,16 @@ export function AuthProvider({ children }: { children: ReactNode }) {
       setError(null);
       try {
         const data = await authApi.register(name, email, password, passwordConfirmation);
-        await refreshUser();
+        
+        // Si el register devuelve el usuario directamente, usarlo
+        if (data.user) {
+          console.log('🟢 AuthContext: Setting user from register response:', data.user);
+          setUser(data.user);
+        } else {
+          // Si no, intentar cargar desde /me
+          await refreshUser();
+        }
+        
         return data;
       } catch (err: any) {
         setError(err?.message || "Register error");

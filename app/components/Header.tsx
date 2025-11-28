@@ -2,7 +2,7 @@
 import Link from "next/link";
 import { useState, useEffect } from "react";
 import LanguageSwitcher from "./LanguageSwitcher";
-import { useAuth } from "../contexts/AuthContext";
+import { useAuth } from "@/app/contexts/AuthContext";
 
 export default function Header({ lang }: { lang: string }) {
   const { user, logout } = useAuth();

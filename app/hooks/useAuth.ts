@@ -2,7 +2,7 @@
 
 import { useCallback, useEffect, useState } from "react";
 import { useRouter } from "next/navigation";
-import * as authApi from "../lib/api/auth";
+import * as authApi from "@/app/lib/api/auth";
 
 type User = Record<string, any> | null;
 

@@ -20,7 +20,7 @@
     ],
     "paths": {
       "@/*": ["./*"],
-      "@locales/*": ["./src/locales/*"]
+      "@locales/*": ["./locales/*"]
     }
   },
   "include": [

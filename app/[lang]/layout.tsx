@@ -1,16 +1,20 @@
-"use client";
-import Header from "@/src/app/components/Header";
-import { AuthProvider } from "@/src/app/contexts/AuthContext";
-import { useParams } from "next/navigation";
+import { Providers } from "@/app/components/Providers";
+import { ClientLayout } from "@/app/components/ClientLayout";
 
-export default function LangLayout({ children }: { children: React.ReactNode }) {
-  const params = useParams();
-  const lang = ((params as any)?.lang || "es") as string;
+export default async function LangLayout({ 
+  children, 
+  params 
+}: { 
+  children: React.ReactNode; 
+  params: Promise<{ lang: string }>;
+}) {
+  const { lang } = await params;
 
   return (
-    <AuthProvider>
-      <Header lang={lang} />
-      <main className="p-6">{children}</main>
-    </AuthProvider>
+    <Providers>
+      <ClientLayout lang={lang || "es"}>
+        {children}
+      </ClientLayout>
+    </Providers>
   );
 }

@@ -1,14 +1,15 @@
 "use client";
 import { useState } from "react";
-import { useTranslation } from "@/src/app/hooks/useTranslation";
+import { useTranslation } from "@/app/hooks/useTranslation";
 
-export default function Home({ params }: { params: { lang: string } }) {
+export default function Home({ params }: { params: Promise<{ lang: string }> }) {
   const { t } = useTranslation();
   const [from, setFrom] = useState("");
   const [to, setTo] = useState("");
 
   function handleSubmit(e: React.FormEvent) {
     e.preventDefault();
+    // placeholder: do search
     alert(`${t("page.home.search")} ${from} → ${to}`);
   }
 
@@ -32,9 +33,7 @@ export default function Home({ params }: { params: { lang: string } }) {
         <button className="bg-blue-600 text-white px-4 py-2 rounded">{t("page.home.search")}</button>
       </form>
 
-      <button className="bg-green-600 hover:bg-green-700 text-white font-semibold px-6 py-3 rounded-lg shadow-md transition-colors duration-200">
-        {t("page.home.publish")}
-      </button>
+      <button className="bg-black text-white px-4 py-2 rounded">{t("page.home.publish")}</button>
     </div>
   );
 }
