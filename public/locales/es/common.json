@@ -7,6 +7,17 @@
       "search": "Buscar",
       "publish": "Publicar un viaje"
     },
+    "search": {
+      "searching": "Buscando viajes",
+      "results": "Resultados de búsqueda desde",
+      "noResults": "No se encontraron viajes",
+      "back": "Volver",
+      "driver": "Conductor",
+      "perSeat": "por asiento",
+      "departure": "Salida",
+      "availableSeats": "Asientos disponibles",
+      "book": "Reservar"
+    },
     "trips": {
       "title": "Viajes disponibles",
       "seat": "Plaza"

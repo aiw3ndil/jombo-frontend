@@ -7,6 +7,17 @@
       "search": "Hae",
       "publish": "Julkaise matka"
     },
+    "search": {
+      "searching": "Etsitään matkoja",
+      "results": "Hakutulokset lähtöpaikasta",
+      "noResults": "Matkoja ei löytynyt",
+      "back": "Takaisin",
+      "driver": "Kuljettaja",
+      "perSeat": "per paikka",
+      "departure": "Lähtö",
+      "availableSeats": "Vapaita paikkoja",
+      "book": "Varaa"
+    },
     "trips": {
       "title": "Saatavilla olevat matkat",
       "seat": "Paikka"

@@ -4,7 +4,5 @@
   "email": "Correo electrónico",
   "password": "Contraseña",
   "passwordConfirmation": "Confirmar contraseña",
-  "submit": "Crear cuenta",
-  "haveAccount": "¿Ya tienes cuenta?",
-  "loginLink": "Inicia sesión"
+  "submit": "Crear cuenta"
 }

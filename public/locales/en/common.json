@@ -7,6 +7,17 @@
       "search": "Search",
       "publish": "Publish a trip"
     },
+    "search": {
+      "searching": "Searching trips",
+      "results": "Search results from",
+      "noResults": "No trips found",
+      "back": "Back",
+      "driver": "Driver",
+      "perSeat": "per seat",
+      "departure": "Departure",
+      "availableSeats": "Available seats",
+      "book": "Book"
+    },
     "trips": {
       "title": "Available Trips",
       "seat": "Seat"

@@ -27,6 +27,7 @@ export default function SearchPage() {
         setLoading(true);
         setError("");
         const results = await searchTrips(from);
+        console.log('🔍 Search results:', results);
         setTrips(results);
       } catch (err) {
         setError(err instanceof Error ? err.message : "Error al buscar viajes");
@@ -41,7 +42,7 @@ export default function SearchPage() {
   if (loading) {
     return (
       <div className="max-w-5xl mx-auto">
-        <h1 className="text-2xl font-bold text-black mb-6">
+        <h1 className="text-2xl font-bold text-gray-800 mb-6">
           {t("page.search.searching")}...
         </h1>
       </div>
@@ -54,7 +55,7 @@ export default function SearchPage() {
         <h1 className="text-2xl font-bold text-red-600 mb-6">{error}</h1>
         <button
           onClick={() => router.push(`/${lang}`)}
-          className="bg-blue-600 text-white px-4 py-2 rounded"
+          className="bg-blue-600 text-white px-4 py-2 rounded hover:bg-blue-700"
         >
           {t("page.search.back")}
         </button>
@@ -65,38 +66,40 @@ export default function SearchPage() {
   return (
     <div className="max-w-5xl mx-auto">
       <div className="flex justify-between items-center mb-6">
-        <h1 className="text-2xl font-bold text-black">
-          {t("page.search.results")} "{from}"
+        <h1 className="text-3xl font-bold text-gray-900">
+          <span className="text-gray-700">{t("page.search.results")}</span> <span className="text-blue-600">"{from}"</span>
         </h1>
         <button
           onClick={() => router.push(`/${lang}`)}
-          className="bg-gray-200 text-black px-4 py-2 rounded hover:bg-gray-300"
+          className="bg-gray-600 text-white px-4 py-2 rounded hover:bg-gray-700"
         >
           {t("page.search.back")}
         </button>
       </div>
 
       {trips.length === 0 ? (
-        <p className="text-gray-600">{t("page.search.noResults")}</p>
+        <p className="text-gray-700">{t("page.search.noResults")}</p>
       ) : (
         <div className="space-y-4">
-          {trips.map((trip) => (
+          {trips.map((trip) => {
+            console.log('🎫 Trip:', trip, 'Price:', trip.price_per_seat);
+            return (
             <div
               key={trip.id}
-              className="border border-gray-300 rounded-lg p-4 hover:shadow-lg transition-shadow"
+              className="border border-gray-300 rounded-lg p-4 hover:shadow-lg transition-shadow bg-white"
             >
               <div className="flex justify-between items-start mb-2">
                 <div>
-                  <h2 className="text-xl font-semibold text-black">
+                  <h2 className="text-xl font-semibold text-gray-900">
                     {trip.departure_location} → {trip.arrival_location}
                   </h2>
-                  <p className="text-gray-600">
+                  <p className="text-gray-700">
                     {t("page.search.driver")}: {trip.driver.name}
                   </p>
                 </div>
                 <div className="text-right">
-                  <p className="text-2xl font-bold text-blue-600">
-                    ${trip.price_per_seat}
+                  <p className="text-2xl font-bold text-green-600">
+                    €{(trip.price_per_seat || 0).toFixed(2)}
                   </p>
                   <p className="text-sm text-gray-600">
                     {t("page.search.perSeat")}
@@ -106,11 +109,11 @@ export default function SearchPage() {
               
               <div className="flex justify-between items-center mt-4">
                 <div>
-                  <p className="text-sm text-gray-600">
-                    {t("page.search.departure")}: {new Date(trip.departure_time).toLocaleString(lang)}
+                  <p className="text-sm text-gray-700">
+                    <span className="font-semibold">{t("page.search.departure")}:</span> {new Date(trip.departure_time).toLocaleString(lang)}
                   </p>
-                  <p className="text-sm text-gray-600">
-                    {t("page.search.availableSeats")}: {trip.available_seats}
+                  <p className="text-sm text-gray-700">
+                    <span className="font-semibold">{t("page.search.availableSeats")}:</span> {trip.available_seats}
                   </p>
                 </div>
                 <button className="bg-blue-600 text-white px-6 py-2 rounded hover:bg-blue-700">
@@ -118,7 +121,7 @@ export default function SearchPage() {
                 </button>
               </div>
             </div>
-          ))}
+          )})}
         </div>
       )}
     </div>
