@@ -1,48 +1,185 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# Jombo Frontend
 
-## Getting Started
+Aplicación web de carpooling (compartir viajes) construida con Next.js 16, TypeScript y Tailwind CSS.
 
-First, run the development server:
+## 📋 Descripción
 
+Jombo es una plataforma de carpooling que permite a los usuarios publicar y reservar viajes compartidos. La aplicación facilita la conexión entre conductores que tienen asientos disponibles y pasajeros que buscan transporte, promoviendo un transporte más sostenible y económico.
+
+## ✨ Características
+
+### Para Pasajeros
+- 🔍 **Búsqueda de viajes** - Encuentra viajes disponibles desde tu ciudad de origen
+- 📅 **Reservar asientos** - Solicita reservas para los viajes que necesites
+- 📋 **Mis reservas** - Gestiona tus reservas activas, pendientes y confirmadas
+- 🌍 **Multiidioma** - Disponible en Español, Inglés y Finés
+
+### Para Conductores
+- 🚗 **Publicar viajes** - Crea nuevos viajes indicando origen, destino, fecha, hora, asientos y precio
+- 👥 **Gestionar reservas** - Acepta o rechaza solicitudes de reserva de pasajeros
+- 📊 **Mis viajes** - Visualiza todos tus viajes publicados y sus reservas
+
+### Sistema de Reservas
+- **Estados de reserva:**
+  - `Pendiente` - Solicitud enviada, esperando confirmación del conductor
+  - `Confirmada` - Conductor ha aceptado la reserva
+  - `Rechazada` - Conductor ha rechazado la reserva
+  - `Cancelada` - Pasajero ha cancelado la reserva
+
+### Características Técnicas
+- 🔐 **Autenticación** - Sistema de login/registro con JWT
+- 🎨 **UI Responsiva** - Diseño adaptable a móviles, tablets y desktop
+- 🌐 **Internacionalización** - Sistema completo de traducciones (i18n)
+- 🔄 **Estado en tiempo real** - Actualización automática de asientos disponibles
+- 🎯 **Validaciones** - Validación de formularios y estados
+
+## 🚀 Comenzando
+
+### Prerrequisitos
+
+- Node.js 18+ 
+- npm, yarn, pnpm o bun
+- Backend de Rails corriendo en `http://localhost:3001`
+- PostgreSQL (para el backend)
+
+### Instalación
+
+1. Clona el repositorio:
 ```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
+git clone <repository-url>
+cd jombo-frontend
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
-
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
-
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
-
-## Learn More
-
-To learn more about Next.js, take a look at the following resources:
-
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
-
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
-
-## Deploy on Vercel
-
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
-
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
-
-## API / Auth configuration
-
-This project can connect to a Ruby on Rails API for authentication. Configure the following environment variables in a `.env.local` file at the project root:
-
+2. Instala las dependencias:
+```bash
+npm install
 ```
+
+3. Configura las variables de entorno creando un archivo `.env.local`:
+```bash
 NEXT_PUBLIC_API_BASE_URL=http://localhost:3001
 NEXT_PUBLIC_API_LOGIN_PATH=/api/v1/login
 NEXT_PUBLIC_API_REGISTER_PATH=/api/v1/register
+NEXT_PUBLIC_API_ME_PATH=/api/v1/me
 ```
 
-Adjust the paths to match your Rails API endpoints. The frontend expects the login/register endpoints to return JSON containing at least a `token` (JWT or similar) and optionally a `user` object. The token will be stored in `localStorage` under `auth_token`.
+4. Inicia el servidor de desarrollo:
+```bash
+npm run dev
+```
+
+5. Abre [http://localhost:3000](http://localhost:3000) en tu navegador
+
+## 🏗️ Estructura del Proyecto
+
+```
+jombo-frontend/
+├── app/
+│   ├── [lang]/              # Rutas por idioma
+│   │   ├── page.tsx         # Página principal
+│   │   ├── login/           # Página de login
+│   │   ├── register/        # Página de registro
+│   │   ├── search/          # Búsqueda de viajes
+│   │   ├── create-trip/     # Crear viaje
+│   │   ├── my-trips/        # Mis viajes (conductor)
+│   │   └── my-bookings/     # Mis reservas (pasajero)
+│   ├── components/          # Componentes reutilizables
+│   ├── contexts/            # Context API (Auth)
+│   ├── hooks/               # Custom hooks
+│   └── lib/
+│       └── api/             # Funciones de API
+├── public/
+│   └── locales/            # Archivos de traducción
+│       ├── es/
+│       ├── en/
+│       └── fi/
+└── middleware.ts           # Middleware de i18n
+```
+
+## 🌐 Idiomas Soportados
+
+- 🇪🇸 Español (`es`)
+- 🇬🇧 Inglés (`en`)
+- 🇫🇮 Finés (`fi`)
+
+El idioma se detecta automáticamente desde la URL: `/es/`, `/en/`, `/fi/`
+
+## 🔌 API Backend
+
+El frontend se conecta a un backend de Ruby on Rails. Endpoints principales:
+
+### Autenticación
+- `POST /api/v1/register` - Registro de usuario
+- `POST /api/v1/login` - Login
+- `GET /api/v1/me` - Obtener usuario actual
+- `DELETE /api/v1/logout` - Cerrar sesión
+
+### Viajes
+- `GET /api/v1/trips/search/:location` - Buscar viajes
+- `POST /api/v1/trips` - Crear viaje
+- `GET /api/v1/trips/my_trips` - Mis viajes (conductor)
+- `GET /api/v1/trips/:id/bookings` - Reservas de un viaje
+
+### Reservas
+- `POST /api/v1/bookings` - Crear reserva
+- `GET /api/v1/bookings` - Mis reservas
+- `PATCH /api/v1/bookings/:id/confirm` - Confirmar reserva (conductor)
+- `PATCH /api/v1/bookings/:id/reject` - Rechazar reserva (conductor)
+- `DELETE /api/v1/bookings/:id` - Cancelar reserva (pasajero)
+
+## 🎨 Tecnologías
+
+- **Framework:** Next.js 16 (App Router)
+- **Lenguaje:** TypeScript
+- **Estilos:** Tailwind CSS
+- **Autenticación:** JWT con cookies HTTP-only
+- **Internacionalización:** Sistema custom con JSON
+- **Gestión de Estado:** React Context API
+
+## 📝 Flujos Principales
+
+### Flujo de Reserva
+1. Usuario busca viajes desde una ciudad
+2. Selecciona un viaje y solicita reserva
+3. Reserva queda en estado "Pendiente"
+4. Conductor recibe notificación y puede confirmar/rechazar
+5. Si confirma, se descuentan los asientos y reserva pasa a "Confirmada"
+6. Usuario puede cancelar reserva antes del viaje
+
+### Flujo de Publicación
+1. Conductor completa formulario con detalles del viaje
+2. Sistema valida datos (fecha, hora, asientos, precio)
+3. Viaje se publica y aparece en búsquedas
+4. Conductor recibe solicitudes de reserva
+5. Gestiona reservas desde "Mis Viajes"
+
+## 🔧 Scripts Disponibles
+
+```bash
+npm run dev          # Servidor de desarrollo
+npm run build        # Build de producción
+npm run start        # Servidor de producción
+npm run lint         # Linter
+```
+
+## 🤝 Contribuir
+
+1. Fork el proyecto
+2. Crea una rama para tu feature (`git checkout -b feature/AmazingFeature`)
+3. Commit tus cambios (`git commit -m 'Add some AmazingFeature'`)
+4. Push a la rama (`git push origin feature/AmazingFeature`)
+5. Abre un Pull Request
+
+## 📄 Licencia
+
+Este proyecto está bajo la Licencia MIT.
+
+## 👥 Autores
+
+- Equipo Jombo
+
+## 🙏 Agradecimientos
+
+- Next.js team
+- Tailwind CSS
+- Comunidad de código abierto
