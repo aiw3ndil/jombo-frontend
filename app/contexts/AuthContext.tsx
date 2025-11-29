@@ -74,11 +74,13 @@ export function AuthProvider({ children }: { children: ReactNode }) {
   }, [refreshUser]);
 
   const register = useCallback(
-    async (name: string, email: string, password: string, passwordConfirmation: string) => {
+    async (name: string, email: string, password: string, passwordConfirmation: string, language: string = "es") => {
       setLoading(true);
       setError(null);
       try {
-        const data = await authApi.register(name, email, password, passwordConfirmation);
+        console.log('🟢 AuthContext: Registering user...');
+        const data = await authApi.register(name, email, password, passwordConfirmation, language);
+        console.log('🟢 AuthContext: Register successful, data:', data);
         
         // Si el register devuelve el usuario directamente, usarlo
         if (data.user) {
@@ -86,11 +88,13 @@ export function AuthProvider({ children }: { children: ReactNode }) {
           setUser(data.user);
         } else {
           // Si no, intentar cargar desde /me
+          console.log('🟢 AuthContext: Fetching user from /me...');
           await refreshUser();
         }
         
         return data;
       } catch (err: any) {
+        console.error('🟢 AuthContext: Register error:', err);
         setError(err?.message || "Register error");
         throw err;
       } finally {

@@ -20,7 +20,7 @@ export default function Register() {
   const handleSubmit = async (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     try {
-      await register(name, email, password, passwordConfirmation);
+      await register(name, email, password, passwordConfirmation, lang);
       // Forzar recarga completa para actualizar el contexto
       window.location.href = `/${lang}`;
     } catch (err) {

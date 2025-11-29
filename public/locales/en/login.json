@@ -2,5 +2,8 @@
   "title": "Login",
   "email": "Email",
   "password": "Password",
-  "submit": "Sign In"
+  "submit": "Sign In",
+  "loading": "Loading...",
+  "noAccount": "Don't have an account?",
+  "registerLink": "Sign Up"
 }

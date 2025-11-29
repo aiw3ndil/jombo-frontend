@@ -2,5 +2,8 @@
   "title": "Iniciar sesión",
   "email": "Correo electrónico",
   "password": "Contraseña",
-  "submit": "Entrar"
+  "submit": "Entrar",
+  "loading": "Cargando...",
+  "noAccount": "¿No tienes cuenta?",
+  "registerLink": "Regístrate"
 }

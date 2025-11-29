@@ -48,12 +48,14 @@ async function requestJson(path: string, body: any) {
   console.log('🔵 API Response status:', res.status);
 
   const text = await res.text();
-  console.log('🔵 API Response text:', text);
+  console.log('🔵 API Response text:', text.substring(0, 500)); // Limitar a 500 caracteres
   
   let json: any = null;
   try {
     json = text ? JSON.parse(text) : null;
-  } catch (_) {
+    console.log('🔵 API Response JSON:', json);
+  } catch (e) {
+    console.error('🔵 Failed to parse JSON response:', e);
     json = null;
   }
 
@@ -64,6 +66,7 @@ async function requestJson(path: string, body: any) {
     // try to surface a helpful message
     const msg = (json && (json.error || json.message || json.errors)) || text || res.statusText;
     console.error('🔵 API Error:', msg);
+    console.error('🔵 Full error response:', { status: res.status, json, text: text.substring(0, 200) });
     const error = new Error(typeof msg === "string" ? msg : JSON.stringify(msg));
     (error as any).status = res.status;
     throw error;
@@ -84,8 +87,16 @@ export async function login(email: string, password: string) {
   return result;
 }
 
-export async function register(name: string, email: string, password: string, passwordConfirmation: string) {
-  return requestJson(REGISTER_PATH, { user: { name, email, password, password_confirmation: passwordConfirmation } });
+export async function register(name: string, email: string, password: string, passwordConfirmation: string, language: string = "es") {
+  return requestJson(REGISTER_PATH, { 
+    user: { 
+      name, 
+      email, 
+      password, 
+      password_confirmation: passwordConfirmation,
+      language 
+    } 
+  });
 }
 
 export async function fetchMe(): Promise<any> {
