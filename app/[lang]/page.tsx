@@ -26,21 +26,21 @@ export default function Home() {
 
   return (
     <div className="max-w-3xl mx-auto">
-      <h1 className="text-2xl font-bold text-gray-800 mb-6">{t("page.home.welcome")}</h1>
+      <h1 className="text-2xl font-bold text-gray-100 mb-6">{t("page.home.welcome")}</h1>
 
       <form onSubmit={handleSubmit} className="flex gap-2 mb-4">
         <input
           value={from}
           onChange={(e) => setFrom(e.target.value)}
           placeholder={t("page.home.from")}
-          className="border border-gray-300 p-2 rounded w-1/3 text-gray-800"
+          className="border border-gray-300 p-2 rounded w-1/3 text-gray-100"
           required
         />
         <input
           value={to}
           onChange={(e) => setTo(e.target.value)}
           placeholder={t("page.home.to")}
-          className="border border-gray-300 p-2 rounded w-1/3 text-gray-800"
+          className="border border-gray-300 p-2 rounded w-1/3 text-gray-100"
         />
         <button className="bg-blue-600 text-white px-4 py-2 rounded hover:bg-blue-700">{t("page.home.search")}</button>
       </form>
