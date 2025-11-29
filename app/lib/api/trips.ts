@@ -30,6 +30,38 @@ export async function searchTrips(departureLocation: string): Promise<Trip[]> {
   return data;
 }
 
+export async function getMyTrips(): Promise<Trip[]> {
+  const url = `${API_BASE}/api/v1/trips/my_trips`;
+  
+  const res = await fetch(url, {
+    method: "GET",
+    credentials: "include",
+  });
+
+  if (!res.ok) {
+    throw new Error("Error al obtener tus viajes");
+  }
+
+  const data = await res.json();
+  return data;
+}
+
+export async function getTripBookings(tripId: number): Promise<any[]> {
+  const url = `${API_BASE}/api/v1/trips/${tripId}/bookings`;
+  
+  const res = await fetch(url, {
+    method: "GET",
+    credentials: "include",
+  });
+
+  if (!res.ok) {
+    throw new Error("Error al obtener las reservas del viaje");
+  }
+
+  const data = await res.json();
+  return data;
+}
+
 export interface CreateTripData {
   departure_location: string;
   arrival_location: string;
@@ -84,4 +116,4 @@ export async function createTrip(tripData: CreateTripData): Promise<Trip> {
   return data;
 }
 
-export default { searchTrips, createTrip };
+export default { searchTrips, getMyTrips, getTripBookings, createTrip };

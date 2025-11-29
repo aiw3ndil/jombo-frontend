@@ -3,12 +3,18 @@ import Link from "next/link";
 import { useState, useEffect } from "react";
 import LanguageSwitcher from "./LanguageSwitcher";
 import { useAuth } from "@/app/contexts/AuthContext";
+import { useTranslation } from "@/app/hooks/useTranslation";
 
 export default function Header({ lang }: { lang: string }) {
   const { user, logout } = useAuth();
+  const { t, loading } = useTranslation();
   const [isDropdownOpen, setIsDropdownOpen] = useState(false);
 
   console.log('🟡 Header: user state:', user);
+  console.log('🟡 Header: translation loading:', loading);
+  console.log('🟡 Header: myBookings translation:', t("menu.myBookings"));
+  console.log('🟡 Header: myTrips translation:', t("menu.myTrips"));
+  console.log('🟡 Header: logout translation:', t("menu.logout"));
 
   useEffect(() => {
     if (!isDropdownOpen) return;
@@ -58,14 +64,28 @@ export default function Header({ lang }: { lang: string }) {
             </button>
             {isDropdownOpen && (
               <div className="absolute right-0 mt-2 w-48 bg-white rounded-lg shadow-lg py-1 z-50">
+                <Link
+                  href={`/${lang}/my-bookings`}
+                  onClick={() => setIsDropdownOpen(false)}
+                  className="block w-full text-left px-4 py-2 text-gray-800 hover:bg-gray-100"
+                >
+                  {t("menu.myBookings")}
+                </Link>
+                <Link
+                  href={`/${lang}/my-trips`}
+                  onClick={() => setIsDropdownOpen(false)}
+                  className="block w-full text-left px-4 py-2 text-gray-800 hover:bg-gray-100"
+                >
+                  {t("menu.myTrips")}
+                </Link>
                 <button
                   onClick={() => {
                     logout();
                     setIsDropdownOpen(false);
                   }}
-                  className="block w-full text-left px-4 py-2 text-gray-100 hover:bg-gray-100"
+                  className="block w-full text-left px-4 py-2 text-gray-800 hover:bg-gray-100"
                 >
-                  Logout
+                  {t("menu.logout")}
                 </button>
               </div>
             )}

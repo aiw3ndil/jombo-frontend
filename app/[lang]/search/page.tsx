@@ -2,7 +2,9 @@
 import { useEffect, useState } from "react";
 import { useSearchParams, useRouter, useParams } from "next/navigation";
 import { searchTrips, Trip } from "@/app/lib/api/trips";
+import { createBooking, getBookings } from "@/app/lib/api/bookings";
 import { useTranslation } from "@/app/hooks/useTranslation";
+import { useAuth } from "@/app/contexts/AuthContext";
 
 export default function SearchPage() {
   const { t } = useTranslation();
@@ -11,10 +13,13 @@ export default function SearchPage() {
   const params = useParams();
   const lang = (params?.lang as string) || "es";
   const from = searchParams.get("from") || "";
+  const { user } = useAuth();
   
   const [trips, setTrips] = useState<Trip[]>([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState("");
+  const [bookingLoading, setBookingLoading] = useState<number | null>(null);
+  const [userBookings, setUserBookings] = useState<Map<number, string>>(new Map());
 
   useEffect(() => {
     if (!from) {
@@ -29,6 +34,24 @@ export default function SearchPage() {
         const results = await searchTrips(from);
         console.log('🔍 Search results:', results);
         setTrips(results);
+        
+        // Si el usuario está logueado, cargar sus reservas
+        if (user) {
+          try {
+            const bookings = await getBookings();
+            // Crear un mapa de trip_id -> status para reservas activas
+            const bookingsMap = new Map<number, string>();
+            bookings.forEach(b => {
+              if (b.status !== 'cancelled' && b.status !== 'rejected') {
+                bookingsMap.set(b.trip_id, b.status);
+              }
+            });
+            setUserBookings(bookingsMap);
+            console.log('📋 User bookings:', Array.from(bookingsMap.entries()));
+          } catch (err) {
+            console.error('Error loading user bookings:', err);
+          }
+        }
       } catch (err) {
         setError(err instanceof Error ? err.message : "Error al buscar viajes");
       } finally {
@@ -37,7 +60,55 @@ export default function SearchPage() {
     }
 
     fetchTrips();
-  }, [from, lang, router]);
+  }, [from, lang, router, user]);
+
+  const handleBookTrip = async (tripId: number, availableSeats: number) => {
+    if (!user) {
+      router.push(`/${lang}/login?redirect=${encodeURIComponent(window.location.pathname + window.location.search)}`);
+      return;
+    }
+
+    const seats = prompt(t("page.search.howManySeats") || `¿Cuántos asientos? (Disponibles: ${availableSeats})`, "1");
+    
+    if (!seats) return;
+    
+    const seatsNumber = parseInt(seats);
+    
+    if (isNaN(seatsNumber) || seatsNumber < 1 || seatsNumber > availableSeats) {
+      alert(t("page.search.invalidSeats") || "Número de asientos inválido");
+      return;
+    }
+
+    setBookingLoading(tripId);
+
+    try {
+      await createBooking({
+        trip_id: tripId,
+        seats: seatsNumber,
+      });
+      
+      alert(t("page.search.bookingSuccess") || "¡Solicitud de reserva enviada! Pendiente de confirmación del conductor");
+      
+      // Recargar los viajes para actualizar los asientos disponibles
+      const results = await searchTrips(from);
+      setTrips(results);
+      
+      // Actualizar las reservas del usuario
+      const bookings = await getBookings();
+      const bookingsMap = new Map<number, string>();
+      bookings.forEach(b => {
+        if (b.status !== 'cancelled' && b.status !== 'rejected') {
+          bookingsMap.set(b.trip_id, b.status);
+        }
+      });
+      setUserBookings(bookingsMap);
+    } catch (error: any) {
+      console.error("Error booking trip:", error);
+      alert(error?.message || t("page.search.bookingError") || "Error al realizar la reserva");
+    } finally {
+      setBookingLoading(null);
+    }
+  };
 
   if (loading) {
     return (
@@ -116,8 +187,24 @@ export default function SearchPage() {
                     <span className="font-semibold">{t("page.search.availableSeats")}:</span> {trip.available_seats}
                   </p>
                 </div>
-                <button className="bg-blue-600 text-white px-6 py-2 rounded hover:bg-blue-700">
-                  {t("page.search.book")}
+                <button 
+                  onClick={() => handleBookTrip(trip.id, trip.available_seats)}
+                  disabled={
+                    bookingLoading === trip.id || 
+                    trip.available_seats === 0 || 
+                    userBookings.has(trip.id)
+                  }
+                  className="bg-blue-600 text-white px-6 py-2 rounded hover:bg-blue-700 disabled:bg-gray-400 disabled:cursor-not-allowed"
+                >
+                  {bookingLoading === trip.id 
+                    ? (t("page.search.booking") || "Reservando...") 
+                    : userBookings.has(trip.id)
+                    ? userBookings.get(trip.id) === "pending"
+                      ? (t("page.search.statusPending") || "Pendiente")
+                      : (t("page.search.statusConfirmed") || "Confirmada")
+                    : trip.available_seats === 0
+                    ? (t("page.search.noSeats") || "Sin asientos")
+                    : t("page.search.book")}
                 </button>
               </div>
             </div>
