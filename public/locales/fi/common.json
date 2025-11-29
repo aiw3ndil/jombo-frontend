@@ -21,6 +21,26 @@
     "trips": {
       "title": "Saatavilla olevat matkat",
       "seat": "Paikka"
+    },
+    "createTrip": {
+      "title": "Julkaise matka",
+      "from": "Lähtöpaikka",
+      "to": "Määränpää",
+      "fromPlaceholder": "Lähtökaupunki",
+      "toPlaceholder": "Kohdekaupunki",
+      "date": "Päivämäärä",
+      "time": "Aika",
+      "availableSeats": "Vapaita paikkoja",
+      "pricePerSeat": "Hinta per paikka (€)",
+      "description": "Kuvaus (valinnainen)",
+      "descriptionPlaceholder": "Lisää tietoja matkasta, tapaamispisteestä jne.",
+      "submit": "Julkaise matka",
+      "cancel": "Peruuta",
+      "creating": "Luodaan...",
+      "loading": "Ladataan...",
+      "requiredFields": "Täytä kaikki pakolliset kentät",
+      "success": "Matka julkaistu onnistuneesti",
+      "error": "Virhe matkan julkaisussa"
     }
   },
   "menu": {

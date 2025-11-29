@@ -21,6 +21,24 @@
     "trips": {
       "title": "Available Trips",
       "seat": "Seat"
+    },
+    "createTrip": {
+      "title": "Publish a trip",
+      "from": "Origin",
+      "to": "Destination",
+      "fromPlaceholder": "Origin city",
+      "toPlaceholder": "Destination city",
+      "date": "Date",
+      "time": "Time",
+      "availableSeats": "Available seats",
+      "pricePerSeat": "Price per seat (€)",
+      "description": "Description (optional)",
+      "descriptionPlaceholder": "Add details about the trip, meeting point, etc.",
+      "submit": "Publish trip",
+      "cancel": "Cancel",
+      "requiredFields": "Please complete all required fields",
+      "success": "Trip published successfully",
+      "error": "Error publishing trip"
     }
   },
   "menu": {

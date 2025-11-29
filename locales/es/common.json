@@ -21,6 +21,24 @@
     "trips": {
       "title": "Viajes disponibles",
       "seat": "Plaza"
+    },
+    "createTrip": {
+      "title": "Publicar un viaje",
+      "from": "Origen",
+      "to": "Destino",
+      "fromPlaceholder": "Ciudad de origen",
+      "toPlaceholder": "Ciudad de destino",
+      "date": "Fecha",
+      "time": "Hora",
+      "availableSeats": "Asientos disponibles",
+      "pricePerSeat": "Precio por asiento (€)",
+      "description": "Descripción (opcional)",
+      "descriptionPlaceholder": "Añade detalles sobre el viaje, punto de encuentro, etc.",
+      "submit": "Publicar viaje",
+      "cancel": "Cancelar",
+      "requiredFields": "Por favor completa todos los campos requeridos",
+      "success": "Viaje publicado exitosamente",
+      "error": "Error al publicar el viaje"
     }
   },
   "menu": {

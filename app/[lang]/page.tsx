@@ -45,7 +45,12 @@ export default function Home() {
         <button className="bg-blue-600 text-white px-4 py-2 rounded hover:bg-blue-700">{t("page.home.search")}</button>
       </form>
 
-      <button className="bg-gray-800 text-white px-4 py-2 rounded hover:bg-gray-900">{t("page.home.publish")}</button>
+      <button 
+        onClick={() => router.push(`/${lang}/create-trip`)}
+        className="bg-gray-800 text-white px-4 py-2 rounded hover:bg-gray-900"
+      >
+        {t("page.home.publish")}
+      </button>
     </div>
   );
 }

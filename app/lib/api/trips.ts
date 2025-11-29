@@ -6,7 +6,7 @@ export interface Trip {
   arrival_location: string;
   departure_time: string;
   available_seats: number;
-  price_per_seat: number;
+  price: number;
   driver: {
     id: number;
     name: string;
@@ -30,4 +30,58 @@ export async function searchTrips(departureLocation: string): Promise<Trip[]> {
   return data;
 }
 
-export default { searchTrips };
+export interface CreateTripData {
+  departure_location: string;
+  arrival_location: string;
+  departure_time: string;
+  available_seats: number;
+  price: number;
+  description?: string;
+}
+
+export async function createTrip(tripData: CreateTripData): Promise<Trip> {
+  const url = `${API_BASE}/api/v1/trips`;
+  
+  console.log('📤 Creating trip with data:', tripData);
+  
+  const res = await fetch(url, {
+    method: "POST",
+    headers: {
+      "Content-Type": "application/json",
+    },
+    credentials: "include",
+    body: JSON.stringify({ trip: tripData }),
+  });
+
+  console.log('📥 Response status:', res.status);
+
+  if (!res.ok) {
+    let errorMessage = "Error al crear el viaje";
+    
+    try {
+      const errorData = await res.json();
+      console.log('❌ Error data:', errorData);
+      
+      if (errorData.errors && Array.isArray(errorData.errors)) {
+        errorMessage = errorData.errors.join(", ");
+      } else if (errorData.error) {
+        errorMessage = errorData.error;
+      } else if (errorData.message) {
+        errorMessage = errorData.message;
+      }
+    } catch (e) {
+      console.log('❌ Could not parse error JSON');
+      const text = await res.text();
+      console.log('❌ Error text:', text);
+    }
+    
+    console.log('❌ Final error message:', errorMessage);
+    throw new Error(errorMessage);
+  }
+
+  const data = await res.json();
+  console.log('✅ Trip created:', data);
+  return data;
+}
+
+export default { searchTrips, createTrip };

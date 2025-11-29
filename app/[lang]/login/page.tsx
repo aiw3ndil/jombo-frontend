@@ -2,13 +2,15 @@
 import { useTranslation } from "@/app/hooks/useTranslation";
 import useAuth from "@/app/hooks/useAuth";
 import { useState, FormEvent } from "react";
-import { useRouter, useParams } from "next/navigation";
+import { useRouter, useParams, useSearchParams } from "next/navigation";
 import Link from "next/link";
 
 export default function Login() {
   const { t } = useTranslation("login");
   const params = useParams();
+  const searchParams = useSearchParams();
   const lang = (params?.lang as string) || "es";
+  const redirect = searchParams.get("redirect");
   const { login, loading: isLoading, error } = useAuth() as any;
   const router = useRouter();
 
@@ -21,8 +23,9 @@ export default function Login() {
       console.log('🔵 Login page: Submitting login...');
       await login(email, password);
       console.log('🔵 Login page: Login successful, redirecting...');
-      // Forzar recarga completa para actualizar el contexto
-      window.location.href = `/${lang}`;
+      // Redirigir a la página solicitada o a la home
+      const destination = redirect || `/${lang}`;
+      window.location.href = destination;
     } catch (err) {
       console.error('🔵 Login page: Login error:', err);
       // useAuth sets error in hook; keep lightweight here

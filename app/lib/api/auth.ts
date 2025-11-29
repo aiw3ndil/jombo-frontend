@@ -36,6 +36,8 @@ function extractUserFromJson(json: any): any | null {
 
 async function requestJson(path: string, body: any) {
   const url = `${API_BASE}${path}`;
+  console.log('🔵 API Request:', { url, body });
+  
   const res = await fetch(url, {
     method: "POST",
     headers: { "Content-Type": "application/json" },
@@ -43,7 +45,11 @@ async function requestJson(path: string, body: any) {
     body: JSON.stringify(body),
   });
 
+  console.log('🔵 API Response status:', res.status);
+
   const text = await res.text();
+  console.log('🔵 API Response text:', text);
+  
   let json: any = null;
   try {
     json = text ? JSON.parse(text) : null;
@@ -52,10 +58,12 @@ async function requestJson(path: string, body: any) {
   }
 
   const headers = headerToObj(res.headers);
+  console.log('🔵 API Response headers:', headers);
 
   if (!res.ok) {
     // try to surface a helpful message
     const msg = (json && (json.error || json.message || json.errors)) || text || res.statusText;
+    console.error('🔵 API Error:', msg);
     const error = new Error(typeof msg === "string" ? msg : JSON.stringify(msg));
     (error as any).status = res.status;
     throw error;
@@ -63,6 +71,8 @@ async function requestJson(path: string, body: any) {
 
   const token = extractTokenFromJson(json) || headers["authorization"] || headers["access-token"] || null;
   const user = extractUserFromJson(json);
+
+  console.log('🔵 API Success:', { token: token ? 'present' : 'none', user });
 
   return { token, user, raw: json, rawHeaders: headers };
 }

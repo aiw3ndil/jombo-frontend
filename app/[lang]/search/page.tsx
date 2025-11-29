@@ -82,7 +82,7 @@ export default function SearchPage() {
       ) : (
         <div className="space-y-4">
           {trips.map((trip) => {
-            console.log('🎫 Trip:', trip, 'Price:', trip.price_per_seat);
+            console.log('🎫 Trip:', trip, 'Price:', trip.price);
             return (
             <div
               key={trip.id}
@@ -99,7 +99,7 @@ export default function SearchPage() {
                 </div>
                 <div className="text-right">
                   <p className="text-2xl font-bold text-green-600">
-                    €{(trip.price_per_seat || 0).toFixed(2)}
+                    €{Number(trip.price || 0).toFixed(2)}
                   </p>
                   <p className="text-sm text-gray-600">
                     {t("page.search.perSeat")}
