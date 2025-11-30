@@ -83,6 +83,39 @@
       "statusRejected": "Hylätty",
       "statusCancelled": "Peruutettu"
     },
+    "messages": {
+      "title": "Viestit",
+      "loading": "Ladataan...",
+      "back": "Takaisin",
+      "noConversations": "Sinulla ei ole keskusteluja",
+      "conversationsInfo": "Keskustelut luodaan automaattisesti kun varaus vahvistetaan",
+      "departure": "Lähtö",
+      "participants": "Osallistujat",
+      "openChat": "Avaa keskustelu",
+      "delete": "Poista",
+      "deleting": "Poistetaan...",
+      "confirmDelete": "Haluatko varmasti poistaa tämän keskustelun?",
+      "deleteSuccess": "Keskustelu poistettu onnistuneesti",
+      "deleteError": "Virhe keskustelun poistamisessa"
+    },
+    "conversation": {
+      "title": "Keskustelu",
+      "loading": "Ladataan...",
+      "back": "Takaisin",
+      "departure": "Lähtö",
+      "participants": "Osallistujat",
+      "noMessages": "Ei viestejä vielä. Lähetä ensimmäinen!",
+      "messagePlaceholder": "Kirjoita viesti...",
+      "send": "Lähetä",
+      "sending": "Lähetetään...",
+      "loadError": "Virhe keskustelun latauksessa",
+      "sendError": "Virhe viestin lähetyksessä",
+      "delete": "Poista",
+      "deleting": "Poistetaan...",
+      "confirmDelete": "Haluatko varmasti poistaa tämän keskustelun?",
+      "deleteSuccess": "Keskustelu poistettu onnistuneesti",
+      "deleteError": "Virhe keskustelun poistamisessa"
+    },
     "createTrip": {
       "title": "Julkaise matka",
       "from": "Lähtöpaikka",
@@ -107,6 +140,7 @@
   "menu": {
     "home": "Koti",
     "trips": "Matkat",
+    "messages": "Viestit",
     "myBookings": "Omat Varaukseni",
     "myTrips": "Omat Matkani",
     "logout": "Kirjaudu ulos"

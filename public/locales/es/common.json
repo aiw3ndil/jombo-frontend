@@ -83,6 +83,39 @@
       "statusRejected": "Rechazada",
       "statusCancelled": "Cancelada"
     },
+    "messages": {
+      "title": "Mensajes",
+      "loading": "Cargando...",
+      "back": "Volver",
+      "noConversations": "No tienes conversaciones",
+      "conversationsInfo": "Las conversaciones se crean automáticamente cuando se confirma una reserva",
+      "departure": "Salida",
+      "participants": "Participantes",
+      "openChat": "Abrir chat",
+      "delete": "Eliminar",
+      "deleting": "Eliminando...",
+      "confirmDelete": "¿Estás seguro de eliminar esta conversación?",
+      "deleteSuccess": "Conversación eliminada exitosamente",
+      "deleteError": "Error al eliminar la conversación"
+    },
+    "conversation": {
+      "title": "Conversación",
+      "loading": "Cargando...",
+      "back": "Volver",
+      "departure": "Salida",
+      "participants": "Participantes",
+      "noMessages": "No hay mensajes aún. ¡Envía el primero!",
+      "messagePlaceholder": "Escribe un mensaje...",
+      "send": "Enviar",
+      "sending": "Enviando...",
+      "loadError": "Error al cargar la conversación",
+      "sendError": "Error al enviar el mensaje",
+      "delete": "Eliminar",
+      "deleting": "Eliminando...",
+      "confirmDelete": "¿Estás seguro de eliminar esta conversación?",
+      "deleteSuccess": "Conversación eliminada exitosamente",
+      "deleteError": "Error al eliminar la conversación"
+    },
     "createTrip": {
       "title": "Publicar un viaje",
       "from": "Origen",
@@ -107,6 +140,7 @@
   "menu": {
     "home": "Inicio",
     "trips": "Viajes",
+    "messages": "Mensajes",
     "myBookings": "Mis Reservas",
     "myTrips": "Mis Viajes",
     "logout": "Cerrar sesión"

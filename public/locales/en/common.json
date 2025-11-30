@@ -83,6 +83,39 @@
       "statusRejected": "Rejected",
       "statusCancelled": "Cancelled"
     },
+    "messages": {
+      "title": "Messages",
+      "loading": "Loading...",
+      "back": "Back",
+      "noConversations": "You have no conversations",
+      "conversationsInfo": "Conversations are created automatically when a booking is confirmed",
+      "departure": "Departure",
+      "participants": "Participants",
+      "openChat": "Open chat",
+      "delete": "Delete",
+      "deleting": "Deleting...",
+      "confirmDelete": "Are you sure you want to delete this conversation?",
+      "deleteSuccess": "Conversation deleted successfully",
+      "deleteError": "Error deleting conversation"
+    },
+    "conversation": {
+      "title": "Conversation",
+      "loading": "Loading...",
+      "back": "Back",
+      "departure": "Departure",
+      "participants": "Participants",
+      "noMessages": "No messages yet. Send the first one!",
+      "messagePlaceholder": "Type a message...",
+      "send": "Send",
+      "sending": "Sending...",
+      "loadError": "Error loading conversation",
+      "sendError": "Error sending message",
+      "delete": "Delete",
+      "deleting": "Deleting...",
+      "confirmDelete": "Are you sure you want to delete this conversation?",
+      "deleteSuccess": "Conversation deleted successfully",
+      "deleteError": "Error deleting conversation"
+    },
     "createTrip": {
       "title": "Publish a trip",
       "from": "Origin",
@@ -107,6 +140,7 @@
   "menu": {
     "home": "Home",
     "trips": "Trips",
+    "messages": "Messages",
     "myBookings": "My Bookings",
     "myTrips": "My Trips",
     "logout": "Logout"

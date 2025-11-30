@@ -65,6 +65,13 @@ export default function Header({ lang }: { lang: string }) {
             {isDropdownOpen && (
               <div className="absolute right-0 mt-2 w-48 bg-white rounded-lg shadow-lg py-1 z-50">
                 <Link
+                  href={`/${lang}/messages`}
+                  onClick={() => setIsDropdownOpen(false)}
+                  className="block w-full text-left px-4 py-2 text-gray-800 hover:bg-gray-100"
+                >
+                  {t("menu.messages")}
+                </Link>
+                <Link
                   href={`/${lang}/my-bookings`}
                   onClick={() => setIsDropdownOpen(false)}
                   className="block w-full text-left px-4 py-2 text-gray-800 hover:bg-gray-100"
