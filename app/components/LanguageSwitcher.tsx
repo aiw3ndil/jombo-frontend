@@ -1,5 +1,5 @@
 "use client";
-import { usePathname, useParams, useRouter } from "next/navigation";
+import { usePathname, useParams, useRouter, useSearchParams } from "next/navigation";
 import React from "react";
 
 const languages = [
@@ -12,6 +12,7 @@ export default function LanguageSwitcher() {
   const pathname = usePathname();
   const params = useParams();
   const router = useRouter();
+  const searchParams = useSearchParams();
 
   const currentPath = pathname?.split("/").slice(2).join("/") || "";
   const selected = ((params as any)?.lang || "es") as string;
@@ -22,7 +23,16 @@ export default function LanguageSwitcher() {
     if (typeof window !== "undefined") {
       localStorage.setItem("preferredLanguage", lang);
     }
-    const newPath = currentPath ? `/${lang}/${currentPath}` : `/${lang}`;
+    
+    // Construir la nueva ruta preservando los query parameters
+    let newPath = currentPath ? `/${lang}/${currentPath}` : `/${lang}`;
+    
+    // Agregar los query parameters si existen
+    const queryString = searchParams.toString();
+    if (queryString) {
+      newPath += `?${queryString}`;
+    }
+    
     router.push(newPath);
   }
 
