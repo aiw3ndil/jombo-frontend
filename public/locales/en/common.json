@@ -55,7 +55,14 @@
       "perSeat": "per seat",
       "departure": "Departure",
       "availableSeats": "Available seats",
-      "book": "Book"
+      "book": "Book",
+      "booking": "Booking...",
+      "howManySeats": "How many seats?",
+      "statusPending": "Pending",
+      "statusConfirmed": "Confirmed",
+      "noSeats": "No seats available",
+      "bookingSuccess": "Booking completed successfully",
+      "bookingError": "Error making booking"
     },
     "trips": {
       "title": "Available Trips",

@@ -55,7 +55,14 @@
       "perSeat": "per paikka",
       "departure": "Lähtö",
       "availableSeats": "Vapaita paikkoja",
-      "book": "Varaa"
+      "book": "Varaa",
+      "booking": "Varataan...",
+      "howManySeats": "Montako paikkaa?",
+      "statusPending": "Odottaa",
+      "statusConfirmed": "Vahvistettu",
+      "noSeats": "Ei vapaita paikkoja",
+      "bookingSuccess": "Varaus tehty onnistuneesti",
+      "bookingError": "Virhe varauksessa"
     },
     "trips": {
       "title": "Saatavilla olevat matkat",

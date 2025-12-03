@@ -55,7 +55,14 @@
       "perSeat": "por asiento",
       "departure": "Salida",
       "availableSeats": "Asientos disponibles",
-      "book": "Reservar"
+      "book": "Reservar",
+      "booking": "Reservando...",
+      "howManySeats": "¿Cuántos asientos?",
+      "statusPending": "Pendiente",
+      "statusConfirmed": "Confirmada",
+      "noSeats": "Sin asientos",
+      "bookingSuccess": "Reserva realizada exitosamente",
+      "bookingError": "Error al realizar la reserva"
     },
     "trips": {
       "title": "Viajes disponibles",
