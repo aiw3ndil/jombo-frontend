@@ -80,15 +80,35 @@ export default function ProfilePage({ params }: { params: Promise<{ lang: string
         body: formDataToSend,
       });
 
+      console.log("📥 Response status:", response.status);
+      console.log("📥 Response headers:", Object.fromEntries(response.headers.entries()));
+
+      const contentType = response.headers.get("content-type");
+      const responseText = await response.text();
+      console.log("📥 Response text:", responseText.substring(0, 500));
+
       if (!response.ok) {
-        const errorData = await response.json();
+        let errorData;
+        try {
+          errorData = responseText ? JSON.parse(responseText) : {};
+        } catch (e) {
+          console.error("❌ Response is not JSON:", responseText);
+          throw new Error(`Server error: ${response.status} - ${responseText.substring(0, 100)}`);
+        }
         console.error("❌ Profile update failed:", errorData);
-        throw new Error(errorData.error || "Error al actualizar el perfil");
+        throw new Error(errorData.error || errorData.message || "Error al actualizar el perfil");
       }
 
-      const data = await response.json();
+      let data;
+      try {
+        data = responseText ? JSON.parse(responseText) : {};
+      } catch (e) {
+        console.error("❌ Success response is not JSON:", responseText);
+        throw new Error("Invalid server response");
+      }
+
       console.log("✅ Profile updated successfully:", data);
-      updateUser(data.user);
+      updateUser(data.user || data);
       setPictureFile(null);
       setMessage({ type: "success", text: t("profile.updateSuccess") || "Perfil actualizado exitosamente" });
     } catch (error: any) {
