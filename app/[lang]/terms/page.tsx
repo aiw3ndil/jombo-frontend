@@ -2,11 +2,25 @@
 
 import { useTranslation } from "@/app/hooks/useTranslation";
 import { useParams } from "next/navigation";
+import { useEffect } from "react";
 
 export default function TermsPage() {
   const { t } = useTranslation();
   const params = useParams();
   const lang = (params?.lang as string) || "es";
+
+  // Actualizar título y meta description
+  useEffect(() => {
+    const title = t("terms.title") || "Términos y Condiciones";
+    document.title = `${title} | Jombo`;
+    
+    const metaDescription = document.querySelector('meta[name="description"]');
+    if (metaDescription) {
+      metaDescription.setAttribute('content', 
+        'Términos y condiciones de uso de Jombo. Lee sobre nuestras políticas y limitaciones de responsabilidad.'
+      );
+    }
+  }, [t, lang]);
 
   return (
     <div className="max-w-4xl mx-auto py-8">
