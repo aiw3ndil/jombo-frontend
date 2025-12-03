@@ -6,7 +6,7 @@ import { createTrip } from "@/app/lib/api/trips";
 import { useAuth } from "@/app/contexts/AuthContext";
 
 export default function CreateTrip() {
-  const { t } = useTranslation();
+  const { t, loading: translationsLoading } = useTranslation();
   const router = useRouter();
   const params = useParams();
   const lang = (params?.lang as string) || "es";
@@ -23,6 +23,15 @@ export default function CreateTrip() {
   });
 
   const [loading, setLoading] = useState(false);
+
+  // Wait for translations to load
+  if (translationsLoading) {
+    return (
+      <div className="min-h-screen flex items-center justify-center">
+        <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-blue-600"></div>
+      </div>
+    );
+  }
 
   // Redirigir al login si no está autenticado
   useEffect(() => {

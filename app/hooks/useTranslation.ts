@@ -7,13 +7,13 @@ type Translations = Record<string, any>;
 
 export function useTranslation(namespace: string = "common") {
   const params = useParams();
-  const lang = ((params as any)?.lang || "es") as string;
   const [translations, setTranslations] = useState<Translations>({});
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
     const loadTranslations = async () => {
       try {
+        const lang = ((params as any)?.lang || "es") as string;
         console.log(`🌐 Loading translations: /locales/${lang}/${namespace}.json`);
         const res = await fetch(`/locales/${lang}/${namespace}.json`);
         if (res.ok) {
@@ -24,15 +24,17 @@ export function useTranslation(namespace: string = "common") {
           console.error(`❌ Failed to load translations: ${res.status}`);
         }
       } catch (err) {
-        console.error(`❌ Error loading ${lang}/${namespace}.json:`, err);
+        console.error(`❌ Error loading ${namespace}.json:`, err);
         setTranslations({});
       } finally {
         setLoading(false);
       }
     };
 
-    loadTranslations();
-  }, [lang, namespace]);
+    if (params) {
+      loadTranslations();
+    }
+  }, [params, namespace]);
 
   const t = (key: string, defaultValue?: string): string => {
     const keys = key.split(".");
@@ -45,8 +47,8 @@ export function useTranslation(namespace: string = "common") {
     const result = typeof value === "string" ? value : defaultValue || key;
     
     // Log cuando no se encuentra una traducción
-    if (result === key && !loading) {
-      console.warn(`⚠️ Translation not found: ${key} in ${lang}/common.json`);
+    if (result === key && !loading && Object.keys(translations).length > 0) {
+      console.warn(`⚠️ Translation not found: ${key}`);
     }
     
     return result;

@@ -7,7 +7,7 @@ import { useAuth } from "@/app/contexts/AuthContext";
 import Link from "next/link";
 
 export default function MessagesPage() {
-  const { t } = useTranslation();
+  const { t, loading: translationsLoading } = useTranslation();
   const router = useRouter();
   const params = useParams();
   const lang = (params?.lang as string) || "es";
@@ -59,7 +59,7 @@ export default function MessagesPage() {
     }
   };
 
-  if (authLoading || loading) {
+  if (translationsLoading || authLoading || loading) {
     return (
       <div className="max-w-5xl mx-auto">
         <p className="text-gray-100">{t("page.messages.loading") || "Cargando..."}</p>

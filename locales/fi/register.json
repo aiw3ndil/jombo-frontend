@@ -1,8 +1,0 @@
-{
-  "title": "Rekisteröidy",
-  "name": "Nimi",
-  "email": "Sähköposti",
-  "password": "Salasana",
-  "passwordConfirmation": "Vahvista salasana",
-  "submit": "Luo tili"
-}

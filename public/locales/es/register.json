@@ -4,5 +4,8 @@
   "email": "Correo electrónico",
   "password": "Contraseña",
   "passwordConfirmation": "Confirmar contraseña",
-  "submit": "Crear cuenta"
+  "submit": "Crear cuenta",
+  "loading": "Cargando...",
+  "haveAccount": "¿Ya tienes una cuenta?",
+  "loginLink": "Inicia sesión aquí"
 }

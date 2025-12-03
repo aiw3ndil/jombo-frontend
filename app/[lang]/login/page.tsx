@@ -6,7 +6,7 @@ import { useRouter, useParams, useSearchParams } from "next/navigation";
 import Link from "next/link";
 
 export default function Login() {
-  const { t } = useTranslation("login");
+  const { t, loading: translationsLoading } = useTranslation("login");
   const params = useParams();
   const searchParams = useSearchParams();
   const lang = (params?.lang as string) || "es";
@@ -16,6 +16,15 @@ export default function Login() {
 
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
+
+  // Wait for translations to load
+  if (translationsLoading) {
+    return (
+      <div className="min-h-screen flex items-center justify-center">
+        <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-blue-600"></div>
+      </div>
+    );
+  }
 
   const handleSubmit = async (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();

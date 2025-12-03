@@ -7,7 +7,7 @@ import { useTranslation } from "@/app/hooks/useTranslation";
 import { useAuth } from "@/app/contexts/AuthContext";
 
 export default function MyTrips() {
-  const { t } = useTranslation();
+  const { t, loading: translationsLoading } = useTranslation();
   const router = useRouter();
   const params = useParams();
   const lang = (params?.lang as string) || "es";
@@ -96,7 +96,7 @@ export default function MyTrips() {
     }
   };
 
-  if (authLoading || loading) {
+  if (translationsLoading || authLoading || loading) {
     return (
       <div className="max-w-5xl mx-auto">
         <p className="text-gray-100">{t("page.myTrips.loading") || "Cargando..."}</p>

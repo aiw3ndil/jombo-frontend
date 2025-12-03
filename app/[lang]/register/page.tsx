@@ -6,7 +6,7 @@ import { useRouter, useParams } from "next/navigation";
 import Link from "next/link";
 
 export default function Register() {
-  const { t } = useTranslation("register");
+  const { t, loading: translationsLoading } = useTranslation("register");
   const params = useParams();
   const lang = (params?.lang as string) || "es";
   const { register, loading: isLoading, error } = useAuth() as any;
@@ -16,6 +16,15 @@ export default function Register() {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [passwordConfirmation, setPasswordConfirmation] = useState("");
+
+  // Wait for translations to load
+  if (translationsLoading) {
+    return (
+      <div className="min-h-screen flex items-center justify-center">
+        <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-blue-600"></div>
+      </div>
+    );
+  }
 
   const handleSubmit = async (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();

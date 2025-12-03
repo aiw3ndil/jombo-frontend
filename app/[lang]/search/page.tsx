@@ -7,7 +7,7 @@ import { useTranslation } from "@/app/hooks/useTranslation";
 import { useAuth } from "@/app/contexts/AuthContext";
 
 export default function SearchPage() {
-  const { t } = useTranslation();
+  const { t, loading: translationsLoading } = useTranslation();
   const router = useRouter();
   const searchParams = useSearchParams();
   const params = useParams();
@@ -20,6 +20,15 @@ export default function SearchPage() {
   const [error, setError] = useState("");
   const [bookingLoading, setBookingLoading] = useState<number | null>(null);
   const [userBookings, setUserBookings] = useState<Map<number, string>>(new Map());
+
+  // Wait for translations to load
+  if (translationsLoading) {
+    return (
+      <div className="min-h-screen flex items-center justify-center">
+        <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-blue-600"></div>
+      </div>
+    );
+  }
 
   useEffect(() => {
     if (!from) {
