@@ -47,6 +47,14 @@ export default function ProfilePage({ params }: { params: Promise<{ lang: string
   const handlePictureChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const file = e.target.files?.[0];
     if (file) {
+      // Validate file size (max 5MB)
+      const maxSize = 5 * 1024 * 1024; // 5MB in bytes
+      if (file.size > maxSize) {
+        alert("La imagen es demasiado grande. El tamaño máximo es 5MB.");
+        e.target.value = ''; // Clear the input
+        return;
+      }
+      
       setPictureFile(file);
       const reader = new FileReader();
       reader.onloadend = () => {
@@ -93,11 +101,17 @@ export default function ProfilePage({ params }: { params: Promise<{ lang: string
           errorData = responseText ? JSON.parse(responseText) : {};
         } catch (e) {
           console.error("❌ Response is not JSON:", responseText);
-          throw new Error(`Server error: ${response.status} - ${responseText.substring(0, 100)}`);
+          
+          // Handle specific status codes
+          if (response.status === 500) {
+            throw new Error("Error del servidor al procesar la solicitud. Intenta sin subir imagen o contacta con soporte.");
+          }
+          
+          throw new Error(`Server error: ${response.status} - ${responseText.substring(0, 100) || "Sin respuesta del servidor"}`);
         }
         console.error("❌ Profile update failed:", errorData);
         console.error("❌ Full error context:", { status: response.status, responseText, errorData });
-        throw new Error(errorData.error || errorData.message || `Server error ${response.status}`);
+        throw new Error(errorData.error || errorData.message || `Error del servidor (${response.status})`);
       }
 
       let data;
