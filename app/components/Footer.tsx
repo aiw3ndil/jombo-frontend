@@ -10,7 +10,7 @@ interface FooterProps {
 export default function Footer({ lang }: FooterProps) {
   const { t } = useTranslation();
 
-  const supportEmail = lang === "fi" ? "support@jombo.fi" : "soporte@jombo.es";
+  const supportEmail = lang === "fi" ? "tuki@jombo.fi" : "soporte@jombo.es";
 
   return (
     <footer className="bg-gray-800 text-white mt-auto">
