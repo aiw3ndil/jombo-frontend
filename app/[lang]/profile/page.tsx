@@ -96,7 +96,8 @@ export default function ProfilePage({ params }: { params: Promise<{ lang: string
           throw new Error(`Server error: ${response.status} - ${responseText.substring(0, 100)}`);
         }
         console.error("❌ Profile update failed:", errorData);
-        throw new Error(errorData.error || errorData.message || "Error al actualizar el perfil");
+        console.error("❌ Full error context:", { status: response.status, responseText, errorData });
+        throw new Error(errorData.error || errorData.message || `Server error ${response.status}`);
       }
 
       let data;
