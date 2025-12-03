@@ -6,15 +6,25 @@ const API_BASE_URL = process.env.NEXT_PUBLIC_API_BASE_URL || "http://localhost:3
 export async function PATCH(request: NextRequest) {
   try {
     const incomingFormData = await request.formData();
-    const jwt = request.cookies.get("jwt")?.value;
+    
+    // Try multiple cookie names for compatibility
+    const jwt = request.cookies.get("jwt")?.value || 
+                request.cookies.get("JWT")?.value ||
+                request.cookies.get("token")?.value;
 
     console.log("🔐 Checking authentication...");
     console.log("   - Cookie jwt present:", !!jwt);
-    console.log("   - All cookies:", request.cookies.getAll().map(c => c.name));
+    console.log("   - All cookies:", request.cookies.getAll().map(c => ({ name: c.name, value: c.value.substring(0, 20) + '...' })));
+    console.log("   - Headers:", Object.fromEntries(request.headers.entries()));
 
     if (!jwt) {
       console.error("❌ No JWT cookie found");
-      return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
+      console.error("   Available cookies:", request.cookies.getAll());
+      return NextResponse.json({ 
+        error: "Unauthorized",
+        details: "No authentication cookie found",
+        availableCookies: request.cookies.getAll().map(c => c.name)
+      }, { status: 401 });
     }
 
     console.log("📤 Forwarding profile update to backend");
