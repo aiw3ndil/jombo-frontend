@@ -99,7 +99,7 @@ export default function MyTrips() {
   if (translationsLoading || authLoading || loading) {
     return (
       <div className="max-w-5xl mx-auto">
-        <p className="text-gray-100">{t("page.myTrips.loading") || "Cargando..."}</p>
+        <p className="text-gray-900">{t("page.myTrips.loading") || "Cargando..."}</p>
       </div>
     );
   }
@@ -141,7 +141,7 @@ export default function MyTrips() {
   return (
     <div className="max-w-6xl mx-auto">
       <div className="flex justify-between items-center mb-6">
-        <h1 className="text-3xl font-bold text-gray-100">
+        <h1 className="text-3xl font-bold text-gray-900">
           {t("page.myTrips.title")}
         </h1>
         <button
@@ -168,7 +168,7 @@ export default function MyTrips() {
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
           {/* Lista de viajes */}
           <div className="space-y-4">
-            <h2 className="text-xl font-bold text-gray-100 mb-4">
+            <h2 className="text-xl font-bold text-gray-900 mb-4">
               {t("page.myTrips.yourTrips")}
             </h2>
             {trips.map((trip) => (
@@ -202,7 +202,7 @@ export default function MyTrips() {
 
           {/* Panel de reservas */}
           <div>
-            <h2 className="text-xl font-bold text-gray-100 mb-4">
+            <h2 className="text-xl font-bold text-gray-900 mb-4">
               {t("page.myTrips.bookingsForTrip")}
             </h2>
             {!selectedTripId ? (

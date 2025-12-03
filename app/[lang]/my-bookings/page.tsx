@@ -61,7 +61,7 @@ export default function MyBookings() {
   if (translationsLoading || authLoading || (loading && bookings.length === 0)) {
     return (
       <div className="max-w-5xl mx-auto">
-        <p className="text-gray-100">{t("page.myBookings.loading") || "Cargando..."}</p>
+        <p className="text-gray-900">{t("page.myBookings.loading") || "Cargando..."}</p>
       </div>
     );
   }
@@ -103,7 +103,7 @@ export default function MyBookings() {
   return (
     <div className="max-w-5xl mx-auto">
       <div className="flex justify-between items-center mb-6">
-        <h1 className="text-3xl font-bold text-gray-100">
+        <h1 className="text-3xl font-bold text-gray-900">
           {t("page.myBookings.title")}
         </h1>
         <button

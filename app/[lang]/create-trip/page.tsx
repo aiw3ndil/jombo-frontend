@@ -44,7 +44,7 @@ export default function CreateTrip() {
   if (authLoading) {
     return (
       <div className="max-w-2xl mx-auto">
-        <p className="text-gray-100">{t("page.createTrip.loading") || "Cargando..."}</p>
+        <p className="text-gray-900">{t("page.createTrip.loading") || "Cargando..."}</p>
       </div>
     );
   }
@@ -99,13 +99,13 @@ export default function CreateTrip() {
 
   return (
     <div className="max-w-2xl mx-auto">
-      <h1 className="text-2xl font-bold text-gray-100 mb-6">
+      <h1 className="text-2xl font-bold text-gray-900 mb-6">
         {t("page.createTrip.title")}
       </h1>
 
       <form onSubmit={handleSubmit} className="space-y-4">
         <div>
-          <label className="block text-gray-100 mb-2">
+          <label className="block text-gray-900 mb-2">
             {t("page.createTrip.from")} *
           </label>
           <input
@@ -113,14 +113,14 @@ export default function CreateTrip() {
             name="from"
             value={formData.from}
             onChange={handleChange}
-            className="w-full border border-gray-300 p-2 rounded text-gray-100 placeholder:text-gray-400"
+            className="w-full border border-gray-300 p-2 rounded text-gray-900 placeholder:text-gray-400"
             placeholder={t("page.createTrip.fromPlaceholder")}
             required
           />
         </div>
 
         <div>
-          <label className="block text-gray-100 mb-2">
+          <label className="block text-gray-900 mb-2">
             {t("page.createTrip.to")} *
           </label>
           <input
@@ -128,7 +128,7 @@ export default function CreateTrip() {
             name="to"
             value={formData.to}
             onChange={handleChange}
-            className="w-full border border-gray-300 p-2 rounded text-gray-100 placeholder:text-gray-400"
+            className="w-full border border-gray-300 p-2 rounded text-gray-900 placeholder:text-gray-400"
             placeholder={t("page.createTrip.toPlaceholder")}
             required
           />
@@ -136,7 +136,7 @@ export default function CreateTrip() {
 
         <div className="grid grid-cols-2 gap-4">
           <div>
-            <label className="block text-gray-100 mb-2">
+            <label className="block text-gray-900 mb-2">
               {t("page.createTrip.date")} *
             </label>
             <input
@@ -144,13 +144,13 @@ export default function CreateTrip() {
               name="date"
               value={formData.date}
               onChange={handleChange}
-              className="w-full border border-gray-300 p-2 rounded text-gray-100"
+              className="w-full border border-gray-300 p-2 rounded text-gray-900"
               required
             />
           </div>
 
           <div>
-            <label className="block text-gray-100 mb-2">
+            <label className="block text-gray-900 mb-2">
               {t("page.createTrip.time")} *
             </label>
             <input
@@ -158,7 +158,7 @@ export default function CreateTrip() {
               name="time"
               value={formData.time}
               onChange={handleChange}
-              className="w-full border border-gray-300 p-2 rounded text-gray-100"
+              className="w-full border border-gray-300 p-2 rounded text-gray-900"
               required
             />
           </div>
@@ -166,7 +166,7 @@ export default function CreateTrip() {
 
         <div className="grid grid-cols-2 gap-4">
           <div>
-            <label className="block text-gray-100 mb-2">
+            <label className="block text-gray-900 mb-2">
               {t("page.createTrip.availableSeats")} *
             </label>
             <input
@@ -176,13 +176,13 @@ export default function CreateTrip() {
               onChange={handleChange}
               min="1"
               max="8"
-              className="w-full border border-gray-300 p-2 rounded text-gray-100"
+              className="w-full border border-gray-300 p-2 rounded text-gray-900"
               required
             />
           </div>
 
           <div>
-            <label className="block text-gray-100 mb-2">
+            <label className="block text-gray-900 mb-2">
               {t("page.createTrip.pricePerSeat")} *
             </label>
             <input
@@ -192,14 +192,14 @@ export default function CreateTrip() {
               onChange={handleChange}
               min="0"
               step="0.01"
-              className="w-full border border-gray-300 p-2 rounded text-gray-100"
+              className="w-full border border-gray-300 p-2 rounded text-gray-900"
               required
             />
           </div>
         </div>
 
         <div>
-          <label className="block text-gray-100 mb-2">
+          <label className="block text-gray-900 mb-2">
             {t("page.createTrip.description")}
           </label>
           <textarea
@@ -207,7 +207,7 @@ export default function CreateTrip() {
             value={formData.description}
             onChange={handleChange}
             rows={4}
-            className="w-full border border-gray-300 p-2 rounded text-gray-100 placeholder:text-gray-400"
+            className="w-full border border-gray-300 p-2 rounded text-gray-900 placeholder:text-gray-400"
             placeholder={t("page.createTrip.descriptionPlaceholder")}
           />
         </div>

@@ -97,7 +97,7 @@ export default function ConversationPage() {
   if (authLoading || loading) {
     return (
       <div className="max-w-5xl mx-auto">
-        <p className="text-gray-100">{t("page.conversation.loading") || "Cargando..."}</p>
+        <p className="text-gray-900">{t("page.conversation.loading") || "Cargando..."}</p>
       </div>
     );
   }
