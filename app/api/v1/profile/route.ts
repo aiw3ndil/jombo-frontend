@@ -8,7 +8,12 @@ export async function PATCH(request: NextRequest) {
     const incomingFormData = await request.formData();
     const jwt = request.cookies.get("jwt")?.value;
 
+    console.log("🔐 Checking authentication...");
+    console.log("   - Cookie jwt present:", !!jwt);
+    console.log("   - All cookies:", request.cookies.getAll().map(c => c.name));
+
     if (!jwt) {
+      console.error("❌ No JWT cookie found");
       return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
     }
 
