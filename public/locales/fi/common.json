@@ -188,5 +188,48 @@
     "cancel": "Peruuta",
     "updateSuccess": "Profiili päivitetty onnistuneesti",
     "updateError": "Virhe profiilin päivityksessä"
+  },
+  "footer": {
+    "about": "Tietoa Jombosta",
+    "description": "Ilmainen alusta kyydinjakoon. Yhdistä ihmisiin, jotka matkustavat samaan paikkaan ja säästä rahaa.",
+    "links": "Linkit",
+    "terms": "Käyttöehdot",
+    "home": "Koti",
+    "contact": "Yhteystiedot",
+    "rights": "Kaikki oikeudet pidätetään."
+  },
+  "terms": {
+    "title": "Käyttöehdot",
+    "section1": {
+      "title": "1. Ehtojen Hyväksyminen",
+      "content": "Käyttämällä Jomboa hyväksyt nämä käyttöehdot kokonaisuudessaan. Jos et hyväksy näitä ehtoja, et saa käyttää palveluamme."
+    },
+    "section2": {
+      "title": "2. Palvelun Kuvaus",
+      "content": "Jombo on alusta, joka yhdistää kuljettajat matkustajiin, jotka haluavat jakaa matkan. Toimimme vain välittäjinä helpottaen yhteyttä käyttäjien välillä. Emme ole kuljetusyritys emmekä tarjoa kuljetuspalveluja."
+    },
+    "section3": {
+      "title": "3. Palvelun Käyttö",
+      "content": "Käyttäjät sitoutuvat käyttämään alustaa vastuullisesti ja laillisesti. Jokainen käyttäjä on vastuussa henkilöiden henkilöllisyyden varmistamisesta, joiden kanssa jakaa kyydin, ja kaikkien tarvittavien varotoimien tekemisestä."
+    },
+    "section4": {
+      "title": "4. Vastuunrajoitus",
+      "content": "TÄRKEÄÄ: Jombo EI ole vastuussa mistään tapahtumasta, onnettomuudesta, vahingosta, menetyksestä tai haitasta, joka voi tapahtua matkan aikana.",
+      "details": "Käyttäjät ottavat kaikki kyydinjakoon liittyvät riskit. Jombo ei vahvista käyttäjien henkilöllisyyttä eikä takaa matkojen turvallisuutta. Suosittelemme kaikkien tarvittavien varotoimien tekemistä ja muiden käyttäjien tietojen varmistamista ennen kyydin jakamista."
+    },
+    "section5": {
+      "title": "5. Käyttäjien Välinen Suhde",
+      "content": "Sopimussuhde syntyy suoraan kuljettajan ja matkustajien välille. Jombo ei ole osa tätä suhdetta eikä ota siitä johtuvia vastuita. Maksut ja taloudelliset sopimukset tehdään suoraan käyttäjien välillä."
+    },
+    "section6": {
+      "title": "6. Käyttäjän Sisältö",
+      "content": "Käyttäjät ovat vastuussa alustalle julkaisemastaan sisällöstä. Jombo pidättää oikeuden poistaa sisältöä, jota pidetään sopimattomana, loukkaavana tai näitä ehtoja rikkovat."
+    },
+    "section7": {
+      "title": "7. Muutokset",
+      "content": "Jombo pidättää oikeuden muuttaa näitä ehtoja milloin tahansa. Muutokset tulevat voimaan välittömästi julkaisun jälkeen alustalla."
+    },
+    "lastUpdate": "Viimeksi päivitetty",
+    "updateDate": "3. joulukuuta 2025"
   }
 }

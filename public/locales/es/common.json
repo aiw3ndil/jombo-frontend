@@ -188,5 +188,48 @@
     "cancel": "Cancelar",
     "updateSuccess": "Perfil actualizado exitosamente",
     "updateError": "Error al actualizar el perfil"
+  },
+  "footer": {
+    "about": "Sobre Jombo",
+    "description": "Plataforma gratuita para compartir viajes. Conecta con personas que van a tu mismo destino y ahorra dinero.",
+    "links": "Enlaces",
+    "terms": "Términos y Condiciones",
+    "home": "Inicio",
+    "contact": "Contacto",
+    "rights": "Todos los derechos reservados."
+  },
+  "terms": {
+    "title": "Términos y Condiciones de Uso",
+    "section1": {
+      "title": "1. Aceptación de los Términos",
+      "content": "Al acceder y utilizar Jombo, aceptas estos términos y condiciones en su totalidad. Si no estás de acuerdo con alguno de estos términos, no debes utilizar nuestro servicio."
+    },
+    "section2": {
+      "title": "2. Descripción del Servicio",
+      "content": "Jombo es una plataforma que conecta conductores con pasajeros que desean compartir un viaje. Actuamos únicamente como intermediarios facilitando el contacto entre usuarios. No somos una empresa de transporte ni prestamos servicios de transporte."
+    },
+    "section3": {
+      "title": "3. Uso del Servicio",
+      "content": "Los usuarios se comprometen a utilizar la plataforma de manera responsable y legal. Cada usuario es responsable de verificar la identidad de las personas con las que comparte viaje y de tomar todas las precauciones necesarias."
+    },
+    "section4": {
+      "title": "4. Limitación de Responsabilidad",
+      "content": "IMPORTANTE: Jombo NO se hace responsable de ningún incidente, accidente, daño, pérdida o perjuicio que pueda ocurrir durante el viaje.",
+      "details": "Los usuarios asumen todos los riesgos asociados con compartir viaje. Jombo no verifica la identidad de los usuarios ni garantiza la seguridad de los viajes. Recomendamos tomar todas las precauciones necesarias y verificar la información de los demás usuarios antes de compartir un viaje."
+    },
+    "section5": {
+      "title": "5. Relación entre Usuarios",
+      "content": "La relación contractual se establece directamente entre el conductor y los pasajeros. Jombo no es parte de esta relación y no asume ninguna responsabilidad derivada de ella. Los pagos y acuerdos económicos se realizan directamente entre los usuarios."
+    },
+    "section6": {
+      "title": "6. Contenido del Usuario",
+      "content": "Los usuarios son responsables del contenido que publican en la plataforma. Jombo se reserva el derecho de eliminar cualquier contenido que considere inapropiado, ofensivo o que viole estos términos."
+    },
+    "section7": {
+      "title": "7. Modificaciones",
+      "content": "Jombo se reserva el derecho de modificar estos términos en cualquier momento. Las modificaciones entrarán en vigor inmediatamente después de su publicación en la plataforma."
+    },
+    "lastUpdate": "Última actualización",
+    "updateDate": "3 de diciembre de 2025"
   }
 }

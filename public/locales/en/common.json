@@ -188,5 +188,48 @@
     "cancel": "Cancel",
     "updateSuccess": "Profile updated successfully",
     "updateError": "Error updating profile"
+  },
+  "footer": {
+    "about": "About Jombo",
+    "description": "Free platform for sharing rides. Connect with people going to the same destination and save money.",
+    "links": "Links",
+    "terms": "Terms and Conditions",
+    "home": "Home",
+    "contact": "Contact",
+    "rights": "All rights reserved."
+  },
+  "terms": {
+    "title": "Terms and Conditions of Use",
+    "section1": {
+      "title": "1. Acceptance of Terms",
+      "content": "By accessing and using Jombo, you accept these terms and conditions in full. If you do not agree with any of these terms, you should not use our service."
+    },
+    "section2": {
+      "title": "2. Service Description",
+      "content": "Jombo is a platform that connects drivers with passengers who wish to share a trip. We act only as intermediaries facilitating contact between users. We are not a transportation company nor do we provide transportation services."
+    },
+    "section3": {
+      "title": "3. Use of Service",
+      "content": "Users agree to use the platform responsibly and legally. Each user is responsible for verifying the identity of people they share rides with and taking all necessary precautions."
+    },
+    "section4": {
+      "title": "4. Limitation of Liability",
+      "content": "IMPORTANT: Jombo is NOT responsible for any incident, accident, damage, loss or harm that may occur during the trip.",
+      "details": "Users assume all risks associated with ride sharing. Jombo does not verify user identities nor guarantee the safety of trips. We recommend taking all necessary precautions and verifying information of other users before sharing a ride."
+    },
+    "section5": {
+      "title": "5. Relationship Between Users",
+      "content": "The contractual relationship is established directly between the driver and passengers. Jombo is not part of this relationship and assumes no responsibility derived from it. Payments and financial agreements are made directly between users."
+    },
+    "section6": {
+      "title": "6. User Content",
+      "content": "Users are responsible for the content they post on the platform. Jombo reserves the right to remove any content deemed inappropriate, offensive or violating these terms."
+    },
+    "section7": {
+      "title": "7. Modifications",
+      "content": "Jombo reserves the right to modify these terms at any time. Modifications will take effect immediately after publication on the platform."
+    },
+    "lastUpdate": "Last updated",
+    "updateDate": "December 3, 2025"
   }
 }
