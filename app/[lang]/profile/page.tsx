@@ -71,9 +71,10 @@ export default function ProfilePage({ params }: { params: Promise<{ lang: string
         formDataToSend.append("picture", pictureFile);
       }
 
-      console.log("🚀 Sending profile update to Next.js API route");
+      const API_BASE_URL = process.env.NEXT_PUBLIC_API_BASE_URL || "http://localhost:3001";
+      console.log("🚀 Sending profile update directly to backend:", `${API_BASE_URL}/api/v1/users/profile`);
       
-      const response = await fetch("/api/v1/profile", {
+      const response = await fetch(`${API_BASE_URL}/api/v1/users/profile`, {
         method: "PATCH",
         credentials: "include",
         body: formDataToSend,
