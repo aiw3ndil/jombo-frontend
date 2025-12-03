@@ -39,53 +39,53 @@ export default function Register() {
 
   return (
     <div className="max-w-md mx-auto">
-      <h2 className="text-2xl font-bold mb-4">{t("title")}</h2>
+      <h2 className="text-2xl font-bold mb-4 text-gray-900">{t("title")}</h2>
       {error && <div className="text-red-600 mb-2">{String(error)}</div>}
       <form className="space-y-3" onSubmit={handleSubmit}>
         <div>
-          <label className="block mb-1">{t("name")}</label>
+          <label className="block mb-1 text-gray-900">{t("name")}</label>
           <input
             value={name}
             onChange={(e) => setName(e.target.value)}
-            className="border p-2 w-full rounded"
+            className="border p-2 w-full rounded text-gray-900"
           />
         </div>
         <div>
-          <label className="block mb-1">{t("email")}</label>
+          <label className="block mb-1 text-gray-900">{t("email")}</label>
           <input
             value={email}
             onChange={(e) => setEmail(e.target.value)}
-            className="border p-2 w-full rounded"
+            className="border p-2 w-full rounded text-gray-900"
           />
         </div>
         <div>
-          <label className="block mb-1">{t("password")}</label>
+          <label className="block mb-1 text-gray-900">{t("password")}</label>
           <input
             type="password"
             value={password}
             onChange={(e) => setPassword(e.target.value)}
-            className="border p-2 w-full rounded"
+            className="border p-2 w-full rounded text-gray-900"
           />
         </div>
         <div>
-          <label className="block mb-1">{t("passwordConfirmation") || "Confirm Password"}</label>
+          <label className="block mb-1 text-gray-900">{t("passwordConfirmation") || "Confirm Password"}</label>
           <input
             type="password"
             value={passwordConfirmation}
             onChange={(e) => setPasswordConfirmation(e.target.value)}
-            className="border p-2 w-full rounded"
+            className="border p-2 w-full rounded text-gray-900"
           />
         </div>
         <button
           type="submit"
-          className="bg-blue-600 text-white px-4 py-2 rounded"
+          className="bg-blue-600 text-white px-4 py-2 rounded w-full hover:bg-blue-700"
           disabled={isLoading}
         >
           {isLoading ? t("loading") || "..." : t("submit")}
         </button>
       </form>
-      <p className="mt-3">
-        {t("haveAccount")} <Link href={`/${lang}/login`}>{t("loginLink")}</Link>
+      <p className="mt-3 text-gray-900">
+        {t("haveAccount")} <Link href={`/${lang}/login`} className="text-blue-600 hover:underline">{t("loginLink")}</Link>
       </p>
     </div>
   );

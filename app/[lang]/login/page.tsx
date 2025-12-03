@@ -43,36 +43,36 @@ export default function Login() {
 
   return (
     <div className="max-w-md mx-auto">
-      <h2 className="text-2xl font-bold mb-4">{t("title")}</h2>
+      <h2 className="text-2xl font-bold mb-4 text-gray-900">{t("title")}</h2>
       {error && <div className="text-red-600 mb-2">{String(error)}</div>}
       <form className="space-y-3" onSubmit={handleSubmit}>
         <div>
-          <label className="block mb-1">{t("email")}</label>
+          <label className="block mb-1 text-gray-900">{t("email")}</label>
           <input
             value={email}
             onChange={(e) => setEmail(e.target.value)}
-            className="border p-2 w-full rounded"
+            className="border p-2 w-full rounded text-gray-900"
           />
         </div>
         <div>
-          <label className="block mb-1">{t("password")}</label>
+          <label className="block mb-1 text-gray-900">{t("password")}</label>
           <input
             type="password"
             value={password}
             onChange={(e) => setPassword(e.target.value)}
-            className="border p-2 w-full rounded"
+            className="border p-2 w-full rounded text-gray-900"
           />
         </div>
         <button
           type="submit"
-          className="bg-blue-600 text-white px-4 py-2 rounded"
+          className="bg-blue-600 text-white px-4 py-2 rounded w-full hover:bg-blue-700"
           disabled={isLoading}
         >
           {isLoading ? t("loading") || "..." : t("submit")}
         </button>
       </form>
-      <p className="mt-3">
-        {t("noAccount")} <Link href={`/${lang}/register`}>{t("registerLink")}</Link>
+      <p className="mt-3 text-gray-900">
+        {t("noAccount")} <Link href={`/${lang}/register`} className="text-blue-600 hover:underline">{t("registerLink")}</Link>
       </p>
     </div>
   );
