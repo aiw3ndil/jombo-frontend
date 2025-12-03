@@ -35,13 +35,15 @@ export async function PATCH(request: NextRequest) {
 
     console.log("   📋 Sending request to:", `${API_BASE_URL}/api/v1/users/profile`);
 
+    const bodyBuffer = formData.getBuffer();
+    
     const response = await fetch(`${API_BASE_URL}/api/v1/users/profile`, {
       method: "PATCH",
       headers: {
         Cookie: `jwt=${jwt}`,
         ...formData.getHeaders(),
       },
-      body: formData.getBuffer(),
+      body: bodyBuffer as any,
     });
 
     const data = await response.json();

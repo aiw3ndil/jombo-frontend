@@ -4,8 +4,47 @@
       "welcome": "Tervetuloa Jomboon",
       "from": "Mistä",
       "to": "Minne",
-      "search": "Hae",
-      "publish": "Julkaise matka"
+      "search": "Hae matka",
+      "publish": "Julkaise matka",
+      "hero": {
+        "title": "Jaa matkasi, säästä rahaa",
+        "subtitle": "Yhdistä ihmisiin, jotka matkustavat samaan paikkaan",
+        "free": "100% ILMAINEN - Ei provisioita"
+      },
+      "howItWorks": {
+        "title": "Miten se toimii?",
+        "step1": {
+          "title": "1. Hae tai Julkaise",
+          "description": "Hae saatavilla olevia matkoja tai julkaise omasi. Täysin ilmainen, ei piilotettuja kuluja."
+        },
+        "step2": {
+          "title": "2. Yhdistä",
+          "description": "Ota yhteyttä suoraan muihin käyttäjiin. Ei välittäjiä eikä provisioita."
+        },
+        "step3": {
+          "title": "3. Jaa ja Säästä",
+          "description": "Jaa matkakulut matkustajien kesken. Säästä rahaa ja auta ympäristöä."
+        }
+      },
+      "benefits": {
+        "title": "Miksi Jombo?",
+        "free": {
+          "title": "Täysin Ilmainen",
+          "description": "Emme veloita provisioita. Ei kuljettajalta eikä matkustajalta. Mitä sovitte, sen maksat."
+        },
+        "safe": {
+          "title": "Turvallinen ja Luotettava",
+          "description": "Arviointijärjestelmä ja käyttäjien vahvistus turvallisuutesi vuoksi."
+        },
+        "eco": {
+          "title": "Ympäristöystävällinen",
+          "description": "Vähennä hiilijalanjälkeäsi jakamalla kyytejä. Vähemmän autoja, vähemmän saastetta."
+        },
+        "community": {
+          "title": "Yhteisö",
+          "description": "Tapaa uusia ihmisiä ja tee matkasta miellyttävämpi jakamalla kokemuksia."
+        }
+      }
     },
     "search": {
       "searching": "Etsitään matkoja",

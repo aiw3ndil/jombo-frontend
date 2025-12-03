@@ -4,8 +4,47 @@
       "welcome": "Bienvenido a Jombo",
       "from": "Desde",
       "to": "Hasta",
-      "search": "Buscar",
-      "publish": "Publicar un viaje"
+      "search": "Buscar viaje",
+      "publish": "Publicar un viaje",
+      "hero": {
+        "title": "Comparte tu viaje, ahorra dinero",
+        "subtitle": "Conecta con personas que van a tu mismo destino",
+        "free": "100% GRATIS - Sin comisiones"
+      },
+      "howItWorks": {
+        "title": "¿Cómo funciona?",
+        "step1": {
+          "title": "1. Busca o Publica",
+          "description": "Busca viajes disponibles o publica el tuyo. Totalmente gratis, sin costes ocultos."
+        },
+        "step2": {
+          "title": "2. Conecta",
+          "description": "Contacta directamente con otros usuarios. Sin intermediarios ni comisiones."
+        },
+        "step3": {
+          "title": "3. Comparte y Ahorra",
+          "description": "Divide los gastos del viaje entre los pasajeros. Ahorra dinero y ayuda al medio ambiente."
+        }
+      },
+      "benefits": {
+        "title": "¿Por qué Jombo?",
+        "free": {
+          "title": "Completamente Gratis",
+          "description": "No cobramos comisiones. Ni al conductor ni al pasajero. Lo que acuerdes es lo que pagas."
+        },
+        "safe": {
+          "title": "Seguro y Confiable",
+          "description": "Sistema de valoraciones y verificación de usuarios para tu seguridad."
+        },
+        "eco": {
+          "title": "Ecológico",
+          "description": "Reduce la huella de carbono compartiendo viajes. Menos coches, menos contaminación."
+        },
+        "community": {
+          "title": "Comunidad",
+          "description": "Conoce gente nueva y haz el viaje más ameno compartiendo experiencias."
+        }
+      }
     },
     "search": {
       "searching": "Buscando viajes",
