@@ -24,6 +24,13 @@ export default function CreateTrip() {
 
   const [loading, setLoading] = useState(false);
 
+  // Redirigir al login si no está autenticado
+  useEffect(() => {
+    if (!authLoading && !user) {
+      router.push(`/${lang}/login?redirect=/${lang}/create-trip`);
+    }
+  }, [user, authLoading, router, lang]);
+
   // Wait for translations to load
   if (translationsLoading) {
     return (
@@ -32,13 +39,6 @@ export default function CreateTrip() {
       </div>
     );
   }
-
-  // Redirigir al login si no está autenticado
-  useEffect(() => {
-    if (!authLoading && !user) {
-      router.push(`/${lang}/login?redirect=/${lang}/create-trip`);
-    }
-  }, [user, authLoading, router, lang]);
 
   // Mostrar loading mientras se verifica la autenticación
   if (authLoading) {
