@@ -1,0 +1,218 @@
+"use client";
+import { useState, useEffect } from "react";
+import { useRouter } from "next/navigation";
+import { useAuth } from "@/app/contexts/AuthContext";
+import { useTranslation } from "@/app/hooks/useTranslation";
+
+export default function ProfilePage({ params }: { params: Promise<{ lang: string }> }) {
+  const router = useRouter();
+  const { user, updateUser, loading: authLoading } = useAuth();
+  const { t } = useTranslation();
+  const [lang, setLang] = useState("es");
+  const [formData, setFormData] = useState({
+    name: "",
+    email: "",
+    language: "es"
+  });
+  const [pictureFile, setPictureFile] = useState<File | null>(null);
+  const [picturePreview, setPicturePreview] = useState<string | null>(null);
+  const [loading, setLoading] = useState(false);
+  const [message, setMessage] = useState<{ type: "success" | "error"; text: string } | null>(null);
+  const [isReady, setIsReady] = useState(false);
+
+  useEffect(() => {
+    params.then(p => setLang(p.lang));
+  }, [params]);
+
+  useEffect(() => {
+    if (authLoading) return;
+    
+    if (!user) {
+      router.push(`/${lang}/login`);
+    } else {
+      setFormData({
+        name: user.name || "",
+        email: user.email || "",
+        language: user.language || lang
+      });
+      // Backend puede retornar 'picture' o 'picture_url'
+      const pictureUrl = user.picture_url || user.picture;
+      if (pictureUrl) {
+        setPicturePreview(pictureUrl);
+      }
+      setIsReady(true);
+    }
+  }, [user, authLoading, router, lang]);
+
+  const handlePictureChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const file = e.target.files?.[0];
+    if (file) {
+      setPictureFile(file);
+      const reader = new FileReader();
+      reader.onloadend = () => {
+        setPicturePreview(reader.result as string);
+      };
+      reader.readAsDataURL(file);
+    }
+  };
+
+  const handleSubmit = async (e: React.FormEvent) => {
+    e.preventDefault();
+    setLoading(true);
+    setMessage(null);
+
+    try {
+      const formDataToSend = new FormData();
+      formDataToSend.append("name", formData.name);
+      formDataToSend.append("language", formData.language);
+      
+      if (pictureFile) {
+        console.log("📸 Uploading picture:", pictureFile.name, pictureFile.type);
+        formDataToSend.append("picture", pictureFile);
+      }
+
+      console.log("🚀 Sending profile update to /api/v1/profile");
+      const response = await fetch("/api/v1/profile", {
+        method: "PATCH",
+        body: formDataToSend,
+      });
+
+      if (!response.ok) {
+        const errorData = await response.json();
+        console.error("❌ Profile update failed:", errorData);
+        throw new Error(errorData.error || "Error al actualizar el perfil");
+      }
+
+      const data = await response.json();
+      console.log("✅ Profile updated successfully:", data);
+      updateUser(data.user);
+      setPictureFile(null);
+      setMessage({ type: "success", text: t("profile.updateSuccess") || "Perfil actualizado exitosamente" });
+    } catch (error: any) {
+      console.error("Error updating profile:", error);
+      setMessage({ type: "error", text: error.message || t("profile.updateError") || "Error al actualizar el perfil" });
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>) => {
+    setFormData({
+      ...formData,
+      [e.target.name]: e.target.value
+    });
+  };
+
+  if (!isReady || !user) {
+    return (
+      <div className="max-w-2xl mx-auto p-6">
+        <div className="animate-pulse">
+          <div className="h-8 bg-gray-200 rounded w-1/3 mb-6"></div>
+          <div className="bg-white rounded-lg shadow-md p-6 space-y-4">
+            <div className="h-24 bg-gray-200 rounded w-24"></div>
+            <div className="h-10 bg-gray-200 rounded"></div>
+            <div className="h-10 bg-gray-200 rounded"></div>
+          </div>
+        </div>
+      </div>
+    );
+  }
+
+  return (
+    <div className="max-w-2xl mx-auto p-6">
+      <h1 className="text-3xl font-bold mb-6">{t("profile.title") || "Mi Perfil"}</h1>
+
+      {message && (
+        <div
+          className={`mb-4 p-4 rounded-lg ${
+            message.type === "success" ? "bg-green-100 text-green-800" : "bg-red-100 text-red-800"
+          }`}
+        >
+          {message.text}
+        </div>
+      )}
+
+      <form onSubmit={handleSubmit} className="bg-white rounded-lg shadow-md p-6 space-y-4">
+        <div>
+          <label htmlFor="picture" className="block text-sm font-medium text-gray-700 mb-2">
+            {t("profile.picture") || "Foto de perfil"}
+          </label>
+          <div className="flex items-center gap-4">
+            {picturePreview && (
+              <img
+                src={picturePreview}
+                alt="Profile preview"
+                className="w-24 h-24 rounded-full object-cover border-2 border-gray-200"
+              />
+            )}
+            <input
+              type="file"
+              id="picture"
+              accept="image/*"
+              onChange={handlePictureChange}
+              className="block w-full text-sm text-gray-900 file:mr-4 file:py-2 file:px-4 file:rounded-lg file:border-0 file:text-sm file:font-semibold file:bg-blue-50 file:text-blue-700 hover:file:bg-blue-100"
+            />
+          </div>
+        </div>
+
+        <div>
+          <label htmlFor="name" className="block text-sm font-medium text-gray-700 mb-1">
+            {t("profile.name") || "Nombre"}
+          </label>
+          <input
+            type="text"
+            id="name"
+            name="name"
+            value={formData.name}
+            onChange={handleChange}
+            className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent text-gray-900"
+            required
+          />
+        </div>
+
+        <div>
+          <label htmlFor="email" className="block text-sm font-medium text-gray-700 mb-1">
+            {t("profile.email") || "Email"}
+          </label>
+          <input
+            type="email"
+            id="email"
+            name="email"
+            value={formData.email}
+            onChange={handleChange}
+            className="w-full px-4 py-2 border border-gray-300 rounded-lg bg-gray-50 text-gray-600"
+            disabled
+          />
+          <p className="text-sm text-gray-500 mt-1">{t("profile.emailNotEditable") || "El email no puede ser modificado"}</p>
+        </div>
+
+        <div>
+          <label htmlFor="language" className="block text-sm font-medium text-gray-700 mb-1">
+            {t("profile.language") || "Idioma"}
+          </label>
+          <select
+            id="language"
+            name="language"
+            value={formData.language}
+            onChange={handleChange}
+            className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent text-gray-900"
+          >
+            <option value="es">Español</option>
+            <option value="en">English</option>
+            <option value="fi">Suomi</option>
+          </select>
+        </div>
+
+        <div className="pt-4">
+          <button
+            type="submit"
+            disabled={loading}
+            className="w-full bg-blue-600 text-white py-2 px-4 rounded-lg hover:bg-blue-700 disabled:bg-gray-400 disabled:cursor-not-allowed transition-colors"
+          >
+            {loading ? (t("profile.saving") || "Guardando...") : (t("profile.save") || "Guardar cambios")}
+          </button>
+        </div>
+      </form>
+    </div>
+  );
+}

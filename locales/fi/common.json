@@ -43,6 +43,27 @@
   },
   "menu": {
     "home": "Koti",
-    "trips": "Matkat"
+    "trips": "Matkat",
+    "profile": "Profiilini",
+    "messages": "Viestit",
+    "myBookings": "Varaukseni",
+    "myTrips": "Matkani",
+    "logout": "Kirjaudu ulos"
+  },
+  "profile": {
+    "title": "Profiilini",
+    "name": "Nimi",
+    "email": "Sähköposti",
+    "phone": "Puhelin",
+    "bio": "Biografia",
+    "language": "Ilmoitusten kieli",
+    "picture": "Profiilikuva",
+    "bioPlaceholder": "Kerro itsestäsi...",
+    "emailNotEditable": "Sähköpostia ei voi muuttaa",
+    "save": "Tallenna muutokset",
+    "saving": "Tallennetaan...",
+    "cancel": "Peruuta",
+    "updateSuccess": "Profiili päivitetty onnistuneesti",
+    "updateError": "Virhe profiilin päivityksessä"
   }
 }

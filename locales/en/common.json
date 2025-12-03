@@ -43,6 +43,27 @@
   },
   "menu": {
     "home": "Home",
-    "trips": "Trips"
+    "trips": "Trips",
+    "profile": "My Profile",
+    "messages": "Messages",
+    "myBookings": "My Bookings",
+    "myTrips": "My Trips",
+    "logout": "Logout"
+  },
+  "profile": {
+    "title": "My Profile",
+    "name": "Name",
+    "email": "Email",
+    "phone": "Phone",
+    "bio": "Bio",
+    "language": "Notification language",
+    "picture": "Profile picture",
+    "bioPlaceholder": "Tell us about yourself...",
+    "emailNotEditable": "Email cannot be modified",
+    "save": "Save changes",
+    "saving": "Saving...",
+    "cancel": "Cancel",
+    "updateSuccess": "Profile updated successfully",
+    "updateError": "Error updating profile"
   }
 }

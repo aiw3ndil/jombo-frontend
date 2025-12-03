@@ -9,6 +9,7 @@
     "lint": "eslint"
   },
   "dependencies": {
+    "form-data": "^4.0.5",
     "i18next": "^25.6.3",
     "next": "16.0.4",
     "nextjs-google-analytics": "2.3.7",

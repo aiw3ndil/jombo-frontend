@@ -50,9 +50,20 @@ export default function Header({ lang }: { lang: string }) {
                 e.stopPropagation();
                 setIsDropdownOpen(!isDropdownOpen);
               }}
-              className="bg-white text-blue-700 px-3 py-1 rounded-lg hover:bg-blue-50 flex items-center gap-2"
+              className="bg-white text-blue-700 px-2 py-1 rounded-lg hover:bg-blue-50 flex items-center gap-2"
             >
-              {user.name || user.email}
+              {(user.picture_url || user.picture) ? (
+                <img 
+                  src={user.picture_url || user.picture} 
+                  alt={user.name || user.email}
+                  className="w-8 h-8 rounded-full object-cover"
+                />
+              ) : (
+                <div className="w-8 h-8 rounded-full bg-blue-500 flex items-center justify-center text-white font-bold">
+                  {(user.name || user.email || 'U').charAt(0).toUpperCase()}
+                </div>
+              )}
+              <span className="hidden sm:inline">{user.name || user.email}</span>
               <svg
                 className={`w-4 h-4 transition-transform ${isDropdownOpen ? "rotate-180" : ""}`}
                 fill="none"
@@ -64,6 +75,13 @@ export default function Header({ lang }: { lang: string }) {
             </button>
             {isDropdownOpen && (
               <div className="absolute right-0 mt-2 w-48 bg-white rounded-lg shadow-lg py-1 z-50">
+                <Link
+                  href={`/${lang}/profile`}
+                  onClick={() => setIsDropdownOpen(false)}
+                  className="block w-full text-left px-4 py-2 text-gray-800 hover:bg-gray-100"
+                >
+                  {t("menu.profile")}
+                </Link>
                 <Link
                   href={`/${lang}/messages`}
                   onClick={() => setIsDropdownOpen(false)}

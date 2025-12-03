@@ -43,6 +43,27 @@
   },
   "menu": {
     "home": "Inicio",
-    "trips": "Viajes"
+    "trips": "Viajes",
+    "profile": "Mi Perfil",
+    "messages": "Mensajes",
+    "myBookings": "Mis Reservas",
+    "myTrips": "Mis Viajes",
+    "logout": "Cerrar Sesión"
+  },
+  "profile": {
+    "title": "Mi Perfil",
+    "name": "Nombre",
+    "email": "Email",
+    "phone": "Teléfono",
+    "bio": "Biografía",
+    "language": "Idioma de las notificaciones",
+    "picture": "Foto de perfil",
+    "bioPlaceholder": "Cuéntanos sobre ti...",
+    "emailNotEditable": "El email no puede ser modificado",
+    "save": "Guardar cambios",
+    "saving": "Guardando...",
+    "cancel": "Cancelar",
+    "updateSuccess": "Perfil actualizado exitosamente",
+    "updateError": "Error al actualizar el perfil"
   }
 }

@@ -4,8 +4,5 @@
   "email": "Sähköposti",
   "password": "Salasana",
   "passwordConfirmation": "Vahvista salasana",
-  "submit": "Luo tili",
-  "loading": "Ladataan...",
-  "haveAccount": "Onko sinulla jo tili?",
-  "loginLink": "Kirjaudu sisään"
+  "submit": "Luo tili"
 }
