@@ -7,6 +7,13 @@ export async function PATCH(request: NextRequest) {
   try {
     const incomingFormData = await request.formData();
     
+    // Get all cookies
+    const allCookies = request.cookies.getAll();
+    console.log("🔐 DEBUG: All available cookies:", allCookies.map(c => ({ 
+      name: c.name, 
+      value: c.value.substring(0, 30) + (c.value.length > 30 ? '...' : '')
+    })));
+    
     // Try multiple cookie names for compatibility
     const jwt = request.cookies.get("jwt")?.value || 
                 request.cookies.get("JWT")?.value ||
@@ -14,16 +21,25 @@ export async function PATCH(request: NextRequest) {
 
     console.log("🔐 Checking authentication...");
     console.log("   - Cookie jwt present:", !!jwt);
-    console.log("   - All cookies:", request.cookies.getAll().map(c => ({ name: c.name, value: c.value.substring(0, 20) + '...' })));
-    console.log("   - Headers:", Object.fromEntries(request.headers.entries()));
+    console.log("   - Cookie count:", allCookies.length);
 
     if (!jwt) {
       console.error("❌ No JWT cookie found");
-      console.error("   Available cookies:", request.cookies.getAll());
+      console.error("   Available cookies:", allCookies.map(c => c.name).join(", "));
+      
+      // If no JWT but there are cookies, log them for debugging
+      if (allCookies.length > 0) {
+        console.error("   DEBUG: Cookie details:");
+        allCookies.forEach(c => {
+          console.error(`     - ${c.name}: ${c.value.substring(0, 50)}...`);
+        });
+      }
+      
       return NextResponse.json({ 
         error: "Unauthorized",
         details: "No authentication cookie found",
-        availableCookies: request.cookies.getAll().map(c => c.name)
+        availableCookies: allCookies.map(c => c.name),
+        hint: "The jwt cookie is not being sent from the browser. Check if you're logged in."
       }, { status: 401 });
     }
 

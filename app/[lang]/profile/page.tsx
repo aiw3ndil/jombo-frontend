@@ -75,6 +75,7 @@ export default function ProfilePage({ params }: { params: Promise<{ lang: string
       
       const response = await fetch("/api/v1/profile", {
         method: "PATCH",
+        credentials: "include",
         body: formDataToSend,
       });
 
