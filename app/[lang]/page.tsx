@@ -5,12 +5,24 @@ import { useRouter, useParams } from "next/navigation";
 import Image from "next/image";
 
 export default function Home() {
-  const { t } = useTranslation();
+  const { t, loading } = useTranslation();
   const router = useRouter();
   const params = useParams();
   const lang = (params?.lang as string) || "es";
   const [from, setFrom] = useState("");
   const [to, setTo] = useState("");
+
+  // Wait for translations to load
+  if (loading) {
+    return (
+      <div className="min-h-screen bg-gradient-to-b from-blue-50 to-white flex items-center justify-center">
+        <div className="text-center">
+          <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-blue-600 mx-auto"></div>
+          <p className="mt-4 text-gray-600">Cargando...</p>
+        </div>
+      </div>
+    );
+  }
 
   function handleSubmit(e: React.FormEvent) {
     e.preventDefault();

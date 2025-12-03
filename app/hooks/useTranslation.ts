@@ -14,13 +14,17 @@ export function useTranslation(namespace: string = "common") {
   useEffect(() => {
     const loadTranslations = async () => {
       try {
+        console.log(`🌐 Loading translations: /locales/${lang}/${namespace}.json`);
         const res = await fetch(`/locales/${lang}/${namespace}.json`);
         if (res.ok) {
           const data = await res.json();
+          console.log(`✅ Translations loaded for ${lang}/${namespace}:`, Object.keys(data));
           setTranslations(data);
+        } else {
+          console.error(`❌ Failed to load translations: ${res.status}`);
         }
       } catch (err) {
-        console.warn(`Failed to load ${lang}/${namespace}.json:`, err);
+        console.error(`❌ Error loading ${lang}/${namespace}.json:`, err);
         setTranslations({});
       } finally {
         setLoading(false);
@@ -38,7 +42,14 @@ export function useTranslation(namespace: string = "common") {
       value = value?.[k];
     }
 
-    return typeof value === "string" ? value : defaultValue || key;
+    const result = typeof value === "string" ? value : defaultValue || key;
+    
+    // Log cuando no se encuentra una traducción
+    if (result === key && !loading) {
+      console.warn(`⚠️ Translation not found: ${key} in ${lang}/common.json`);
+    }
+    
+    return result;
   };
 
   return { t, loading };
