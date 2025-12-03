@@ -1,0 +1,28 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 180 50" fill="none">
+  <!-- Modern J icon with car -->
+  <g transform="translate(5, 5)">
+    <!-- Rounded square background -->
+    <rect width="40" height="40" rx="10" fill="white" opacity="0.15"/>
+    
+    <!-- Stylized J -->
+    <path d="M15 10 L15 24 Q15 30 20 30 L25 30" stroke="white" stroke-width="3.5" stroke-linecap="round" fill="none"/>
+    <circle cx="15" cy="7" r="2" fill="white"/>
+    
+    <!-- Small car accent -->
+    <g transform="translate(22, 12)">
+      <rect x="0" y="3" width="10" height="4" rx="1" fill="#34D399"/>
+      <circle cx="2" cy="7.5" r="1" fill="white"/>
+      <circle cx="8" cy="7.5" r="1" fill="white"/>
+    </g>
+  </g>
+  
+  <!-- JOMBO text -->
+  <text x="55" y="35" font-family="Arial, sans-serif" font-size="26" font-weight="800" fill="white" letter-spacing="1">
+    JOMBO
+  </text>
+  
+  <!-- Tagline -->
+  <text x="55" y="43" font-family="Arial, sans-serif" font-size="8" fill="white" opacity="0.8" letter-spacing="2">
+    CARPOOLING
+  </text>
+</svg>

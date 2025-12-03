@@ -38,8 +38,12 @@ export default function Header({ lang }: { lang: string }) {
 
   return (
     <header className="p-4 bg-blue-700 text-white flex justify-between items-center">
-      <Link href={`/${lang}`} className="text-xl font-bold hover:underline">
-        Jombo
+      <Link href={`/${lang}`} className="flex items-center gap-2 hover:opacity-90 transition-opacity">
+        <img 
+          src="/images/jombo-logo.svg" 
+          alt="Jombo" 
+          className="h-10 w-auto"
+        />
       </Link>
       <div className="flex items-center gap-4">
         <LanguageSwitcher />
