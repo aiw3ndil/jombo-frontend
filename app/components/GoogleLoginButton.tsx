@@ -20,47 +20,80 @@ export default function GoogleLoginButton({ onSuccess, onError, redirect }: Goog
 
   const login = useGoogleLogin({
     onSuccess: async (tokenResponse) => {
+      console.log('🔵 [GoogleLogin] Token received from Google', {
+        hasAccessToken: !!tokenResponse.access_token,
+        tokenType: tokenResponse.token_type,
+        expiresIn: tokenResponse.expires_in
+      });
+
       try {
         setIsLoading(true);
-        console.log('🔵 Google login initiated');
         
         // Get user info using access token
+        console.log('🔵 [GoogleLogin] Fetching user info from Google...');
         const userInfoResponse = await fetch(`https://www.googleapis.com/oauth2/v3/userinfo?access_token=${tokenResponse.access_token}`);
-        const userInfo = await userInfoResponse.json();
         
-        console.log('🔵 User info:', userInfo);
+        if (!userInfoResponse.ok) {
+          throw new Error(`Failed to get user info: ${userInfoResponse.status} ${userInfoResponse.statusText}`);
+        }
+        
+        const userInfo = await userInfoResponse.json();
+        console.log('🔵 [GoogleLogin] User info received:', {
+          email: userInfo.email,
+          name: userInfo.name,
+          sub: userInfo.sub
+        });
         
         // Send access token to backend
+        console.log('🔵 [GoogleLogin] Sending token to backend...');
         const { user } = await loginWithGoogle(tokenResponse.access_token);
-        console.log('🔵 Google login successful:', user);
+        console.log('🔵 [GoogleLogin] Backend login successful:', user);
         
         if (onSuccess) {
           onSuccess(user);
         }
         
         const destination = redirect || `/${lang}`;
+        console.log('🔵 [GoogleLogin] Redirecting to:', destination);
         window.location.href = destination;
       } catch (error: any) {
-        console.error('🔵 Google login error:', error);
+        console.error('❌ [GoogleLogin] Error during login:', error);
+        console.error('❌ [GoogleLogin] Error details:', {
+          message: error.message,
+          stack: error.stack,
+          name: error.name
+        });
+        
         const errorMessage = error.message || 'Error al iniciar sesión con Google';
+        
         if (onError) {
           onError(errorMessage);
+        } else {
+          // Show alert in production if no error handler
+          alert(`Error de autenticación: ${errorMessage}`);
         }
+        
         setIsLoading(false);
       }
     },
     onError: (error) => {
-      console.error('🔵 Google login failed', error);
+      console.error('❌ [GoogleLogin] OAuth popup error:', error);
       const errorMessage = 'Error al iniciar sesión con Google';
+      
       if (onError) {
         onError(errorMessage);
+      } else {
+        alert(`Error de autenticación: ${errorMessage}`);
       }
     },
   });
 
   return (
     <button
-      onClick={() => login()}
+      onClick={() => {
+        console.log('🔵 [GoogleLogin] Button clicked, opening OAuth popup...');
+        login();
+      }}
       disabled={isLoading}
       className="w-full flex items-center justify-center gap-3 bg-white border border-gray-300 rounded-lg px-4 py-2.5 text-gray-700 font-medium hover:bg-gray-50 transition-colors shadow-sm disabled:opacity-50 disabled:cursor-not-allowed"
       type="button"
