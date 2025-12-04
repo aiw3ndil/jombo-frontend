@@ -4,6 +4,7 @@ import useAuth from "@/app/hooks/useAuth";
 import { useState, FormEvent } from "react";
 import { useRouter, useParams, useSearchParams } from "next/navigation";
 import Link from "next/link";
+import GoogleLoginButton from "@/app/components/GoogleLoginButton";
 
 export default function Login() {
   const { t, loading: translationsLoading } = useTranslation("login");
@@ -16,6 +17,7 @@ export default function Login() {
 
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
+  const [oauthError, setOauthError] = useState<string | null>(null);
 
   // Wait for translations to load
   if (translationsLoading) {
@@ -41,10 +43,33 @@ export default function Login() {
     }
   };
 
+  const handleOAuthError = (errorMsg: string) => {
+    setOauthError(errorMsg);
+  };
+
   return (
     <div className="max-w-md mx-auto">
       <h2 className="text-2xl font-bold mb-4 text-gray-900">{t("title")}</h2>
       {error && <div className="text-red-600 mb-2">{String(error)}</div>}
+      {oauthError && <div className="text-red-600 mb-2">{oauthError}</div>}
+      
+      {/* Google Login Button */}
+      <div className="mb-4">
+        <GoogleLoginButton 
+          redirect={redirect}
+          onError={handleOAuthError}
+        />
+      </div>
+
+      <div className="relative mb-4">
+        <div className="absolute inset-0 flex items-center">
+          <div className="w-full border-t border-gray-300"></div>
+        </div>
+        <div className="relative flex justify-center text-sm">
+          <span className="px-2 bg-gray-50 text-gray-500">{t("or")}</span>
+        </div>
+      </div>
+
       <form className="space-y-3" onSubmit={handleSubmit}>
         <div>
           <label className="block mb-1 text-gray-900">{t("email")}</label>

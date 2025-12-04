@@ -5,5 +5,7 @@
   "submit": "Sign In",
   "loading": "Loading...",
   "noAccount": "Don't have an account?",
-  "registerLink": "Register here"
+  "registerLink": "Register here",
+  "continueWith": "Continue with {provider}",
+  "or": "or"
 }

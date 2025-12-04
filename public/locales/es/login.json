@@ -5,5 +5,7 @@
   "submit": "Entrar",
   "loading": "Cargando...",
   "noAccount": "¿No tienes una cuenta?",
-  "registerLink": "Regístrate aquí"
+  "registerLink": "Regístrate aquí",
+  "continueWith": "Continuar con {provider}",
+  "or": "o"
 }

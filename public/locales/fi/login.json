@@ -5,5 +5,7 @@
   "submit": "Kirjaudu",
   "loading": "Ladataan...",
   "noAccount": "Eikö sinulla ole tiliä?",
-  "registerLink": "Rekisteröidy tästä"
+  "registerLink": "Rekisteröidy tästä",
+  "continueWith": "Jatka {provider}lla",
+  "or": "tai"
 }

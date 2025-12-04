@@ -3,6 +3,7 @@ import { Geist, Geist_Mono } from "next/font/google";
 import { headers } from "next/headers";
 import { GoogleAnalytics } from "./components/GoogleAnalytics";
 import { OrganizationSchema, WebSiteSchema } from "./components/StructuredData";
+import GoogleOAuthWrapper from "./components/GoogleOAuthWrapper";
 import "./globals.css";
 
 const geistSans = Geist({
@@ -100,7 +101,9 @@ export default async function RootLayout({
         className={`${geistSans.variable} ${geistMono.variable} antialiased min-h-screen bg-gray-50 text-gray-900`}
       >
         <GoogleAnalytics />
-        {children}
+        <GoogleOAuthWrapper>
+          {children}
+        </GoogleOAuthWrapper>
       </body>
     </html>
   );

@@ -126,4 +126,18 @@ export async function logout(): Promise<void> {
   });
 }
 
-export default { login, register, fetchMe, logout };
+export async function loginWithGoogle(token: string) {
+  console.log('🔵 Google OAuth login request');
+  const result = await requestJson('/api/v1/auth/google', { token });
+  console.log('🔵 Google OAuth login response:', result);
+  return result;
+}
+
+export async function loginWithFacebook(token: string) {
+  console.log('🔵 Facebook OAuth login request');
+  const result = await requestJson('/api/v1/auth/facebook', { token });
+  console.log('🔵 Facebook OAuth login response:', result);
+  return result;
+}
+
+export default { login, register, fetchMe, logout, loginWithGoogle, loginWithFacebook };
