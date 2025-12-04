@@ -7,5 +7,7 @@
   "submit": "Crear cuenta",
   "loading": "Cargando...",
   "haveAccount": "¿Ya tienes una cuenta?",
-  "loginLink": "Inicia sesión aquí"
+  "loginLink": "Inicia sesión aquí",
+  "continueWith": "Continuar con {provider}",
+  "or": "o"
 }

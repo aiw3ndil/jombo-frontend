@@ -7,5 +7,7 @@
   "submit": "Luo tili",
   "loading": "Ladataan...",
   "haveAccount": "Onko sinulla jo tili?",
-  "loginLink": "Kirjaudu tästä"
+  "loginLink": "Kirjaudu tästä",
+  "continueWith": "Jatka {provider}lla",
+  "or": "tai"
 }

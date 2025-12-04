@@ -7,5 +7,7 @@
   "submit": "Create Account",
   "loading": "Loading...",
   "haveAccount": "Already have an account?",
-  "loginLink": "Login here"
+  "loginLink": "Login here",
+  "continueWith": "Continue with {provider}",
+  "or": "or"
 }
