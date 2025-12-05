@@ -126,9 +126,9 @@ export async function logout(): Promise<void> {
   });
 }
 
-export async function loginWithGoogle(token: string) {
-  console.log('🔵 Google OAuth login request');
-  const result = await requestJson('/api/v1/auth/google', { token });
+export async function loginWithGoogle(credential: string) {
+  console.log('🔵 Google OAuth login request with credential');
+  const result = await requestJson('/api/v1/auth/google', { credential });
   console.log('🔵 Google OAuth login response:', result);
   return result;
 }
