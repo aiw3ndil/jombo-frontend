@@ -5,6 +5,7 @@ import { searchTrips, Trip } from "@/app/lib/api/trips";
 import { createBooking, getBookings } from "@/app/lib/api/bookings";
 import { useTranslation } from "@/app/hooks/useTranslation";
 import { useAuth } from "@/app/contexts/AuthContext";
+import UserReviewsModal from "@/app/components/UserReviewsModal";
 
 export default function SearchPage() {
   const { t, loading: translationsLoading } = useTranslation();
@@ -20,6 +21,10 @@ export default function SearchPage() {
   const [error, setError] = useState("");
   const [bookingLoading, setBookingLoading] = useState<number | null>(null);
   const [userBookings, setUserBookings] = useState<Map<number, string>>(new Map());
+  const [reviewsModalOpen, setReviewsModalOpen] = useState(false);
+  const [selectedDriver, setSelectedDriver] = useState<{ id: number; name: string } | null>(null);
+  const [searchFrom, setSearchFrom] = useState(from);
+  const [searchTo, setSearchTo] = useState("");
 
   useEffect(() => {
     if (!from) {
@@ -119,6 +124,29 @@ export default function SearchPage() {
     }
   };
 
+  const handleOpenReviews = (driverId: number, driverName: string) => {
+    setSelectedDriver({ id: driverId, name: driverName });
+    setReviewsModalOpen(true);
+  };
+
+  const handleCloseReviews = () => {
+    setReviewsModalOpen(false);
+    setSelectedDriver(null);
+  };
+
+  const handleSearch = (e: React.FormEvent) => {
+    e.preventDefault();
+    if (!searchFrom.trim()) return;
+    
+    const params = new URLSearchParams();
+    params.set("from", searchFrom);
+    if (searchTo.trim()) {
+      params.set("to", searchTo);
+    }
+    
+    router.push(`/${lang}/search?${params.toString()}`);
+  };
+
   if (loading) {
     return (
       <div className="max-w-5xl mx-auto">
@@ -157,68 +185,156 @@ export default function SearchPage() {
         </button>
       </div>
 
+      {/* Search Form */}
+      <div className="bg-white border border-gray-300 rounded-lg p-4 mb-6 shadow">
+        <form onSubmit={handleSearch} className="flex gap-3">
+          <div className="flex-1">
+            <label className="block text-sm font-medium text-gray-700 mb-1">
+              {t("page.home.from") || "Desde"}
+            </label>
+            <input
+              type="text"
+              value={searchFrom}
+              onChange={(e) => setSearchFrom(e.target.value)}
+              placeholder={t("page.home.from") || "Ciudad de origen"}
+              className="w-full border border-gray-300 rounded-lg px-3 py-2 text-gray-900 focus:outline-none focus:ring-2 focus:ring-blue-500"
+              required
+            />
+          </div>
+          <div className="flex-1">
+            <label className="block text-sm font-medium text-gray-700 mb-1">
+              {t("page.home.to") || "Hasta"}
+            </label>
+            <input
+              type="text"
+              value={searchTo}
+              onChange={(e) => setSearchTo(e.target.value)}
+              placeholder={t("page.home.to") || "Ciudad de destino (opcional)"}
+              className="w-full border border-gray-300 rounded-lg px-3 py-2 text-gray-900 focus:outline-none focus:ring-2 focus:ring-blue-500"
+            />
+          </div>
+          <div className="flex items-end">
+            <button
+              type="submit"
+              className="bg-blue-600 text-white px-6 py-2 rounded-lg hover:bg-blue-700 transition-colors h-[42px]"
+            >
+              {t("page.home.search") || "Buscar"}
+            </button>
+          </div>
+        </form>
+      </div>
+
       {trips.length === 0 ? (
         <p className="text-gray-700">{t("page.search.noResults")}</p>
       ) : (
         <div className="space-y-4">
           {trips.map((trip) => {
-            console.log('🎫 Trip:', trip, 'Price:', trip.price);
+            const API_BASE = process.env.NEXT_PUBLIC_API_BASE_URL || "";
+            const driverPictureUrl = trip.driver.picture_url 
+              ? (trip.driver.picture_url.startsWith('http') 
+                  ? trip.driver.picture_url 
+                  : `${API_BASE}${trip.driver.picture_url}`)
+              : null;
+
             return (
             <div
               key={trip.id}
               className="border border-gray-300 rounded-lg p-4 hover:shadow-lg transition-shadow bg-white"
             >
-              <div className="flex justify-between items-start mb-2">
-                <div>
-                  <h2 className="text-xl font-semibold text-gray-900">
-                    {trip.departure_location} → {trip.arrival_location}
-                  </h2>
-                  <p className="text-gray-700">
-                    {t("page.search.driver")}: {trip.driver.name}
-                  </p>
+              <div className="flex gap-4">
+                {/* Driver Photo */}
+                <div className="flex-shrink-0">
+                  {driverPictureUrl ? (
+                    <img
+                      src={driverPictureUrl}
+                      alt={trip.driver.name}
+                      className="w-20 h-20 rounded-full object-cover border-2 border-gray-200"
+                      onError={(e) => {
+                        // Fallback to initials if image fails to load
+                        const target = e.target as HTMLImageElement;
+                        target.style.display = 'none';
+                        target.nextElementSibling?.classList.remove('hidden');
+                      }}
+                    />
+                  ) : null}
+                  <div 
+                    className={`w-20 h-20 rounded-full bg-blue-600 flex items-center justify-center text-white text-2xl font-bold ${driverPictureUrl ? 'hidden' : ''}`}
+                  >
+                    {trip.driver.name.charAt(0).toUpperCase()}
+                  </div>
                 </div>
-                <div className="text-right">
-                  <p className="text-2xl font-bold text-green-600">
-                    €{Number(trip.price || 0).toFixed(2)}
-                  </p>
-                  <p className="text-sm text-gray-600">
-                    {t("page.search.perSeat")}
-                  </p>
+
+                {/* Trip Info */}
+                <div className="flex-1">
+                  <div className="flex justify-between items-start mb-2">
+                    <div>
+                      <h2 className="text-xl font-semibold text-gray-900">
+                        {trip.departure_location} → {trip.arrival_location}
+                      </h2>
+                      <div className="flex items-center gap-2 mt-1">
+                        <p className="text-gray-700">
+                          {t("page.search.driver")}: {trip.driver.name}
+                        </p>
+                        <button
+                          onClick={() => handleOpenReviews(trip.driver.id, trip.driver.name)}
+                          className="text-blue-600 hover:text-blue-700 text-sm font-medium underline"
+                        >
+                          {t("page.search.seeReviews") || "Ver reseñas"}
+                        </button>
+                      </div>
+                    </div>
+                    <div className="text-right">
+                      <p className="text-2xl font-bold text-green-600">
+                        €{Number(trip.price || 0).toFixed(2)}
+                      </p>
+                      <p className="text-sm text-gray-600">
+                        {t("page.search.perSeat")}
+                      </p>
+                    </div>
+                  </div>
+                  
+                  <div className="flex justify-between items-center mt-4">
+                    <div>
+                      <p className="text-sm text-gray-700">
+                        <span className="font-semibold">{t("page.search.departure")}:</span> {new Date(trip.departure_time).toLocaleString(lang)}
+                      </p>
+                      <p className="text-sm text-gray-700">
+                        <span className="font-semibold">{t("page.search.availableSeats")}:</span> {trip.available_seats}
+                      </p>
+                    </div>
+                    <button 
+                      onClick={() => handleBookTrip(trip.id, trip.available_seats)}
+                      disabled={
+                        bookingLoading === trip.id || 
+                        trip.available_seats === 0 || 
+                        userBookings.has(trip.id)
+                      }
+                      className="bg-blue-600 text-white px-6 py-2 rounded hover:bg-blue-700 disabled:bg-gray-400 disabled:cursor-not-allowed"
+                    >
+                      {bookingLoading === trip.id 
+                        ? (t("page.search.booking") || "Reservando...") 
+                        : userBookings.has(trip.id)
+                        ? userBookings.get(trip.id) === "pending"
+                          ? (t("page.search.statusPending") || "Pendiente")
+                          : (t("page.search.statusConfirmed") || "Confirmada")
+                        : trip.available_seats === 0
+                        ? (t("page.search.noSeats") || "Sin asientos")
+                        : t("page.search.book")}
+                    </button>
+                  </div>
                 </div>
-              </div>
-              
-              <div className="flex justify-between items-center mt-4">
-                <div>
-                  <p className="text-sm text-gray-700">
-                    <span className="font-semibold">{t("page.search.departure")}:</span> {new Date(trip.departure_time).toLocaleString(lang)}
-                  </p>
-                  <p className="text-sm text-gray-700">
-                    <span className="font-semibold">{t("page.search.availableSeats")}:</span> {trip.available_seats}
-                  </p>
-                </div>
-                <button 
-                  onClick={() => handleBookTrip(trip.id, trip.available_seats)}
-                  disabled={
-                    bookingLoading === trip.id || 
-                    trip.available_seats === 0 || 
-                    userBookings.has(trip.id)
-                  }
-                  className="bg-blue-600 text-white px-6 py-2 rounded hover:bg-blue-700 disabled:bg-gray-400 disabled:cursor-not-allowed"
-                >
-                  {bookingLoading === trip.id 
-                    ? (t("page.search.booking") || "Reservando...") 
-                    : userBookings.has(trip.id)
-                    ? userBookings.get(trip.id) === "pending"
-                      ? (t("page.search.statusPending") || "Pendiente")
-                      : (t("page.search.statusConfirmed") || "Confirmada")
-                    : trip.available_seats === 0
-                    ? (t("page.search.noSeats") || "Sin asientos")
-                    : t("page.search.book")}
-                </button>
               </div>
             </div>
           )})}
         </div>
+      )}
+
+      {reviewsModalOpen && selectedDriver && (
+        <UserReviewsModal
+          userId={selectedDriver.id}
+          userName={selectedDriver.name}
+          onClose={handleCloseReviews}
+        />
       )}
     </div>
   );

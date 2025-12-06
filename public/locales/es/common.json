@@ -62,7 +62,16 @@
       "statusConfirmed": "Confirmada",
       "noSeats": "Sin asientos",
       "bookingSuccess": "Reserva realizada exitosamente",
-      "bookingError": "Error al realizar la reserva"
+      "bookingError": "Error al realizar la reserva",
+      "seeReviews": "Ver reseñas",
+      "reviewsModal": {
+        "title": "Reseñas",
+        "review": "reseña",
+        "reviews": "reseñas",
+        "noReviews": "Este usuario aún no tiene reseñas",
+        "anonymous": "Anónimo",
+        "close": "Cerrar"
+      }
     },
     "trips": {
       "title": "Viajes disponibles",

@@ -62,7 +62,16 @@
       "statusConfirmed": "Vahvistettu",
       "noSeats": "Ei vapaita paikkoja",
       "bookingSuccess": "Varaus tehty onnistuneesti",
-      "bookingError": "Virhe varauksessa"
+      "bookingError": "Virhe varauksessa",
+      "seeReviews": "Näytä arvostelut",
+      "reviewsModal": {
+        "title": "Arvostelut",
+        "review": "arvostelu",
+        "reviews": "arvostelua",
+        "noReviews": "Tällä käyttäjällä ei ole vielä arvosteluja",
+        "anonymous": "Anonyymi",
+        "close": "Sulje"
+      }
     },
     "trips": {
       "title": "Saatavilla olevat matkat",

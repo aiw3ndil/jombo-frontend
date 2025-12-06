@@ -62,7 +62,16 @@
       "statusConfirmed": "Confirmed",
       "noSeats": "No seats available",
       "bookingSuccess": "Booking completed successfully",
-      "bookingError": "Error making booking"
+      "bookingError": "Error making booking",
+      "seeReviews": "See reviews",
+      "reviewsModal": {
+        "title": "Reviews",
+        "review": "review",
+        "reviews": "reviews",
+        "noReviews": "This user has no reviews yet",
+        "anonymous": "Anonymous",
+        "close": "Close"
+      }
     },
     "trips": {
       "title": "Available Trips",
