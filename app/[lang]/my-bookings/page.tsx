@@ -2,8 +2,10 @@
 import { useEffect, useState } from "react";
 import { useRouter, useParams } from "next/navigation";
 import { getBookings, cancelBooking, Booking } from "@/app/lib/api/bookings";
+import { getBookingReviews } from "@/app/lib/api/reviews";
 import { useTranslation } from "@/app/hooks/useTranslation";
 import { useAuth } from "@/app/contexts/AuthContext";
+import ReviewModal from "@/app/components/ReviewModal";
 
 export default function MyBookings() {
   const { t, loading: translationsLoading } = useTranslation();
@@ -15,6 +17,9 @@ export default function MyBookings() {
   const [bookings, setBookings] = useState<Booking[]>([]);
   const [loading, setLoading] = useState(true);
   const [cancellingId, setCancellingId] = useState<number | null>(null);
+  const [reviewModalOpen, setReviewModalOpen] = useState(false);
+  const [selectedBooking, setSelectedBooking] = useState<Booking | null>(null);
+  const [bookingReviews, setBookingReviews] = useState<{ [key: number]: boolean }>({});
 
   useEffect(() => {
     if (!authLoading && !user) {
@@ -32,6 +37,26 @@ export default function MyBookings() {
       setLoading(true);
       const data = await getBookings();
       setBookings(data);
+      
+      // Check which bookings already have reviews
+      const reviewsStatus: { [key: number]: boolean } = {};
+      await Promise.all(
+        data.map(async (booking) => {
+          if (booking.status === "confirmed" && booking.trip?.departure_time) {
+            try {
+              const reviews = await getBookingReviews(booking.id);
+              // Check if current user already reviewed
+              reviewsStatus[booking.id] = reviews.some(
+                (review) => review.reviewer_id === user?.id
+              );
+            } catch (error) {
+              console.error(`Error fetching reviews for booking ${booking.id}:`, error);
+              reviewsStatus[booking.id] = false;
+            }
+          }
+        })
+      );
+      setBookingReviews(reviewsStatus);
     } catch (error) {
       console.error("Error loading bookings:", error);
     } finally {
@@ -56,6 +81,39 @@ export default function MyBookings() {
     } finally {
       setCancellingId(null);
     }
+  };
+
+  const handleOpenReview = (booking: Booking) => {
+    setSelectedBooking(booking);
+    setReviewModalOpen(true);
+  };
+
+  const handleCloseReview = () => {
+    setReviewModalOpen(false);
+    setSelectedBooking(null);
+  };
+
+  const handleReviewSuccess = () => {
+    handleCloseReview();
+    loadBookings();
+  };
+
+  const canReview = (booking: Booking): boolean => {
+    // Only confirmed bookings can be reviewed
+    if (booking.status !== "confirmed") return false;
+    
+    // Trip must have already happened (departure_time in the past)
+    if (!booking.trip?.departure_time) return false;
+    
+    const departureTime = new Date(booking.trip.departure_time);
+    const now = new Date();
+    
+    if (departureTime > now) return false;
+    
+    // Check if user already reviewed
+    if (bookingReviews[booking.id]) return false;
+    
+    return true;
   };
 
   if (translationsLoading || authLoading || (loading && bookings.length === 0)) {
@@ -173,7 +231,23 @@ export default function MyBookings() {
               </div>
 
               {booking.status !== "cancelled" && booking.status !== "rejected" && (
-                <div className="flex justify-end">
+                <div className="flex justify-end gap-2">
+                  {canReview(booking) && (
+                    <button
+                      onClick={() => handleOpenReview(booking)}
+                      className="bg-yellow-500 text-white px-4 py-2 rounded hover:bg-yellow-600 transition-colors"
+                    >
+                      ⭐ {t("page.myBookings.review") || "Calificar"}
+                    </button>
+                  )}
+                  {bookingReviews[booking.id] && (
+                    <span className="flex items-center gap-1 text-green-600 px-4 py-2">
+                      <svg className="w-5 h-5" fill="currentColor" viewBox="0 0 20 20">
+                        <path fillRule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clipRule="evenodd" />
+                      </svg>
+                      {t("page.myBookings.reviewed") || "Calificado"}
+                    </span>
+                  )}
                   <button
                     onClick={() => handleCancelBooking(booking.id)}
                     disabled={cancellingId === booking.id}
@@ -188,6 +262,16 @@ export default function MyBookings() {
             </div>
           ))}
         </div>
+      )}
+      
+      {reviewModalOpen && selectedBooking && (
+        <ReviewModal
+          bookingId={selectedBooking.id}
+          driverName={selectedBooking.trip?.driver?.name || ""}
+          tripRoute={`${selectedBooking.trip?.departure_location} → ${selectedBooking.trip?.arrival_location}`}
+          onClose={handleCloseReview}
+          onSuccess={handleReviewSuccess}
+        />
       )}
     </div>
   );

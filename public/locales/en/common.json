@@ -168,7 +168,29 @@
       "statusCancelled": "Cancelled",
       "confirmCancel": "Are you sure you want to cancel this booking?",
       "cancelSuccess": "Booking cancelled successfully",
-      "cancelError": "Error cancelling booking"
+      "cancelError": "Error cancelling booking",
+      "review": "Review",
+      "reviewed": "Reviewed",
+      "reviewModal": {
+        "title": "Rate trip",
+        "driver": "Driver",
+        "route": "Route",
+        "ratingLabel": "How was your experience?",
+        "ratingRequired": "Please select a rating",
+        "rating1": "Very bad",
+        "rating2": "Bad",
+        "rating3": "Regular",
+        "rating4": "Good",
+        "rating5": "Excellent",
+        "commentLabel": "Comment (optional)",
+        "commentPlaceholder": "Tell us more about your experience...",
+        "characters": "characters",
+        "cancel": "Cancel",
+        "submit": "Submit review",
+        "submitting": "Submitting...",
+        "success": "Review created successfully!",
+        "error": "Error creating review"
+      }
     }
   },
   "menu": {

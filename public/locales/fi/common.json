@@ -168,7 +168,29 @@
       "statusCancelled": "Peruttu",
       "confirmCancel": "Haluatko varmasti peruuttaa tämän varauksen?",
       "cancelSuccess": "Varaus peruttu onnistuneesti",
-      "cancelError": "Virhe varauksen peruutuksessa"
+      "cancelError": "Virhe varauksen peruutuksessa",
+      "review": "Arvostele",
+      "reviewed": "Arvosteltu",
+      "reviewModal": {
+        "title": "Arvostele matka",
+        "driver": "Kuljettaja",
+        "route": "Reitti",
+        "ratingLabel": "Millainen kokemuksesi oli?",
+        "ratingRequired": "Valitse arvosana",
+        "rating1": "Erittäin huono",
+        "rating2": "Huono",
+        "rating3": "Kohtalainen",
+        "rating4": "Hyvä",
+        "rating5": "Erinomainen",
+        "commentLabel": "Kommentti (valinnainen)",
+        "commentPlaceholder": "Kerro lisää kokemuksestasi...",
+        "characters": "merkkiä",
+        "cancel": "Peruuta",
+        "submit": "Lähetä arvostelu",
+        "submitting": "Lähetetään...",
+        "success": "Arvostelu luotu onnistuneesti!",
+        "error": "Virhe arvostelun luomisessa"
+      }
     }
   },
   "menu": {

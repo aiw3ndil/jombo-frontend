@@ -168,7 +168,29 @@
       "statusCancelled": "Cancelada",
       "confirmCancel": "¿Estás seguro de cancelar esta reserva?",
       "cancelSuccess": "Reserva cancelada exitosamente",
-      "cancelError": "Error al cancelar la reserva"
+      "cancelError": "Error al cancelar la reserva",
+      "review": "Calificar",
+      "reviewed": "Calificado",
+      "reviewModal": {
+        "title": "Calificar viaje",
+        "driver": "Conductor",
+        "route": "Ruta",
+        "ratingLabel": "¿Cómo fue tu experiencia?",
+        "ratingRequired": "Por favor selecciona una calificación",
+        "rating1": "Muy malo",
+        "rating2": "Malo",
+        "rating3": "Regular",
+        "rating4": "Bueno",
+        "rating5": "Excelente",
+        "commentLabel": "Comentario (opcional)",
+        "commentPlaceholder": "Cuéntanos más sobre tu experiencia...",
+        "characters": "caracteres",
+        "cancel": "Cancelar",
+        "submit": "Enviar reseña",
+        "submitting": "Enviando...",
+        "success": "¡Reseña creada exitosamente!",
+        "error": "Error al crear la reseña"
+      }
     }
   },
   "menu": {
