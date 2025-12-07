@@ -1,7 +1,4 @@
 const API_BASE = process.env.NEXT_PUBLIC_API_BASE_URL || "";
-const LOGIN_PATH = process.env.NEXT_PUBLIC_API_LOGIN_PATH || "/api/v1/login";
-const REGISTER_PATH = process.env.NEXT_PUBLIC_API_REGISTER_PATH || "/api/v1/register";
-const ME_PATH = process.env.NEXT_PUBLIC_API_ME_PATH || "/api/v1/me";
 
 function headerToObj(headers: Headers): Record<string, string> {
   const obj: Record<string, string> = {};
@@ -82,13 +79,13 @@ async function requestJson(path: string, body: any) {
 
 export async function login(email: string, password: string) {
   console.log('🔵 Login request:', { email });
-  const result = await requestJson(LOGIN_PATH, { user: { email, password } });
+  const result = await requestJson('/api/v1/login', { user: { email, password } });
   console.log('🔵 Login response:', result);
   return result;
 }
 
 export async function register(name: string, email: string, password: string, passwordConfirmation: string, language: string = "es") {
-  return requestJson(REGISTER_PATH, { 
+  return requestJson('/api/v1/register', { 
     user: { 
       name, 
       email, 
@@ -100,7 +97,7 @@ export async function register(name: string, email: string, password: string, pa
 }
 
 export async function fetchMe(): Promise<any> {
-  const url = `${API_BASE}${ME_PATH}`;
+  const url = `${API_BASE}/api/v1/me`;
   console.log('🔵 Fetching /me from:', url);
   const res = await fetch(url, {
     method: "GET",

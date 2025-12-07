@@ -58,10 +58,10 @@ npm install
 3. Configura las variables de entorno creando un archivo `.env.local`:
 ```bash
 NEXT_PUBLIC_API_BASE_URL=http://localhost:3001
-NEXT_PUBLIC_API_LOGIN_PATH=/api/v1/login
-NEXT_PUBLIC_API_REGISTER_PATH=/api/v1/register
-NEXT_PUBLIC_API_ME_PATH=/api/v1/me
+NEXT_PUBLIC_GOOGLE_CLIENT_ID=tu_google_client_id.apps.googleusercontent.com
 ```
+
+> **Nota:** Las rutas de API (`/api/v1/login`, `/api/v1/register`, `/api/v1/me`) están hardcodeadas en el código y no requieren variables de entorno.
 
 4. Inicia el servidor de desarrollo:
 ```bash
