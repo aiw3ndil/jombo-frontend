@@ -211,6 +211,10 @@
     "myTrips": "Mis Viajes",
     "logout": "Cerrar Sesión"
   },
+  "notifications": {
+    "title": "Notificaciones",
+    "empty": "No hay notificaciones"
+  },
   "profile": {
     "title": "Mi Perfil",
     "name": "Nombre",

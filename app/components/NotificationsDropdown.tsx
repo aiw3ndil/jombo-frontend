@@ -1,6 +1,7 @@
 "use client";
 
 import { Notification } from "@/app/lib/api/notifications";
+import { useTranslation } from "@/app/hooks/useTranslation";
 
 interface NotificationsDropdownProps {
   notifications: Notification[];
@@ -11,14 +12,15 @@ export default function NotificationsDropdown({
   notifications,
   onNotificationClick,
 }: NotificationsDropdownProps) {
+  const { t } = useTranslation();
   return (
     <div className="absolute right-0 mt-2 w-80 bg-white rounded-lg shadow-lg z-50">
       <div className="p-4 border-b">
-        <h3 className="text-lg font-semibold text-gray-800">Notifications</h3>
+        <h3 className="text-lg font-semibold text-gray-800">{t("notifications.title")}</h3>
       </div>
       <div className="py-1 max-h-96 overflow-y-auto">
         {notifications.length === 0 ? (
-          <p className="text-gray-500 text-center py-4">No notifications</p>
+          <p className="text-gray-500 text-center py-4">{t("notifications.empty")}</p>
         ) : (
           notifications.map((notification) => (
             <div
