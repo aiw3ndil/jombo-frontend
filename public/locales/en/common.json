@@ -211,6 +211,10 @@
     "myTrips": "My Trips",
     "logout": "Logout"
   },
+  "notifications": {
+    "title": "Notifications",
+    "empty": "No notifications"
+  },
   "profile": {
     "title": "My Profile",
     "name": "Name",

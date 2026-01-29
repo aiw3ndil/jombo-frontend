@@ -211,6 +211,10 @@
     "myTrips": "Matkani",
     "logout": "Kirjaudu ulos"
   },
+  "notifications": {
+    "title": "Ilmoitukset",
+    "empty": "Ei ilmoituksia"
+  },
   "profile": {
     "title": "Profiilini",
     "name": "Nimi",
