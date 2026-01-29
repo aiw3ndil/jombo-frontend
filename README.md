@@ -123,8 +123,8 @@ El frontend se conecta a un backend de Ruby on Rails. Endpoints principales:
 ### Reservas
 - `POST /api/v1/bookings` - Crear reserva
 - `GET /api/v1/bookings` - Mis reservas
-- `PATCH /api/v1/bookings/:id/confirm` - Confirmar reserva (conductor)
-- `PATCH /api/v1/bookings/:id/reject` - Rechazar reserva (conductor)
+- `PUT /api/v1/bookings/:id/confirm` - Confirmar reserva (conductor)
+- `PUT /api/v1/bookings/:id/reject` - Rechazar reserva (conductor)
 - `DELETE /api/v1/bookings/:id` - Cancelar reserva (pasajero)
 
 ## 🎨 Tecnologías
