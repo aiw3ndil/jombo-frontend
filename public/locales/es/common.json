@@ -64,6 +64,7 @@
       "bookingSuccess": "Reserva realizada exitosamente",
       "bookingError": "Error al realizar la reserva",
       "seeReviews": "Ver reseñas",
+      "cannotBookOwnTrip": "No puedes reservar tu propio viaje.",
       "reviewsModal": {
         "title": "Reseñas",
         "review": "reseña",

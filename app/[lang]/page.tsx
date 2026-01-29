@@ -3,6 +3,7 @@ import { useState } from "react";
 import { useTranslation } from "@/app/hooks/useTranslation";
 import { useRouter, useParams } from "next/navigation";
 import Image from "next/image";
+import { toast } from "sonner";
 
 export default function Home() {
   const { t, loading } = useTranslation();
@@ -27,7 +28,7 @@ export default function Home() {
   function handleSubmit(e: React.FormEvent) {
     e.preventDefault();
     if (!from) {
-      alert(t("page.home.fromRequired") || "Por favor ingresa la ubicación de salida");
+      toast.error(t("page.home.fromRequired") || "Por favor ingresa la ubicación de salida");
       return;
     }
     const searchParams = new URLSearchParams();

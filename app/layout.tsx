@@ -4,6 +4,7 @@ import { headers } from "next/headers";
 import { GoogleAnalytics } from "./components/GoogleAnalytics";
 import { OrganizationSchema, WebSiteSchema } from "./components/StructuredData";
 import GoogleOAuthWrapper from "./components/GoogleOAuthWrapper";
+import { Toaster } from "sonner";
 import "./globals.css";
 
 const geistSans = Geist({
@@ -103,6 +104,7 @@ export default async function RootLayout({
         <GoogleAnalytics />
         <GoogleOAuthWrapper>
           {children}
+          <Toaster richColors position="top-right" />
         </GoogleOAuthWrapper>
       </body>
     </html>

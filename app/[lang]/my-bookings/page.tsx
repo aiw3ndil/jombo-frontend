@@ -6,6 +6,7 @@ import { getBookingReviews } from "@/app/lib/api/reviews";
 import { useTranslation } from "@/app/hooks/useTranslation";
 import { useAuth } from "@/app/contexts/AuthContext";
 import ReviewModal from "@/app/components/ReviewModal";
+import { toast } from "sonner";
 
 export default function MyBookings() {
   const { t, loading: translationsLoading } = useTranslation();
@@ -73,11 +74,11 @@ export default function MyBookings() {
 
     try {
       await cancelBooking(bookingId);
-      alert(t("page.myBookings.cancelSuccess") || "Reserva cancelada exitosamente");
+      toast.success(t("page.myBookings.cancelSuccess") || "Reserva cancelada exitosamente");
       await loadBookings();
     } catch (error: any) {
       console.error("Error cancelling booking:", error);
-      alert(error?.message || t("page.myBookings.cancelError") || "Error al cancelar la reserva");
+      toast.error(error?.message || t("page.myBookings.cancelError") || "Error al cancelar la reserva");
     } finally {
       setCancellingId(null);
     }

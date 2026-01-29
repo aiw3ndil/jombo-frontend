@@ -4,6 +4,7 @@ import { useRouter, useParams } from "next/navigation";
 import { getConversations, deleteConversation, Conversation } from "@/app/lib/api/conversations";
 import { useTranslation } from "@/app/hooks/useTranslation";
 import { useAuth } from "@/app/contexts/AuthContext";
+import { toast } from "sonner";
 import Link from "next/link";
 
 export default function MessagesPage() {
@@ -49,11 +50,11 @@ export default function MessagesPage() {
 
     try {
       await deleteConversation(conversationId);
-      alert(t("page.messages.deleteSuccess") || "Conversación eliminada exitosamente");
+      toast.success(t("page.messages.deleteSuccess") || "Conversación eliminada exitosamente");
       await loadConversations();
     } catch (error: any) {
       console.error("Error deleting conversation:", error);
-      alert(error?.message || t("page.messages.deleteError") || "Error al eliminar la conversación");
+      toast.error(error?.message || t("page.messages.deleteError") || "Error al eliminar la conversación");
     } finally {
       setDeletingId(null);
     }

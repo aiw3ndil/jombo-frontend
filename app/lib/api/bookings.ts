@@ -34,7 +34,7 @@ export interface CreateBookingData {
 }
 
 export async function createBooking(data: CreateBookingData): Promise<Booking> {
-  const url = `${API_BASE}/api/v1/bookings`;
+  const url = `${API_BASE}/api/v1/trips/${data.trip_id}/bookings`;
   
   console.log('📤 Creating booking:', data);
   
@@ -45,7 +45,6 @@ export async function createBooking(data: CreateBookingData): Promise<Booking> {
     },
     credentials: "include",
     body: JSON.stringify({
-      trip_id: data.trip_id,
       booking: {
         seats: data.seats,
       },

@@ -4,6 +4,7 @@ import { useRouter, useParams } from "next/navigation";
 import { getConversation, sendMessage, deleteConversation, ConversationDetail, Message } from "@/app/lib/api/conversations";
 import { useTranslation } from "@/app/hooks/useTranslation";
 import { useAuth } from "@/app/contexts/AuthContext";
+import { toast } from "sonner";
 
 export default function ConversationPage() {
   const { t } = useTranslation();
@@ -48,7 +49,7 @@ export default function ConversationPage() {
       setMessages(data.messages);
     } catch (error: any) {
       console.error("Error loading conversation:", error);
-      alert(error?.message || t("page.conversation.loadError") || "Error al cargar la conversación");
+      toast.error(error?.message || t("page.conversation.loadError") || "Error al cargar la conversación");
       router.push(`/${lang}/messages`);
     } finally {
       setLoading(false);
@@ -68,7 +69,7 @@ export default function ConversationPage() {
       setNewMessage("");
     } catch (error: any) {
       console.error("Error sending message:", error);
-      alert(error?.message || t("page.conversation.sendError") || "Error al enviar el mensaje");
+      toast.error(error?.message || t("page.conversation.sendError") || "Error al enviar el mensaje");
     } finally {
       setSending(false);
     }
@@ -83,11 +84,11 @@ export default function ConversationPage() {
 
     try {
       await deleteConversation(conversationId);
-      alert(t("page.conversation.deleteSuccess") || "Conversación eliminada exitosamente");
+      toast.success(t("page.conversation.deleteSuccess") || "Conversación eliminada exitosamente");
       router.push(`/${lang}/messages`);
     } catch (error: any) {
       console.error("Error deleting conversation:", error);
-      alert(error?.message || t("page.conversation.deleteError") || "Error al eliminar la conversación");
+      toast.error(error?.message || t("page.conversation.deleteError") || "Error al eliminar la conversación");
       setDeleting(false);
     }
   };

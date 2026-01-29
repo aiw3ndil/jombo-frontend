@@ -4,6 +4,7 @@ import { useTranslation } from "@/app/hooks/useTranslation";
 import { useRouter, useParams } from "next/navigation";
 import { createTrip } from "@/app/lib/api/trips";
 import { useAuth } from "@/app/contexts/AuthContext";
+import { toast } from "sonner";
 
 export default function CreateTrip() {
   const { t, loading: translationsLoading } = useTranslation();
@@ -67,7 +68,7 @@ export default function CreateTrip() {
     
     // Validar campos requeridos
     if (!formData.from || !formData.to || !formData.date || !formData.time) {
-      alert(t("page.createTrip.requiredFields") || "Por favor completa todos los campos requeridos");
+      toast.error(t("page.createTrip.requiredFields") || "Por favor completa todos los campos requeridos");
       return;
     }
 
@@ -86,12 +87,12 @@ export default function CreateTrip() {
         description: formData.description || undefined,
       });
       
-      alert(t("page.createTrip.success") || "Viaje creado exitosamente");
+      toast.success(t("page.createTrip.success") || "Viaje creado exitosamente");
       router.push(`/${lang}`);
     } catch (error) {
       console.error("Error creating trip:", error);
       const errorMessage = (error as any)?.message || t("page.createTrip.error") || "Error al crear el viaje";
-      alert(errorMessage);
+      toast.error(errorMessage);
     } finally {
       setLoading(false);
     }

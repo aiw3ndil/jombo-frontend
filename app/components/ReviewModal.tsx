@@ -2,6 +2,7 @@
 import { useState } from "react";
 import { createReview } from "@/app/lib/api/reviews";
 import { useTranslation } from "@/app/hooks/useTranslation";
+import { toast } from "sonner";
 
 interface ReviewModalProps {
   bookingId: number;
@@ -42,7 +43,7 @@ export default function ReviewModal({
         comment: comment.trim() || undefined,
       });
       
-      alert(t("page.myBookings.reviewModal.success") || "¡Reseña creada exitosamente!");
+      toast.success(t("page.myBookings.reviewModal.success") || "¡Reseña creada exitosamente!");
       onSuccess();
     } catch (error: any) {
       console.error("Error creating review:", error);

@@ -6,6 +6,7 @@ import { createBooking, getBookings } from "@/app/lib/api/bookings";
 import { useTranslation } from "@/app/hooks/useTranslation";
 import { useAuth } from "@/app/contexts/AuthContext";
 import UserReviewsModal from "@/app/components/UserReviewsModal";
+import { toast } from "sonner";
 
 export default function SearchPage() {
   const { t, loading: translationsLoading } = useTranslation();
@@ -36,7 +37,7 @@ export default function SearchPage() {
       try {
         setLoading(true);
         setError("");
-        const results = await searchTrips(from);
+        const results = await searchTrips(from, searchTo);
         console.log('🔍 Search results:', results);
         setTrips(results);
         
@@ -76,9 +77,14 @@ export default function SearchPage() {
     );
   }
 
-  const handleBookTrip = async (tripId: number, availableSeats: number) => {
+  const handleBookTrip = async (tripId: number, availableSeats: number, driverId: number) => {
     if (!user) {
       router.push(`/${lang}/login?redirect=${encodeURIComponent(window.location.pathname + window.location.search)}`);
+      return;
+    }
+
+    if (user.id === driverId) {
+      toast.error(t("page.search.cannotBookOwnTrip") || "No puedes reservar tu propio viaje.");
       return;
     }
 
@@ -89,7 +95,7 @@ export default function SearchPage() {
     const seatsNumber = parseInt(seats);
     
     if (isNaN(seatsNumber) || seatsNumber < 1 || seatsNumber > availableSeats) {
-      alert(t("page.search.invalidSeats") || "Número de asientos inválido");
+      toast.error(t("page.search.invalidSeats") || "Número de asientos inválido");
       return;
     }
 
@@ -101,7 +107,7 @@ export default function SearchPage() {
         seats: seatsNumber,
       });
       
-      alert(t("page.search.bookingSuccess") || "¡Solicitud de reserva enviada! Pendiente de confirmación del conductor");
+      toast.success(t("page.search.bookingSuccess") || "¡Solicitud de reserva enviada! Pendiente de confirmación del conductor");
       
       // Recargar los viajes para actualizar los asientos disponibles
       const results = await searchTrips(from);
@@ -118,7 +124,7 @@ export default function SearchPage() {
       setUserBookings(bookingsMap);
     } catch (error: any) {
       console.error("Error booking trip:", error);
-      alert(error?.message || t("page.search.bookingError") || "Error al realizar la reserva");
+      toast.error(error?.message || t("page.search.bookingError") || "Error al realizar la reserva");
     } finally {
       setBookingLoading(null);
     }
@@ -303,7 +309,7 @@ export default function SearchPage() {
                       </p>
                     </div>
                     <button 
-                      onClick={() => handleBookTrip(trip.id, trip.available_seats)}
+                      onClick={() => handleBookTrip(trip.id, trip.available_seats, trip.driver.id)}
                       disabled={
                         bookingLoading === trip.id || 
                         trip.available_seats === 0 || 

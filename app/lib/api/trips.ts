@@ -13,10 +13,17 @@ export interface Trip {
     email: string;
     picture_url?: string;
   };
+  created_at: string;
+  updated_at: string;
 }
 
-export async function searchTrips(departureLocation: string): Promise<Trip[]> {
-  const url = `${API_BASE}/api/v1/trips/search/${encodeURIComponent(departureLocation)}`;
+export async function searchTrips(departureLocation: string, arrivalLocation?: string): Promise<Trip[]> {
+  const params = new URLSearchParams();
+  params.set("from", departureLocation);
+  if (arrivalLocation) {
+    params.set("to", arrivalLocation);
+  }
+  const url = `${API_BASE}/api/v1/trips/search/${encodeURIComponent(departureLocation)}?${params.toString()}`;
   
   const res = await fetch(url, {
     method: "GET",

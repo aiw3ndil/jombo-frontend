@@ -5,6 +5,7 @@ import { getMyTrips, getTripBookings, Trip } from "@/app/lib/api/trips";
 import { confirmBooking, rejectBooking, Booking } from "@/app/lib/api/bookings";
 import { useTranslation } from "@/app/hooks/useTranslation";
 import { useAuth } from "@/app/contexts/AuthContext";
+import { toast } from "sonner";
 
 export default function MyTrips() {
   const { t, loading: translationsLoading } = useTranslation();
@@ -51,7 +52,7 @@ export default function MyTrips() {
       setTripBookings(bookings);
     } catch (error) {
       console.error("Error loading trip bookings:", error);
-      alert(t("page.myTrips.errorLoadingBookings") || "Error al cargar las reservas");
+      toast.error(t("page.myTrips.errorLoadingBookings") || "Error al cargar las reservas");
     } finally {
       setLoadingBookings(false);
     }
@@ -61,7 +62,7 @@ export default function MyTrips() {
     setActionLoading(bookingId);
     try {
       await confirmBooking(bookingId);
-      alert(t("page.myTrips.bookingConfirmed") || "Reserva confirmada");
+      toast.success(t("page.myTrips.bookingConfirmed") || "Reserva confirmada");
       // Recargar las reservas del viaje
       if (selectedTripId) {
         await loadTripBookings(selectedTripId);
@@ -69,7 +70,7 @@ export default function MyTrips() {
       }
     } catch (error: any) {
       console.error("Error confirming booking:", error);
-      alert(error?.message || t("page.myTrips.errorConfirming") || "Error al confirmar la reserva");
+      toast.error(error?.message || t("page.myTrips.errorConfirming") || "Error al confirmar la reserva");
     } finally {
       setActionLoading(null);
     }
@@ -83,14 +84,14 @@ export default function MyTrips() {
     setActionLoading(bookingId);
     try {
       await rejectBooking(bookingId);
-      alert(t("page.myTrips.bookingRejected") || "Reserva rechazada");
+      toast.success(t("page.myTrips.bookingRejected") || "Reserva rechazada");
       // Recargar las reservas del viaje
       if (selectedTripId) {
         await loadTripBookings(selectedTripId);
       }
     } catch (error: any) {
       console.error("Error rejecting booking:", error);
-      alert(error?.message || t("page.myTrips.errorRejecting") || "Error al rechazar la reserva");
+      toast.error(error?.message || t("page.myTrips.errorRejecting") || "Error al rechazar la reserva");
     } finally {
       setActionLoading(null);
     }

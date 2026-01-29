@@ -3,6 +3,7 @@ import { useState, useEffect } from "react";
 import { useRouter } from "next/navigation";
 import { useAuth } from "@/app/contexts/AuthContext";
 import { useTranslation } from "@/app/hooks/useTranslation";
+import { toast } from "sonner";
 
 export default function ProfilePage({ params }: { params: Promise<{ lang: string }> }) {
   const router = useRouter();
@@ -50,7 +51,7 @@ export default function ProfilePage({ params }: { params: Promise<{ lang: string
       // Validate file size (max 5MB)
       const maxSize = 5 * 1024 * 1024; // 5MB in bytes
       if (file.size > maxSize) {
-        alert("La imagen es demasiado grande. El tamaño máximo es 5MB.");
+        toast.error("La imagen es demasiado grande. El tamaño máximo es 5MB.");
         e.target.value = ''; // Clear the input
         return;
       }
