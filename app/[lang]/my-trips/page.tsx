@@ -58,10 +58,10 @@ export default function MyTrips() {
     }
   };
 
-  const handleConfirmBooking = async (bookingId: number) => {
+  const handleConfirmBooking = async (tripId: number, bookingId: number) => {
     setActionLoading(bookingId);
     try {
-      await confirmBooking(bookingId);
+      await confirmBooking(tripId, bookingId);
       toast.success(t("page.myTrips.bookingConfirmed") || "Reserva confirmada");
       // Recargar las reservas del viaje
       if (selectedTripId) {
@@ -76,14 +76,14 @@ export default function MyTrips() {
     }
   };
 
-  const handleRejectBooking = async (bookingId: number) => {
+  const handleRejectBooking = async (tripId: number, bookingId: number) => {
     if (!confirm(t("page.myTrips.confirmReject") || "¿Estás seguro de rechazar esta reserva?")) {
       return;
     }
 
     setActionLoading(bookingId);
     try {
-      await rejectBooking(bookingId);
+      await rejectBooking(tripId, bookingId);
       toast.success(t("page.myTrips.bookingRejected") || "Reserva rechazada");
       // Recargar las reservas del viaje
       if (selectedTripId) {
@@ -242,7 +242,7 @@ export default function MyTrips() {
                     {booking.status === "pending" && (
                       <div className="flex gap-2 mt-3">
                         <button
-                          onClick={() => handleConfirmBooking(booking.id)}
+                          onClick={() => selectedTripId && handleConfirmBooking(selectedTripId, booking.id)}
                           disabled={actionLoading === booking.id}
                           className="flex-1 bg-green-600 text-white px-3 py-2 rounded text-sm hover:bg-green-700 disabled:bg-gray-400"
                         >
@@ -251,7 +251,7 @@ export default function MyTrips() {
                             : t("page.myTrips.confirm") || "Confirmar"}
                         </button>
                         <button
-                          onClick={() => handleRejectBooking(booking.id)}
+                          onClick={() => selectedTripId && handleRejectBooking(selectedTripId, booking.id)}
                           disabled={actionLoading === booking.id}
                           className="flex-1 bg-red-600 text-white px-3 py-2 rounded text-sm hover:bg-red-700 disabled:bg-gray-400"
                         >

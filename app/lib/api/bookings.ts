@@ -95,21 +95,8 @@ export async function getBookings(): Promise<Booking[]> {
   return await res.json();
 }
 
-export async function confirmBooking(bookingId: number): Promise<Booking> {
-    method: "PUT",
-    credentials: "include",
-  });
-
-  if (!res.ok) {
-    const errorData = await res.json();
-    throw new Error(errorData.error || errorData.errors?.join(", ") || "Error al confirmar la reserva");
-  }
-
-  return await res.json();
-}
-
-export async function rejectBooking(bookingId: number): Promise<Booking> {
-  const url = `${API_BASE}/api/v1/bookings/${bookingId}/reject`;
+export async function confirmBooking(tripId: number, bookingId: number): Promise<Booking> {
+  const url = `${API_BASE}/api/v1/trips/${tripId}/bookings/${bookingId}/confirm`;
   
   const res = await fetch(url, {
     method: "PUT",
@@ -117,11 +104,57 @@ export async function rejectBooking(bookingId: number): Promise<Booking> {
   });
 
   if (!res.ok) {
-    const errorData = await res.json();
-    throw new Error(errorData.error || "Error al rechazar la reserva");
+    let errorData = null;
+    try {
+      errorData = await res.json();
+    } catch (e) {
+      console.error("Error parsing error response for confirmBooking:", e);
+    }
+    throw new Error(errorData?.error || errorData?.errors?.join(", ") || "Error al confirmar la reserva");
   }
 
-  return await res.json();
+  // Handle 204 No Content for successful operations that don't return a body
+  if (res.status === 204) {
+    return {} as Booking; // Or a more appropriate empty/success object
+  }
+
+  try {
+    return await res.json();
+  } catch (e) {
+    console.error("Error parsing success response for confirmBooking:", e);
+    throw new Error("Respuesta inválida del servidor al confirmar la reserva.");
+  }
+}
+
+export async function rejectBooking(tripId: number, bookingId: number): Promise<Booking> {
+  const url = `${API_BASE}/api/v1/trips/${tripId}/bookings/${bookingId}/reject`;
+  
+  const res = await fetch(url, {
+    method: "PUT",
+    credentials: "include",
+  });
+
+  if (!res.ok) {
+    let errorData = null;
+    try {
+      errorData = await res.json();
+    } catch (e) {
+      console.error("Error parsing error response for rejectBooking:", e);
+    }
+    throw new Error(errorData?.error || "Error al rechazar la reserva");
+  }
+
+  // Handle 204 No Content for successful operations that don't return a body
+  if (res.status === 204) {
+    return {} as Booking; // Or a more appropriate empty/success object
+  }
+
+  try {
+    return await res.json();
+  } catch (e) {
+    console.error("Error parsing success response for rejectBooking:", e);
+    throw new Error("Respuesta inválida del servidor al rechazar la reserva.");
+  }
 }
 
 export async function cancelBooking(bookingId: number): Promise<void> {
