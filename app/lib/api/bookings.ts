@@ -96,10 +96,7 @@ export async function getBookings(): Promise<Booking[]> {
 }
 
 export async function confirmBooking(bookingId: number): Promise<Booking> {
-  const url = `${API_BASE}/api/v1/bookings/${bookingId}/confirm`;
-  
-  const res = await fetch(url, {
-    method: "PATCH",
+    method: "PUT",
     credentials: "include",
   });
 
@@ -115,7 +112,7 @@ export async function rejectBooking(bookingId: number): Promise<Booking> {
   const url = `${API_BASE}/api/v1/bookings/${bookingId}/reject`;
   
   const res = await fetch(url, {
-    method: "PATCH",
+    method: "PUT",
     credentials: "include",
   });
 
