@@ -1,6 +1,7 @@
 "use client";
 import { useEffect, useState } from "react";
 import { useRouter, useParams } from "next/navigation";
+import Link from "next/link";
 import { getMyTrips, getTripBookings, Trip } from "@/app/lib/api/trips";
 import { confirmBooking, rejectBooking, Booking } from "@/app/lib/api/bookings";
 import { useTranslation } from "@/app/hooks/useTranslation";
@@ -145,6 +146,9 @@ export default function MyTrips() {
         <h1 className="text-3xl font-bold text-gray-900">
           {t("page.myTrips.title")}
         </h1>
+        <Link href={`/${lang}/create-trip`} className="bg-blue-600 text-white px-4 py-2 rounded hover:bg-blue-700">
+          {t("page.myTrips.createTrip") || "Publicar viaje"}
+        </Link>
         <button
           onClick={() => router.push(`/${lang}`)}
           className="bg-gray-600 text-white px-4 py-2 rounded hover:bg-gray-700"
