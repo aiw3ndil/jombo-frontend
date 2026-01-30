@@ -146,13 +146,14 @@ export default function MyTrips() {
         <h1 className="text-3xl font-bold text-gray-900">
           {t("page.myTrips.title")}
         </h1>
-        <Link href={`/${lang}/create-trip`} className="bg-blue-600 text-white px-4 py-2 rounded hover:bg-blue-700">
-          {t("page.myTrips.createTrip") || "Publicar viaje"}
-        </Link>
-        <button
-          onClick={() => router.push(`/${lang}`)}
-          className="bg-gray-600 text-white px-4 py-2 rounded hover:bg-gray-700"
-        >
+        <div className="flex gap-4">
+          <Link href={`/${lang}/create-trip`} className="bg-blue-600 text-white px-4 py-2 rounded hover:bg-blue-700">
+            {t("page.myTrips.createTrip") || "Publicar viaje"}
+          </Link>
+          <button
+            onClick={() => router.push(`/${lang}`)}
+            className="bg-gray-600 text-white px-4 py-2 rounded hover:bg-gray-700"
+          >
           {t("page.myTrips.back")}
         </button>
       </div>
