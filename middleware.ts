@@ -21,19 +21,21 @@ const PUBLIC_FILE_SUFFIXES = [
   '.map',
 ];
 
-export function middleware(req: NextRequest) {
-  const { pathname } = req.nextUrl;
-  
-  // Ignorar rutas de archivos públicos
+export function middleware(request: NextRequest) {
+  const { pathname } = request.nextUrl;
+
+  // Ignorar rutas de archivos públicos y APIs
   if (
     PUBLIC_FILE_SUFFIXES.some((suffix) => pathname.endsWith(suffix)) ||
     pathname.startsWith('/api') ||
     pathname.startsWith('/_next')
   ) {
-    return NextResponse.next();
+    const response = NextResponse.next();
+    response.headers.set('x-pathname', pathname);
+    return response;
   }
 
-  const host = req.headers.get('host');
+  const host = request.headers.get('host');
   let targetLang = 'es'; // Idioma por defecto
 
   if (host?.endsWith('.fi')) {
@@ -48,24 +50,33 @@ export function middleware(req: NextRequest) {
 
   const supportedLangs = ['es', 'en', 'fi']; // Asegúrate de que esto coincida con tus idiomas soportados
 
-  // Si no hay idioma en la URL o el idioma actual no está soportado, redirigir al idioma objetivo
+  // If no language in URL or current language not supported, redirect to target language
   if (!currentLang || !supportedLangs.includes(currentLang)) {
-    // Si la ruta ya es "/" (raíz), redirigir a "/[targetLang]"
+    // If the path is already "/", redirect to "/[targetLang]"
     if (pathname === '/') {
-      return NextResponse.redirect(new URL(`/${targetLang}`, req.url));
+      const response = NextResponse.redirect(new URL(`/${targetLang}`, request.url));
+      response.headers.set('x-pathname', `/${targetLang}`);
+      return response;
     }
-    // Si la ruta no es "/", pero no tiene un idioma válido, insertar el idioma objetivo
-    const newUrl = new URL(`/${targetLang}${pathname}`, req.url);
-    return NextResponse.redirect(newUrl);
+    // If the path is not "/", but has no valid language, insert the target language
+    const newUrl = new URL(`/${targetLang}${pathname}`, request.url);
+    const response = NextResponse.redirect(newUrl);
+    response.headers.set('x-pathname', `/${targetLang}${pathname}`);
+    return response;
   }
 
-  // Si el idioma en la URL no coincide con el idioma objetivo del dominio, redirigir
+  // If the language in the URL does not match the target language from the domain, redirect
   if (currentLang !== targetLang) {
-    const newUrl = new URL(`/${targetLang}${pathname.substring(currentLang.length + 1)}`, req.url);
-    return NextResponse.redirect(newUrl);
+    const newUrl = new URL(`/${targetLang}${pathname.substring(currentLang.length + 1)}`, request.url);
+    const response = NextResponse.redirect(newUrl);
+    response.headers.set('x-pathname', `/${targetLang}${pathname.substring(currentLang.length + 1)}`);
+    return response;
   }
-
-  return NextResponse.next();
+  
+  // If no redirection, proceed as normal and set x-pathname
+  const response = NextResponse.next();
+  response.headers.set('x-pathname', pathname);
+  return response;
 }
 
 export const config = {
