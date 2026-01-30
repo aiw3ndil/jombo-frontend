@@ -156,6 +156,7 @@ export default function MyTrips() {
           >
           {t("page.myTrips.back")}
         </button>
+        </div>
       </div>
 
       {trips.length === 0 ? (
