@@ -35,14 +35,14 @@ export function middleware(request: NextRequest) {
     return response;
   }
 
-  const host = request.headers.get('host');
-  let targetLang = 'es'; // Idioma por defecto
+  // const host = request.headers.get('host');
+  // let targetLang = 'es'; // Idioma por defecto
 
-  if (host?.endsWith('.fi')) {
-    targetLang = 'fi';
-  } else if (host?.endsWith('.es')) {
-    targetLang = 'es';
-  }
+  // if (host?.endsWith('.fi')) {
+  //   targetLang = 'fi';
+  // } else if (host?.endsWith('.es')) {
+  //   targetLang = 'es';
+  // }
   // Añadir más mapeos de dominio a idioma aquí si es necesario
 
   const pathnameParts = pathname.split('/').filter(Boolean);
@@ -52,6 +52,7 @@ export function middleware(request: NextRequest) {
 
   // If no language in URL or current language not supported, redirect to target language
   if (!currentLang || !supportedLangs.includes(currentLang)) {
+    const targetLang = 'es';
     // If the path is already "/", redirect to "/[targetLang]"
     if (pathname === '/') {
       const response = NextResponse.redirect(new URL(`/${targetLang}`, request.url));
@@ -66,12 +67,12 @@ export function middleware(request: NextRequest) {
   }
 
   // If the language in the URL does not match the target language from the domain, redirect
-  if (currentLang !== targetLang) {
-    const newUrl = new URL(`/${targetLang}${pathname.substring(currentLang.length + 1)}`, request.url);
-    const response = NextResponse.redirect(newUrl);
-    response.headers.set('x-pathname', `/${targetLang}${pathname.substring(currentLang.length + 1)}`);
-    return response;
-  }
+  // if (currentLang !== targetLang) {
+  //   const newUrl = new URL(`/${targetLang}${pathname.substring(currentLang.length + 1)}`, request.url);
+  //   const response = NextResponse.redirect(newUrl);
+  //   response.headers.set('x-pathname', `/${targetLang}${pathname.substring(currentLang.length + 1)}`);
+  //   return response;
+  // }
   
   // If no redirection, proceed as normal and set x-pathname
   const response = NextResponse.next();

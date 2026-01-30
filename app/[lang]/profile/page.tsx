@@ -4,10 +4,11 @@ import { useRouter } from "next/navigation";
 import { useAuth } from "@/app/contexts/AuthContext";
 import { useTranslation } from "@/app/hooks/useTranslation";
 import { toast } from "sonner";
+import { deleteUser } from "@/app/lib/api/auth";
 
 export default function ProfilePage({ params }: { params: Promise<{ lang: string }> }) {
   const router = useRouter();
-  const { user, updateUser, loading: authLoading } = useAuth();
+  const { user, updateUser, logout, loading: authLoading } = useAuth();
   const { t } = useTranslation();
   const [lang, setLang] = useState("es");
   const [formData, setFormData] = useState({
@@ -18,6 +19,8 @@ export default function ProfilePage({ params }: { params: Promise<{ lang: string
   const [pictureFile, setPictureFile] = useState<File | null>(null);
   const [picturePreview, setPicturePreview] = useState<string | null>(null);
   const [loading, setLoading] = useState(false);
+  const [deleting, setDeleting] = useState(false); // New state for delete loading
+  const [showDeleteModal, setShowDeleteModal] = useState(false); // State for delete confirmation modal
   const [message, setMessage] = useState<{ type: "success" | "error"; text: string } | null>(null);
   const [isReady, setIsReady] = useState(false);
 
@@ -112,7 +115,7 @@ export default function ProfilePage({ params }: { params: Promise<{ lang: string
         }
         console.error("❌ Profile update failed:", errorData);
         console.error("❌ Full error context:", { status: response.status, responseText, errorData });
-        throw new Error(errorData.error || errorData.message || `Error del servidor (${response.status})`);
+        throw new Error(errorData.error || errorData.message || (Object.keys(errorData).length === 0 ? "Error desconocido al actualizar el perfil." : `Error del servidor (${response.status})`));
       }
 
       let data;
@@ -142,6 +145,22 @@ export default function ProfilePage({ params }: { params: Promise<{ lang: string
     });
   };
 
+  const handleDeleteAccount = async () => {
+    setDeleting(true);
+    try {
+      await deleteUser();
+      await logout(); // Logout the user after successful deletion
+      toast.success(t("profile.deleteAccountSuccess") || "Cuenta eliminada exitosamente.");
+      router.push(`/${lang}/`); // Redirect to home or login page
+    } catch (error: any) {
+      console.error("Error deleting account:", error);
+      toast.error(error.message || t("profile.deleteAccountError") || "Error al eliminar la cuenta.");
+    } finally {
+      setDeleting(false);
+      setShowDeleteModal(false);
+    }
+  };
+
   if (!isReady || !user) {
     return (
       <div className="max-w-2xl mx-auto p-6">
@@ -159,7 +178,7 @@ export default function ProfilePage({ params }: { params: Promise<{ lang: string
 
   return (
     <div className="max-w-2xl mx-auto p-6">
-      <h1 className="text-3xl font-bold mb-6">{t("profile.title") || "Mi Perfil"}</h1>
+      <h1 className="text-3xl font-bold mb-6 text-black">{t("profile.title") || "Mi Perfil"}</h1>
 
       {message && (
         <div
@@ -252,6 +271,47 @@ export default function ProfilePage({ params }: { params: Promise<{ lang: string
           </button>
         </div>
       </form>
+
+      <div className="mt-8 pt-6 border-t border-gray-200">
+        <h2 className="text-xl font-bold text-red-600 mb-4">{t("profile.dangerZone") || "Zona de Peligro"}</h2>
+        <p className="text-gray-700 mb-4">
+          {t("profile.deleteAccountWarning") || "Eliminar tu cuenta es una acción permanente y no se puede deshacer."}
+        </p>
+        <button
+          onClick={() => setShowDeleteModal(true)}
+          disabled={deleting}
+          className="bg-red-600 text-white py-2 px-4 rounded-lg hover:bg-red-700 disabled:bg-gray-400 disabled:cursor-not-allowed transition-colors"
+        >
+          {deleting ? (t("profile.deletingAccount") || "Eliminando...") : (t("profile.deleteAccountButton") || "Eliminar Cuenta")}
+        </button>
+      </div>
+
+      {showDeleteModal && (
+        <div className="fixed inset-0 bg-gray-600 bg-opacity-50 flex justify-center items-center p-4">
+          <div className="bg-white rounded-lg shadow-xl p-6 w-full max-w-sm">
+            <h3 className="text-lg font-bold text-gray-900 mb-4">{t("profile.deleteAccountModalTitle") || "¿Estás seguro?"}</h3>
+            <p className="text-gray-700 mb-6">
+              {t("profile.deleteAccountModalMessage") || "Esta acción es irreversible. Todos tus datos serán eliminados permanentemente."}
+            </p>
+            <div className="flex justify-end gap-3">
+              <button
+                onClick={() => setShowDeleteModal(false)}
+                disabled={deleting}
+                className="px-4 py-2 rounded-lg border border-gray-300 text-gray-700 hover:bg-gray-50 disabled:opacity-50 disabled:cursor-not-allowed"
+              >
+                {t("profile.deleteAccountCancel") || "Cancelar"}
+              </button>
+              <button
+                onClick={handleDeleteAccount}
+                disabled={deleting}
+                className="px-4 py-2 rounded-lg bg-red-600 text-white hover:bg-red-700 disabled:opacity-50 disabled:cursor-not-allowed"
+              >
+                {deleting ? (t("profile.deletingAccount") || "Eliminando...") : (t("profile.deleteAccountConfirm") || "Sí, eliminar")}
+              </button>
+            </div>
+          </div>
+        </div>
+      )}
     </div>
   );
 }

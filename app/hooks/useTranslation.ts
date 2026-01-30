@@ -1,19 +1,19 @@
 "use client";
 
-import { useParams } from "next/navigation";
+import { usePathname } from "next/navigation";
 import { useEffect, useState } from "react";
 
 type Translations = Record<string, any>;
 
 export function useTranslation(namespace: string = "common") {
-  const params = useParams();
+    const pathname = usePathname();
   const [translations, setTranslations] = useState<Translations>({});
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
     const loadTranslations = async () => {
       try {
-        const lang = ((params as any)?.lang || "es") as string;
+        const lang = pathname.split('/')[1] || "es";
         console.log(`🌐 Loading translations: /locales/${lang}/${namespace}.json`);
         const res = await fetch(`/locales/${lang}/${namespace}.json`);
         if (res.ok) {
@@ -31,10 +31,10 @@ export function useTranslation(namespace: string = "common") {
       }
     };
 
-    if (params) {
+    if (pathname) {
       loadTranslations();
     }
-  }, [params, namespace]);
+  }, [pathname, namespace]);
 
   const t = (key: string, defaultValue?: string): string => {
     const keys = key.split(".");
