@@ -6,6 +6,7 @@ import { createBooking, getBookings } from "@/app/lib/api/bookings";
 import { useTranslation } from "@/app/hooks/useTranslation";
 import { useAuth } from "@/app/contexts/AuthContext";
 import UserReviewsModal from "@/app/components/UserReviewsModal";
+import BookTripModal from "@/app/components/BookTripModal";
 import { toast } from "sonner";
 
 export default function SearchPage() {
@@ -26,6 +27,8 @@ export default function SearchPage() {
   const [selectedDriver, setSelectedDriver] = useState<{ id: number; name: string } | null>(null);
   const [searchFrom, setSearchFrom] = useState(from);
   const [searchTo, setSearchTo] = useState("");
+  const [bookTripModalOpen, setBookTripModalOpen] = useState(false); // New state
+  const [selectedTripForBooking, setSelectedTripForBooking] = useState<Trip | null>(null); // New state
 
   useEffect(() => {
     if (!from) {
@@ -77,30 +80,23 @@ export default function SearchPage() {
     );
   }
 
-  const handleBookTrip = async (tripId: number, availableSeats: number, driverId: number) => {
+  const handleBookTrip = async (trip: Trip) => {
     if (!user) {
       router.push(`/${lang}/login?redirect=${encodeURIComponent(window.location.pathname + window.location.search)}`);
       return;
     }
 
-    if (user.id === driverId) {
+    if (user.id === trip.driver.id) {
       toast.error(t("page.search.cannotBookOwnTrip") || "No puedes reservar tu propio viaje.");
       return;
     }
 
-    const seats = prompt(t("page.search.howManySeats") || `¿Cuántos asientos? (Disponibles: ${availableSeats})`, "1");
-    
-    if (!seats) return;
-    
-    const seatsNumber = parseInt(seats);
-    
-    if (isNaN(seatsNumber) || seatsNumber < 1 || seatsNumber > availableSeats) {
-      toast.error(t("page.search.invalidSeats") || "Número de asientos inválido");
-      return;
-    }
+    setSelectedTripForBooking(trip);
+    setBookTripModalOpen(true);
+  };
 
+  const handleConfirmBooking = async (tripId: number, seatsNumber: number) => {
     setBookingLoading(tripId);
-
     try {
       await createBooking({
         trip_id: tripId,
@@ -122,6 +118,9 @@ export default function SearchPage() {
         }
       });
       setUserBookings(bookingsMap);
+
+      setBookTripModalOpen(false); // Close modal on success
+      setSelectedTripForBooking(null); // Clear selected trip
     } catch (error: any) {
       console.error("Error booking trip:", error);
       toast.error(error?.message || t("page.search.bookingError") || "Error al realizar la reserva");
@@ -129,6 +128,8 @@ export default function SearchPage() {
       setBookingLoading(null);
     }
   };
+
+
 
   const handleOpenReviews = (driverId: number, driverName: string) => {
     setSelectedDriver({ id: driverId, name: driverName });
@@ -309,7 +310,7 @@ export default function SearchPage() {
                       </p>
                     </div>
                     <button 
-                      onClick={() => handleBookTrip(trip.id, trip.available_seats, trip.driver.id)}
+                      onClick={() => handleBookTrip(trip)}
                       disabled={
                         bookingLoading === trip.id || 
                         trip.available_seats === 0 || 
@@ -340,6 +341,20 @@ export default function SearchPage() {
           userId={selectedDriver.id}
           userName={selectedDriver.name}
           onClose={handleCloseReviews}
+        />
+      )}
+
+      {bookTripModalOpen && (
+        <BookTripModal
+          isOpen={bookTripModalOpen}
+          onClose={() => {
+            setBookTripModalOpen(false);
+            setSelectedTripForBooking(null);
+          }}
+          onConfirm={handleConfirmBooking}
+          trip={selectedTripForBooking}
+          loading={bookingLoading === selectedTripForBooking?.id}
+          t={t}
         />
       )}
     </div>

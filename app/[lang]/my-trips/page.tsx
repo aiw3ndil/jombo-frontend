@@ -2,14 +2,17 @@
 import { useEffect, useState } from "react";
 import { useRouter, useParams } from "next/navigation";
 import Link from "next/link";
+import { useMemo } from "react"; // Add useMemo import
 import { getMyTrips, getTripBookings, Trip } from "@/app/lib/api/trips";
 import { confirmBooking, rejectBooking, Booking } from "@/app/lib/api/bookings";
 import { useTranslation } from "@/app/hooks/useTranslation";
 import { useAuth } from "@/app/contexts/AuthContext";
 import { toast } from "sonner";
+import RejectBookingModal from "@/app/components/RejectBookingModal";
 
 export default function MyTrips() {
-  const { t, loading: translationsLoading } = useTranslation();
+  const translationNamespaces = useMemo(() => ["common", "myTrips"], []);
+  const { t, loading: translationsLoading } = useTranslation(translationNamespaces);
   const router = useRouter();
   const params = useParams();
   const lang = (params?.lang as string) || "es";
@@ -21,6 +24,8 @@ export default function MyTrips() {
   const [tripBookings, setTripBookings] = useState<Booking[]>([]);
   const [loadingBookings, setLoadingBookings] = useState(false);
   const [actionLoading, setActionLoading] = useState<number | null>(null);
+  const [rejectModalOpen, setRejectModalOpen] = useState(false); // New state
+  const [selectedBookingToReject, setSelectedBookingToReject] = useState<Booking | null>(null); // New state
 
   useEffect(() => {
     if (!authLoading && !user) {
@@ -77,19 +82,25 @@ export default function MyTrips() {
     }
   };
 
-  const handleRejectBooking = async (tripId: number, bookingId: number) => {
-    if (!confirm(t("page.myTrips.confirmReject") || "¿Estás seguro de rechazar esta reserva?")) {
-      return;
-    }
+  const handleRejectBooking = async (tripId: number, booking: Booking) => {
+    // This function now just opens the modal
+    setSelectedBookingToReject(booking);
+    setRejectModalOpen(true);
+  };
 
-    setActionLoading(bookingId);
+  const handleConfirmRejectBooking = async () => {
+    if (!selectedBookingToReject || !selectedTripId) return;
+
+    setActionLoading(selectedBookingToReject.id);
     try {
-      await rejectBooking(tripId, bookingId);
+      await rejectBooking(selectedTripId, selectedBookingToReject.id);
       toast.success(t("page.myTrips.bookingRejected") || "Reserva rechazada");
       // Recargar las reservas del viaje
       if (selectedTripId) {
         await loadTripBookings(selectedTripId);
       }
+      setRejectModalOpen(false); // Close modal on success
+      setSelectedBookingToReject(null); // Clear selected booking
     } catch (error: any) {
       console.error("Error rejecting booking:", error);
       toast.error(error?.message || t("page.myTrips.errorRejecting") || "Error al rechazar la reserva");
@@ -97,6 +108,8 @@ export default function MyTrips() {
       setActionLoading(null);
     }
   };
+
+
 
   if (translationsLoading || authLoading || loading) {
     return (
@@ -257,7 +270,7 @@ export default function MyTrips() {
                             : t("page.myTrips.confirm") || "Confirmar"}
                         </button>
                         <button
-                          onClick={() => selectedTripId && handleRejectBooking(selectedTripId, booking.id)}
+                          onClick={() => selectedTripId && handleRejectBooking(selectedTripId, booking)}
                           disabled={actionLoading === booking.id}
                           className="flex-1 bg-red-600 text-white px-3 py-2 rounded text-sm hover:bg-red-700 disabled:bg-gray-400"
                         >
@@ -273,6 +286,22 @@ export default function MyTrips() {
             )}
           </div>
         </div>
+      )}
+      {rejectModalOpen && selectedBookingToReject && (
+        <RejectBookingModal
+          isOpen={rejectModalOpen}
+          onClose={() => {
+            setRejectModalOpen(false);
+            setSelectedBookingToReject(null);
+          }}
+          onConfirm={handleConfirmRejectBooking}
+          loading={actionLoading === selectedBookingToReject.id}
+          t={t}
+          bookingDetails={{
+            userName: selectedBookingToReject.user?.name || selectedBookingToReject.user?.email || 'N/A',
+            seats: selectedBookingToReject.seats,
+          }}
+        />
       )}
     </div>
   );

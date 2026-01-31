@@ -53,7 +53,12 @@ export function AuthProvider({ children }: { children: ReactNode }) {
       console.log('🟢 AuthContext: Logging in...');
       const data = await authApi.login(email, password);
       console.log('🟢 AuthContext: Login successful, data:', data);
-      
+
+      if (data.token) { // Store the token
+        localStorage.setItem('authToken', data.token);
+        console.log('🟢 AuthContext: Token stored.');
+      }
+
       // Si el login devuelve el usuario directamente, usarlo
       if (data.user) {
         console.log('🟢 AuthContext: Setting user from login response:', data.user);
@@ -63,7 +68,7 @@ export function AuthProvider({ children }: { children: ReactNode }) {
         console.log('🟢 AuthContext: Fetching user from /me...');
         await refreshUser();
       }
-      
+
       return data;
     } catch (err: any) {
       console.error('🟢 AuthContext: Login error:', err);
@@ -82,7 +87,12 @@ export function AuthProvider({ children }: { children: ReactNode }) {
         console.log('🟢 AuthContext: Registering user...');
         const data = await authApi.register(name, email, password, passwordConfirmation, language);
         console.log('🟢 AuthContext: Register successful, data:', data);
-        
+
+        if (data.token) { // Store the token
+          localStorage.setItem('authToken', data.token);
+          console.log('🟢 AuthContext: Token stored.');
+        }
+
         // Si el register devuelve el usuario directamente, usarlo
         if (data.user) {
           console.log('🟢 AuthContext: Setting user from register response:', data.user);
@@ -92,7 +102,7 @@ export function AuthProvider({ children }: { children: ReactNode }) {
           console.log('🟢 AuthContext: Fetching user from /me...');
           await refreshUser();
         }
-        
+
         return data;
       } catch (err: any) {
         console.error('🟢 AuthContext: Register error:', err);
@@ -111,10 +121,12 @@ export function AuthProvider({ children }: { children: ReactNode }) {
     } catch (_) {
       // Continuar con el logout local aunque falle el servidor
     }
+    localStorage.removeItem('authToken'); // Remove the token
+    console.log('🟢 AuthContext: Token removed.');
     setUser(null);
     try {
       router.push("/");
-    } catch (_) {}
+    } catch (_) { }
   }, [router]);
 
   const updateUser = useCallback((userData: any) => {

@@ -1,5 +1,15 @@
 const API_BASE = process.env.NEXT_PUBLIC_API_BASE_URL || "";
 
+function getAuthHeaders(): HeadersInit {
+  const token = localStorage.getItem('authToken'); // Assuming token is stored in localStorage
+  if (token) {
+    return {
+      'Authorization': `Bearer ${token}`,
+    };
+  }
+  return {};
+}
+
 export interface Trip {
   id: number;
   departure_location: string;
@@ -59,6 +69,9 @@ export async function getTripBookings(tripId: number): Promise<any[]> {
   
   const res = await fetch(url, {
     method: "GET",
+    headers: {
+      ...getAuthHeaders(),
+    },
     credentials: "include",
   });
 
@@ -88,6 +101,7 @@ export async function createTrip(tripData: CreateTripData): Promise<Trip> {
     method: "POST",
     headers: {
       "Content-Type": "application/json",
+      ...getAuthHeaders(),
     },
     credentials: "include",
     body: JSON.stringify({ trip: tripData }),

@@ -5,36 +5,43 @@ import { useEffect, useState } from "react";
 
 type Translations = Record<string, any>;
 
-export function useTranslation(namespace: string = "common") {
-    const pathname = usePathname();
+export function useTranslation(namespaces: string | string[] = "common") { // Changed to accept string or string[]
+  const pathname = usePathname();
   const [translations, setTranslations] = useState<Translations>({});
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
     const loadTranslations = async () => {
-      try {
-        const lang = pathname.split('/')[1] || "es";
-        console.log(`🌐 Loading translations: /locales/${lang}/${namespace}.json`);
-        const res = await fetch(`/locales/${lang}/${namespace}.json`);
-        if (res.ok) {
-          const data = await res.json();
-          console.log(`✅ Translations loaded for ${lang}/${namespace}:`, Object.keys(data));
-          setTranslations(data);
-        } else {
-          console.error(`❌ Failed to load translations: ${res.status}`);
+      setLoading(true); // Set loading to true when starting to load new translations
+      const langsToLoad = Array.isArray(namespaces) ? namespaces : [namespaces]; // Ensure it's an array
+
+      const loadedTranslations: Translations = {};
+      const lang = pathname.split('/')[1] || "es";
+
+      for (const ns of langsToLoad) {
+        try {
+          console.log(`🌐 Loading translations: /locales/${lang}/${ns}.json`);
+          const res = await fetch(`/locales/${lang}/${ns}.json`);
+          if (res.ok) {
+            const data = await res.json();
+            console.log(`✅ Translations loaded for ${lang}/${ns}:`, Object.keys(data));
+            // Merge new translations into the loadedTranslations object
+            Object.assign(loadedTranslations, data);
+          } else {
+            console.error(`❌ Failed to load translations for ${lang}/${ns}: ${res.status}`);
+          }
+        } catch (err) {
+          console.error(`❌ Error loading ${ns}.json:`, err);
         }
-      } catch (err) {
-        console.error(`❌ Error loading ${namespace}.json:`, err);
-        setTranslations({});
-      } finally {
-        setLoading(false);
       }
+      setTranslations(loadedTranslations);
+      setLoading(false);
     };
 
     if (pathname) {
       loadTranslations();
     }
-  }, [pathname, namespace]);
+  }, [pathname, namespaces]); // 'namespaces' is now a dependency
 
   const t = (key: string, defaultValue?: string): string => {
     const keys = key.split(".");
