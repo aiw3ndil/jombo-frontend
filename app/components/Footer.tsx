@@ -33,11 +33,7 @@ export default function Footer({ lang }: FooterProps) {
                   {t("footer.terms")}
                 </Link>
               </li>
-              <li>
-                <Link href={`/${lang}`} className="text-gray-300 hover:text-white text-sm">
-                  {t("footer.home")}
-                </Link>
-              </li>
+
               <li>
                 <Link href={`/${lang}/data-deletion`} className="text-gray-300 hover:text-white text-sm">
                   {t("footer.dataDeletion")}
