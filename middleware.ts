@@ -23,6 +23,10 @@ const PUBLIC_FILE_SUFFIXES = [
 
 export function middleware(request: NextRequest) {
   const { pathname } = request.nextUrl;
+  
+  // Initialize a response that will be potentially modified or replaced
+  let response = NextResponse.next();
+
 
   // Ignorar rutas de archivos públicos y APIs
   if (
@@ -30,52 +34,36 @@ export function middleware(request: NextRequest) {
     pathname.startsWith('/api') ||
     pathname.startsWith('/_next')
   ) {
-    const response = NextResponse.next();
     response.headers.set('x-pathname', pathname);
     return response;
   }
-
-  // const host = request.headers.get('host');
-  // let targetLang = 'es'; // Idioma por defecto
-
-  // if (host?.endsWith('.fi')) {
-  //   targetLang = 'fi';
-  // } else if (host?.endsWith('.es')) {
-  //   targetLang = 'es';
-  // }
-  // Añadir más mapeos de dominio a idioma aquí si es necesario
 
   const pathnameParts = pathname.split('/').filter(Boolean);
   const currentLang = pathnameParts[0];
 
   const supportedLangs = ['es', 'en', 'fi']; // Asegúrate de que esto coincida con tus idiomas soportados
 
+
+
   // If no language in URL or current language not supported, redirect to target language
   if (!currentLang || !supportedLangs.includes(currentLang)) {
     const targetLang = 'es';
     // If the path is already "/", redirect to "/[targetLang]"
     if (pathname === '/') {
-      const response = NextResponse.redirect(new URL(`/${targetLang}`, request.url));
-      response.headers.set('x-pathname', `/${targetLang}`);
-      return response;
+      const redirectResponse = NextResponse.redirect(new URL(`/${targetLang}`, request.url));
+
+      redirectResponse.headers.set('x-pathname', `/${targetLang}`);
+      return redirectResponse;
     }
     // If the path is not "/", but has no valid language, insert the target language
     const newUrl = new URL(`/${targetLang}${pathname}`, request.url);
-    const response = NextResponse.redirect(newUrl);
-    response.headers.set('x-pathname', `/${targetLang}${pathname}`);
-    return response;
-  }
+    const redirectResponse = NextResponse.redirect(newUrl);
 
-  // If the language in the URL does not match the target language from the domain, redirect
-  // if (currentLang !== targetLang) {
-  //   const newUrl = new URL(`/${targetLang}${pathname.substring(currentLang.length + 1)}`, request.url);
-  //   const response = NextResponse.redirect(newUrl);
-  //   response.headers.set('x-pathname', `/${targetLang}${pathname.substring(currentLang.length + 1)}`);
-  //   return response;
-  // }
+    redirectResponse.headers.set('x-pathname', `/${targetLang}${pathname}`);
+    return redirectResponse;
+  }
   
   // If no redirection, proceed as normal and set x-pathname
-  const response = NextResponse.next();
   response.headers.set('x-pathname', pathname);
   return response;
 }

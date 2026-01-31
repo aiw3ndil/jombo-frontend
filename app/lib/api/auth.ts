@@ -123,6 +123,28 @@ export async function logout(): Promise<void> {
   });
 }
 
+export async function deleteUser(): Promise<void> {
+  const url = `${API_BASE}/api/v1/me`;
+  console.log('🔵 Deleting user from:', url);
+  const res = await fetch(url, {
+    method: "DELETE",
+    credentials: "include",
+  });
+
+  console.log('🔵 Delete user response:', { status: res.status, ok: res.ok });
+
+  if (!res.ok) {
+    let errorMessage = "Failed to delete user";
+    try {
+      const errorJson = await res.json();
+      errorMessage = errorJson.message || errorMessage;
+    } catch (e) {
+      // ignore json parsing error, use default message
+    }
+    throw new Error(errorMessage);
+  }
+}
+
 export async function loginWithGoogle(credential: string) {
   console.log('🔵 Google OAuth login request with credential');
   const result = await requestJson('/api/v1/auth/google', { credential });
@@ -137,4 +159,4 @@ export async function loginWithFacebook(token: string) {
   return result;
 }
 
-export default { login, register, fetchMe, logout, loginWithGoogle, loginWithFacebook };
+export default { login, register, fetchMe, logout, loginWithGoogle, loginWithFacebook, deleteUser };
