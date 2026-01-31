@@ -38,13 +38,18 @@ export default function Footer({ lang }: FooterProps) {
                   {t("footer.home")}
                 </Link>
               </li>
+              <li>
+                <Link href={`/${lang}/data-deletion`} className="text-gray-300 hover:text-white text-sm">
+                  {t("footer.dataDeletion")}
+                </Link>
+              </li>
             </ul>
           </div>
 
           {/* Columna 3: Contacto */}
           <div>
             <h3 className="text-lg font-bold mb-4">{t("footer.contact")}</h3>
-            <a 
+            <a
               href={`mailto:${supportEmail}`}
               className="text-gray-300 hover:text-white text-sm"
             >

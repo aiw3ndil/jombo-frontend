@@ -255,6 +255,7 @@
     "terms": "Términos y Condiciones",
     "home": "Inicio",
     "contact": "Contacto",
+    "dataDeletion": "Eliminación de Datos",
     "rights": "Todos los derechos reservados."
   },
   "terms": {
@@ -290,5 +291,40 @@
     },
     "lastUpdate": "Última actualización",
     "updateDate": "3 de diciembre de 2025"
+  },
+  "dataDeletion": {
+    "title": "Instrucciones de Eliminación de Datos",
+    "description": "En Jombo, valoramos tu privacidad. Puedes solicitar la eliminación de tus datos en cualquier momento.",
+    "section1": {
+      "title": "Eliminación de Datos de Usuario",
+      "content": "De acuerdo con los Términos de la Plataforma de Facebook y el RGPD, proporcionamos un mecanismo para que los usuarios soliciten la eliminación de sus datos."
+    },
+    "section2": {
+      "title": "Tipo de Datos Eliminados",
+      "content": "Cuando eliminas tu cuenta, eliminaremos:",
+      "list": {
+        "item1": "Tu información de perfil personal (nombre, email, foto)",
+        "item2": "Tokens de autenticación",
+        "item3": "Historial de viajes y reservas"
+      }
+    },
+    "section3": {
+      "title": "Retención de Datos",
+      "content": "Algunos datos pueden conservarse durante un período limitado si así lo exige la ley o para fines comerciales legítimos (por ejemplo, prevención de fraude)."
+    },
+    "section4": {
+      "title": "Cómo Eliminar Tus Datos",
+      "subtitle": "Método 1: Eliminación Automática vía App (Recomendado)",
+      "step1": "Inicia sesión en tu cuenta de Jombo",
+      "step2": "Ve a 'Mi Perfil'",
+      "step3": "Desplázate hacia abajo hasta la 'Zona de Peligro'",
+      "step4": "Haz clic en 'Eliminar Cuenta' y confirma la acción"
+    },
+    "section5": {
+      "subtitle": "Método 2: Solicitud Manual",
+      "content": "Si no puedes acceder a tu cuenta, puedes solicitar la eliminación de datos enviando un correo electrónico a:",
+      "email": "soporte@jombo.es",
+      "note": "Por favor incluye tu dirección de correo electrónico registrada."
+    }
   }
 }

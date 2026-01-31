@@ -255,6 +255,7 @@
     "terms": "Käyttöehdot",
     "home": "Koti",
     "contact": "Yhteystiedot",
+    "dataDeletion": "Tietojen Poistaminen",
     "rights": "Kaikki oikeudet pidätetään."
   },
   "terms": {
@@ -290,5 +291,40 @@
     },
     "lastUpdate": "Viimeksi päivitetty",
     "updateDate": "3. joulukuuta 2025"
+  },
+  "dataDeletion": {
+    "title": "Tietojen Poistamisohjeet",
+    "description": "Me Jombossa arvostamme yksityisyyttäsi. Voit pyytää tietojesi poistamista milloin tahansa.",
+    "section1": {
+      "title": "Käyttäjätietojen Poistaminen",
+      "content": "Facebookin alustaehtojen ja GDPR:n mukaisesti tarjoamme käyttäjille mekanismin tietojen poistamisen pyytämiseen."
+    },
+    "section2": {
+      "title": "Poistettavat Tiedot",
+      "content": "Kun poistat tilisi, poistamme:",
+      "list": {
+        "item1": "Henkilökohtaiset profiilitietosi (nimi, sähköposti, kuva)",
+        "item2": "Tunnistautumisavaimet",
+        "item3": "Matkahistoria ja varaukset"
+      }
+    },
+    "section3": {
+      "title": "Tietojen Säilytys",
+      "content": "Joitakin tietoja voidaan säilyttää rajoitetun ajan, jos laki niin vaatii tai laillisiin liiketoimintatarkoituksiin (esim. petosten ehkäisy)."
+    },
+    "section4": {
+      "title": "Kuinka Poistaa Tiedot",
+      "subtitle": "Tapa 1: Automaattinen Poisto Sovelluksessa (Suositeltu)",
+      "step1": "Kirjaudu sisään Jombo-tilillesi",
+      "step2": "Mene 'Profiilini'-osioon",
+      "step3": "Vieritä alas 'Vaaravyöhyke'-kohtaan",
+      "step4": "Klikkaa 'Poista Tili' ja vahvista toiminto"
+    },
+    "section5": {
+      "subtitle": "Tapa 2: Manuaalinen Pyyntö",
+      "content": "Jos et pääse tilillesi, voit pyytää tietojen poistoa lähettämällä sähköpostia osoitteeseen:",
+      "email": "tuki@jombo.fi",
+      "note": "Liitä mukaan rekisteröity sähköpostiosoitteesi."
+    }
   }
 }

@@ -255,6 +255,7 @@
     "terms": "Terms and Conditions",
     "home": "Home",
     "contact": "Contact",
+    "dataDeletion": "Data Deletion",
     "rights": "All rights reserved."
   },
   "terms": {
@@ -290,5 +291,40 @@
     },
     "lastUpdate": "Last updated",
     "updateDate": "December 3, 2025"
+  },
+  "dataDeletion": {
+    "title": "Data Deletion Instructions",
+    "description": "At Jombo, we value your privacy. You can request the deletion of your data at any time.",
+    "section1": {
+      "title": "User Data Deletion",
+      "content": "In accordance with Facebook Platform Terms and GDPR, we provide a mechanism for users to request the deletion of their data."
+    },
+    "section2": {
+      "title": "Type of Data Deleted",
+      "content": "When you delete your account, we will remove:",
+      "list": {
+        "item1": "Your personal profile information (name, email, photo)",
+        "item2": "Authentication tokens",
+        "item3": "Trip history and bookings"
+      }
+    },
+    "section3": {
+      "title": "Data Retention",
+      "content": "Some data may be retained for a limited period if required by law or for legitimate business purposes (e.g., fraud prevention)."
+    },
+    "section4": {
+      "title": "How to Delete Your Data",
+      "subtitle": "Method 1: Automatic Deletion via App (Recommended)",
+      "step1": "Log in to your Jombo account",
+      "step2": "Go to 'My Profile'",
+      "step3": "Scroll down to the 'Danger Zone'",
+      "step4": "Click on 'Delete Account' and confirm the action"
+    },
+    "section5": {
+      "subtitle": "Method 2: Manual Request",
+      "content": "If you cannot access your account, you can request data deletion by sending an email to:",
+      "email": "soporte@jombo.es",
+      "note": "Please include your registered email address."
+    }
   }
 }
