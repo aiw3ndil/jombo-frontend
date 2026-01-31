@@ -140,6 +140,8 @@
       "loading": "Loading...",
       "noTrips": "You haven't published any trips",
       "createTrip": "Publish trip",
+      "manageTrip": "Manage trip",
+      "tripDetails": "Trip Details",
       "yourTrips": "Your trips",
       "bookingsForTrip": "Trip bookings",
       "selectTrip": "Select a trip to view its bookings",

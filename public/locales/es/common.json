@@ -140,6 +140,8 @@
       "loading": "Cargando...",
       "noTrips": "No has publicado ningún viaje",
       "createTrip": "Publicar viaje",
+      "manageTrip": "Gestionar viaje",
+      "tripDetails": "Detalles del Viaje",
       "yourTrips": "Tus viajes",
       "bookingsForTrip": "Reservas del viaje",
       "selectTrip": "Selecciona un viaje para ver sus reservas",

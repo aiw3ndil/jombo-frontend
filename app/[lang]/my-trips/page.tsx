@@ -1,14 +1,10 @@
 "use client";
-import { useEffect, useState } from "react";
+import { useEffect, useState, useMemo } from "react";
 import { useRouter, useParams } from "next/navigation";
 import Link from "next/link";
-import { useMemo } from "react"; // Add useMemo import
-import { getMyTrips, getTripBookings, Trip } from "@/app/lib/api/trips";
-import { confirmBooking, rejectBooking, Booking } from "@/app/lib/api/bookings";
+import { getMyTrips, Trip } from "@/app/lib/api/trips";
 import { useTranslation } from "@/app/hooks/useTranslation";
 import { useAuth } from "@/app/contexts/AuthContext";
-import { toast } from "sonner";
-import RejectBookingModal from "@/app/components/RejectBookingModal";
 
 export default function MyTrips() {
   const translationNamespaces = useMemo(() => ["common", "myTrips"], []);
@@ -20,12 +16,6 @@ export default function MyTrips() {
 
   const [trips, setTrips] = useState<Trip[]>([]);
   const [loading, setLoading] = useState(true);
-  const [selectedTripId, setSelectedTripId] = useState<number | null>(null);
-  const [tripBookings, setTripBookings] = useState<Booking[]>([]);
-  const [loadingBookings, setLoadingBookings] = useState(false);
-  const [actionLoading, setActionLoading] = useState<number | null>(null);
-  const [rejectModalOpen, setRejectModalOpen] = useState(false); // New state
-  const [selectedBookingToReject, setSelectedBookingToReject] = useState<Booking | null>(null); // New state
 
   useEffect(() => {
     if (!authLoading && !user) {
@@ -42,7 +32,10 @@ export default function MyTrips() {
     try {
       setLoading(true);
       const data = await getMyTrips();
-      setTrips(data);
+      // Sort trips by date, newest first or by departure date?
+      // Usually upcoming trips first.
+      const sortedTrips = data.sort((a, b) => new Date(a.departure_time).getTime() - new Date(b.departure_time).getTime());
+      setTrips(sortedTrips);
     } catch (error) {
       console.error("Error loading trips:", error);
     } finally {
@@ -50,70 +43,9 @@ export default function MyTrips() {
     }
   };
 
-  const loadTripBookings = async (tripId: number) => {
-    try {
-      setLoadingBookings(true);
-      setSelectedTripId(tripId);
-      const bookings = await getTripBookings(tripId);
-      setTripBookings(bookings);
-    } catch (error) {
-      console.error("Error loading trip bookings:", error);
-      toast.error(t("page.myTrips.errorLoadingBookings") || "Error al cargar las reservas");
-    } finally {
-      setLoadingBookings(false);
-    }
-  };
-
-  const handleConfirmBooking = async (tripId: number, bookingId: number) => {
-    setActionLoading(bookingId);
-    try {
-      await confirmBooking(tripId, bookingId);
-      toast.success(t("page.myTrips.bookingConfirmed") || "Reserva confirmada");
-      // Recargar las reservas del viaje
-      if (selectedTripId) {
-        await loadTripBookings(selectedTripId);
-        await loadTrips(); // Actualizar asientos disponibles
-      }
-    } catch (error: any) {
-      console.error("Error confirming booking:", error);
-      toast.error(error?.message || t("page.myTrips.errorConfirming") || "Error al confirmar la reserva");
-    } finally {
-      setActionLoading(null);
-    }
-  };
-
-  const handleRejectBooking = async (tripId: number, booking: Booking) => {
-    // This function now just opens the modal
-    setSelectedBookingToReject(booking);
-    setRejectModalOpen(true);
-  };
-
-  const handleConfirmRejectBooking = async () => {
-    if (!selectedBookingToReject || !selectedTripId) return;
-
-    setActionLoading(selectedBookingToReject.id);
-    try {
-      await rejectBooking(selectedTripId, selectedBookingToReject.id);
-      toast.success(t("page.myTrips.bookingRejected") || "Reserva rechazada");
-      // Recargar las reservas del viaje
-      if (selectedTripId) {
-        await loadTripBookings(selectedTripId);
-      }
-      setRejectModalOpen(false); // Close modal on success
-      setSelectedBookingToReject(null); // Clear selected booking
-    } catch (error: any) {
-      console.error("Error rejecting booking:", error);
-      toast.error(error?.message || t("page.myTrips.errorRejecting") || "Error al rechazar la reserva");
-    } finally {
-      setActionLoading(null);
-    }
-  };
-
-
-
   if (translationsLoading || authLoading || loading) {
     return (
-      <div className="max-w-5xl mx-auto">
+      <div className="max-w-4xl mx-auto p-6">
         <p className="text-gray-900">{t("page.myTrips.loading") || "Cargando..."}</p>
       </div>
     );
@@ -123,185 +55,80 @@ export default function MyTrips() {
     return null;
   }
 
-  const getStatusColor = (status: string) => {
-    switch (status) {
-      case "confirmed":
-        return "bg-green-100 text-green-800";
-      case "pending":
-        return "bg-yellow-100 text-yellow-800";
-      case "rejected":
-        return "bg-red-100 text-red-800";
-      case "cancelled":
-        return "bg-gray-100 text-gray-800";
-      default:
-        return "bg-gray-100 text-gray-800";
-    }
-  };
-
-  const getStatusText = (status: string) => {
-    switch (status) {
-      case "confirmed":
-        return t("page.myTrips.statusConfirmed") || "Confirmada";
-      case "pending":
-        return t("page.myTrips.statusPending") || "Pendiente";
-      case "rejected":
-        return t("page.myTrips.statusRejected") || "Rechazada";
-      case "cancelled":
-        return t("page.myTrips.statusCancelled") || "Cancelada";
-      default:
-        return status;
-    }
-  };
-
   return (
-    <div className="max-w-6xl mx-auto">
-      <div className="flex justify-between items-center mb-6">
+    <div className="max-w-4xl mx-auto py-8 px-4">
+      <div className="flex justify-between items-center mb-8">
         <h1 className="text-3xl font-bold text-gray-900">
           {t("page.myTrips.title")}
         </h1>
         <div className="flex gap-4">
-          <Link href={`/${lang}/create-trip`} className="bg-blue-600 text-white px-4 py-2 rounded hover:bg-blue-700">
+          <Link href={`/${lang}/create-trip`} className="bg-blue-600 text-white px-4 py-2 rounded hover:bg-blue-700 transition-colors shadow-sm">
             {t("page.myTrips.createTrip") || "Publicar viaje"}
           </Link>
-          <button
-            onClick={() => router.push(`/${lang}`)}
-            className="bg-gray-600 text-white px-4 py-2 rounded hover:bg-gray-700"
-          >
-          {t("page.myTrips.back")}
-        </button>
         </div>
       </div>
 
       {trips.length === 0 ? (
-        <div className="text-center py-12">
-          <p className="text-gray-400 text-lg mb-4">
+        <div className="text-center py-16 bg-gray-50 rounded-lg border border-gray-200">
+          <p className="text-gray-500 text-lg mb-6">
             {t("page.myTrips.noTrips") || "No has publicado ningún viaje"}
           </p>
           <button
             onClick={() => router.push(`/${lang}/create-trip`)}
-            className="bg-blue-600 text-white px-6 py-2 rounded hover:bg-blue-700"
+            className="bg-blue-600 text-white px-6 py-2 rounded hover:bg-blue-700 transition-colors"
           >
             {t("page.myTrips.createTrip") || "Publicar viaje"}
           </button>
         </div>
       ) : (
-        <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
-          {/* Lista de viajes */}
-          <div className="space-y-4">
-            <h2 className="text-xl font-bold text-gray-900 mb-4">
-              {t("page.myTrips.yourTrips")}
-            </h2>
-            {trips.map((trip) => (
-              <div
-                key={trip.id}
-                className={`border rounded-lg p-4 bg-white shadow cursor-pointer transition-all ${
-                  selectedTripId === trip.id ? "ring-2 ring-blue-500" : ""
-                }`}
-                onClick={() => loadTripBookings(trip.id)}
-              >
-                <h3 className="text-lg font-semibold text-gray-900 mb-2">
-                  {trip.departure_location} → {trip.arrival_location}
-                </h3>
-                <div className="text-sm text-gray-600 space-y-1">
-                  <p>
-                    <span className="font-medium">{t("page.myTrips.departure")}:</span>{" "}
-                    {new Date(trip.departure_time).toLocaleString(lang)}
-                  </p>
-                  <p>
-                    <span className="font-medium">{t("page.myTrips.availableSeats")}:</span>{" "}
-                    {trip.available_seats}
-                  </p>
-                  <p>
-                    <span className="font-medium">{t("page.myTrips.price")}:</span> €
-                    {Number(trip.price).toFixed(2)}
-                  </p>
-                </div>
-              </div>
-            ))}
-          </div>
+        <div className="grid grid-cols-1 gap-4">
+          {trips.map((trip) => (
+            <div
+              key={trip.id}
+              className="border border-gray-200 rounded-lg p-6 bg-white shadow-sm hover:shadow-md transition-shadow"
+            >
+              <div className="flex flex-col md:flex-row justify-between md:items-center gap-4">
+                <div className="flex-1">
+                  <div className="flex items-center gap-3 mb-2">
+                    <h3 className="text-xl font-bold text-gray-900">
+                      {trip.departure_location} <span className="text-gray-400">→</span> {trip.arrival_location}
+                    </h3>
+                  </div>
 
-          {/* Panel de reservas */}
-          <div>
-            <h2 className="text-xl font-bold text-gray-900 mb-4">
-              {t("page.myTrips.bookingsForTrip")}
-            </h2>
-            {!selectedTripId ? (
-              <p className="text-gray-400 text-center py-12">
-                {t("page.myTrips.selectTrip") || "Selecciona un viaje para ver sus reservas"}
-              </p>
-            ) : loadingBookings ? (
-              <p className="text-gray-400 text-center py-12">
-                {t("page.myTrips.loadingBookings") || "Cargando reservas..."}
-              </p>
-            ) : tripBookings.length === 0 ? (
-              <p className="text-gray-400 text-center py-12">
-                {t("page.myTrips.noBookings") || "No hay reservas para este viaje"}
-              </p>
-            ) : (
-              <div className="space-y-3">
-                {tripBookings.map((booking) => (
-                  <div
-                    key={booking.id}
-                    className="border rounded-lg p-4 bg-white shadow"
-                  >
-                    <div className="flex justify-between items-start mb-3">
-                      <div>
-                        <p className="font-semibold text-gray-900">
-                          {booking.user?.name || booking.user?.email}
-                        </p>
-                        <p className="text-sm text-gray-600">
-                          {booking.seats} {booking.seats === 1 ? t("page.myTrips.seat") : t("page.myTrips.seats")}
-                        </p>
-                      </div>
-                      <span className={`px-2 py-1 rounded text-xs font-medium ${getStatusColor(booking.status)}`}>
-                        {getStatusText(booking.status)}
+                  <div className="flex flex-wrap gap-x-6 gap-y-2 text-gray-600 text-sm">
+                    <div className="flex items-center gap-1">
+                      <span className="font-medium">{t("page.myTrips.departure")}:</span>
+                      {new Date(trip.departure_time).toLocaleString(lang, {
+                        month: 'short', day: 'numeric', hour: '2-digit', minute: '2-digit'
+                      })}
+                    </div>
+
+                    <div className="flex items-center gap-1">
+                      <span className="font-medium">{t("page.myTrips.availableSeats")}:</span>
+                      <span className={trip.available_seats === 0 ? "text-red-500 font-bold" : ""}>
+                        {trip.available_seats}
                       </span>
                     </div>
 
-                    {booking.status === "pending" && (
-                      <div className="flex gap-2 mt-3">
-                        <button
-                          onClick={() => selectedTripId && handleConfirmBooking(selectedTripId, booking.id)}
-                          disabled={actionLoading === booking.id}
-                          className="flex-1 bg-green-600 text-white px-3 py-2 rounded text-sm hover:bg-green-700 disabled:bg-gray-400"
-                        >
-                          {actionLoading === booking.id
-                            ? t("page.myTrips.confirming") || "..."
-                            : t("page.myTrips.confirm") || "Confirmar"}
-                        </button>
-                        <button
-                          onClick={() => selectedTripId && handleRejectBooking(selectedTripId, booking)}
-                          disabled={actionLoading === booking.id}
-                          className="flex-1 bg-red-600 text-white px-3 py-2 rounded text-sm hover:bg-red-700 disabled:bg-gray-400"
-                        >
-                          {actionLoading === booking.id
-                            ? t("page.myTrips.rejecting") || "..."
-                            : t("page.myTrips.reject") || "Rechazar"}
-                        </button>
-                      </div>
-                    )}
+                    <div className="flex items-center gap-1">
+                      <span className="font-medium">{t("page.myTrips.price")}:</span>
+                      €{Number(trip.price).toFixed(2)}
+                    </div>
                   </div>
-                ))}
+                </div>
+
+                <div className="flex flex-col sm:flex-row gap-3 min-w-[200px] justify-end">
+                  <Link
+                    href={`/${lang}/my-trips/${trip.id}`}
+                    className="bg-white border border-gray-300 text-gray-700 px-4 py-2 rounded hover:bg-gray-50 text-center transition-colors font-medium whitespace-nowrap"
+                  >
+                    {t("page.myTrips.manageTrip") || "Gestionar viaje"}
+                  </Link>
+                </div>
               </div>
-            )}
-          </div>
+            </div>
+          ))}
         </div>
-      )}
-      {rejectModalOpen && selectedBookingToReject && (
-        <RejectBookingModal
-          isOpen={rejectModalOpen}
-          onClose={() => {
-            setRejectModalOpen(false);
-            setSelectedBookingToReject(null);
-          }}
-          onConfirm={handleConfirmRejectBooking}
-          loading={actionLoading === selectedBookingToReject.id}
-          t={t}
-          bookingDetails={{
-            userName: selectedBookingToReject.user?.name || selectedBookingToReject.user?.email || 'N/A',
-            seats: selectedBookingToReject.seats,
-          }}
-        />
       )}
     </div>
   );

@@ -140,6 +140,8 @@
       "loading": "Ladataan...",
       "noTrips": "Et ole julkaissut matkoja",
       "createTrip": "Julkaise matka",
+      "manageTrip": "Hallinnoi matkaa",
+      "tripDetails": "Matkan tiedot",
       "yourTrips": "Matkasi",
       "bookingsForTrip": "Matkan varaukset",
       "selectTrip": "Valitse matka nähdäksesi sen varaukset",
