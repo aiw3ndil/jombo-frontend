@@ -13,11 +13,13 @@ export interface Review {
     id: number;
     name: string;
     email: string;
+    picture_url?: string;
   };
   reviewee?: {
     id: number;
     name: string;
     email: string;
+    picture_url?: string;
   };
 }
 
@@ -28,9 +30,9 @@ export interface CreateReviewData {
 
 export async function createReview(bookingId: number, data: CreateReviewData): Promise<Review> {
   const url = `${API_BASE}/api/v1/bookings/${bookingId}/reviews`;
-  
+
   console.log('📤 Creating review:', { bookingId, data });
-  
+
   const res = await fetch(url, {
     method: "POST",
     headers: {
@@ -49,11 +51,11 @@ export async function createReview(bookingId: number, data: CreateReviewData): P
 
   if (!res.ok) {
     let errorMessage = "Error al crear la reseña";
-    
+
     try {
       const errorData = await res.json();
       console.log('❌ Error data:', errorData);
-      
+
       if (errorData.errors && Array.isArray(errorData.errors)) {
         errorMessage = errorData.errors.join(", ");
       } else if (errorData.error) {
@@ -64,7 +66,7 @@ export async function createReview(bookingId: number, data: CreateReviewData): P
     } catch (e) {
       console.log('❌ Could not parse error JSON');
     }
-    
+
     console.log('❌ Final error message:', errorMessage);
     throw new Error(errorMessage);
   }
@@ -76,7 +78,7 @@ export async function createReview(bookingId: number, data: CreateReviewData): P
 
 export async function getBookingReviews(bookingId: number): Promise<Review[]> {
   const url = `${API_BASE}/api/v1/bookings/${bookingId}/reviews`;
-  
+
   const res = await fetch(url, {
     method: "GET",
     credentials: "include",
@@ -91,7 +93,7 @@ export async function getBookingReviews(bookingId: number): Promise<Review[]> {
 
 export async function getUserReviews(userId: number): Promise<Review[]> {
   const url = `${API_BASE}/api/v1/users/${userId}/reviews`;
-  
+
   const res = await fetch(url, {
     method: "GET",
     credentials: "include",
