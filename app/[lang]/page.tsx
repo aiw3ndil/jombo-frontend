@@ -17,11 +17,12 @@ export default function Home() {
   // Wait for translations to load
   if (loading) {
     return (
-      <div className="min-h-screen bg-gradient-to-b from-blue-50 to-white flex items-center justify-center">
-        <div className="text-center">
-          <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-blue-600 mx-auto"></div>
-          <p className="mt-4 text-gray-600">Cargando...</p>
+      <div className="min-h-screen bg-brand-dark flex flex-col items-center justify-center">
+        <div className="relative w-24 h-24 mb-12">
+          <div className="absolute inset-0 rounded-full border-4 border-white/5 border-t-brand-cyan animate-spin"></div>
+          <div className="absolute inset-2 rounded-full border-4 border-white/5 border-t-brand-purple animate-spin" style={{ animationDuration: '1.5s' }}></div>
         </div>
+        <p className="text-brand-gray uppercase tracking-widest text-xs font-black animate-pulse">Sincronizando portal...</p>
       </div>
     );
   }
@@ -81,7 +82,7 @@ export default function Home() {
                         value={from}
                         onChange={(val: string) => setFrom(val)}
                         placeholder={t("page.home.from") || "Desde"}
-                        className="w-full bg-transparent border-none pl-16 pr-6 py-7 text-2xl text-white placeholder:text-brand-gray/30 focus:ring-0 outline-none font-bold"
+                        className="w-full bg-transparent border-none pl-16 pr-6 py-7 text-2xl text-white placeholder:text-brand-gray/50 focus:ring-0 outline-none font-bold"
                         required
                       />
                     </div>
