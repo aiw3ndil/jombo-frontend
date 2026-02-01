@@ -19,12 +19,14 @@ export interface Booking {
       id: number;
       name: string;
       email: string;
+      picture_url?: string;
     };
   };
   user?: {
     id: number;
     name: string;
     email: string;
+    picture_url?: string;
   };
 }
 
@@ -35,9 +37,9 @@ export interface CreateBookingData {
 
 export async function createBooking(data: CreateBookingData): Promise<Booking> {
   const url = `${API_BASE}/api/v1/trips/${data.trip_id}/bookings`;
-  
+
   console.log('📤 Creating booking:', data);
-  
+
   const res = await fetch(url, {
     method: "POST",
     headers: {
@@ -55,11 +57,11 @@ export async function createBooking(data: CreateBookingData): Promise<Booking> {
 
   if (!res.ok) {
     let errorMessage = "Error al crear la reserva";
-    
+
     try {
       const errorData = await res.json();
       console.log('❌ Error data:', errorData);
-      
+
       if (errorData.errors && Array.isArray(errorData.errors)) {
         errorMessage = errorData.errors.join(", ");
       } else if (errorData.error) {
@@ -70,7 +72,7 @@ export async function createBooking(data: CreateBookingData): Promise<Booking> {
     } catch (e) {
       console.log('❌ Could not parse error JSON');
     }
-    
+
     console.log('❌ Final error message:', errorMessage);
     throw new Error(errorMessage);
   }
@@ -82,7 +84,7 @@ export async function createBooking(data: CreateBookingData): Promise<Booking> {
 
 export async function getBookings(): Promise<Booking[]> {
   const url = `${API_BASE}/api/v1/bookings`;
-  
+
   const res = await fetch(url, {
     method: "GET",
     credentials: "include",
@@ -97,7 +99,7 @@ export async function getBookings(): Promise<Booking[]> {
 
 export async function confirmBooking(tripId: number, bookingId: number): Promise<Booking> {
   const url = `${API_BASE}/api/v1/trips/${tripId}/bookings/${bookingId}/confirm`;
-  
+
   const res = await fetch(url, {
     method: "PUT",
     credentials: "include",
@@ -128,7 +130,7 @@ export async function confirmBooking(tripId: number, bookingId: number): Promise
 
 export async function rejectBooking(tripId: number, bookingId: number): Promise<Booking> {
   const url = `${API_BASE}/api/v1/trips/${tripId}/bookings/${bookingId}/reject`;
-  
+
   const res = await fetch(url, {
     method: "PUT",
     credentials: "include",
@@ -159,7 +161,7 @@ export async function rejectBooking(tripId: number, bookingId: number): Promise<
 
 export async function cancelBooking(bookingId: number): Promise<void> {
   const url = `${API_BASE}/api/v1/bookings/${bookingId}`;
-  
+
   const res = await fetch(url, {
     method: "DELETE",
     credentials: "include",

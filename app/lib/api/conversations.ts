@@ -8,6 +8,7 @@ export interface Message {
     id: number;
     name: string;
     email: string;
+    picture_url?: string;
   };
 }
 
@@ -24,12 +25,14 @@ export interface Conversation {
       id: number;
       name: string;
       email: string;
+      picture_url?: string;
     };
   };
   participants: Array<{
     id: number;
     name: string;
     email: string;
+    picture_url?: string;
   }>;
   last_message?: {
     id: number;
@@ -38,6 +41,7 @@ export interface Conversation {
     user: {
       id: number;
       name: string;
+      picture_url?: string;
     };
   };
 }
@@ -49,7 +53,7 @@ export interface ConversationDetail extends Conversation {
 // Obtener todas las conversaciones del usuario
 export async function getConversations(): Promise<Conversation[]> {
   const url = `${API_BASE}/api/v1/conversations`;
-  
+
   const res = await fetch(url, {
     method: "GET",
     credentials: "include",
@@ -65,7 +69,7 @@ export async function getConversations(): Promise<Conversation[]> {
 // Obtener una conversación específica con todos sus mensajes
 export async function getConversation(conversationId: number): Promise<ConversationDetail> {
   const url = `${API_BASE}/api/v1/conversations/${conversationId}`;
-  
+
   const res = await fetch(url, {
     method: "GET",
     credentials: "include",
@@ -85,7 +89,7 @@ export async function getConversation(conversationId: number): Promise<Conversat
 // Obtener conversación de un viaje específico
 export async function getTripConversation(tripId: number): Promise<ConversationDetail> {
   const url = `${API_BASE}/api/v1/trips/${tripId}/conversation`;
-  
+
   const res = await fetch(url, {
     method: "GET",
     credentials: "include",
@@ -106,7 +110,7 @@ export async function getTripConversation(tripId: number): Promise<ConversationD
 // Enviar un mensaje
 export async function sendMessage(conversationId: number, content: string): Promise<Message> {
   const url = `${API_BASE}/api/v1/conversations/${conversationId}/messages`;
-  
+
   const res = await fetch(url, {
     method: "POST",
     headers: {
@@ -129,7 +133,7 @@ export async function sendMessage(conversationId: number, content: string): Prom
 // Eliminar una conversación (solo conductor)
 export async function deleteConversation(conversationId: number): Promise<void> {
   const url = `${API_BASE}/api/v1/conversations/${conversationId}`;
-  
+
   const res = await fetch(url, {
     method: "DELETE",
     credentials: "include",
@@ -144,7 +148,7 @@ export async function deleteConversation(conversationId: number): Promise<void> 
 // Eliminar un mensaje (solo autor)
 export async function deleteMessage(conversationId: number, messageId: number): Promise<void> {
   const url = `${API_BASE}/api/v1/conversations/${conversationId}/messages/${messageId}`;
-  
+
   const res = await fetch(url, {
     method: "DELETE",
     credentials: "include",
