@@ -34,7 +34,7 @@ export async function searchTrips(departureLocation: string, arrivalLocation?: s
     params.set("to", arrivalLocation);
   }
   const url = `${API_BASE}/api/v1/trips/search/${encodeURIComponent(departureLocation)}?${params.toString()}`;
-  
+
   const res = await fetch(url, {
     method: "GET",
     credentials: "include",
@@ -50,14 +50,26 @@ export async function searchTrips(departureLocation: string, arrivalLocation?: s
 
 export async function getMyTrips(): Promise<Trip[]> {
   const url = `${API_BASE}/api/v1/trips/my_trips`;
-  
+
   const res = await fetch(url, {
     method: "GET",
+    headers: {
+      ...getAuthHeaders(),
+    },
     credentials: "include",
   });
 
   if (!res.ok) {
-    throw new Error("Error al obtener tus viajes");
+    const status = res.status;
+    let errorDetail = "";
+    try {
+      const errorJson = await res.json();
+      errorDetail = JSON.stringify(errorJson);
+    } catch {
+      errorDetail = await res.text();
+    }
+    console.error(`❌ getMyTrips failed with status ${status}:`, errorDetail);
+    throw new Error(`Error al obtener tus viajes (Status: ${status}) - ${errorDetail}`);
   }
 
   const data = await res.json();
@@ -66,7 +78,7 @@ export async function getMyTrips(): Promise<Trip[]> {
 
 export async function getTripBookings(tripId: number): Promise<any[]> {
   const url = `${API_BASE}/api/v1/trips/${tripId}/bookings`;
-  
+
   const res = await fetch(url, {
     method: "GET",
     headers: {
@@ -94,9 +106,9 @@ export interface CreateTripData {
 
 export async function createTrip(tripData: CreateTripData): Promise<Trip> {
   const url = `${API_BASE}/api/v1/trips`;
-  
+
   console.log('📤 Creating trip with data:', tripData);
-  
+
   const res = await fetch(url, {
     method: "POST",
     headers: {
@@ -111,11 +123,11 @@ export async function createTrip(tripData: CreateTripData): Promise<Trip> {
 
   if (!res.ok) {
     let errorMessage = "Error al crear el viaje";
-    
+
     try {
       const errorData = await res.json();
       console.log('❌ Error data:', errorData);
-      
+
       if (errorData.errors && Array.isArray(errorData.errors)) {
         errorMessage = errorData.errors.join(", ");
       } else if (errorData.error) {
@@ -128,7 +140,7 @@ export async function createTrip(tripData: CreateTripData): Promise<Trip> {
       const text = await res.text();
       console.log('❌ Error text:', text);
     }
-    
+
     console.log('❌ Final error message:', errorMessage);
     throw new Error(errorMessage);
   }
