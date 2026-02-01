@@ -89,6 +89,25 @@ export default function LocationInput({
         );
     }
 
+    const handleKeyDown = (e: React.KeyboardEvent<HTMLInputElement>) => {
+        if (e.key === "Enter") {
+            // Check if there's a selected item in the Google Maps dropdown
+            const selectedItem = document.querySelector(".pac-item-selected");
+            if (!selectedItem) {
+                // If no item is selected, simulate Arrow Down to highlight the first one
+                const downArrowEvent = new KeyboardEvent("keydown", {
+                    key: "ArrowDown",
+                    code: "ArrowDown",
+                    keyCode: 40,
+                    which: 40,
+                    bubbles: true,
+                    cancelable: true,
+                });
+                e.currentTarget.dispatchEvent(downArrowEvent);
+            }
+        }
+    };
+
     return (
         <Autocomplete onLoad={onLoad} onPlaceChanged={onPlaceChanged}>
             <input
@@ -96,6 +115,7 @@ export default function LocationInput({
                 name={name}
                 value={value}
                 onChange={(e) => onChange(e.target.value)}
+                onKeyDown={handleKeyDown}
                 placeholder={placeholder}
                 className={className}
                 required={required}
