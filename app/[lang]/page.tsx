@@ -4,6 +4,7 @@ import { useTranslation } from "@/app/hooks/useTranslation";
 import { useRouter, useParams } from "next/navigation";
 import Image from "next/image";
 import { toast } from "sonner";
+import LocationInput from "@/app/components/LocationInput";
 
 export default function Home() {
   const { t, loading } = useTranslation();
@@ -50,7 +51,7 @@ export default function Home() {
             <p className="text-xl text-gray-600">
               {t("page.home.hero.subtitle") || "Conecta con personas que van a tu mismo destino"}
             </p>
-            
+
             {/* Free Badge */}
             <div className="inline-flex items-center gap-2 bg-green-100 text-green-800 px-4 py-2 rounded-full font-semibold">
               <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -62,16 +63,16 @@ export default function Home() {
             {/* Search Form */}
             <form onSubmit={handleSubmit} className="space-y-4 mt-8">
               <div className="space-y-3">
-                <input
+                <LocationInput
                   value={from}
-                  onChange={(e) => setFrom(e.target.value)}
+                  onChange={(val: string) => setFrom(val)}
                   placeholder={t("page.home.from") || "Desde"}
                   className="w-full border border-gray-300 p-4 rounded-lg text-gray-900 focus:ring-2 focus:ring-blue-500 focus:border-transparent"
                   required
                 />
-                <input
+                <LocationInput
                   value={to}
-                  onChange={(e) => setTo(e.target.value)}
+                  onChange={(val: string) => setTo(val)}
                   placeholder={t("page.home.to") || "Hasta"}
                   className="w-full border border-gray-300 p-4 rounded-lg text-gray-900 focus:ring-2 focus:ring-blue-500 focus:border-transparent"
                 />
@@ -81,7 +82,7 @@ export default function Home() {
               </button>
             </form>
 
-            <button 
+            <button
               onClick={() => router.push(`/${lang}/create-trip`)}
               className="w-full bg-gray-800 text-white px-6 py-4 rounded-lg hover:bg-gray-900 font-semibold text-lg transition-colors"
             >

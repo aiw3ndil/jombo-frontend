@@ -5,6 +5,7 @@ import { useRouter, useParams } from "next/navigation";
 import { createTrip } from "@/app/lib/api/trips";
 import { useAuth } from "@/app/contexts/AuthContext";
 import { toast } from "sonner";
+import LocationInput from "@/app/components/LocationInput";
 
 export default function CreateTrip() {
   const { t, loading: translationsLoading } = useTranslation();
@@ -65,7 +66,7 @@ export default function CreateTrip() {
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    
+
     // Validar campos requeridos
     if (!formData.from || !formData.to || !formData.date || !formData.time) {
       toast.error(t("page.createTrip.requiredFields") || "Por favor completa todos los campos requeridos");
@@ -86,7 +87,7 @@ export default function CreateTrip() {
         price: Number(formData.pricePerSeat),
         description: formData.description || undefined,
       });
-      
+
       toast.success(t("page.createTrip.success") || "Viaje creado exitosamente");
       router.push(`/${lang}`);
     } catch (error) {
@@ -109,11 +110,10 @@ export default function CreateTrip() {
           <label className="block text-gray-900 mb-2">
             {t("page.createTrip.from")} *
           </label>
-          <input
-            type="text"
+          <LocationInput
             name="from"
             value={formData.from}
-            onChange={handleChange}
+            onChange={(val: string) => setFormData(prev => ({ ...prev, from: val }))}
             className="w-full border border-gray-300 p-2 rounded text-gray-900 placeholder:text-gray-400"
             placeholder={t("page.createTrip.fromPlaceholder")}
             required
@@ -124,11 +124,10 @@ export default function CreateTrip() {
           <label className="block text-gray-900 mb-2">
             {t("page.createTrip.to")} *
           </label>
-          <input
-            type="text"
+          <LocationInput
             name="to"
             value={formData.to}
-            onChange={handleChange}
+            onChange={(val: string) => setFormData(prev => ({ ...prev, to: val }))}
             className="w-full border border-gray-300 p-2 rounded text-gray-900 placeholder:text-gray-400"
             placeholder={t("page.createTrip.toPlaceholder")}
             required
