@@ -23,7 +23,7 @@ const PUBLIC_FILE_SUFFIXES = [
 
 export function middleware(request: NextRequest) {
   const { pathname } = request.nextUrl;
-  
+
   // Initialize a response that will be potentially modified or replaced
   let response = NextResponse.next();
 
@@ -40,18 +40,23 @@ export function middleware(request: NextRequest) {
 
   const pathnameParts = pathname.split('/').filter(Boolean);
   const currentLang = pathnameParts[0];
+  const supportedLangs = ['es', 'en', 'fi'];
 
-  const supportedLangs = ['es', 'en', 'fi']; // Asegúrate de que esto coincida con tus idiomas soportados
+  // Determine target language based on domain
+  const host = request.headers.get('host') || '';
+  let targetLang = 'es'; // Default fallback
 
-
+  if (host.includes('jombo.fi')) {
+    targetLang = 'fi';
+  } else if (host.includes('jombo.es')) {
+    targetLang = 'es';
+  }
 
   // If no language in URL or current language not supported, redirect to target language
   if (!currentLang || !supportedLangs.includes(currentLang)) {
-    const targetLang = 'es';
     // If the path is already "/", redirect to "/[targetLang]"
     if (pathname === '/') {
       const redirectResponse = NextResponse.redirect(new URL(`/${targetLang}`, request.url));
-
       redirectResponse.headers.set('x-pathname', `/${targetLang}`);
       return redirectResponse;
     }
@@ -62,7 +67,7 @@ export function middleware(request: NextRequest) {
     redirectResponse.headers.set('x-pathname', `/${targetLang}${pathname}`);
     return redirectResponse;
   }
-  
+
   // If no redirection, proceed as normal and set x-pathname
   response.headers.set('x-pathname', pathname);
   return response;
