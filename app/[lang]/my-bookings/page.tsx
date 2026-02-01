@@ -38,7 +38,7 @@ export default function MyBookings() {
       setLoading(true);
       const data = await getBookings();
       setBookings(data);
-      
+
       // Check which bookings already have reviews
       const reviewsStatus: { [key: number]: boolean } = {};
       await Promise.all(
@@ -102,18 +102,18 @@ export default function MyBookings() {
   const canReview = (booking: Booking): boolean => {
     // Only confirmed bookings can be reviewed
     if (booking.status !== "confirmed") return false;
-    
+
     // Trip must have already happened (departure_time in the past)
     if (!booking.trip?.departure_time) return false;
-    
+
     const departureTime = new Date(booking.trip.departure_time);
     const now = new Date();
-    
+
     if (departureTime > now) return false;
-    
+
     // Check if user already reviewed
     if (bookingReviews[booking.id]) return false;
-    
+
     return true;
   };
 
@@ -129,142 +129,205 @@ export default function MyBookings() {
     return null;
   }
 
-  const getStatusColor = (status: string) => {
+  const getStatusClasses = (status: string) => {
     switch (status) {
       case "confirmed":
-        return "text-green-600";
+        return "bg-brand-cyan/10 text-brand-cyan border-brand-cyan/20";
       case "pending":
-        return "text-yellow-600";
+        return "bg-brand-gray/10 text-brand-gray border-brand-gray/20";
       case "rejected":
-        return "text-orange-600";
       case "cancelled":
-        return "text-red-600";
+        return "bg-brand-pink/10 text-brand-pink border-brand-pink/20";
       default:
-        return "text-gray-600";
+        return "bg-white/5 text-white border-white/10";
     }
   };
 
   const getStatusText = (status: string) => {
     switch (status) {
       case "confirmed":
-        return t("page.myBookings.statusConfirmed") || "Confirmada";
+        return t("page.myBookings.statusConfirmed") || "CONFIRMADA";
       case "pending":
-        return t("page.myBookings.statusPending") || "Pendiente";
+        return t("page.myBookings.statusPending") || "PENDIENTE";
       case "rejected":
-        return t("page.myBookings.statusRejected") || "Rechazada";
+        return t("page.myBookings.statusRejected") || "RECHAZADA";
       case "cancelled":
-        return t("page.myBookings.statusCancelled") || "Cancelada";
+        return t("page.myBookings.statusCancelled") || "CANCELADA";
       default:
-        return status;
+        return status.toUpperCase();
     }
   };
 
+  if (translationsLoading || authLoading || (loading && bookings.length === 0)) {
+    return (
+      <div className="max-w-4xl mx-auto py-24 px-6 flex flex-col items-center justify-center min-h-[60vh]">
+        <div className="relative w-24 h-24 mb-8">
+          <div className="absolute inset-0 rounded-full border-4 border-white/5 border-t-brand-cyan animate-spin"></div>
+          <div className="absolute inset-2 rounded-full border-4 border-white/5 border-t-brand-purple animate-spin" style={{ animationDuration: '1.5s' }}></div>
+        </div>
+        <p className="text-brand-gray uppercase tracking-widest text-[10px] font-black animate-pulse">{t("page.myBookings.loading") || "Cargando..."}</p>
+      </div>
+    );
+  }
+
+  if (!user) {
+    return null;
+  }
+
   return (
-    <div className="max-w-5xl mx-auto">
-      <div className="flex justify-between items-center mb-6">
-        <h1 className="text-3xl font-bold text-gray-900">
-          {t("page.myBookings.title")}
-        </h1>
+    <div className="max-w-5xl mx-auto py-12 px-4 sm:px-6 relative">
+      <div className="absolute top-0 right-0 -translate-y-1/2 translate-x-1/4 w-[400px] h-[400px] bg-brand-cyan/5 rounded-full blur-[100px] pointer-events-none"></div>
+
+      <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-6 mb-12">
+        <div>
+          <h1 className="text-4xl md:text-5xl font-black text-white tracking-tightest uppercase italic mb-2">
+            {t("page.myBookings.title")}
+          </h1>
+          <p className="text-brand-gray font-medium uppercase tracking-[0.2em] text-[10px]">
+            Tu historial de reservas en la red
+          </p>
+        </div>
         <button
           onClick={() => router.push(`/${lang}`)}
-          className="bg-gray-600 text-white px-4 py-2 rounded hover:bg-gray-700"
+          className="bg-white/5 text-white/50 border border-white/10 px-8 py-4 rounded-2xl font-black uppercase tracking-widest text-[10px] hover:text-white hover:border-white/20 transition-all shadow-xl"
         >
           {t("page.myBookings.back")}
         </button>
       </div>
 
       {bookings.length === 0 ? (
-        <div className="text-center py-12">
-          <p className="text-gray-400 text-lg mb-4">
-            {t("page.myBookings.noBookings") || "No tienes reservas"}
+        <div className="text-center py-24 bg-white/5 backdrop-blur-3xl rounded-[3rem] border border-white/10 relative overflow-hidden">
+          <div className="absolute inset-0 bg-hacker-dots opacity-5 pointer-events-none"></div>
+          <div className="w-20 h-20 bg-white/5 rounded-full flex items-center justify-center mx-auto mb-8 border border-white/10 text-brand-gray/30">
+            <svg className="w-10 h-10" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z" />
+            </svg>
+          </div>
+          <p className="text-xl text-brand-gray font-medium uppercase tracking-widest mb-10">
+            {t("page.myBookings.noBookings") || "No tienes reservas registradas"}
           </p>
           <button
             onClick={() => router.push(`/${lang}`)}
-            className="bg-blue-600 text-white px-6 py-2 rounded hover:bg-blue-700"
+            className="bg-brand-gradient text-white px-10 py-5 rounded-2xl font-black uppercase tracking-widest text-xs shadow-2xl shadow-brand-cyan/20 hover:scale-105 active:scale-95 transition-all"
           >
             {t("page.myBookings.searchTrips") || "Buscar viajes"}
           </button>
         </div>
       ) : (
-        <div className="space-y-4">
+        <div className="space-y-6">
           {bookings.map((booking) => (
             <div
               key={booking.id}
-              className="border border-gray-300 rounded-lg p-4 bg-white shadow"
+              className="group relative bg-white/5 backdrop-blur-3xl border border-white/5 rounded-[2.5rem] p-8 hover:border-brand-cyan/20 transition-all duration-500 hover:shadow-2xl hover:shadow-brand-cyan/5 overflow-hidden"
             >
-              <div className="flex justify-between items-start mb-3">
-                <div className="flex-1">
-                  <h2 className="text-xl font-semibold text-gray-900 mb-1">
-                    {booking.trip?.departure_location} → {booking.trip?.arrival_location}
-                  </h2>
-                  <p className="text-sm text-gray-600">
-                    {t("page.myBookings.driver")}: {booking.trip?.driver?.name}
-                  </p>
-                </div>
-                <span className={`font-semibold ${getStatusColor(booking.status)}`}>
-                  {getStatusText(booking.status)}
-                </span>
-              </div>
+              <div className="absolute inset-0 bg-hacker-dots opacity-5 pointer-events-none"></div>
 
-              <div className="grid grid-cols-2 md:grid-cols-4 gap-4 mb-3">
-                <div>
-                  <p className="text-sm text-gray-600">{t("page.myBookings.departure")}</p>
-                  <p className="font-medium text-gray-900">
-                    {booking.trip?.departure_time ? new Date(booking.trip.departure_time).toLocaleString(lang) : "-"}
-                  </p>
-                </div>
-                <div>
-                  <p className="text-sm text-gray-600">{t("page.myBookings.seats")}</p>
-                  <p className="font-medium text-gray-900">{booking.seats}</p>
-                </div>
-                <div>
-                  <p className="text-sm text-gray-600">{t("page.myBookings.totalPrice")}</p>
-                  <p className="font-medium text-green-600">
-                    €{booking.trip?.price ? (Number(booking.trip.price) * booking.seats).toFixed(2) : "0.00"}
-                  </p>
-                </div>
-                <div>
-                  <p className="text-sm text-gray-600">{t("page.myBookings.bookingDate")}</p>
-                  <p className="font-medium text-gray-900">
-                    {new Date(booking.created_at).toLocaleDateString(lang)}
-                  </p>
-                </div>
-              </div>
-
-              {booking.status !== "cancelled" && booking.status !== "rejected" && (
-                <div className="flex justify-end gap-2">
-                  {canReview(booking) && (
-                    <button
-                      onClick={() => handleOpenReview(booking)}
-                      className="bg-yellow-500 text-white px-4 py-2 rounded hover:bg-yellow-600 transition-colors"
-                    >
-                      ⭐ {t("page.myBookings.review") || "Calificar"}
-                    </button>
-                  )}
-                  {bookingReviews[booking.id] && (
-                    <span className="flex items-center gap-1 text-green-600 px-4 py-2">
-                      <svg className="w-5 h-5" fill="currentColor" viewBox="0 0 20 20">
-                        <path fillRule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clipRule="evenodd" />
-                      </svg>
-                      {t("page.myBookings.reviewed") || "Calificado"}
+              <div className="relative flex flex-col xl:flex-row justify-between xl:items-center gap-8">
+                <div className="flex-1 space-y-6">
+                  <div className="flex flex-wrap items-center gap-4">
+                    <span className={`px-4 py-1.5 rounded-full text-[10px] font-black uppercase tracking-widest border transition-all ${getStatusClasses(booking.status)}`}>
+                      {getStatusText(booking.status)}
                     </span>
-                  )}
-                  <button
-                    onClick={() => handleCancelBooking(booking.id)}
-                    disabled={cancellingId === booking.id}
-                    className="bg-red-600 text-white px-4 py-2 rounded hover:bg-red-700 disabled:bg-gray-400 disabled:cursor-not-allowed"
-                  >
-                    {cancellingId === booking.id
-                      ? (t("page.myBookings.cancelling") || "Cancelando...")
-                      : (t("page.myBookings.cancel") || "Cancelar reserva")}
-                  </button>
+                    <span className="text-brand-gray/50 text-[10px] font-black uppercase tracking-[0.2em]">{new Date(booking.created_at).toLocaleDateString(lang)}</span>
+                  </div>
+
+                  <div className="space-y-2">
+                    <h2 className="text-2xl md:text-3xl font-black text-white leading-tight tracking-tightest flex items-center gap-4 group-hover:text-brand-cyan transition-colors italic">
+                      {booking.trip?.departure_location}
+                      <svg className="w-6 h-6 text-brand-gray/30 group-hover:text-brand-cyan/50 transition-colors" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={3} d="M17 8l4 4m0 0l-4 4m4-4H3" />
+                      </svg>
+                      {booking.trip?.arrival_location}
+                    </h2>
+                    <div className="flex items-center gap-3">
+                      <div className="w-5 h-5 rounded-full bg-brand-gradient flex items-center justify-center p-0.5">
+                        <div className="w-full h-full rounded-full bg-brand-dark overflow-hidden">
+                          {booking.trip?.driver?.picture_url ? (
+                            <img src={booking.trip.driver.picture_url} className="w-full h-full object-cover" alt="" />
+                          ) : (
+                            <div className="w-full h-full flex items-center justify-center bg-brand-purple text-[8px] font-black text-white">{booking.trip?.driver?.name?.charAt(0)}</div>
+                          )}
+                        </div>
+                      </div>
+                      <p className="text-[10px] font-black text-brand-gray uppercase tracking-widest">
+                        {t("page.myBookings.driver")}: <span className="text-white">{booking.trip?.driver?.name}</span>
+                      </p>
+                    </div>
+                  </div>
+
+                  <div className="grid grid-cols-2 lg:grid-cols-4 gap-4 bg-black/20 rounded-[2rem] p-6 border border-white/5">
+                    <div>
+                      <p className="text-[10px] font-black text-brand-gray/40 uppercase tracking-widest mb-1">{t("page.myBookings.departure")}</p>
+                      <p className="font-bold text-xs text-white uppercase italic">
+                        {booking.trip?.departure_time ? (
+                          <>
+                            {new Date(booking.trip.departure_time).toLocaleDateString(lang, { day: 'numeric', month: 'short' })}
+                            <span className="mx-2 text-brand-purple">|</span>
+                            {new Date(booking.trip.departure_time).toLocaleTimeString(lang, { hour: '2-digit', minute: '2-digit' })}
+                          </>
+                        ) : "-"}
+                      </p>
+                    </div>
+                    <div>
+                      <p className="text-[10px] font-black text-brand-gray/40 uppercase tracking-widest mb-1">{t("page.myBookings.seats")}</p>
+                      <p className="font-bold text-xs text-white">{booking.seats} <span className="text-[10px] text-brand-gray font-medium">LUGARES</span></p>
+                    </div>
+                    <div>
+                      <p className="text-[10px] font-black text-brand-gray/40 uppercase tracking-widest mb-1">{t("page.myBookings.totalPrice")}</p>
+                      <p className="font-bold text-xs text-brand-cyan">
+                        €{booking.trip?.price ? (Number(booking.trip.price) * booking.seats).toFixed(2) : "0.00"}
+                      </p>
+                    </div>
+                    <div>
+                      <p className="text-[10px] font-black text-brand-gray/40 uppercase tracking-widest mb-1">ID RESERVA</p>
+                      <p className="font-bold text-[10px] text-brand-gray/60 font-mono">#{String(booking.id).padStart(6, '0')}</p>
+                    </div>
+                  </div>
                 </div>
-              )}
+
+                <div className="flex flex-col sm:flex-row xl:flex-col gap-4 min-w-[200px] justify-center items-stretch">
+                  {booking.status !== "cancelled" && booking.status !== "rejected" && (
+                    <>
+                      {canReview(booking) && (
+                        <button
+                          onClick={() => handleOpenReview(booking)}
+                          className="bg-brand-purple text-white px-8 py-4 rounded-2xl hover:scale-105 active:scale-95 transition-all font-black uppercase tracking-widest text-[10px] shadow-xl shadow-brand-purple/20"
+                        >
+                          ⭐ {t("page.myBookings.review") || "CALIFICAR"}
+                        </button>
+                      )}
+                      {bookingReviews[booking.id] && (
+                        <div className="flex items-center justify-center gap-2 text-brand-cyan bg-brand-cyan/10 border border-brand-cyan/20 px-8 py-4 rounded-2xl text-[10px] font-black uppercase tracking-widest">
+                          <svg className="w-4 h-4" fill="currentColor" viewBox="0 0 20 20">
+                            <path fillRule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clipRule="evenodd" />
+                          </svg>
+                          {t("page.myBookings.reviewed") || "CALIFICADO"}
+                        </div>
+                      )}
+
+                      <button
+                        onClick={() => handleCancelBooking(booking.id)}
+                        disabled={cancellingId === booking.id}
+                        className="bg-brand-pink/10 text-brand-pink border border-brand-pink/20 px-8 py-4 rounded-2xl hover:bg-brand-pink hover:text-white transition-all font-black uppercase tracking-widest text-[10px] disabled:opacity-50"
+                      >
+                        {cancellingId === booking.id
+                          ? (t("page.myBookings.cancelling") || "PROCESANDO...")
+                          : (t("page.myBookings.cancel") || "CANCELAR")}
+                      </button>
+                    </>
+                  )}
+                  {(booking.status === "cancelled" || booking.status === "rejected") && (
+                    <div className="px-8 py-4 text-center grayscale opacity-50">
+                      <span className="text-[10px] font-black text-brand-gray uppercase tracking-widest italic">{t("page.myBookings.inactive")}</span>
+                    </div>
+                  )}
+                </div>
+              </div>
             </div>
           ))}
         </div>
       )}
-      
+
       {reviewModalOpen && selectedBooking && (
         <ReviewModal
           bookingId={selectedBooking.id}

@@ -1,22 +1,39 @@
 @import "tailwindcss";
 
 :root {
-  --background: #ffffff;
-  --foreground: #171717;
+  --background: #120d2b;
+  --foreground: #ffffff;
+  --brand-dark: #120d2b;
+  --brand-gray: #717285;
+  --brand-blue: #5471E9;
+  --brand-deep: #0051B3;
+  --brand-pink: #FF419C;
+  --brand-cyan: #0BB1D3;
+  --brand-purple: #9F2FFF;
+  --brand-gradient: linear-gradient(89.8deg, #0BB1D3 0%, #9F2FFF 100%);
 }
 
 @theme inline {
   --color-background: var(--background);
   --color-foreground: var(--foreground);
+  --color-brand-dark: var(--brand-dark);
+  --color-brand-gray: var(--brand-gray);
+  --color-brand-blue: var(--brand-blue);
+  --color-brand-deep: var(--brand-deep);
+  --color-brand-pink: var(--brand-pink);
+  --color-brand-cyan: var(--brand-cyan);
+  --color-brand-purple: var(--brand-purple);
   --font-sans: var(--font-geist-sans);
   --font-mono: var(--font-geist-mono);
 }
 
-@media (prefers-color-scheme: dark) {
-  :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
-  }
+.bg-hacker-dots {
+  background-image: radial-gradient(rgba(113, 114, 133, 0.1) 1px, transparent 1px);
+  background-size: 20px 20px;
+}
+
+.bg-brand-gradient {
+  background: var(--brand-gradient);
 }
 
 body {

@@ -64,8 +64,9 @@ export default function Header({ lang }: { lang: string }) {
   };
 
   return (
-    <header className="p-4 bg-blue-700 text-white flex justify-between items-center">
-      <Link href={`/${lang}`} className="flex items-center gap-2 hover:opacity-90 transition-opacity">
+    <header className="p-4 bg-brand-dark text-white shadow-xl flex justify-between items-center transition-all duration-300 relative z-[100] border-b border-white/5">
+      <div className="absolute inset-0 bg-hacker-dots opacity-30 pointer-events-none"></div>
+      <Link href={`/${lang}`} className="relative flex items-center gap-2 hover:opacity-90 transition-opacity">
         <img
           src="/images/jombo-logo.svg"
           alt="Jombo"
@@ -114,7 +115,7 @@ export default function Header({ lang }: { lang: string }) {
                   e.stopPropagation();
                   setIsDropdownOpen(!isDropdownOpen);
                 }}
-                className="bg-white text-blue-700 px-2 py-1 rounded-lg hover:bg-blue-50 flex items-center gap-2"
+                className="relative bg-white/5 text-white border border-white/10 px-4 py-2 rounded-xl hover:bg-white/10 transition-all flex items-center gap-2 backdrop-blur-md"
               >
                 {(user.picture_url || user.picture) ? (
                   <img
@@ -138,44 +139,48 @@ export default function Header({ lang }: { lang: string }) {
                 </svg>
               </button>
               {isDropdownOpen && (
-                <div className="absolute right-0 mt-2 w-48 bg-white rounded-lg shadow-lg py-1 z-50">
-                  <Link
-                    href={`/${lang}/profile`}
-                    onClick={() => setIsDropdownOpen(false)}
-                    className="block w-full text-left px-4 py-2 text-gray-800 hover:bg-gray-100"
-                  >
-                    {t("menu.profile")}
-                  </Link>
-                  <Link
-                    href={`/${lang}/messages`}
-                    onClick={() => setIsDropdownOpen(false)}
-                    className="block w-full text-left px-4 py-2 text-gray-800 hover:bg-gray-100"
-                  >
-                    {t("menu.messages")}
-                  </Link>
-                  <Link
-                    href={`/${lang}/my-bookings`}
-                    onClick={() => setIsDropdownOpen(false)}
-                    className="block w-full text-left px-4 py-2 text-gray-800 hover:bg-gray-100"
-                  >
-                    {t("menu.myBookings")}
-                  </Link>
-                  <Link
-                    href={`/${lang}/my-trips`}
-                    onClick={() => setIsDropdownOpen(false)}
-                    className="block w-full text-left px-4 py-2 text-gray-800 hover:bg-gray-100"
-                  >
-                    {t("menu.myTrips")}
-                  </Link>
-                  <button
-                    onClick={() => {
-                      logout();
-                      setIsDropdownOpen(false);
-                    }}
-                    className="block w-full text-left px-4 py-2 text-gray-800 hover:bg-gray-100"
-                  >
-                    {t("menu.logout")}
-                  </button>
+                <div className="absolute right-0 mt-4 w-56 bg-brand-dark rounded-2xl shadow-2xl py-3 z-50 border border-white/10 backdrop-blur-xl animate-in fade-in slide-in-from-top-2 duration-200">
+                  <div className="absolute inset-0 bg-hacker-dots opacity-10 pointer-events-none"></div>
+                  <div className="relative">
+                    <Link
+                      href={`/${lang}/profile`}
+                      onClick={() => setIsDropdownOpen(false)}
+                      className="block w-full text-left px-4 py-3 text-sm text-gray-300 hover:bg-white/5 hover:text-white transition-colors"
+                    >
+                      {t("menu.profile")}
+                    </Link>
+                    <Link
+                      href={`/${lang}/messages`}
+                      onClick={() => setIsDropdownOpen(false)}
+                      className="block w-full text-left px-4 py-3 text-sm text-gray-300 hover:bg-white/5 hover:text-white transition-colors"
+                    >
+                      {t("menu.messages")}
+                    </Link>
+                    <Link
+                      href={`/${lang}/my-bookings`}
+                      onClick={() => setIsDropdownOpen(false)}
+                      className="block w-full text-left px-4 py-3 text-sm text-gray-300 hover:bg-white/5 hover:text-white transition-colors"
+                    >
+                      {t("menu.myBookings")}
+                    </Link>
+                    <Link
+                      href={`/${lang}/my-trips`}
+                      onClick={() => setIsDropdownOpen(false)}
+                      className="block w-full text-left px-4 py-3 text-sm text-gray-300 hover:bg-white/5 hover:text-white transition-colors"
+                    >
+                      {t("menu.myTrips")}
+                    </Link>
+                    <div className="h-px bg-white/5 my-2"></div>
+                    <button
+                      onClick={() => {
+                        logout();
+                        setIsDropdownOpen(false);
+                      }}
+                      className="block w-full text-left px-4 py-3 text-sm text-brand-pink font-bold hover:bg-brand-pink/5 transition-colors"
+                    >
+                      {t("menu.logout")}
+                    </button>
+                  </div>
                 </div>
               )}
             </div>
@@ -183,7 +188,7 @@ export default function Header({ lang }: { lang: string }) {
         ) : (
           <Link
             href={`/${lang}/login`}
-            className="bg-white text-blue-700 px-3 py-1 rounded-lg hover:bg-blue-50 transition-colors"
+            className="relative bg-brand-gradient text-white px-8 py-2.5 rounded-xl hover:opacity-90 transition-all shadow-lg shadow-brand-cyan/20 active:scale-95 font-black uppercase tracking-widest text-xs"
           >
             Login
           </Link>

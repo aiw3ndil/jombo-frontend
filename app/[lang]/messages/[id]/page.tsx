@@ -58,7 +58,7 @@ export default function ConversationPage() {
 
   const handleSendMessage = async (e: React.FormEvent) => {
     e.preventDefault();
-    
+
     if (!newMessage.trim()) return;
 
     setSending(true);
@@ -97,8 +97,12 @@ export default function ConversationPage() {
 
   if (authLoading || loading) {
     return (
-      <div className="max-w-5xl mx-auto">
-        <p className="text-gray-900">{t("page.conversation.loading") || "Cargando..."}</p>
+      <div className="max-w-4xl mx-auto py-24 px-6 flex flex-col items-center justify-center min-h-[60vh]">
+        <div className="relative w-24 h-24 mb-8">
+          <div className="absolute inset-0 rounded-full border-4 border-white/5 border-t-brand-cyan animate-spin"></div>
+          <div className="absolute inset-2 rounded-full border-4 border-white/5 border-t-brand-purple animate-spin" style={{ animationDuration: '1.5s' }}></div>
+        </div>
+        <p className="text-brand-gray uppercase tracking-widest text-[10px] font-black animate-pulse">Abriendo canal de datos...</p>
       </div>
     );
   }
@@ -108,73 +112,93 @@ export default function ConversationPage() {
   }
 
   return (
-    <div className="max-w-5xl mx-auto h-[calc(100vh-200px)] flex flex-col">
-      {/* Header */}
-      <div className="bg-white border-b border-gray-300 p-4 rounded-t-lg shadow">
-        <div className="flex justify-between items-center">
-          <div>
-            <h1 className="text-2xl font-bold text-gray-900">
-              {conversation.trip.departure_location} → {conversation.trip.arrival_location}
+    <div className="max-w-5xl mx-auto h-[calc(100vh-140px)] flex flex-col relative py-8 px-4 sm:px-6">
+      <div className="absolute top-0 left-0 w-[300px] h-[300px] bg-brand-cyan/5 rounded-full blur-[100px] pointer-events-none"></div>
+
+      {/* Header HUD */}
+      <div className="bg-white/5 backdrop-blur-3xl border border-white/10 p-6 rounded-[2.5rem] shadow-2xl relative overflow-hidden mb-6 flex-shrink-0">
+        <div className="absolute inset-0 bg-hacker-dots opacity-5 pointer-events-none"></div>
+        <div className="relative flex flex-col sm:flex-row justify-between items-start sm:items-center gap-6">
+          <div className="space-y-4">
+            <div className="flex items-center gap-3">
+              <span className="w-2 h-2 rounded-full bg-brand-cyan animate-pulse"></span>
+              <p className="text-[10px] font-black text-brand-cyan uppercase tracking-[0.3em]">CONEXIÓN ESTABLECIDA</p>
+            </div>
+            <h1 className="text-2xl md:text-3xl font-black text-white tracking-tightest uppercase italic flex items-center gap-4">
+              {conversation.trip.departure_location}
+              <svg className="w-6 h-6 text-brand-purple" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={3} d="M17 8l4 4m0 0l-4 4m4-4H3" />
+              </svg>
+              {conversation.trip.arrival_location}
             </h1>
-            <p className="text-sm text-gray-600">
-              {t("page.conversation.departure")}: {new Date(conversation.trip.departure_time).toLocaleString(lang)}
-            </p>
-            <p className="text-sm text-gray-600">
-              {t("page.conversation.participants")}: {conversation.participants.map(p => p.name).join(", ")}
-            </p>
+            <div className="flex flex-wrap gap-4 text-[10px] font-black text-brand-gray uppercase tracking-widest">
+              <span>{new Date(conversation.trip.departure_time).toLocaleString(lang, { day: 'numeric', month: 'short', hour: '2-digit', minute: '2-digit' })}</span>
+              <span className="text-white/20">|</span>
+              <span>{conversation.participants.map(p => p.name).join(" • ")}</span>
+            </div>
           </div>
-          <div className="flex gap-2">
+          <div className="flex gap-4">
             {isDriver && (
               <button
                 onClick={handleDeleteConversation}
                 disabled={deleting}
-                className="bg-red-600 text-white px-4 py-2 rounded hover:bg-red-700 disabled:bg-gray-400"
+                className="bg-brand-pink/10 text-brand-pink border border-brand-pink/20 px-6 py-3 rounded-2xl font-black uppercase tracking-widest text-[10px] hover:bg-brand-pink hover:text-white transition-all disabled:opacity-50"
               >
-                {deleting ? t("page.conversation.deleting") || "..." : t("page.conversation.delete") || "Eliminar"}
+                {deleting ? "..." : (t("page.conversation.delete") || "BORRAR")}
               </button>
             )}
             <button
               onClick={() => router.push(`/${lang}/messages`)}
-              className="bg-gray-600 text-white px-4 py-2 rounded hover:bg-gray-700"
+              className="bg-white/5 text-white/50 border border-white/10 px-6 py-3 rounded-2xl font-black uppercase tracking-widest text-[10px] hover:text-white hover:border-white/20 transition-all"
             >
-              {t("page.conversation.back")}
+              {t("page.conversation.back") || "VOLVER"}
             </button>
           </div>
         </div>
       </div>
 
       {/* Messages Area */}
-      <div className="flex-1 overflow-y-auto bg-gray-50 p-4 space-y-4">
+      <div className="flex-1 overflow-y-auto bg-black/20 rounded-[2.5rem] border border-white/5 p-6 space-y-6 scrollbar-hide mb-6 relative hover:border-white/10 transition-colors">
+        <div className="absolute inset-0 bg-hacker-dots opacity-[0.03] pointer-events-none"></div>
         {messages.length === 0 ? (
-          <p className="text-center text-gray-500 mt-8">
-            {t("page.conversation.noMessages") || "No hay mensajes aún. ¡Envía el primero!"}
-          </p>
+          <div className="flex flex-col items-center justify-center h-full gap-4 py-20 grayscale opacity-20 italic">
+            <svg className="w-12 h-12" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1} d="M8 12h.01M12 12h.01M16 12h.01M21 12c0 4.418-4.03 8-9 8a9.863 9.863 0 01-4.255-.949L3 20l1.395-3.72C3.512 15.042 3 13.574 3 12c0-4.418 4.03-8 9-8s9 3.582 9 8z" /></svg>
+            <p className="uppercase tracking-widest text-[10px] font-black">
+              {t("page.conversation.noMessages") || "Esperando transmisión..."}
+            </p>
+          </div>
         ) : (
           messages.map((message) => {
             const isOwn = message.user.id === user.id;
             return (
               <div
                 key={message.id}
-                className={`flex ${isOwn ? "justify-end" : "justify-start"}`}
+                className={`flex gap-4 ${isOwn ? "justify-end" : "justify-start"}`}
               >
+                {!isOwn && (
+                  <div className="w-8 h-8 rounded-full bg-brand-gradient p-0.5 flex-shrink-0 mt-auto">
+                    <div className="w-full h-full rounded-full bg-brand-dark flex items-center justify-center text-white font-black text-[10px] overflow-hidden">
+                      {message.user.name.charAt(0)}
+                    </div>
+                  </div>
+                )}
                 <div
-                  className={`max-w-[70%] rounded-lg p-3 ${
-                    isOwn
-                      ? "bg-blue-600 text-white"
-                      : "bg-white text-gray-900 border border-gray-300"
-                  }`}
+                  className={`max-w-[75%] space-y-2 ${isOwn ? "items-end text-right" : "items-start"}`}
                 >
-                  {!isOwn && (
-                    <p className="text-xs font-semibold mb-1 opacity-75">
-                      {message.user.name}
-                    </p>
-                  )}
-                  <p className="break-words">{message.content}</p>
-                  <p
-                    className={`text-xs mt-1 ${
-                      isOwn ? "text-blue-200" : "text-gray-500"
-                    }`}
+                  <div
+                    className={`rounded-[2rem] px-6 py-4 relative group ${isOwn
+                        ? "bg-brand-gradient text-white rounded-tr-none shadow-2xl shadow-brand-cyan/10"
+                        : "bg-white/10 backdrop-blur-3xl text-white border border-white/10 rounded-tl-none"
+                      }`}
                   >
+                    {!isOwn && (
+                      <p className="text-[10px] font-black text-brand-cyan/70 uppercase tracking-widest mb-2">
+                        {message.user.name}
+                      </p>
+                    )}
+                    <p className="text-sm font-medium leading-relaxed break-words">{message.content}</p>
+                  </div>
+                  <p className={`text-[9px] font-black uppercase tracking-widest font-mono opacity-30 ${isOwn ? "mr-4" : "ml-4"}`}>
                     {new Date(message.created_at).toLocaleTimeString(lang, {
                       hour: "2-digit",
                       minute: "2-digit",
@@ -189,22 +213,23 @@ export default function ConversationPage() {
       </div>
 
       {/* Input Area */}
-      <form onSubmit={handleSendMessage} className="bg-white border-t border-gray-300 p-4 rounded-b-lg shadow">
-        <div className="flex gap-2">
+      <form onSubmit={handleSendMessage} className="bg-white/5 backdrop-blur-3xl border border-white/10 p-3 rounded-[3rem] shadow-2xl relative group flex-shrink-0">
+        <div className="absolute -inset-1.5 bg-brand-gradient rounded-[3.2rem] opacity-0 blur-2xl group-focus-within/input:opacity-20 transition-opacity"></div>
+        <div className="relative flex gap-3">
           <input
             type="text"
             value={newMessage}
             onChange={(e) => setNewMessage(e.target.value)}
-            placeholder={t("page.conversation.messagePlaceholder") || "Escribe un mensaje..."}
-            className="flex-1 border border-gray-300 rounded px-4 py-2 focus:outline-none focus:ring-2 focus:ring-blue-500 text-gray-900"
+            placeholder={t("page.conversation.messagePlaceholder") || "Codificar mensaje..."}
+            className="flex-1 bg-black/20 border border-white/5 rounded-[2.5rem] px-8 py-5 text-white placeholder:text-brand-gray/30 focus:outline-none focus:border-brand-cyan/50 focus:ring-0 transition-all font-bold italic text-sm"
             disabled={sending}
           />
           <button
             type="submit"
             disabled={sending || !newMessage.trim()}
-            className="bg-blue-600 text-white px-6 py-2 rounded hover:bg-blue-700 disabled:bg-gray-400 disabled:cursor-not-allowed"
+            className="bg-brand-gradient text-white px-10 py-5 rounded-[2.5rem] font-black uppercase tracking-widest text-[10px] transition-all hover:scale-[1.03] active:scale-95 shadow-xl shadow-brand-cyan/20 disabled:opacity-50 disabled:grayscale disabled:cursor-not-allowed group"
           >
-            {sending ? t("page.conversation.sending") || "..." : t("page.conversation.send") || "Enviar"}
+            {sending ? "..." : (t("page.conversation.send") || "ENVIAR")}
           </button>
         </div>
       </form>
