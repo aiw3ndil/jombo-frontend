@@ -225,10 +225,10 @@ export default function MyBookings() {
               <div className="relative flex flex-col xl:flex-row justify-between xl:items-center gap-8">
                 <div className="flex-1 space-y-6">
                   <div className="flex flex-wrap items-center gap-4">
-                    <span className={`px-4 py-1.5 rounded-full text-[10px] font-black uppercase tracking-widest border transition-all ${getStatusClasses(booking.status)}`}>
+                    <span className={`px-4 py-1.5 rounded-full text-xs font-black uppercase tracking-widest border transition-all ${getStatusClasses(booking.status)}`}>
                       {getStatusText(booking.status)}
                     </span>
-                    <span className="text-brand-gray/50 text-[10px] font-black uppercase tracking-[0.2em]">{new Date(booking.created_at).toLocaleDateString(lang)}</span>
+                    <span className="text-brand-gray/80 text-xs font-black uppercase tracking-[0.2em]">{new Date(booking.created_at).toLocaleDateString(lang)}</span>
                   </div>
 
                   <div className="space-y-2">
@@ -249,7 +249,7 @@ export default function MyBookings() {
                           )}
                         </div>
                       </div>
-                      <p className="text-[10px] font-black text-brand-gray uppercase tracking-widest">
+                      <p className="text-xs font-black text-brand-gray uppercase tracking-widest">
                         {t("page.myBookings.driver")}: <span className="text-white">{booking.trip?.driver?.name}</span>
                       </p>
                     </div>
@@ -257,8 +257,8 @@ export default function MyBookings() {
 
                   <div className="grid grid-cols-2 lg:grid-cols-4 gap-4 bg-black/20 rounded-[2rem] p-6 border border-white/5">
                     <div>
-                      <p className="text-[10px] font-black text-brand-gray/40 uppercase tracking-widest mb-1">{t("page.myBookings.departure")}</p>
-                      <p className="font-bold text-xs text-white uppercase italic">
+                      <p className="text-xs font-black text-brand-gray/70 uppercase tracking-widest mb-1">{t("page.myBookings.departure")}</p>
+                      <p className="font-bold text-sm text-white uppercase italic">
                         {booking.trip?.departure_time ? (
                           <>
                             {new Date(booking.trip.departure_time).toLocaleDateString(lang, { day: 'numeric', month: 'short' })}
@@ -269,18 +269,18 @@ export default function MyBookings() {
                       </p>
                     </div>
                     <div>
-                      <p className="text-[10px] font-black text-brand-gray/40 uppercase tracking-widest mb-1">{t("page.myBookings.seats")}</p>
-                      <p className="font-bold text-xs text-white">{booking.seats} <span className="text-[10px] text-brand-gray font-medium">LUGARES</span></p>
+                      <p className="text-xs font-black text-brand-gray/70 uppercase tracking-widest mb-1">{t("page.myBookings.seats")}</p>
+                      <p className="font-bold text-sm text-white">{booking.seats} <span className="text-xs text-brand-gray font-black">LUGARES</span></p>
                     </div>
                     <div>
-                      <p className="text-[10px] font-black text-brand-gray/40 uppercase tracking-widest mb-1">{t("page.myBookings.totalPrice")}</p>
-                      <p className="font-bold text-xs text-brand-cyan">
+                      <p className="text-xs font-black text-brand-gray/70 uppercase tracking-widest mb-1">{t("page.myBookings.totalPrice")}</p>
+                      <p className="font-bold text-sm text-brand-cyan">
                         €{booking.trip?.price ? (Number(booking.trip.price) * booking.seats).toFixed(2) : "0.00"}
                       </p>
                     </div>
                     <div>
-                      <p className="text-[10px] font-black text-brand-gray/40 uppercase tracking-widest mb-1">ID RESERVA</p>
-                      <p className="font-bold text-[10px] text-brand-gray/60 font-mono">#{String(booking.id).padStart(6, '0')}</p>
+                      <p className="text-xs font-black text-brand-gray/70 uppercase tracking-widest mb-1">ID RESERVA</p>
+                      <p className="font-bold text-xs text-brand-gray/80 font-mono">#{String(booking.id).padStart(6, '0')}</p>
                     </div>
                   </div>
                 </div>

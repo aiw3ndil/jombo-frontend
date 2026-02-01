@@ -112,7 +112,7 @@ export default function MessagesPage() {
           <p className="text-xl text-brand-gray font-medium uppercase tracking-widest mb-4">
             {t("page.messages.noConversations") || "Sin transmisiones activas"}
           </p>
-          <p className="text-brand-gray/40 text-[10px] font-black uppercase tracking-[0.2em] max-w-md mx-auto">
+          <p className="text-brand-gray/70 text-xs font-black uppercase tracking-[0.2em] max-w-md mx-auto">
             {t("page.messages.conversationsInfo") || "Las conversaciones se crean automáticamente cuando se confirma una reserva"}
           </p>
         </div>
@@ -132,10 +132,10 @@ export default function MessagesPage() {
                     className="block group/link"
                   >
                     <div className="flex flex-wrap items-center gap-4 mb-4">
-                      <span className="bg-brand-cyan/10 text-brand-cyan border border-brand-cyan/20 px-4 py-1.5 rounded-full text-[10px] font-black uppercase tracking-widest">
+                      <span className="bg-brand-cyan/10 text-brand-cyan border border-brand-cyan/20 px-4 py-1.5 rounded-full text-xs font-black uppercase tracking-widest">
                         CANAL ACTIVO
                       </span>
-                      <span className="text-brand-gray/50 text-[10px] font-black uppercase tracking-[0.2em]">
+                      <span className="text-brand-gray/80 text-xs font-black uppercase tracking-[0.2em]">
                         {new Date(conversation.trip.departure_time).toLocaleDateString(lang, { day: 'numeric', month: 'short' })}
                       </span>
                     </div>
@@ -148,7 +148,7 @@ export default function MessagesPage() {
                       {conversation.trip.arrival_location}
                     </h2>
 
-                    <div className="flex flex-wrap items-center gap-6 text-[10px] font-black text-brand-gray uppercase tracking-widest">
+                    <div className="flex flex-wrap items-center gap-6 text-xs font-black text-brand-gray uppercase tracking-widest">
                       <div className="flex items-center gap-2">
                         <svg className="w-4 h-4 text-brand-purple" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 4.354a4 4 0 110 5.292M15 21H3v-1a6 6 0 0112 0v1zm0 0h6v-1a6 6 0 00-9-5.197M13 7a4 4 0 11-8 0 4 4 0 018 0z" /></svg>
                         {conversation.participants.map(p => p.name).join(" • ")}
@@ -159,7 +159,7 @@ export default function MessagesPage() {
                       <div className="mt-6 p-6 bg-black/20 rounded-[2rem] border border-white/5 group-hover/link:border-brand-cyan/20 transition-all">
                         <div className="flex items-center gap-3 mb-2">
                           <div className="w-1.5 h-1.5 rounded-full bg-brand-cyan"></div>
-                          <p className="text-[10px] font-black text-brand-gray uppercase tracking-widest">
+                          <p className="text-xs font-black text-brand-gray/90 uppercase tracking-widest">
                             ÚLTIMA TRANSMISIÓN DE <span className="text-white">{conversation.last_message.user.name}</span>
                           </p>
                         </div>
@@ -167,7 +167,7 @@ export default function MessagesPage() {
                           "{conversation.last_message.content.substring(0, 100)}
                           {conversation.last_message.content.length > 100 ? "..." : ""}"
                         </p>
-                        <p className="text-[10px] font-black text-brand-gray/30 mt-3 uppercase font-mono">
+                        <p className="text-xs font-black text-brand-gray/60 mt-3 uppercase font-mono tracking-tighter">
                           {new Date(conversation.last_message.created_at).toLocaleTimeString(lang, { hour: '2-digit', minute: '2-digit' })}
                         </p>
                       </div>

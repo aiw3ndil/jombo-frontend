@@ -181,7 +181,7 @@ export default function ProfilePage({ params }: { params: Promise<{ lang: string
         <h1 className="text-4xl md:text-5xl font-black text-white tracking-tightest uppercase italic mb-2">
           {t("profile.title") || "Mi Perfil"}
         </h1>
-        <p className="text-brand-gray font-medium uppercase tracking-[0.2em] text-[10px]">
+        <p className="text-brand-gray/80 font-bold uppercase tracking-[0.2em] text-xs">
           Configura tu identidad en el sistema
         </p>
       </div>
@@ -189,8 +189,8 @@ export default function ProfilePage({ params }: { params: Promise<{ lang: string
       {message && (
         <div
           className={`mb-8 p-6 rounded-3xl border backdrop-blur-xl relative overflow-hidden flex items-center gap-4 ${message.type === "success"
-              ? "bg-brand-cyan/10 border-brand-cyan/20 text-brand-cyan"
-              : "bg-brand-pink/10 border-brand-pink/20 text-brand-pink"
+            ? "bg-brand-cyan/10 border-brand-cyan/20 text-brand-cyan"
+            : "bg-brand-pink/10 border-brand-pink/20 text-brand-pink"
             }`}
         >
           <div className={`w-8 h-8 rounded-full flex items-center justify-center flex-shrink-0 ${message.type === "success" ? "bg-brand-cyan/20" : "bg-brand-pink/20"}`}>
@@ -208,7 +208,7 @@ export default function ProfilePage({ params }: { params: Promise<{ lang: string
         <div className="absolute inset-0 bg-hacker-dots opacity-5 pointer-events-none"></div>
 
         <div className="relative">
-          <label className="block text-[10px] font-black text-brand-gray uppercase tracking-[0.2em] ml-4 mb-4">
+          <label className="block text-xs font-black text-brand-gray/90 uppercase tracking-[0.2em] ml-4 mb-4">
             {t("profile.picture") || "Imagen de Usuario"}
           </label>
           <div className="flex flex-col sm:flex-row items-center gap-8">
@@ -248,7 +248,7 @@ export default function ProfilePage({ params }: { params: Promise<{ lang: string
 
         <div className="grid md:grid-cols-2 gap-8 relative">
           <div className="space-y-2">
-            <label htmlFor="name" className="block text-[10px] font-black text-brand-gray uppercase tracking-[0.2em] ml-4">
+            <label htmlFor="name" className="block text-xs font-black text-brand-gray/90 uppercase tracking-[0.2em] ml-4">
               {t("profile.name") || "Nombre Público"}
             </label>
             <div className="relative group/input">
@@ -268,7 +268,7 @@ export default function ProfilePage({ params }: { params: Promise<{ lang: string
           </div>
 
           <div className="space-y-2">
-            <label htmlFor="language" className="block text-[10px] font-black text-brand-gray uppercase tracking-[0.2em] ml-4">
+            <label htmlFor="language" className="block text-xs font-black text-brand-gray/90 uppercase tracking-[0.2em] ml-4">
               {t("profile.language") || "Interfaz"}
             </label>
             <div className="relative group/input">

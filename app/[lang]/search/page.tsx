@@ -312,7 +312,7 @@ export default function SearchPage() {
                     </div>
                     <button
                       onClick={() => handleOpenReviews(trip.driver.id, trip.driver.name)}
-                      className="text-brand-gray hover:text-white text-[10px] font-black uppercase tracking-widest transition-colors block mx-auto underline decoration-brand-gray/30 underline-offset-4"
+                      className="text-brand-gray hover:text-white text-xs font-black uppercase tracking-widest transition-all block mx-auto underline decoration-brand-gray/50 underline-offset-4"
                     >
                       {t("page.search.seeReviews") || "Reseñas"}
                     </button>
@@ -339,7 +339,7 @@ export default function SearchPage() {
                         <p className="text-3xl font-black text-white tracking-tightest">
                           €{Number(trip.price || 0).toFixed(2)}
                         </p>
-                        <p className="text-[10px] font-black text-brand-gray uppercase tracking-widest leading-none">
+                        <p className="text-xs font-black text-brand-gray uppercase tracking-widest leading-none">
                           {t("page.search.perSeat")}
                         </p>
                       </div>
@@ -347,14 +347,14 @@ export default function SearchPage() {
 
                     <div className="grid grid-cols-2 bg-black/20 rounded-3xl p-5 border border-white/5 gap-4">
                       <div className="space-y-1">
-                        <p className="text-[10px] font-black text-brand-gray/50 uppercase tracking-widest">{t("page.search.departure")}</p>
+                        <p className="text-xs font-black text-brand-gray/70 uppercase tracking-widest">{t("page.search.departure")}</p>
                         <p className="text-sm font-bold text-white italic">{new Date(trip.departure_time).toLocaleTimeString(lang, { hour: '2-digit', minute: '2-digit' })} HS</p>
                       </div>
                       <div className="space-y-1">
-                        <p className="text-[10px] font-black text-brand-gray/50 uppercase tracking-widest">{t("page.search.availableSeats")}</p>
+                        <p className="text-xs font-black text-brand-gray/70 uppercase tracking-widest">{t("page.search.availableSeats")}</p>
                         <p className="text-sm font-bold text-white flex items-center gap-2">
                           <span className={`${trip.available_seats <= 1 ? 'text-brand-pink' : 'text-brand-cyan'}`}>{trip.available_seats}</span>
-                          <span className="text-[10px] text-brand-gray font-medium uppercase">{t("common.seats") || "Asientos"}</span>
+                          <span className="text-xs text-brand-gray/80 font-bold uppercase tracking-wide">{t("common.seats") || "Asientos"}</span>
                         </p>
                       </div>
                     </div>

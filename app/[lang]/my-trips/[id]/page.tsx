@@ -253,16 +253,16 @@ export default function TripDetails({ params }: { params: Promise<{ lang: string
                                                 <div className="font-black text-white text-xl tracking-tightest uppercase italic">
                                                     {booking.user?.name || booking.user?.email || "Usuario Invitado"}
                                                 </div>
-                                                <div className="text-[10px] font-black text-brand-gray uppercase tracking-widest">
-                                                    PASAJERO ID: <span className="text-brand-gray/40 font-mono">#{String(booking.user?.id).padStart(4, '0')}</span>
+                                                <div className="text-xs font-black text-brand-gray uppercase tracking-widest">
+                                                    PASAJERO ID: <span className="text-brand-gray/70 font-mono">#{String(booking.user?.id).padStart(4, '0')}</span>
                                                 </div>
                                             </div>
                                         </div>
                                         <div className="flex items-center gap-4">
-                                            <span className={`px-4 py-1 rounded-full text-[10px] font-black uppercase tracking-widest border transition-all ${getStatusClasses(booking.status)}`}>
+                                            <span className={`px-4 py-1.5 rounded-full text-xs font-black uppercase tracking-widest border transition-all ${getStatusClasses(booking.status)}`}>
                                                 {getStatusText(booking.status)}
                                             </span>
-                                            <div className="text-[10px] font-black text-white uppercase tracking-[0.2em] bg-black/20 px-3 py-1 rounded-lg border border-white/5">
+                                            <div className="text-xs font-black text-white uppercase tracking-[0.2em] bg-black/20 px-3 py-1.5 rounded-lg border border-white/5">
                                                 {booking.seats} {booking.seats === 1 ? t("page.myTrips.seat") : t("page.myTrips.seats")}
                                             </div>
                                         </div>
@@ -273,14 +273,14 @@ export default function TripDetails({ params }: { params: Promise<{ lang: string
                                             <button
                                                 onClick={() => handleConfirmBooking(booking.id)}
                                                 disabled={actionLoading === booking.id}
-                                                className="flex-1 md:flex-none bg-brand-gradient text-white px-8 py-3.5 rounded-2xl font-black uppercase tracking-widest text-[10px] shadow-xl shadow-brand-cyan/20 hover:scale-[1.05] transition-all disabled:opacity-50"
+                                                className="flex-1 md:flex-none bg-brand-gradient text-white px-8 py-3.5 rounded-2xl font-black uppercase tracking-widest text-xs shadow-xl shadow-brand-cyan/20 hover:scale-[1.05] transition-all disabled:opacity-50"
                                             >
                                                 {actionLoading === booking.id ? "..." : (t("page.myTrips.confirm") || "CONFIRMAR")}
                                             </button>
                                             <button
                                                 onClick={() => handleRejectBooking(booking)}
                                                 disabled={actionLoading === booking.id}
-                                                className="flex-1 md:flex-none px-8 py-3.5 rounded-2xl bg-brand-pink/10 text-brand-pink border border-brand-pink/20 font-black uppercase tracking-widest text-[10px] hover:bg-brand-pink hover:text-white transition-all disabled:opacity-50"
+                                                className="flex-1 md:flex-none px-8 py-3.5 rounded-2xl bg-brand-pink/10 text-brand-pink border border-brand-pink/20 font-black uppercase tracking-widest text-xs hover:bg-brand-pink hover:text-white transition-all disabled:opacity-50"
                                             >
                                                 {actionLoading === booking.id ? "..." : (t("page.myTrips.reject") || "RECHAZAR")}
                                             </button>

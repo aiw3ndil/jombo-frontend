@@ -60,7 +60,7 @@ export default function Footer({ lang }: FooterProps) {
           <div>
             <h3 className="text-white font-black mb-8 text-xs uppercase tracking-[0.2em]">{t("footer.contact")}</h3>
             <div className="space-y-3">
-              <p className="text-brand-gray text-[10px] uppercase tracking-widest font-black">{t("footer.supportEmail") || "Email de soporte"}</p>
+              <p className="text-xs uppercase tracking-widest font-black text-brand-gray/80">{t("footer.supportEmail") || "Email de soporte"}</p>
               <a
                 href={`mailto:${supportEmail}`}
                 className="text-white hover:text-brand-cyan text-sm font-bold transition-colors inline-block pb-1 border-b border-white/10"
@@ -72,7 +72,7 @@ export default function Footer({ lang }: FooterProps) {
         </div>
 
         <div className="border-t border-white/5 mt-20 pt-10 flex flex-col md:flex-row justify-between items-center gap-6">
-          <p className="text-brand-gray/40 text-xs font-bold tracking-tight">
+          <p className="text-brand-gray/70 text-xs font-bold tracking-tight">
             © {new Date().getFullYear()} Jombo. {t("footer.rights")}
           </p>
           <div className="flex gap-8">
