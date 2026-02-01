@@ -1,13 +1,16 @@
 "use client";
 import Link from "next/link";
 import { useState, useEffect } from "react";
+import { useRouter } from "next/navigation";
 import LanguageSwitcher from "./LanguageSwitcher";
 import { useTranslation } from "@/app/hooks/useTranslation";
 import { useAuth } from "@/app/contexts/AuthContext";
 import { useNotifications } from "@/app/contexts/NotificationsContext";
 import NotificationsDropdown from "./NotificationsDropdown";
+import { Notification } from "@/app/lib/api/notifications";
 
 export default function Header({ lang }: { lang: string }) {
+  const router = useRouter();
   const { user, logout } = useAuth();
   const { t } = useTranslation();
   const { notifications, unreadCount, markAsRead } = useNotifications();
@@ -52,16 +55,20 @@ export default function Header({ lang }: { lang: string }) {
     };
   }, [isNotificationsOpen]);
 
-  const handleNotificationClick = (notificationId: number) => {
-    markAsRead(notificationId);
+  const handleNotificationClick = (notification: Notification) => {
+    markAsRead(notification.id);
+    setIsNotificationsOpen(false);
+    if (notification.url) {
+      router.push(notification.url);
+    }
   };
 
   return (
     <header className="p-4 bg-blue-700 text-white flex justify-between items-center">
       <Link href={`/${lang}`} className="flex items-center gap-2 hover:opacity-90 transition-opacity">
-        <img 
-          src="/images/jombo-logo.svg" 
-          alt="Jombo" 
+        <img
+          src="/images/jombo-logo.svg"
+          alt="Jombo"
           className="h-10 w-auto"
         />
       </Link>

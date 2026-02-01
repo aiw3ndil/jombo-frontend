@@ -5,7 +5,7 @@ import { useTranslation } from "@/app/hooks/useTranslation";
 
 interface NotificationsDropdownProps {
   notifications: Notification[];
-  onNotificationClick: (notificationId: number) => void;
+  onNotificationClick: (notification: Notification) => void;
 }
 
 export default function NotificationsDropdown({
@@ -25,10 +25,9 @@ export default function NotificationsDropdown({
           notifications.map((notification) => (
             <div
               key={notification.id}
-              onClick={() => onNotificationClick(notification.id)}
-              className={`p-4 cursor-pointer hover:bg-gray-100 ${
-                !notification.read_at ? "bg-blue-50" : ""
-              }`}
+              onClick={() => onNotificationClick(notification)}
+              className={`p-4 cursor-pointer hover:bg-gray-100 ${!notification.read_at ? "bg-blue-50" : ""
+                }`}
             >
               <p className="text-sm font-semibold text-gray-800">{notification.title}</p>
               <p className="text-sm text-gray-700 mt-1">{notification.content}</p>
