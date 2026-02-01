@@ -33,6 +33,8 @@ export default function LocationInput({
         if (autocompleteRef.current !== null) {
             const place = autocompleteRef.current.getPlace();
 
+            if (!place) return;
+
             // Try to extract city/locality from address_components
             let cityName = "";
             if (place.address_components) {
