@@ -56,7 +56,7 @@ export default function Register() {
           <h2 className="text-4xl font-black text-white tracking-tightest uppercase italic mb-2">
             {t("title") || "Registro"}
           </h2>
-          <p className="text-brand-gray font-medium uppercase tracking-[0.2em] text-[10px]">
+          <p className="text-brand-gray/80 font-bold uppercase tracking-[0.2em] text-xs">
             Únete a la nueva era del transporte compartido
           </p>
         </div>
@@ -83,13 +83,13 @@ export default function Register() {
 
           <div className="relative py-2 flex items-center">
             <div className="flex-grow border-t border-white/5"></div>
-            <span className="flex-shrink mx-4 text-brand-gray/40 font-black uppercase tracking-widest text-[10px]">{t("or")}</span>
+            <span className="flex-shrink mx-4 text-brand-gray/60 font-black uppercase tracking-widest text-xs">{t("or")}</span>
             <div className="flex-grow border-t border-white/5"></div>
           </div>
 
           <form className="space-y-4" onSubmit={handleSubmit}>
             <div className="space-y-2 text-left">
-              <label className="block text-[10px] font-black text-brand-gray uppercase tracking-[0.2em] ml-4">{t("name")}</label>
+              <label className="block text-xs font-black text-brand-gray/90 uppercase tracking-[0.2em] ml-4">{t("name")}</label>
               <div className="relative group/input">
                 <div className="absolute left-6 top-1/2 -translate-y-1/2 text-brand-gray group-focus-within/input:text-brand-cyan transition-colors">
                   <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -100,7 +100,7 @@ export default function Register() {
                   type="text"
                   value={name}
                   onChange={(e) => setName(e.target.value)}
-                  className="w-full bg-black/20 border border-white/5 rounded-2xl pl-14 pr-6 py-3.5 text-white placeholder:text-brand-gray/30 focus:border-brand-cyan/50 focus:ring-0 transition-all outline-none font-bold italic"
+                  className="w-full bg-black/20 border border-white/5 rounded-2xl pl-14 pr-6 py-3.5 text-white placeholder:text-brand-gray/50 focus:border-brand-cyan/50 focus:ring-0 transition-all outline-none font-bold italic"
                   placeholder="Tu nombre completo"
                   required
                 />
@@ -108,7 +108,7 @@ export default function Register() {
             </div>
 
             <div className="space-y-2 text-left">
-              <label className="block text-[10px] font-black text-brand-gray uppercase tracking-[0.2em] ml-4">{t("email")}</label>
+              <label className="block text-xs font-black text-brand-gray/90 uppercase tracking-[0.2em] ml-4">{t("email")}</label>
               <div className="relative group/input">
                 <div className="absolute left-6 top-1/2 -translate-y-1/2 text-brand-gray group-focus-within/input:text-brand-cyan transition-colors">
                   <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -119,7 +119,7 @@ export default function Register() {
                   type="email"
                   value={email}
                   onChange={(e) => setEmail(e.target.value)}
-                  className="w-full bg-black/20 border border-white/5 rounded-2xl pl-14 pr-6 py-3.5 text-white placeholder:text-brand-gray/30 focus:border-brand-cyan/50 focus:ring-0 transition-all outline-none font-bold italic"
+                  className="w-full bg-black/20 border border-white/5 rounded-2xl pl-14 pr-6 py-3.5 text-white placeholder:text-brand-gray/50 focus:border-brand-cyan/50 focus:ring-0 transition-all outline-none font-bold italic"
                   placeholder="name@example.com"
                   required
                 />
@@ -127,7 +127,7 @@ export default function Register() {
             </div>
 
             <div className="space-y-2 text-left">
-              <label className="block text-[10px] font-black text-brand-gray uppercase tracking-[0.2em] ml-4">{t("password")}</label>
+              <label className="block text-xs font-black text-brand-gray/90 uppercase tracking-[0.2em] ml-4">{t("password")}</label>
               <div className="relative group/input">
                 <div className="absolute left-6 top-1/2 -translate-y-1/2 text-brand-gray group-focus-within/input:text-brand-purple transition-colors">
                   <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -138,7 +138,7 @@ export default function Register() {
                   type="password"
                   value={password}
                   onChange={(e) => setPassword(e.target.value)}
-                  className="w-full bg-black/20 border border-white/5 rounded-2xl pl-14 pr-6 py-3.5 text-white placeholder:text-brand-gray/30 focus:border-brand-purple/50 focus:ring-0 transition-all outline-none font-bold italic"
+                  className="w-full bg-black/20 border border-white/5 rounded-2xl pl-14 pr-6 py-3.5 text-white placeholder:text-brand-gray/50 focus:border-brand-purple/50 focus:ring-0 transition-all outline-none font-bold italic"
                   placeholder="••••••••"
                   required
                 />
@@ -146,7 +146,7 @@ export default function Register() {
             </div>
 
             <div className="space-y-2 text-left">
-              <label className="block text-[10px] font-black text-brand-gray uppercase tracking-[0.2em] ml-4">{t("passwordConfirmation")}</label>
+              <label className="block text-xs font-black text-brand-gray/90 uppercase tracking-[0.2em] ml-4">{t("passwordConfirmation")}</label>
               <div className="relative group/input">
                 <div className="absolute left-6 top-1/2 -translate-y-1/2 text-brand-gray group-focus-within/input:text-brand-purple transition-colors">
                   <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -157,7 +157,7 @@ export default function Register() {
                   type="password"
                   value={passwordConfirmation}
                   onChange={(e) => setPasswordConfirmation(e.target.value)}
-                  className="w-full bg-black/20 border border-white/5 rounded-2xl pl-14 pr-6 py-3.5 text-white placeholder:text-brand-gray/30 focus:border-brand-purple/50 focus:ring-0 transition-all outline-none font-bold italic"
+                  className="w-full bg-black/20 border border-white/5 rounded-2xl pl-14 pr-6 py-3.5 text-white placeholder:text-brand-gray/50 focus:border-brand-purple/50 focus:ring-0 transition-all outline-none font-bold italic"
                   placeholder="Confirmar contraseña"
                   required
                 />
@@ -181,7 +181,7 @@ export default function Register() {
             </button>
           </form>
 
-          <p className="mt-8 text-brand-gray/60 font-medium text-[10px] uppercase tracking-[0.15em]">
+          <p className="mt-8 text-brand-gray/80 font-bold text-xs uppercase tracking-[0.15em]">
             {t("haveAccount")} <Link href={`/${lang}/login`} className="text-brand-cyan hover:text-white font-black transition-colors underline decoration-brand-cyan/30 underline-offset-4">{t("loginLink")}</Link>
           </p>
         </div>

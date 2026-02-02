@@ -67,7 +67,7 @@ export default function MessagesPage() {
           <div className="absolute inset-0 rounded-full border-4 border-white/5 border-t-brand-cyan animate-spin"></div>
           <div className="absolute inset-2 rounded-full border-4 border-white/5 border-t-brand-purple animate-spin" style={{ animationDuration: '1.5s' }}></div>
         </div>
-        <p className="text-brand-gray uppercase tracking-widest text-[10px] font-black animate-pulse">Sincronizando red de mensajes...</p>
+        <p className="text-brand-gray/80 uppercase tracking-widest text-xs font-black animate-pulse">Sincronizando red de mensajes...</p>
       </div>
     );
   }
@@ -89,13 +89,13 @@ export default function MessagesPage() {
           <h1 className="text-4xl md:text-5xl font-black text-white tracking-tightest uppercase italic mb-2">
             {t("page.messages.title")}
           </h1>
-          <p className="text-brand-gray font-medium uppercase tracking-[0.2em] text-[10px]">
+          <p className="text-brand-gray/80 font-bold uppercase tracking-[0.2em] text-xs">
             Canales de comunicación seguros
           </p>
         </div>
         <button
           onClick={() => router.push(`/${lang}`)}
-          className="bg-white/5 text-white/50 border border-white/10 px-8 py-4 rounded-2xl font-black uppercase tracking-widest text-[10px] hover:text-white hover:border-white/20 transition-all shadow-xl"
+          className="bg-white/5 text-white/70 border border-white/10 px-8 py-4 rounded-2xl font-black uppercase tracking-widest text-xs hover:text-white hover:border-white/20 transition-all shadow-xl"
         >
           {t("page.messages.back")}
         </button>
@@ -178,7 +178,7 @@ export default function MessagesPage() {
                 <div className="flex flex-col sm:flex-row xl:flex-col gap-4 min-w-[200px] justify-center items-stretch">
                   <Link
                     href={`/${lang}/messages/${conversation.id}`}
-                    className="flex-1 bg-brand-gradient text-white px-8 py-5 rounded-2xl font-black uppercase tracking-widest text-[10px] text-center shadow-2xl shadow-brand-cyan/20 hover:scale-105 active:scale-95 transition-all"
+                    className="flex-1 bg-brand-gradient text-white px-8 py-5 rounded-2xl font-black uppercase tracking-widest text-xs text-center shadow-2xl shadow-brand-cyan/20 hover:scale-105 active:scale-95 transition-all"
                   >
                     {t("page.messages.openChat") || "ABRIR CANAL"}
                   </Link>
@@ -187,7 +187,7 @@ export default function MessagesPage() {
                     <button
                       onClick={() => handleDeleteConversation(conversation.id)}
                       disabled={deletingId === conversation.id}
-                      className="flex-1 bg-brand-pink/10 text-brand-pink border border-brand-pink/20 px-8 py-5 rounded-2xl font-black uppercase tracking-widest text-[10px] hover:bg-brand-pink hover:text-white transition-all disabled:opacity-50"
+                      className="flex-1 bg-brand-pink/10 text-brand-pink border border-brand-pink/20 px-8 py-5 rounded-2xl font-black uppercase tracking-widest text-xs hover:bg-brand-pink hover:text-white transition-all disabled:opacity-50"
                     >
                       {deletingId === conversation.id
                         ? (t("page.messages.deleting") || "ELIMINANDO...")

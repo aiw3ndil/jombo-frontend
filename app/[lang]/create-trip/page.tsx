@@ -115,7 +115,7 @@ export default function CreateTrip() {
         <form onSubmit={handleSubmit} className="relative space-y-8">
           <div className="grid md:grid-cols-2 gap-8">
             <div className="space-y-2">
-              <label className="block text-[10px] font-black text-brand-gray uppercase tracking-[0.2em] ml-4">
+              <label className="block text-xs font-black text-brand-gray/90 uppercase tracking-[0.2em] ml-4">
                 {t("page.createTrip.from")} *
               </label>
               <div className="relative group/input">
@@ -128,7 +128,7 @@ export default function CreateTrip() {
                   name="from"
                   value={formData.from}
                   onChange={(val: string) => setFormData(prev => ({ ...prev, from: val }))}
-                  className="w-full bg-black/20 border border-white/5 rounded-2xl pl-14 pr-6 py-4 text-white placeholder:text-brand-gray/30 focus:border-brand-cyan/50 focus:ring-0 transition-all outline-none font-bold italic"
+                  className="w-full bg-black/20 border border-white/5 rounded-3xl px-6 py-4 text-white placeholder:text-brand-gray/50 focus:border-brand-cyan/50 focus:ring-0 transition-all outline-none font-medium italic resize-none"
                   placeholder={t("page.createTrip.fromPlaceholder")}
                   required
                 />
@@ -136,7 +136,7 @@ export default function CreateTrip() {
             </div>
 
             <div className="space-y-2">
-              <label className="block text-[10px] font-black text-brand-gray uppercase tracking-[0.2em] ml-4">
+              <label className="block text-xs font-black text-brand-gray/90 uppercase tracking-[0.2em] ml-4">
                 {t("page.createTrip.to")} *
               </label>
               <div className="relative group/input">

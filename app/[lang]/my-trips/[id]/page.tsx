@@ -142,7 +142,7 @@ export default function TripDetails({ params }: { params: Promise<{ lang: string
                     <div className="absolute inset-0 rounded-full border-4 border-white/5 border-t-brand-cyan animate-spin"></div>
                     <div className="absolute inset-2 rounded-full border-4 border-white/5 border-t-brand-purple animate-spin" style={{ animationDuration: '1.5s' }}></div>
                 </div>
-                <p className="text-brand-gray uppercase tracking-widest text-[10px] font-black animate-pulse">Analizando vectores del viaje...</p>
+                <p className="text-brand-gray/80 uppercase tracking-widest text-xs font-black animate-pulse">Analizando vectores del viaje...</p>
             </div>
         );
     }
@@ -156,7 +156,7 @@ export default function TripDetails({ params }: { params: Promise<{ lang: string
             <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-6 mb-12">
                 <button
                     onClick={() => router.push(`/${lang}/my-trips`)}
-                    className="flex items-center gap-2 text-brand-gray/50 font-black uppercase tracking-widest text-[10px] hover:text-white transition-all group"
+                    className="flex items-center gap-2 text-brand-gray/80 font-black uppercase tracking-widest text-xs hover:text-white transition-all group"
                 >
                     <svg className="w-4 h-4 transition-transform group-hover:-translate-x-1" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={3} d="M15 19l-7-7 7-7" /></svg>
                     {t("page.myTrips.back") || "LISTADO"}
@@ -165,7 +165,7 @@ export default function TripDetails({ params }: { params: Promise<{ lang: string
                     <h1 className="text-4xl md:text-5xl font-black text-white tracking-tightest uppercase italic mb-2">
                         {t("page.myTrips.tripDetails") || "Operación de Viaje"}
                     </h1>
-                    <p className="text-brand-gray font-medium uppercase tracking-[0.2em] text-[10px]">Gestión avanzada de pasajeros</p>
+                    <p className="text-brand-gray/80 font-bold uppercase tracking-[0.2em] text-xs">Gestión avanzada de pasajeros</p>
                 </div>
             </div>
 
@@ -174,7 +174,7 @@ export default function TripDetails({ params }: { params: Promise<{ lang: string
                 <div className="absolute inset-0 bg-hacker-dots opacity-5 pointer-events-none"></div>
                 <div className="relative grid grid-cols-1 md:grid-cols-2 gap-12">
                     <div className="space-y-6">
-                        <div className="inline-flex items-center gap-2 text-brand-cyan font-black text-[10px] uppercase tracking-[0.3em] bg-brand-cyan/10 px-4 py-1.5 rounded-full border border-brand-cyan/20">
+                        <div className="inline-flex items-center gap-2 text-brand-cyan font-black text-xs uppercase tracking-[0.3em] bg-brand-cyan/10 px-4 py-1.5 rounded-full border border-brand-cyan/20">
                             COORDENADAS ELEGIDAS
                         </div>
                         <h2 className="text-3xl md:text-4xl font-black text-white leading-tight tracking-tightest italic flex items-center gap-4">
@@ -193,18 +193,18 @@ export default function TripDetails({ params }: { params: Promise<{ lang: string
                     </div>
                     <div className="flex flex-col md:items-end justify-center gap-6">
                         <div className="text-center md:text-right">
-                            <p className="text-brand-gray/40 font-black uppercase tracking-[0.2em] text-[10px] mb-1">PROGRAMA DE COSTOS</p>
+                            <p className="text-brand-gray/80 font-black uppercase tracking-[0.2em] text-xs mb-1">PROGRAMA DE COSTOS</p>
                             <div className="text-4xl font-black text-white italic">
                                 €{Number(trip.price).toFixed(2)} <span className="text-sm font-normal text-brand-gray/50 not-italic lowercase">/ persona</span>
                             </div>
                         </div>
                         <div className="flex gap-4">
                             <div className="bg-black/20 rounded-2xl px-6 py-4 border border-white/5 text-center">
-                                <p className="text-[10px] font-black text-brand-gray/50 uppercase tracking-widest mb-1">{t("page.myTrips.availableSeats")}</p>
+                                <p className="text-xs font-black text-brand-gray/80 uppercase tracking-widest mb-1">{t("page.myTrips.availableSeats")}</p>
                                 <p className="text-xl font-black text-brand-cyan">{trip.available_seats}</p>
                             </div>
                             <div className="bg-black/20 rounded-2xl px-6 py-4 border border-white/5 text-center">
-                                <p className="text-[10px] font-black text-brand-gray/50 uppercase tracking-widest mb-1">TOTAL PASAJEROS</p>
+                                <p className="text-xs font-black text-brand-gray/80 uppercase tracking-widest mb-1">TOTAL PASAJEROS</p>
                                 <p className="text-xl font-black text-brand-purple">{tripBookings.filter(b => b.status === "confirmed").length}</p>
                             </div>
                         </div>
@@ -219,13 +219,13 @@ export default function TripDetails({ params }: { params: Promise<{ lang: string
                         {t("page.myTrips.bookingsForTrip")}
                     </h2>
                     <div className="h-px flex-1 bg-white/5"></div>
-                    <span className="text-[10px] font-black text-brand-gray uppercase tracking-widest bg-white/5 px-3 py-1 rounded-lg border border-white/5">{tripBookings.length} TOTAL</span>
+                    <span className="text-xs font-black text-brand-gray/90 uppercase tracking-widest bg-white/5 px-3 py-1 rounded-lg border border-white/5">{tripBookings.length} TOTAL</span>
                 </div>
 
                 {loadingBookings ? (
                     <div className="flex flex-col items-center py-12 gap-4">
                         <div className="w-8 h-8 border-2 border-brand-cyan/20 border-t-brand-cyan rounded-full animate-spin"></div>
-                        <p className="text-brand-gray text-[10px] font-black uppercase tracking-widest">{t("page.myTrips.loadingBookings")}</p>
+                        <p className="text-brand-gray/80 text-xs font-black uppercase tracking-widest">{t("page.myTrips.loadingBookings")}</p>
                     </div>
                 ) : tripBookings.length === 0 ? (
                     <div className="bg-white/5 backdrop-blur-3xl rounded-[2.5rem] p-12 text-center border border-white/10 italic">

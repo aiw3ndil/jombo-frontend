@@ -53,7 +53,7 @@ export default function NotificationsDropdown({
               <p className="text-sm text-white/70 font-medium leading-relaxed mb-3 relative z-10 italic">
                 {notification.content}
               </p>
-              <p className="text-[10px] font-black text-brand-gray/50 uppercase tracking-widest font-mono relative z-10 group-hover:text-brand-gray/80 transition-colors">
+              <p className="text-xs font-black text-brand-gray/80 uppercase tracking-widest font-mono relative z-10 group-hover:text-brand-gray/90 transition-colors">
                 {new Date(notification.created_at).toLocaleString()}
               </p>
 
@@ -64,7 +64,7 @@ export default function NotificationsDropdown({
       </div>
       {notifications.length > 0 && (
         <div className="p-4 bg-white/5 border-t border-white/10 text-center relative">
-          <button className="text-[10px] font-black text-brand-gray uppercase tracking-[0.2em] hover:text-white transition-colors">
+          <button className="text-xs font-black text-brand-gray/80 uppercase tracking-[0.2em] hover:text-white transition-colors">
             {t("notifications.viewAll") || "Sincronizar todo"}
           </button>
         </div>

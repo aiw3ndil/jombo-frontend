@@ -320,7 +320,7 @@ export default function ProfilePage({ params }: { params: Promise<{ lang: string
           <button
             onClick={() => setShowDeleteModal(true)}
             disabled={deleting}
-            className="relative px-8 py-4 rounded-2xl bg-brand-pink/10 text-brand-pink border border-brand-pink/20 hover:bg-brand-pink hover:text-white transition-all font-black uppercase tracking-widest text-[10px] disabled:opacity-50"
+            className="relative px-8 py-4 rounded-2xl bg-brand-pink/10 text-brand-pink border border-brand-pink/20 hover:bg-brand-pink hover:text-white transition-all font-black uppercase tracking-widest text-xs disabled:opacity-50"
           >
             {deleting ? (t("profile.deletingAccount") || "ELIMINANDO...") : (t("profile.deleteAccountButton") || "ELIMINAR MI CUENTA")}
           </button>

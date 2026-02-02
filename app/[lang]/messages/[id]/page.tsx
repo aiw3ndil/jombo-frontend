@@ -102,7 +102,7 @@ export default function ConversationPage() {
           <div className="absolute inset-0 rounded-full border-4 border-white/5 border-t-brand-cyan animate-spin"></div>
           <div className="absolute inset-2 rounded-full border-4 border-white/5 border-t-brand-purple animate-spin" style={{ animationDuration: '1.5s' }}></div>
         </div>
-        <p className="text-brand-gray uppercase tracking-widest text-[10px] font-black animate-pulse">Abriendo canal de datos...</p>
+        <p className="text-brand-gray/80 uppercase tracking-widest text-xs font-black animate-pulse">Abriendo canal de datos...</p>
       </div>
     );
   }
@@ -122,7 +122,7 @@ export default function ConversationPage() {
           <div className="space-y-4">
             <div className="flex items-center gap-3">
               <span className="w-2 h-2 rounded-full bg-brand-cyan animate-pulse"></span>
-              <p className="text-[10px] font-black text-brand-cyan uppercase tracking-[0.3em]">CONEXIÓN ESTABLECIDA</p>
+              <p className="text-xs font-black text-brand-cyan uppercase tracking-[0.3em]">CONEXIÓN ESTABLECIDA</p>
             </div>
             <h1 className="text-2xl md:text-3xl font-black text-white tracking-tightest uppercase italic flex items-center gap-4">
               {conversation.trip.departure_location}
@@ -131,10 +131,10 @@ export default function ConversationPage() {
               </svg>
               {conversation.trip.arrival_location}
             </h1>
-            <div className="flex flex-wrap gap-4 text-[10px] font-black text-brand-gray uppercase tracking-widest">
+            <div className="flex flex-wrap gap-4 text-xs font-black text-brand-gray/80 uppercase tracking-widest">
               <span>{new Date(conversation.trip.departure_time).toLocaleString(lang, { day: 'numeric', month: 'short', hour: '2-digit', minute: '2-digit' })}</span>
               <span className="text-white/20">|</span>
-              <span>{conversation.participants.map(p => p.name).join(" • ")}</span>
+              <span className="text-brand-gray/60 italic">{conversation.participants.map(p => p.name).join(" • ")}</span>
             </div>
           </div>
           <div className="flex gap-4">
@@ -142,14 +142,14 @@ export default function ConversationPage() {
               <button
                 onClick={handleDeleteConversation}
                 disabled={deleting}
-                className="bg-brand-pink/10 text-brand-pink border border-brand-pink/20 px-6 py-3 rounded-2xl font-black uppercase tracking-widest text-[10px] hover:bg-brand-pink hover:text-white transition-all disabled:opacity-50"
+                className="bg-brand-pink/10 text-brand-pink border border-brand-pink/20 px-6 py-3 rounded-2xl font-black uppercase tracking-widest text-xs hover:bg-brand-pink hover:text-white transition-all disabled:opacity-50"
               >
                 {deleting ? "..." : (t("page.conversation.delete") || "BORRAR")}
               </button>
             )}
             <button
               onClick={() => router.push(`/${lang}/messages`)}
-              className="bg-white/5 text-white/50 border border-white/10 px-6 py-3 rounded-2xl font-black uppercase tracking-widest text-[10px] hover:text-white hover:border-white/20 transition-all"
+              className="bg-white/5 text-white/70 border border-white/10 px-6 py-3 rounded-2xl font-black uppercase tracking-widest text-xs hover:text-white hover:border-white/20 transition-all"
             >
               {t("page.conversation.back") || "VOLVER"}
             </button>
@@ -163,7 +163,7 @@ export default function ConversationPage() {
         {messages.length === 0 ? (
           <div className="flex flex-col items-center justify-center h-full gap-4 py-20 grayscale opacity-20 italic">
             <svg className="w-12 h-12" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1} d="M8 12h.01M12 12h.01M16 12h.01M21 12c0 4.418-4.03 8-9 8a9.863 9.863 0 01-4.255-.949L3 20l1.395-3.72C3.512 15.042 3 13.574 3 12c0-4.418 4.03-8 9-8s9 3.582 9 8z" /></svg>
-            <p className="uppercase tracking-widest text-[10px] font-black">
+            <p className="uppercase tracking-widest text-xs font-black">
               {t("page.conversation.noMessages") || "Esperando transmisión..."}
             </p>
           </div>
@@ -177,7 +177,7 @@ export default function ConversationPage() {
               >
                 {!isOwn && (
                   <div className="w-8 h-8 rounded-full bg-brand-gradient p-0.5 flex-shrink-0 mt-auto">
-                    <div className="w-full h-full rounded-full bg-brand-dark flex items-center justify-center text-white font-black text-[10px] overflow-hidden">
+                    <div className="w-full h-full rounded-full bg-brand-dark flex items-center justify-center text-white font-black text-xs overflow-hidden">
                       {message.user.name.charAt(0)}
                     </div>
                   </div>
@@ -187,18 +187,18 @@ export default function ConversationPage() {
                 >
                   <div
                     className={`rounded-[2rem] px-6 py-4 relative group ${isOwn
-                        ? "bg-brand-gradient text-white rounded-tr-none shadow-2xl shadow-brand-cyan/10"
-                        : "bg-white/10 backdrop-blur-3xl text-white border border-white/10 rounded-tl-none"
+                      ? "bg-brand-gradient text-white rounded-tr-none shadow-2xl shadow-brand-cyan/10"
+                      : "bg-white/10 backdrop-blur-3xl text-white border border-white/10 rounded-tl-none"
                       }`}
                   >
                     {!isOwn && (
-                      <p className="text-[10px] font-black text-brand-cyan/70 uppercase tracking-widest mb-2">
+                      <p className="text-xs font-black text-brand-cyan/80 uppercase tracking-widest mb-2">
                         {message.user.name}
                       </p>
                     )}
                     <p className="text-sm font-medium leading-relaxed break-words">{message.content}</p>
                   </div>
-                  <p className={`text-[9px] font-black uppercase tracking-widest font-mono opacity-30 ${isOwn ? "mr-4" : "ml-4"}`}>
+                  <p className={`text-xs font-black uppercase tracking-widest font-mono opacity-50 ${isOwn ? "mr-4" : "ml-4"}`}>
                     {new Date(message.created_at).toLocaleTimeString(lang, {
                       hour: "2-digit",
                       minute: "2-digit",
@@ -227,7 +227,7 @@ export default function ConversationPage() {
           <button
             type="submit"
             disabled={sending || !newMessage.trim()}
-            className="bg-brand-gradient text-white px-10 py-5 rounded-[2.5rem] font-black uppercase tracking-widest text-[10px] transition-all hover:scale-[1.03] active:scale-95 shadow-xl shadow-brand-cyan/20 disabled:opacity-50 disabled:grayscale disabled:cursor-not-allowed group"
+            className="bg-brand-gradient text-white px-10 py-5 rounded-[2.5rem] font-black uppercase tracking-widest text-xs transition-all hover:scale-[1.03] active:scale-95 shadow-xl shadow-brand-cyan/20 disabled:opacity-50 disabled:grayscale disabled:cursor-not-allowed group"
           >
             {sending ? "..." : (t("page.conversation.send") || "ENVIAR")}
           </button>

@@ -165,7 +165,7 @@ export default function MyBookings() {
           <div className="absolute inset-0 rounded-full border-4 border-white/5 border-t-brand-cyan animate-spin"></div>
           <div className="absolute inset-2 rounded-full border-4 border-white/5 border-t-brand-purple animate-spin" style={{ animationDuration: '1.5s' }}></div>
         </div>
-        <p className="text-brand-gray uppercase tracking-widest text-[10px] font-black animate-pulse">{t("page.myBookings.loading") || "Cargando..."}</p>
+        <p className="text-brand-gray/80 uppercase tracking-widest text-xs font-black animate-pulse">{t("page.myBookings.loading") || "Cargando..."}</p>
       </div>
     );
   }
@@ -183,13 +183,13 @@ export default function MyBookings() {
           <h1 className="text-4xl md:text-5xl font-black text-white tracking-tightest uppercase italic mb-2">
             {t("page.myBookings.title")}
           </h1>
-          <p className="text-brand-gray font-medium uppercase tracking-[0.2em] text-[10px]">
+          <p className="text-brand-gray/80 font-bold uppercase tracking-[0.2em] text-xs">
             Tu historial de reservas en la red
           </p>
         </div>
         <button
           onClick={() => router.push(`/${lang}`)}
-          className="bg-white/5 text-white/50 border border-white/10 px-8 py-4 rounded-2xl font-black uppercase tracking-widest text-[10px] hover:text-white hover:border-white/20 transition-all shadow-xl"
+          className="bg-white/5 text-white/70 border border-white/10 px-8 py-4 rounded-2xl font-black uppercase tracking-widest text-xs hover:text-white hover:border-white/20 transition-all shadow-xl"
         >
           {t("page.myBookings.back")}
         </button>
@@ -291,13 +291,13 @@ export default function MyBookings() {
                       {canReview(booking) && (
                         <button
                           onClick={() => handleOpenReview(booking)}
-                          className="bg-brand-purple text-white px-8 py-4 rounded-2xl hover:scale-105 active:scale-95 transition-all font-black uppercase tracking-widest text-[10px] shadow-xl shadow-brand-purple/20"
+                          className="bg-brand-purple text-white px-8 py-4 rounded-2xl hover:scale-105 active:scale-95 transition-all font-black uppercase tracking-widest text-xs shadow-xl shadow-brand-purple/20"
                         >
                           ⭐ {t("page.myBookings.review") || "CALIFICAR"}
                         </button>
                       )}
                       {bookingReviews[booking.id] && (
-                        <div className="flex items-center justify-center gap-2 text-brand-cyan bg-brand-cyan/10 border border-brand-cyan/20 px-8 py-4 rounded-2xl text-[10px] font-black uppercase tracking-widest">
+                        <div className="flex items-center justify-center gap-2 text-brand-cyan bg-brand-cyan/10 border border-brand-cyan/20 px-8 py-4 rounded-2xl text-xs font-black uppercase tracking-widest">
                           <svg className="w-4 h-4" fill="currentColor" viewBox="0 0 20 20">
                             <path fillRule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clipRule="evenodd" />
                           </svg>
@@ -308,7 +308,7 @@ export default function MyBookings() {
                       <button
                         onClick={() => handleCancelBooking(booking.id)}
                         disabled={cancellingId === booking.id}
-                        className="bg-brand-pink/10 text-brand-pink border border-brand-pink/20 px-8 py-4 rounded-2xl hover:bg-brand-pink hover:text-white transition-all font-black uppercase tracking-widest text-[10px] disabled:opacity-50"
+                        className="bg-brand-pink/10 text-brand-pink border border-brand-pink/20 px-8 py-4 rounded-2xl hover:bg-brand-pink hover:text-white transition-all font-black uppercase tracking-widest text-xs disabled:opacity-50"
                       >
                         {cancellingId === booking.id
                           ? (t("page.myBookings.cancelling") || "PROCESANDO...")
@@ -318,7 +318,7 @@ export default function MyBookings() {
                   )}
                   {(booking.status === "cancelled" || booking.status === "rejected") && (
                     <div className="px-8 py-4 text-center grayscale opacity-50">
-                      <span className="text-[10px] font-black text-brand-gray uppercase tracking-widest italic">{t("page.myBookings.inactive")}</span>
+                      <span className="text-xs font-black text-brand-gray/80 uppercase tracking-widest italic">{t("page.myBookings.inactive")}</span>
                     </div>
                   )}
                 </div>

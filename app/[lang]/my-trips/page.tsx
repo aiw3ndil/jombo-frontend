@@ -50,7 +50,7 @@ export default function MyTrips() {
           <div className="absolute inset-0 rounded-full border-4 border-white/5 border-t-brand-cyan animate-spin"></div>
           <div className="absolute inset-2 rounded-full border-4 border-white/5 border-t-brand-purple animate-spin" style={{ animationDuration: '1.5s' }}></div>
         </div>
-        <p className="text-brand-gray uppercase tracking-widest text-[10px] font-black animate-pulse">{t("page.myTrips.loading") || "Cargando..."}</p>
+        <p className="text-brand-gray uppercase tracking-widest text-xs font-black animate-pulse">{t("page.myTrips.loading") || "Cargando..."}</p>
       </div>
     );
   }
@@ -68,7 +68,7 @@ export default function MyTrips() {
           <h1 className="text-4xl md:text-5xl font-black text-white tracking-tightest uppercase italic mb-2">
             {t("page.myTrips.title")}
           </h1>
-          <p className="text-brand-gray font-medium uppercase tracking-[0.2em] text-[10px]">
+          <p className="text-brand-gray/80 font-bold uppercase tracking-[0.2em] text-xs">
             Tus viajes compartidos en la red
           </p>
         </div>
@@ -103,9 +103,9 @@ export default function MyTrips() {
 
               <div className="relative flex flex-col lg:flex-row justify-between lg:items-center gap-8">
                 <div className="flex-1 space-y-4">
-                  <div className="flex items-center gap-3 text-brand-cyan font-black text-[10px] uppercase tracking-[0.2em]">
+                  <div className="flex items-center gap-3 text-brand-cyan font-black text-xs uppercase tracking-[0.2em]">
                     <span>{new Date(trip.departure_time).toLocaleDateString(lang, { day: 'numeric', month: 'short' })}</span>
-                    <span className="w-1.5 h-1.5 rounded-full bg-white/10"></span>
+                    <span className="w-1.5 h-1.5 rounded-full bg-white/20"></span>
                     <span className="text-brand-purple">{new Date(trip.departure_time).toLocaleTimeString(lang, { hour: '2-digit', minute: '2-digit' })} HS</span>
                   </div>
 
@@ -119,14 +119,14 @@ export default function MyTrips() {
 
                   <div className="flex flex-wrap gap-6">
                     <div className="bg-black/20 rounded-2xl px-5 py-3 border border-white/5">
-                      <p className="text-[10px] font-black text-brand-gray/50 uppercase tracking-widest mb-1">{t("page.myTrips.availableSeats")}</p>
+                      <p className="text-xs font-black text-brand-gray/80 uppercase tracking-widest mb-1">{t("page.myTrips.availableSeats")}</p>
                       <p className={`text-sm font-bold flex items-center gap-2 ${trip.available_seats === 0 ? "text-brand-pink" : "text-white"}`}>
-                        {trip.available_seats} <span className="text-[10px] text-brand-gray uppercase font-medium">Lugares</span>
+                        {trip.available_seats} <span className="text-xs text-brand-gray/70 uppercase font-black italic">Lugares</span>
                       </p>
                     </div>
 
                     <div className="bg-black/20 rounded-2xl px-5 py-3 border border-white/5">
-                      <p className="text-[10px] font-black text-brand-gray/50 uppercase tracking-widest mb-1">{t("page.myTrips.price")}</p>
+                      <p className="text-xs font-black text-brand-gray/80 uppercase tracking-widest mb-1">{t("page.myTrips.price")}</p>
                       <p className="text-sm font-bold text-white italic">€{Number(trip.price).toFixed(2)}</p>
                     </div>
                   </div>
@@ -135,7 +135,7 @@ export default function MyTrips() {
                 <div className="flex flex-col sm:flex-row lg:flex-col gap-4 min-w-[220px]">
                   <Link
                     href={`/${lang}/my-trips/${trip.id}`}
-                    className="flex-1 bg-white/5 text-white border border-white/10 px-8 py-4 rounded-2xl hover:bg-white/10 transition-all font-black uppercase tracking-widest text-[10px] text-center shadow-xl group/btn"
+                    className="flex-1 bg-white/5 text-white border border-white/10 px-8 py-4 rounded-2xl hover:bg-white/10 transition-all font-black uppercase tracking-widest text-xs text-center shadow-xl group/btn"
                   >
                     {t("page.myTrips.manageTrip") || "Gestionar viaje"}
                   </Link>
