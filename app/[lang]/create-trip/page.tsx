@@ -128,7 +128,7 @@ export default function CreateTrip() {
                   name="from"
                   value={formData.from}
                   onChange={(val: string) => setFormData(prev => ({ ...prev, from: val }))}
-                  className="w-full bg-black/20 border border-white/5 rounded-3xl px-6 py-4 text-white placeholder:text-brand-gray/50 focus:border-brand-cyan/50 focus:ring-0 transition-all outline-none font-medium italic resize-none"
+                  className="w-full bg-black/20 border border-white/5 rounded-3xl pl-14 pr-6 py-4 text-white placeholder:text-brand-gray/50 focus:border-brand-cyan/50 focus:ring-0 transition-all outline-none font-medium italic resize-none"
                   placeholder={t("page.createTrip.fromPlaceholder")}
                   required
                 />
@@ -149,7 +149,7 @@ export default function CreateTrip() {
                   name="to"
                   value={formData.to}
                   onChange={(val: string) => setFormData(prev => ({ ...prev, to: val }))}
-                  className="w-full bg-black/20 border border-white/5 rounded-3xl px-6 py-4 text-white placeholder:text-brand-gray/50 focus:border-brand-cyan/50 focus:ring-0 transition-all outline-none font-medium italic resize-none"
+                  className="w-full bg-black/20 border border-white/5 rounded-3xl pl-14 pr-6 py-4 text-white placeholder:text-brand-gray/50 focus:border-brand-cyan/50 focus:ring-0 transition-all outline-none font-medium italic resize-none"
                   placeholder={t("page.createTrip.toPlaceholder")}
                   required
                 />

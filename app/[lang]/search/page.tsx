@@ -27,7 +27,7 @@ export default function SearchPage() {
   const [reviewsModalOpen, setReviewsModalOpen] = useState(false);
   const [selectedDriver, setSelectedDriver] = useState<{ id: number; name: string } | null>(null);
   const [searchFrom, setSearchFrom] = useState(from);
-  const [searchTo, setSearchTo] = useState("");
+  const [searchTo, setSearchTo] = useState(searchParams.get("to") || "");
   const [bookTripModalOpen, setBookTripModalOpen] = useState(false); // New state
   const [selectedTripForBooking, setSelectedTripForBooking] = useState<Trip | null>(null); // New state
 
