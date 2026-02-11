@@ -2,9 +2,9 @@ import { MetadataRoute } from 'next'
  
 export default function manifest(): MetadataRoute.Manifest {
   return {
-    name: 'Jombo - Carpooling Gratis',
+    name: 'Jombo - Carpooling sin comisiones',
     short_name: 'Jombo',
-    description: 'Comparte viaje gratis. Plataforma de carpooling sin comisiones.',
+    description: 'Plataforma de carpooling sin comisiones.',
     start_url: '/',
     display: 'standalone',
     background_color: '#ffffff',

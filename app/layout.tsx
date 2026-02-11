@@ -23,10 +23,10 @@ const geistMono = Geist_Mono({
 
 export const metadata: Metadata = {
   title: {
-    default: "Jombo - Comparte Viaje Gratis | Carpooling Sin Comisiones",
+    default: "Jombo | Carpooling Sin Comisiones",
     template: "%s | Jombo"
   },
-  description: "Plataforma gratuita de carpooling. Comparte viaje con personas que van a tu destino. 100% gratis, sin comisiones. Ahorra dinero y ayuda al medio ambiente.",
+  description: "Plataforma sin comisiones de carpooling. Comparte viaje con personas que van a tu destino. 100% gratis, sin comisiones. Ahorra dinero y ayuda al medio ambiente.",
   keywords: ["carpooling", "compartir viaje", "viaje compartido", "ahorro", "transporte", "blablacar alternativa", "gratis", "sin comisiones"],
   authors: [{ name: "Jombo" }],
   creator: "Jombo",
@@ -46,8 +46,8 @@ export const metadata: Metadata = {
     },
   },
   openGraph: {
-    title: "Jombo - Comparte Viaje Gratis",
-    description: "Plataforma gratuita de carpooling. Ahorra dinero compartiendo viaje. Sin comisiones.",
+    title: "Jombo",
+    description: "Plataforma sin comisiones de carpooling. Ahorra dinero compartiendo viaje. Sin comisiones.",
     url: 'https://www.jombo.es',
     siteName: 'Jombo',
     locale: 'es_ES',
@@ -63,8 +63,8 @@ export const metadata: Metadata = {
   },
   twitter: {
     card: 'summary_large_image',
-    title: 'Jombo - Comparte Viaje Gratis',
-    description: 'Plataforma gratuita de carpooling. Ahorra dinero compartiendo viaje.',
+    title: 'Jombo',
+    description: 'Plataforma sin comisiones de carpooling. Ahorra dinero compartiendo viaje.',
     images: ['/images/jombo-logo.svg'],
   },
   robots: {
