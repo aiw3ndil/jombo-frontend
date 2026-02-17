@@ -26,10 +26,27 @@ export async function generateMetadata({ params: paramsPromise }: { params: Prom
       }
   
       const title = translations.page.title;
+      const description = translations.footer.description; // Get description
       console.log(`generateMetadata: Title for ${lang}: ${title}`);
+
+      const SUPPORTED_LANGS = ['es', 'en', 'fi'];
+      const baseUrl = process.env.NEXT_PUBLIC_SITE_URL || 'https://jombo.com'; // Use a placeholder if not defined
+
+      const languages: { [key: string]: string } = {
+        'x-default': `${baseUrl}/es`, // Default to Spanish
+      };
+      SUPPORTED_LANGS.forEach(supportedLang => {
+        languages[supportedLang] = `${baseUrl}/${supportedLang}`;
+      });
+
   return {
     title: {
       absolute: title,
+    },
+    description: description, // Add description
+    alternates: {
+      canonical: `${baseUrl}/${lang}`, // Canonical for the current language root
+      languages,
     },
   };
 }
