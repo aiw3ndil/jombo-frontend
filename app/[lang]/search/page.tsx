@@ -17,6 +17,7 @@ export default function SearchPage() {
   const params = useParams();
   const lang = (params?.lang as string) || "es";
   const from = searchParams.get("from") || "";
+  const to = searchParams.get("to") || "";
   const { user } = useAuth();
 
   const [trips, setTrips] = useState<Trip[]>([]);
@@ -27,12 +28,12 @@ export default function SearchPage() {
   const [reviewsModalOpen, setReviewsModalOpen] = useState(false);
   const [selectedDriver, setSelectedDriver] = useState<{ id: number; name: string } | null>(null);
   const [searchFrom, setSearchFrom] = useState(from);
-  const [searchTo, setSearchTo] = useState(searchParams.get("to") || "");
+  const [searchTo, setSearchTo] = useState(to);
   const [bookTripModalOpen, setBookTripModalOpen] = useState(false); // New state
   const [selectedTripForBooking, setSelectedTripForBooking] = useState<Trip | null>(null); // New state
 
   useEffect(() => {
-    if (!from) {
+    if (!from && !to) {
       router.push(`/${lang}`);
       return;
     }
@@ -41,7 +42,7 @@ export default function SearchPage() {
       try {
         setLoading(true);
         setError("");
-        const results = await searchTrips(from, searchTo);
+        const results = await searchTrips(from, to);
         console.log('🔍 Search results:', results);
         setTrips(results);
 
@@ -70,7 +71,7 @@ export default function SearchPage() {
     }
 
     fetchTrips();
-  }, [from, lang, router, user]);
+  }, [from, to, lang, router, user]);
 
   // Wait for translations to load
   if (translationsLoading) {
@@ -144,10 +145,12 @@ export default function SearchPage() {
 
   const handleSearch = (e: React.FormEvent) => {
     e.preventDefault();
-    if (!searchFrom.trim()) return;
+    if (!searchFrom.trim() && !searchTo.trim()) return;
 
     const params = new URLSearchParams();
-    params.set("from", searchFrom);
+    if (searchFrom.trim()) {
+      params.set("from", searchFrom);
+    }
     if (searchTo.trim()) {
       params.set("to", searchTo);
     }
@@ -226,7 +229,6 @@ export default function SearchPage() {
                 onChange={(val: string) => setSearchFrom(val)}
                 placeholder={t("page.home.from") || "Desde"}
                 className="w-full bg-transparent border-none pl-14 pr-4 py-4 text-white placeholder:text-brand-gray/40 focus:ring-0 outline-none font-bold"
-                required
               />
             </div>
             <div className="w-full relative group/input">

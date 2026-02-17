@@ -33,7 +33,7 @@ export default function LanguageSwitcher() {
       newPath += `?${queryString}`;
     }
     
-    router.push(newPath);
+    window.location.href = newPath;
   }
 
   return (

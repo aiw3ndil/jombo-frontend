@@ -18,6 +18,7 @@ export function GoogleMapsProvider({ children }: { children: ReactNode }) {
     const { isLoaded, loadError } = useJsApiLoader({
         googleMapsApiKey: apiKey,
         libraries,
+        language: 'es', // Set static language to Spanish
     });
 
     return (
