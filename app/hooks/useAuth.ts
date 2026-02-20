@@ -51,11 +51,11 @@ export function useAuth() {
   }, []);
 
   const register = useCallback(
-    async (name: string, email: string, password: string, passwordConfirmation: string, language: string = "es") => {
+    async (name: string, email: string, password: string, passwordConfirmation: string, language: string = "es", region?: string) => {
       setLoading(true);
       setError(null);
       try {
-        const data = await authApi.register(name, email, password, passwordConfirmation, language);
+        const data = await authApi.register(name, email, password, passwordConfirmation, language, region);
         // Después del registro, obtener los datos del usuario desde /me
         const userData = await authApi.fetchMe();
         setUser(userData);

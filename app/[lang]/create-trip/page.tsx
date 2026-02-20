@@ -22,6 +22,7 @@ export default function CreateTrip() {
     availableSeats: 1,
     pricePerSeat: 0,
     description: "",
+    region: "",
   });
 
   const [loading, setLoading] = useState(false);
@@ -30,8 +31,13 @@ export default function CreateTrip() {
   useEffect(() => {
     if (!authLoading && !user) {
       router.push(`/${lang}/login?redirect=/${lang}/create-trip`);
+    } else if (user && !formData.region) {
+      setFormData(prev => ({
+        ...prev,
+        region: user.region || (lang === "fi" ? "fi" : "es")
+      }));
     }
-  }, [user, authLoading, router, lang]);
+  }, [user, authLoading, router, lang, formData.region]);
 
   // Wait for translations to load
   if (translationsLoading) {
@@ -60,7 +66,7 @@ export default function CreateTrip() {
     return null;
   }
 
-  const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
+  const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement>) => {
     const { name, value } = e.target;
     setFormData((prev) => ({
       ...prev,
@@ -84,6 +90,7 @@ export default function CreateTrip() {
         available_seats: Number(formData.availableSeats),
         price: Number(formData.pricePerSeat),
         description: formData.description || undefined,
+        region: formData.region,
       });
       toast.success(t("page.createTrip.success") || "Viaje creado exitosamente");
       router.push(`/${lang}`);
@@ -218,6 +225,27 @@ export default function CreateTrip() {
                   className="w-full bg-black/20 border border-white/5 rounded-2xl pl-12 pr-6 py-4 text-white focus:border-brand-cyan/50 focus:ring-0 transition-all outline-none font-bold italic"
                   required
                 />
+              </div>
+            </div>
+
+            <div className="space-y-2 col-span-2 md:col-span-1">
+              <label className="block text-xs font-black text-brand-gray/90 uppercase tracking-[0.2em] ml-4">
+                {t("page.createTrip.region") || "Región"} *
+              </label>
+              <div className="relative group/input">
+                <div className="absolute left-6 top-1/2 -translate-y-1/2 text-brand-gray group-focus-within/input:text-brand-cyan transition-colors">
+                  <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M3.055 11H5a2 2 0 012 2v1a2 2 0 002 2 2 2 0 012 2v2.945M8 3.935V5.5A2.5 2.5 0 0010.5 8h.5a2 2 0 012 2 2 2 0 104 0 2 2 0 012-2h1.064M15 20.488V18a2 2 0 012-2h3.064M21 12a9 9 0 11-18 0 9 9 0 0118 0z" /></svg>
+                </div>
+                <select
+                  name="region"
+                  value={formData.region}
+                  onChange={handleChange}
+                  className="w-full bg-black/20 border border-white/5 rounded-2xl pl-14 pr-10 py-4 text-white focus:border-brand-cyan/50 focus:ring-0 transition-all outline-none font-bold italic appearance-none cursor-pointer"
+                  required
+                >
+                  <option value="es" className="bg-brand-dark">{t("page.createTrip.regionSpain") || "España"}</option>
+                  <option value="fi" className="bg-brand-dark">{t("page.createTrip.regionFinland") || "Finlandia"}</option>
+                </select>
               </div>
             </div>
           </div>

@@ -19,6 +19,7 @@ export default function Register() {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [passwordConfirmation, setPasswordConfirmation] = useState("");
+  const [region, setRegion] = useState(lang === "fi" ? "fi" : "es");
   const [oauthError, setOauthError] = useState<string | null>(null);
 
   // Wait for translations to load
@@ -36,7 +37,7 @@ export default function Register() {
   const handleSubmit = async (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     try {
-      await register(name, email, password, passwordConfirmation, lang);
+      await register(name, email, password, passwordConfirmation, lang, region);
       window.location.href = `/${lang}`;
     } catch (err) { }
   };
@@ -123,6 +124,31 @@ export default function Register() {
                   placeholder="name@example.com"
                   required
                 />
+              </div>
+            </div>
+
+            <div className="space-y-2 text-left">
+              <label className="block text-xs font-black text-brand-gray/90 uppercase tracking-[0.2em] ml-4">{t("region")}</label>
+              <div className="relative group/input">
+                <div className="absolute left-6 top-1/2 -translate-y-1/2 text-brand-gray group-focus-within/input:text-brand-cyan transition-colors">
+                  <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M3.055 11H5a2 2 0 012 2v1a2 2 0 002 2 2 2 0 012 2v2.945M8 3.935V5.5A2.5 2.5 0 0010.5 8h.5a2 2 0 012 2 2 2 0 104 0 2 2 0 012-2h1.064M15 20.488V18a2 2 0 012-2h3.064M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
+                  </svg>
+                </div>
+                <select
+                  value={region}
+                  onChange={(e) => setRegion(e.target.value)}
+                  className="w-full bg-black/20 border border-white/5 rounded-2xl pl-14 pr-6 py-3.5 text-white placeholder:text-brand-gray/50 focus:border-brand-cyan/50 focus:ring-0 transition-all outline-none font-bold italic appearance-none cursor-pointer"
+                  required
+                >
+                  <option value="es" className="bg-zinc-900 text-white font-bold">{t("regionSpain")}</option>
+                  <option value="fi" className="bg-zinc-900 text-white font-bold">{t("regionFinland")}</option>
+                </select>
+                <div className="absolute right-6 top-1/2 -translate-y-1/2 text-brand-gray pointer-events-none">
+                  <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 9l-7 7-7-7" />
+                  </svg>
+                </div>
               </div>
             </div>
 

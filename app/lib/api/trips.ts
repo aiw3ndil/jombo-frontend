@@ -29,7 +29,8 @@ export interface Trip {
 
 export async function searchTrips(
   departureLocation?: string,
-  arrivalLocation?: string
+  arrivalLocation?: string,
+  region?: string
 ): Promise<Trip[]> {
   const params = new URLSearchParams();
   if (departureLocation) {
@@ -37,6 +38,9 @@ export async function searchTrips(
   }
   if (arrivalLocation) {
     params.set("arrival_location", arrivalLocation);
+  }
+  if (region) {
+    params.set("region", region);
   }
   const url = `${API_BASE}/api/v1/trips/search?${params.toString()}`;
 
@@ -107,6 +111,7 @@ export interface CreateTripData {
   available_seats: number;
   price: number;
   description?: string;
+  region?: string;
 }
 
 export async function createTrip(tripData: CreateTripData): Promise<Trip> {

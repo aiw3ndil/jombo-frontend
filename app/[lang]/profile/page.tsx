@@ -14,7 +14,8 @@ export default function ProfilePage({ params }: { params: Promise<{ lang: string
   const [formData, setFormData] = useState({
     name: "",
     email: "",
-    language: "es"
+    language: "es",
+    region: "es"
   });
   const [pictureFile, setPictureFile] = useState<File | null>(null);
   const [picturePreview, setPicturePreview] = useState<string | null>(null);
@@ -37,7 +38,8 @@ export default function ProfilePage({ params }: { params: Promise<{ lang: string
       setFormData({
         name: user.name || "",
         email: user.email || "",
-        language: user.language || lang
+        language: user.language || lang,
+        region: user.region || (lang === "fi" ? "fi" : "es")
       });
       // Backend puede retornar 'picture' o 'picture_url'
       const pictureUrl = user.picture_url || user.picture;
@@ -77,6 +79,7 @@ export default function ProfilePage({ params }: { params: Promise<{ lang: string
       const formDataToSend = new FormData();
       formDataToSend.append("name", formData.name);
       formDataToSend.append("language", formData.language);
+      formDataToSend.append("region", formData.region);
 
       if (pictureFile) {
         console.log("📸 Uploading picture:", pictureFile.name, pictureFile.type);
@@ -285,6 +288,27 @@ export default function ProfilePage({ params }: { params: Promise<{ lang: string
                 <option value="es" className="bg-brand-dark">Español</option>
                 <option value="en" className="bg-brand-dark">English</option>
                 <option value="fi" className="bg-brand-dark">Suomi</option>
+              </select>
+            </div>
+          </div>
+
+          <div className="space-y-2">
+            <label htmlFor="region" className="block text-xs font-black text-brand-gray/90 uppercase tracking-[0.2em] ml-4">
+              {t("profile.region") || "Región"}
+            </label>
+            <div className="relative group/input">
+              <div className="absolute left-6 top-1/2 -translate-y-1/2 text-brand-gray group-focus-within/input:text-brand-cyan transition-colors">
+                <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M3.055 11H5a2 2 0 012 2v1a2 2 0 002 2 2 2 0 012 2v2.945M8 3.935V5.5A2.5 2.5 0 0010.5 8h.5a2 2 0 012 2 2 2 0 104 0 2 2 0 012-2h1.064M15 20.488V18a2 2 0 012-2h3.064M21 12a9 9 0 11-18 0 9 9 0 0118 0z" /></svg>
+              </div>
+              <select
+                id="region"
+                name="region"
+                value={formData.region}
+                onChange={handleChange}
+                className="w-full bg-black/20 border border-white/5 rounded-2xl pl-14 pr-10 py-4 text-white focus:border-brand-cyan/50 focus:ring-0 transition-all outline-none font-bold italic appearance-none cursor-pointer"
+              >
+                <option value="es" className="bg-brand-dark">{t("profile.regionSpain") || "España"}</option>
+                <option value="fi" className="bg-brand-dark">{t("profile.regionFinland") || "Finlandia"}</option>
               </select>
             </div>
           </div>

@@ -84,14 +84,15 @@ export async function login(email: string, password: string) {
   return result;
 }
 
-export async function register(name: string, email: string, password: string, passwordConfirmation: string, language: string = "es") {
+export async function register(name: string, email: string, password: string, passwordConfirmation: string, language: string = "es", region?: string) {
   return requestJson('/api/v1/register', { 
     user: { 
       name, 
       email, 
       password, 
       password_confirmation: passwordConfirmation,
-      language 
+      language,
+      region
     } 
   });
 }
