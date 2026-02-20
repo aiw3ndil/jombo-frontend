@@ -158,7 +158,7 @@ export default function ConversationPage() {
       </div>
 
       {/* Messages Area */}
-      <div className="flex-1 overflow-y-auto bg-black/20 rounded-[2.5rem] border border-white/5 p-6 space-y-6 scrollbar-hide mb-6 relative hover:border-white/10 transition-colors">
+      <div className="flex-[4] overflow-y-auto bg-black/20 rounded-[2.5rem] border border-white/5 p-8 space-y-8 scrollbar-hide mb-4 relative hover:border-white/10 transition-colors min-h-[70vh]">
         <div className="absolute inset-0 bg-hacker-dots opacity-[0.03] pointer-events-none"></div>
         {messages.length === 0 ? (
           <div className="flex flex-col items-center justify-center h-full gap-4 py-20 grayscale opacity-20 italic">
@@ -176,29 +176,29 @@ export default function ConversationPage() {
                 className={`flex gap-4 ${isOwn ? "justify-end" : "justify-start"}`}
               >
                 {!isOwn && (
-                  <div className="w-8 h-8 rounded-full bg-brand-gradient p-0.5 flex-shrink-0 mt-auto">
-                    <div className="w-full h-full rounded-full bg-brand-dark flex items-center justify-center text-white font-black text-xs overflow-hidden">
+                  <div className="w-10 h-10 rounded-full bg-brand-gradient p-0.5 flex-shrink-0 mt-auto shadow-lg shadow-brand-cyan/20">
+                    <div className="w-full h-full rounded-full bg-brand-dark flex items-center justify-center text-white font-black text-sm overflow-hidden">
                       {message.user.name.charAt(0)}
                     </div>
                   </div>
                 )}
                 <div
-                  className={`max-w-[75%] space-y-2 ${isOwn ? "items-end text-right" : "items-start"}`}
+                  className={`max-w-[85%] space-y-2 ${isOwn ? "items-end text-right" : "items-start"}`}
                 >
                   <div
-                    className={`rounded-[2rem] px-6 py-4 relative group ${isOwn
-                      ? "bg-brand-gradient text-white rounded-tr-none shadow-2xl shadow-brand-cyan/10"
-                      : "bg-white/10 backdrop-blur-3xl text-white border border-white/10 rounded-tl-none"
+                    className={`rounded-[2.5rem] px-8 py-5 relative group ${isOwn
+                      ? "bg-brand-gradient text-white rounded-tr-none shadow-2xl shadow-brand-cyan/20"
+                      : "bg-white/10 backdrop-blur-3xl text-white border border-white/10 rounded-tl-none shadow-xl"
                       }`}
                   >
                     {!isOwn && (
-                      <p className="text-xs font-black text-brand-cyan/80 uppercase tracking-widest mb-2">
+                      <p className="text-xs font-black text-brand-cyan/80 uppercase tracking-widest mb-3">
                         {message.user.name}
                       </p>
                     )}
-                    <p className="text-sm font-medium leading-relaxed break-words">{message.content}</p>
+                    <p className="text-base font-medium leading-relaxed break-words">{message.content}</p>
                   </div>
-                  <p className={`text-xs font-black uppercase tracking-widest font-mono opacity-50 ${isOwn ? "mr-4" : "ml-4"}`}>
+                  <p className={`text-[10px] font-black uppercase tracking-widest font-mono opacity-40 ${isOwn ? "mr-6" : "ml-6"}`}>
                     {new Date(message.created_at).toLocaleTimeString(lang, {
                       hour: "2-digit",
                       minute: "2-digit",
@@ -215,19 +215,20 @@ export default function ConversationPage() {
       {/* Input Area */}
       <form onSubmit={handleSendMessage} className="bg-white/5 backdrop-blur-3xl border border-white/10 p-3 rounded-[3rem] shadow-2xl relative group flex-shrink-0">
         <div className="absolute -inset-1.5 bg-brand-gradient rounded-[3.2rem] opacity-0 blur-2xl group-focus-within/input:opacity-20 transition-opacity"></div>
-        <div className="relative flex gap-3">
-          <input
-            type="text"
+        <div className="relative flex items-end gap-4">
+          <textarea
+            rows={3}
             value={newMessage}
             onChange={(e) => setNewMessage(e.target.value)}
             placeholder={t("page.conversation.messagePlaceholder") || "Codificar mensaje..."}
-            className="flex-1 bg-black/20 border border-white/5 rounded-[2.5rem] px-8 py-5 text-white placeholder:text-brand-gray/30 focus:outline-none focus:border-brand-cyan/50 focus:ring-0 transition-all font-bold italic text-sm"
+            className="flex-1 bg-black/20 border border-white/5 rounded-[2.5rem] px-8 py-5 text-white placeholder:text-brand-gray/30 focus:outline-none focus:border-brand-cyan/50 focus:ring-0 transition-all font-bold italic text-base resize-none"
             disabled={sending}
+            autoFocus={false}
           />
           <button
             type="submit"
             disabled={sending || !newMessage.trim()}
-            className="bg-brand-gradient text-white px-10 py-5 rounded-[2.5rem] font-black uppercase tracking-widest text-xs transition-all hover:scale-[1.03] active:scale-95 shadow-xl shadow-brand-cyan/20 disabled:opacity-50 disabled:grayscale disabled:cursor-not-allowed group"
+            className="bg-brand-gradient text-white px-10 py-5 h-[62px] rounded-[2.5rem] font-black uppercase tracking-widest text-xs transition-all hover:scale-[1.03] active:scale-95 shadow-xl shadow-brand-cyan/20 disabled:opacity-50 disabled:grayscale disabled:cursor-not-allowed group flex items-center justify-center mb-1"
           >
             {sending ? "..." : (t("page.conversation.send") || "ENVIAR")}
           </button>
