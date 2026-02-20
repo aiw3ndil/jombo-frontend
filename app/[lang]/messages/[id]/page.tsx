@@ -112,7 +112,7 @@ export default function ConversationPage() {
   }
 
   return (
-    <div className="max-w-5xl mx-auto h-[calc(100vh-140px)] flex flex-col relative py-8 px-4 sm:px-6">
+    <div className="max-w-7xl mx-auto min-h-[calc(100vh-80px)] flex flex-col relative py-8 px-4 sm:px-6 mb-12">
       <div className="absolute top-0 left-0 w-[300px] h-[300px] bg-brand-cyan/5 rounded-full blur-[100px] pointer-events-none"></div>
 
       {/* Header HUD */}
@@ -158,7 +158,7 @@ export default function ConversationPage() {
       </div>
 
       {/* Messages Area */}
-      <div className="flex-[4] overflow-y-auto bg-black/20 rounded-[2.5rem] border border-white/5 p-8 space-y-8 scrollbar-hide mb-4 relative hover:border-white/10 transition-colors min-h-[70vh]">
+      <div className="flex-[4] overflow-y-auto bg-black/20 rounded-[2.5rem] border border-white/5 p-8 space-y-8 scrollbar-hide mb-4 relative hover:border-white/10 transition-colors min-h-[60vh] max-h-[70vh]">
         <div className="absolute inset-0 bg-hacker-dots opacity-[0.03] pointer-events-none"></div>
         {messages.length === 0 ? (
           <div className="flex flex-col items-center justify-center h-full gap-4 py-20 grayscale opacity-20 italic">
