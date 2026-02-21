@@ -5,11 +5,22 @@ import { NotificationsProvider } from "@/app/contexts/NotificationsContext";
 import { GoogleMapsProvider } from "@/app/contexts/GoogleMapsContext";
 import { ReactNode } from "react";
 
-export function Providers({ children }: { children: ReactNode }) {
+const getRegionFromLang = (lang: string) => {
+  switch (lang) {
+    case 'fi': return 'FI';
+    case 'en': return 'US';
+    case 'es':
+    default: return 'ES';
+  }
+};
+
+export function Providers({ children, lang = 'es' }: { children: ReactNode; lang?: string }) {
+  const region = getRegionFromLang(lang);
+  
   return (
     <AuthProvider>
       <NotificationsProvider>
-        <GoogleMapsProvider>
+        <GoogleMapsProvider language={lang} region={region}>
           {children}
         </GoogleMapsProvider>
       </NotificationsProvider>

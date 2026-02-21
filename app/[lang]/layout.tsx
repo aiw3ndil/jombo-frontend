@@ -59,10 +59,11 @@ export default async function LangLayout({
   params: Promise<{ lang: string }>;
 }) {
   const { lang } = await params;
+  const currentLang = lang || "es";
 
   return (
-    <Providers>
-      <ClientLayout lang={lang || "es"}>
+    <Providers lang={currentLang}>
+      <ClientLayout lang={currentLang}>
         {children}
       </ClientLayout>
     </Providers>

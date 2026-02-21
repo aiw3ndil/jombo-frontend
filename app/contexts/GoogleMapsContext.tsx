@@ -10,16 +10,31 @@ interface GoogleMapsContextType {
 
 const GoogleMapsContext = createContext<GoogleMapsContextType | undefined>(undefined);
 
-const libraries: any = ["places"];
+// Static libraries and global variable for options
+const LIBRARIES: any = ["places"];
+let globalLoaderOptions: any = null;
 
-export function GoogleMapsProvider({ children }: { children: ReactNode }) {
+export function GoogleMapsProvider({ 
+    children, 
+    language = 'es',
+    region = 'ES' 
+}: { 
+    children: ReactNode;
+    language?: string;
+    region?: string;
+}) {
     const apiKey = process.env.NEXT_PUBLIC_GOOGLE_MAPS_API_KEY || "";
+    
+    if (!globalLoaderOptions) {
+        globalLoaderOptions = {
+            googleMapsApiKey: apiKey,
+            libraries: LIBRARIES,
+            language,
+            region,
+        };
+    }
 
-    const { isLoaded, loadError } = useJsApiLoader({
-        googleMapsApiKey: apiKey,
-        libraries,
-        language: 'es', // Set static language to Spanish
-    });
+    const { isLoaded, loadError } = useJsApiLoader(globalLoaderOptions);
 
     return (
         <GoogleMapsContext.Provider value={{ isLoaded, loadError }}>
