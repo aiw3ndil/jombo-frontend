@@ -1,10 +1,11 @@
 import { Metadata } from 'next';
 import { TOP_FINNISH_ROUTES } from '@/app/lib/constants/routes';
-import { searchTrips } from '@/app/lib/api/trips';
+import { searchTrips, Trip, ExternalOption } from '@/app/lib/api/trips';
 import { notFound } from 'next/navigation';
 import { promises as fs } from 'fs';
 import path from 'path';
 import Link from 'next/link';
+import ExternalTransportCard from '@/app/components/ExternalTransportCard';
 
 interface Props {
   params: Promise<{ lang: string; slug: string }>;
@@ -71,7 +72,10 @@ export default async function RoutePage({ params }: Props) {
   }
 
   const t = await getTranslations(lang);
-  const trips = await searchTrips(route.from, route.to);
+  const response = await searchTrips(route.from, route.to);
+  const trips = response.trips;
+  const externalOptions = response.external_options;
+  const source = response.source;
 
   // Structured Data (Schema.org)
   const jsonLd = {
@@ -134,7 +138,28 @@ export default async function RoutePage({ params }: Props) {
         </p>
       </div>
 
-      {trips.length === 0 ? (
+      {source === 'digitransit' && (
+        <div className="mb-10 p-6 bg-brand-purple/10 border border-brand-purple/20 rounded-[2rem] flex items-center gap-4">
+          <div className="w-12 h-12 bg-brand-purple/20 rounded-full flex items-center justify-center text-brand-purple shrink-0">
+            <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
+            </svg>
+          </div>
+          <div>
+            <p className="text-white font-bold uppercase tracking-widest text-xs mb-1">
+              {lang === 'fi' ? 'Ei kimppakyytejä löytynyt' : 'No carpools found'}
+            </p>
+            <p className="text-brand-gray text-sm">
+              {lang === 'fi' 
+                ? 'Näytetään julkisen liikenteen vaihtoehdot välille ' 
+                : 'Showing public transport alternatives between '}
+              <span className="text-white font-bold">{route.from} - {route.to}</span>
+            </p>
+          </div>
+        </div>
+      )}
+
+      {trips.length === 0 && externalOptions.length === 0 ? (
         <div className="bg-white/5 border border-white/10 rounded-[3rem] p-12 text-center backdrop-blur-xl">
           <div className="w-20 h-20 bg-brand-cyan/10 rounded-full flex items-center justify-center mx-auto mb-8 border border-brand-cyan/20">
             <svg className="w-10 h-10 text-brand-cyan" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -142,7 +167,7 @@ export default async function RoutePage({ params }: Props) {
             </svg>
           </div>
           <h2 className="text-2xl font-bold text-white mb-4 uppercase italic">
-            {lang === 'fi' ? 'Ei vielä kyytejä tälle reitille' : 'No trips yet for this route'}
+            {lang === 'fi' ? 'Ei todavía kyytejä tälle reitille' : 'No trips yet for this route'}
           </h2>
           <p className="text-brand-gray mb-10 max-w-md mx-auto">
             {lang === 'fi' 
@@ -158,31 +183,37 @@ export default async function RoutePage({ params }: Props) {
           </Link>
         </div>
       ) : (
-        <div className="grid gap-6">
+        <div className="grid gap-8">
             <p className="text-brand-cyan font-bold uppercase tracking-widest text-xs mb-2">
-                {lang === 'fi' ? `Löytyi ${trips.length} matkaa` : `Found ${trips.length} trips`}
+                {lang === 'fi' ? `Löytyi ${trips.length + externalOptions.length} vaihtoehtoa` : `Found ${trips.length + externalOptions.length} options`}
             </p>
-          {/* Aquí podrías renderizar una lista simplificada o redirigir a search si quieres reutilizar componentes */}
-          {/* Por brevedad, redirigimos a la página de búsqueda real para completar la reserva */}
-          <div className="bg-white/5 border border-white/10 rounded-3xl p-8 flex flex-col md:flex-row items-center justify-between gap-6">
-            <div>
-              <h3 className="text-xl font-bold text-white uppercase italic">
-                {lang === 'fi' ? 'Katso kaikki saatavilla olevat matkat' : 'See all available trips'}
-              </h3>
-              <p className="text-brand-gray">
-                {lang === 'fi' 
-                  ? `Päivitettyjä kyytejä löytyi tälle reitille.` 
-                  : `Updated rides found for this route.`
-                }
-              </p>
+          
+          {/* Render external transport options */}
+          {externalOptions.map((option, idx) => (
+            <ExternalTransportCard key={`ext-${idx}`} option={option} lang={lang} />
+          ))}
+
+          {trips.length > 0 && (
+            <div className="bg-white/5 border border-white/10 rounded-3xl p-8 flex flex-col md:flex-row items-center justify-between gap-6 mt-8">
+              <div>
+                <h3 className="text-xl font-bold text-white uppercase italic">
+                  {lang === 'fi' ? 'Katso kaikki kyytejä ja varaa' : 'See all carpools and book'}
+                </h3>
+                <p className="text-brand-gray text-sm">
+                  {lang === 'fi' 
+                    ? `Päivitettyjä kyytejä löytyi tälle reitille Jombossa.` 
+                    : `Updated carpools found for this route in Jombo.`
+                  }
+                </p>
+              </div>
+              <Link 
+                href={`/${lang}/search?from=${route.from}&to=${route.to}`}
+                className="bg-white text-black px-8 py-4 rounded-2xl font-black uppercase tracking-widest text-xs hover:bg-brand-cyan hover:text-white transition-all shrink-0"
+              >
+                {t.page.home.search || 'Hae matka'}
+              </Link>
             </div>
-            <Link 
-              href={`/${lang}/search?from=${route.from}&to=${route.to}`}
-              className="bg-white text-black px-8 py-4 rounded-2xl font-black uppercase tracking-widest text-xs hover:bg-brand-cyan hover:text-white transition-all"
-            >
-              {t.page.home.search || 'Hae matka'}
-            </Link>
-          </div>
+          )}
         </div>
       )}
 

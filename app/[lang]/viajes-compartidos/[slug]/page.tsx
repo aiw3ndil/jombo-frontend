@@ -1,10 +1,11 @@
 import { Metadata } from 'next';
 import { TOP_SPANISH_ROUTES } from '@/app/lib/constants/routes';
-import { searchTrips } from '@/app/lib/api/trips';
+import { searchTrips, Trip, ExternalOption } from '@/app/lib/api/trips';
 import { notFound } from 'next/navigation';
 import { promises as fs } from 'fs';
 import path from 'path';
 import Link from 'next/link';
+import ExternalTransportCard from '@/app/components/ExternalTransportCard';
 
 interface Props {
   params: Promise<{ lang: string; slug: string }>;
@@ -68,7 +69,10 @@ export default async function SpanishRoutePage({ params }: Props) {
   }
 
   const t = await getTranslations(lang);
-  const trips = await searchTrips(route.from, route.to);
+  const response = await searchTrips(route.from, route.to);
+  const trips = response.trips;
+  const externalOptions = response.external_options;
+  const source = response.source;
 
   // Structured Data (Schema.org)
   const jsonLd = {
@@ -131,7 +135,28 @@ export default async function SpanishRoutePage({ params }: Props) {
         </p>
       </div>
 
-      {trips.length === 0 ? (
+      {source === 'digitransit' && (
+        <div className="mb-10 p-6 bg-brand-purple/10 border border-brand-purple/20 rounded-[2rem] flex items-center gap-4">
+          <div className="w-12 h-12 bg-brand-purple/20 rounded-full flex items-center justify-center text-brand-purple shrink-0">
+            <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
+            </svg>
+          </div>
+          <div>
+            <p className="text-white font-bold uppercase tracking-widest text-xs mb-1">
+              {lang === 'es' ? 'No se encontraron viajes compartidos' : 'No carpools found'}
+            </p>
+            <p className="text-brand-gray text-sm">
+              {lang === 'es' 
+                ? 'Mostrando alternativas de transporte público entre ' 
+                : 'Showing public transport alternatives between '}
+              <span className="text-white font-bold">{route.from} - {route.to}</span>
+            </p>
+          </div>
+        </div>
+      )}
+
+      {trips.length === 0 && externalOptions.length === 0 ? (
         <div className="bg-white/5 border border-white/10 rounded-[3rem] p-12 text-center backdrop-blur-xl">
           <div className="w-20 h-20 bg-brand-purple/10 rounded-full flex items-center justify-center mx-auto mb-8 border border-brand-purple/20">
             <svg className="w-10 h-10 text-brand-purple" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -155,29 +180,37 @@ export default async function SpanishRoutePage({ params }: Props) {
           </Link>
         </div>
       ) : (
-        <div className="grid gap-6">
+        <div className="grid gap-8">
             <p className="text-brand-purple font-bold uppercase tracking-widest text-xs mb-2">
-                {lang === 'es' ? `Se han encontrado ${trips.length} viajes` : `Found ${trips.length} trips`}
+                {lang === 'es' ? `Se han encontrado ${trips.length + externalOptions.length} opciones` : `Found ${trips.length + externalOptions.length} options`}
             </p>
-          <div className="bg-white/5 border border-white/10 rounded-3xl p-8 flex flex-col md:flex-row items-center justify-between gap-6">
-            <div>
-              <h3 className="text-xl font-bold text-white uppercase italic">
-                {lang === 'es' ? 'Ver todos los viajes disponibles' : 'See all available trips'}
-              </h3>
-              <p className="text-brand-gray">
-                {lang === 'es' 
-                  ? `Hay viajes actualizados para esta ruta.` 
-                  : `There are updated trips for this route.`
-                }
-              </p>
+          
+          {/* Render external transport options */}
+          {externalOptions.map((option, idx) => (
+            <ExternalTransportCard key={`ext-${idx}`} option={option} lang={lang} />
+          ))}
+
+          {trips.length > 0 && (
+            <div className="bg-white/5 border border-white/10 rounded-3xl p-8 flex flex-col md:flex-row items-center justify-between gap-6 mt-8">
+              <div>
+                <h3 className="text-xl font-bold text-white uppercase italic">
+                  {lang === 'es' ? 'Ver todos los viajes y reservar' : 'See all trips and book'}
+                </h3>
+                <p className="text-brand-gray text-sm">
+                  {lang === 'es' 
+                    ? `Se han encontrado viajes actualizados para esta ruta en Jombo.` 
+                    : `Updated trips found for this route in Jombo.`
+                  }
+                </p>
+              </div>
+              <Link 
+                href={`/${lang}/search?from=${route.from}&to=${route.to}`}
+                className="bg-white text-black px-8 py-4 rounded-2xl font-black uppercase tracking-widest text-xs hover:bg-brand-purple hover:text-white transition-all shrink-0"
+              >
+                {t.page.home.search || 'Buscar viaje'}
+              </Link>
             </div>
-            <Link 
-              href={`/${lang}/search?from=${route.from}&to=${route.to}`}
-              className="bg-white text-black px-8 py-4 rounded-2xl font-black uppercase tracking-widest text-xs hover:bg-brand-purple hover:text-white transition-all"
-            >
-              {t.page.home.search || 'Buscar viaje'}
-            </Link>
-          </div>
+          )}
         </div>
       )}
 

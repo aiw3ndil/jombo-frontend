@@ -10,6 +10,24 @@ function getAuthHeaders(): HeadersInit {
   return {};
 }
 
+export interface ExternalLeg {
+  mode: string;
+  from: string;
+  to: string;
+  start_time: string;
+  end_time: string;
+}
+
+export interface ExternalOption {
+  type: "external_transport";
+  start_time: string;
+  end_time: string;
+  duration: number;
+  legs: ExternalLeg[];
+  is_external: true;
+  price?: number;
+}
+
 export interface Trip {
   id: number;
   departure_location: string;
@@ -27,22 +45,28 @@ export interface Trip {
   updated_at: string;
 }
 
+export interface SearchResponse {
+  trips: Trip[];
+  external_options: ExternalOption[];
+  source: 'local' | 'digitransit';
+  is_fallback: boolean;
+}
+
 export async function searchTrips(
   departureLocation?: string,
   arrivalLocation?: string,
   region?: string
-): Promise<Trip[]> {
+): Promise<SearchResponse> {
   const params = new URLSearchParams();
-  if (departureLocation) {
-    params.set("departure_location", departureLocation);
+  if (departureLocation) params.set("departure_location", departureLocation);
+  if (arrivalLocation) params.set("arrival_location", arrivalLocation);
+  if (region) params.set("region", region);
+
+  let url = `${API_BASE}/api/v1/trips/search?${params.toString()}`;
+  if (departureLocation && arrivalLocation) {
+    const seoPath = `${departureLocation.toLowerCase()}-${arrivalLocation.toLowerCase()}`;
+    url = `${API_BASE}/api/v1/trips/${seoPath}`;
   }
-  if (arrivalLocation) {
-    params.set("arrival_location", arrivalLocation);
-  }
-  if (region) {
-    params.set("region", region);
-  }
-  const url = `${API_BASE}/api/v1/trips/search?${params.toString()}`;
 
   const res = await fetch(url, {
     method: "GET",
@@ -54,7 +78,22 @@ export async function searchTrips(
   }
 
   const data = await res.json();
-  return data;
+  
+  // Normalizamos la respuesta
+  const trips = data.trips || (Array.isArray(data) ? data : []);
+  const external_options = (data.external_options || []).map((opt: any) => ({
+    ...opt,
+    is_external: true
+  }));
+
+  const response: SearchResponse = {
+    trips,
+    external_options,
+    source: external_options.length > 0 && trips.length === 0 ? 'digitransit' : 'local',
+    is_fallback: external_options.length > 0 && trips.length === 0
+  };
+  
+  return response;
 }
 
 export async function getMyTrips(): Promise<Trip[]> {

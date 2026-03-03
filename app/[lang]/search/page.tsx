@@ -1,7 +1,6 @@
 "use client";
 import { useEffect, useState } from "react";
 import { useSearchParams, useRouter, useParams } from "next/navigation";
-import { searchTrips, Trip } from "@/app/lib/api/trips";
 import { createBooking, getBookings } from "@/app/lib/api/bookings";
 import { useTranslation } from "@/app/hooks/useTranslation";
 import { useAuth } from "@/app/contexts/AuthContext";
@@ -9,6 +8,8 @@ import UserReviewsModal from "@/app/components/UserReviewsModal";
 import BookTripModal from "@/app/components/BookTripModal";
 import { toast } from "sonner";
 import LocationInput from "@/app/components/LocationInput";
+import ExternalTransportCard from "@/app/components/ExternalTransportCard";
+import { searchTrips, Trip, ExternalOption, SearchResponse } from "@/app/lib/api/trips";
 
 export default function SearchPage() {
   const { t, loading: translationsLoading } = useTranslation();
@@ -21,6 +22,10 @@ export default function SearchPage() {
   const { user } = useAuth();
 
   const [trips, setTrips] = useState<Trip[]>([]);
+  const [externalOptions, setExternalOptions] = useState<ExternalOption[]>([]);
+  const [isFallback, setIsFallback] = useState(false);
+  const [source, setSource] = useState<'local' | 'digitransit'>('local');
+
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState("");
   const [bookingLoading, setBookingLoading] = useState<number | null>(null);
@@ -42,9 +47,12 @@ export default function SearchPage() {
       try {
         setLoading(true);
         setError("");
-        const results = await searchTrips(from, to);
-        console.log('🔍 Search results:', results);
-        setTrips(results);
+        const response: SearchResponse = await searchTrips(from, to);
+        console.log('🔍 Search response:', response);
+        setTrips(response.trips);
+        setExternalOptions(response.external_options);
+        setIsFallback(response.is_fallback);
+        setSource(response.source);
 
         // Si el usuario está logueado, cargar sus reservas
         if (user) {
@@ -257,7 +265,28 @@ export default function SearchPage() {
         </form>
       </div>
 
-      {trips.length === 0 ? (
+      {source === 'digitransit' && (
+        <div className="mb-10 p-6 bg-brand-purple/10 border border-brand-purple/20 rounded-[2rem] flex items-center gap-4 animate-in fade-in slide-in-from-top-4 duration-500">
+          <div className="w-12 h-12 bg-brand-purple/20 rounded-full flex items-center justify-center text-brand-purple shrink-0">
+            <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
+            </svg>
+          </div>
+          <div>
+            <p className="text-white font-bold uppercase tracking-widest text-xs mb-1">
+              {lang === 'fi' ? 'Ei kimppakyytejä löytynyt' : (lang === 'es' ? 'No se encontraron viajes compartidos' : 'No carpools found')}
+            </p>
+            <p className="text-brand-gray text-sm">
+              {lang === 'fi' 
+                ? 'Näytetään julkisen liikenteen vaihtoehdot välille ' 
+                : (lang === 'es' ? 'Mostrando alternativas de transporte público entre ' : 'Showing public transport alternatives between ')}
+              <span className="text-white font-bold">{from} - {to}</span>
+            </p>
+          </div>
+        </div>
+      )}
+
+      {trips.length === 0 && externalOptions.length === 0 ? (
         <div className="text-center py-24 bg-white/5 rounded-[3rem] border border-white/5 backdrop-blur-xl">
           <div className="w-20 h-20 bg-white/5 rounded-full flex items-center justify-center mx-auto mb-6 border border-white/10">
             <svg className="w-8 h-8 text-brand-gray" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -268,9 +297,10 @@ export default function SearchPage() {
         </div>
       ) : (
         <div className="grid gap-6">
+          {/* Render local Jombo trips */}
           {trips.map((trip) => {
             const API_BASE = process.env.NEXT_PUBLIC_API_BASE_URL || "";
-            const driverPictureUrl = trip.driver.picture_url
+            const driverPictureUrl = trip.driver?.picture_url
               ? (trip.driver.picture_url.startsWith('http')
                 ? trip.driver.picture_url
                 : `${API_BASE}${trip.driver.picture_url}`)
@@ -281,6 +311,7 @@ export default function SearchPage() {
                 key={trip.id}
                 className="group relative bg-white/5 backdrop-blur-3xl border border-white/5 rounded-[2.5rem] p-8 hover:border-brand-cyan/20 transition-all duration-500 hover:shadow-2xl hover:shadow-brand-cyan/5 overflow-hidden"
               >
+                {/* ... (resto del renderizado del viaje local) */}
                 <div className="absolute inset-0 bg-hacker-dots opacity-5 pointer-events-none"></div>
                 <div className="absolute top-0 right-0 w-32 h-32 bg-brand-cyan/5 blur-3xl rounded-full opacity-0 group-hover:opacity-100 transition-opacity pointer-events-none"></div>
 
@@ -387,8 +418,13 @@ export default function SearchPage() {
                   </div>
                 </div>
               </div>
-            )
+            );
           })}
+
+          {/* Render external transport options */}
+          {externalOptions.map((option, idx) => (
+            <ExternalTransportCard key={`ext-${idx}`} option={option} lang={lang} />
+          ))}
         </div>
       )}
 
