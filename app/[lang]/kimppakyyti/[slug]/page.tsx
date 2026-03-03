@@ -3,7 +3,7 @@ import { TOP_FINNISH_ROUTES } from '@/app/lib/constants/routes';
 import { searchTrips, Trip, ExternalOption } from '@/app/lib/api/trips';
 import { notFound } from 'next/navigation';
 import { promises as fs } from 'fs';
-import path from 'path';
+import * as path from 'path';
 import Link from 'next/link';
 import ExternalTransportCard from '@/app/components/ExternalTransportCard';
 

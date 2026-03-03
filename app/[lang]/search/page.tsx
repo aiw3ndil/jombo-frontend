@@ -265,7 +265,7 @@ export default function SearchPage() {
         </form>
       </div>
 
-      {source === 'digitransit' && (
+      {lang === 'fi' && source === 'digitransit' && (
         <div className="mb-10 p-6 bg-brand-purple/10 border border-brand-purple/20 rounded-[2rem] flex items-center gap-4 animate-in fade-in slide-in-from-top-4 duration-500">
           <div className="w-12 h-12 bg-brand-purple/20 rounded-full flex items-center justify-center text-brand-purple shrink-0">
             <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -421,8 +421,8 @@ export default function SearchPage() {
             );
           })}
 
-          {/* Render external transport options */}
-          {externalOptions.map((option, idx) => (
+          {/* Render external transport options - Only for Finland */}
+          {lang === 'fi' && externalOptions.map((option, idx) => (
             <ExternalTransportCard key={`ext-${idx}`} option={option} lang={lang} />
           ))}
         </div>
