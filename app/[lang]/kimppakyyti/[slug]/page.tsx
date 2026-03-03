@@ -1,11 +1,13 @@
 import { Metadata } from 'next';
 import { TOP_FINNISH_ROUTES } from '@/app/lib/constants/routes';
-import { searchTrips, Trip, ExternalOption } from '@/app/lib/api/trips';
+import { searchTrips, Trip, ExternalOption, SearchResponse } from '@/app/lib/api/trips';
 import { notFound } from 'next/navigation';
 import { promises as fs } from 'fs';
 import * as path from 'path';
 import Link from 'next/link';
 import ExternalTransportCard from '@/app/components/ExternalTransportCard';
+
+export const dynamic = 'force-dynamic';
 
 interface Props {
   params: Promise<{ lang: string; slug: string }>;
@@ -167,7 +169,7 @@ export default async function RoutePage({ params }: Props) {
             </svg>
           </div>
           <h2 className="text-2xl font-bold text-white mb-4 uppercase italic">
-            {lang === 'fi' ? 'Ei todavía kyytejä tälle reitille' : 'No trips yet for this route'}
+            {lang === 'fi' ? 'Ei vielä kyytejä tälle reitille' : 'No trips yet for this route'}
           </h2>
           <p className="text-brand-gray mb-10 max-w-md mx-auto">
             {lang === 'fi' 

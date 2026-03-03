@@ -1,10 +1,12 @@
 import { Metadata } from 'next';
 import { TOP_SPANISH_ROUTES } from '@/app/lib/constants/routes';
-import { searchTrips, Trip } from '@/app/lib/api/trips';
+import { searchTrips, Trip, SearchResponse } from '@/app/lib/api/trips';
 import { notFound } from 'next/navigation';
 import { promises as fs } from 'fs';
 import * as path from 'path';
 import Link from 'next/link';
+
+export const dynamic = 'force-dynamic';
 
 interface Props {
   params: Promise<{ lang: string; slug: string }>;

@@ -116,8 +116,8 @@ export default function SearchPage() {
       toast.success(t("page.search.bookingSuccess") || "¡Solicitud de reserva enviada! Pendiente de confirmación del conductor");
 
       // Recargar los viajes para actualizar los asientos disponibles
-      const results = await searchTrips(from);
-      setTrips(results);
+      const response = await searchTrips(from);
+      setTrips(response.trips);
 
       // Actualizar las reservas del usuario
       const bookings = await getBookings();
