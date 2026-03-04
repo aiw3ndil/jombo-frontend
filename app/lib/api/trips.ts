@@ -14,8 +14,8 @@ export interface ExternalLeg {
   mode: string;
   from: string;
   to: string;
-  start_time: string;
-  end_time: string;
+  start_time?: string;
+  end_time?: string;
 }
 
 export interface ExternalOption {
@@ -25,7 +25,9 @@ export interface ExternalOption {
   duration: number;
   legs: ExternalLeg[];
   is_external: true;
-  price?: number;
+  price: number;
+  currency: string;
+  url: string;
 }
 
 export interface Trip {
@@ -62,8 +64,9 @@ export async function searchTrips(
   if (arrivalLocation) params.set("arrival_location", arrivalLocation);
   if (region) params.set("region", region);
 
-  let url = `${API_BASE}/api/v1/trips/search?${params.toString()}`;
+  let url = `${API_BASE}/api/v1/trips/search/${departureLocation}?${params.toString()}`;
   if (departureLocation && arrivalLocation) {
+    // Si tenemos ambos, usamos la ruta SEO que es más específica
     const seoPath = `${departureLocation.toLowerCase()}-${arrivalLocation.toLowerCase()}`;
     url = `${API_BASE}/api/v1/trips/${seoPath}`;
   }
@@ -79,18 +82,31 @@ export async function searchTrips(
 
   const data = await res.json();
   
-  // Normalizamos la respuesta
-  const trips = data.trips || (Array.isArray(data) ? data : []);
-  const external_options = (data.external_options || []).map((opt: any) => ({
-    ...opt,
-    is_external: true
-  }));
+  let trips: Trip[] = [];
+  let external_options: ExternalOption[] = [];
+
+  // Manejamos el caso de que la respuesta sea directamente un objeto de transporte externo
+  if (data && data.type === 'external_transport') {
+    external_options = [{ ...data, is_external: true }];
+  } 
+  // Caso de array directo (pueden ser trips locales o externos)
+  else if (Array.isArray(data)) {
+    trips = data.filter((item: any) => item.type !== 'external_transport');
+    const external = data.filter((item: any) => item.type === 'external_transport');
+    external_options = external.map((opt: any) => ({ ...opt, is_external: true }));
+  }
+  // Caso de objeto con claves (formato estándar)
+  else if (data && typeof data === 'object') {
+    trips = data.trips || [];
+    const rawExternal = data.external_options || [];
+    external_options = rawExternal.map((opt: any) => ({ ...opt, is_external: true }));
+  }
 
   const response: SearchResponse = {
     trips,
     external_options,
-    source: external_options.length > 0 && trips.length === 0 ? 'digitransit' : 'local',
-    is_fallback: external_options.length > 0 && trips.length === 0
+    source: (external_options.length > 0 && trips.length === 0) ? 'digitransit' : 'local',
+    is_fallback: (external_options.length > 0 && trips.length === 0)
   };
   
   return response;

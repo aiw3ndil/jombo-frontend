@@ -196,24 +196,31 @@ export default async function RoutePage({ params }: Props) {
           ))}
 
           {trips.length > 0 && (
-            <div className="bg-white/5 border border-white/10 rounded-3xl p-8 flex flex-col md:flex-row items-center justify-between gap-6 mt-8">
-              <div>
-                <h3 className="text-xl font-bold text-white uppercase italic">
-                  {lang === 'fi' ? 'Katso kaikki kyytejä ja varaa' : 'See all carpools and book'}
-                </h3>
-                <p className="text-brand-gray text-sm">
-                  {lang === 'fi' 
-                    ? `Päivitettyjä kyytejä löytyi tälle reitille Jombossa.` 
-                    : `Updated carpools found for this route in Jombo.`
-                  }
-                </p>
+            <div className="space-y-8 mt-8">
+               <h3 className="text-2xl font-black text-white uppercase italic mb-4">
+                 {lang === 'fi' ? 'Kimppakyydit Jombossa' : 'Carpools in Jombo'}
+               </h3>
+               {/* Aquí podrías renderizar un resumen de los viajes de Jombo si quisieras, 
+                   o simplemente el botón de ir a búsqueda */}
+               <div className="bg-white/5 border border-white/10 rounded-3xl p-8 flex flex-col md:flex-row items-center justify-between gap-6">
+                <div>
+                  <h3 className="text-xl font-bold text-white uppercase italic">
+                    {lang === 'fi' ? 'Katso kaikki kyytejä ja varaa' : 'See all carpools and book'}
+                  </h3>
+                  <p className="text-brand-gray text-sm">
+                    {lang === 'fi' 
+                      ? `Päivitettyjä kyytejä löytyi tälle reitille Jombossa.` 
+                      : `Updated carpools found for this route in Jombo.`
+                    }
+                  </p>
+                </div>
+                <Link 
+                  href={`/${lang}/search?from=${route.from}&to=${route.to}`}
+                  className="bg-white text-black px-8 py-4 rounded-2xl font-black uppercase tracking-widest text-xs hover:bg-brand-cyan hover:text-white transition-all shrink-0"
+                >
+                  {t.page.home.search || 'Hae matka'}
+                </Link>
               </div>
-              <Link 
-                href={`/${lang}/search?from=${route.from}&to=${route.to}`}
-                className="bg-white text-black px-8 py-4 rounded-2xl font-black uppercase tracking-widest text-xs hover:bg-brand-cyan hover:text-white transition-all shrink-0"
-              >
-                {t.page.home.search || 'Hae matka'}
-              </Link>
             </div>
           )}
         </div>

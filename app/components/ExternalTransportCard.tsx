@@ -91,10 +91,14 @@ export default function ExternalTransportCard({ option, lang }: Props) {
             
             <div className="text-right flex flex-row sm:flex-col items-center sm:items-end gap-3 sm:gap-0">
               <p className="text-3xl font-black text-white tracking-tightest">
-                {option.price ? `€${Number(option.price).toFixed(2)}` : '--'}
+                {option.price && option.price > 0 
+                  ? `${option.currency === 'EUR' ? '€' : option.currency}${Number(option.price).toFixed(2)}` 
+                  : (lang === 'fi' ? 'Säästä' : (lang === 'es' ? 'Ahorra' : 'Save'))}
               </p>
               <p className="text-xs font-black text-brand-gray uppercase tracking-widest leading-none">
-                {lang === 'fi' ? 'Hinta alkaen' : (lang === 'es' ? 'Desde' : 'From')}
+                {option.price && option.price > 0 
+                  ? (lang === 'fi' ? 'Hinta alkaen' : (lang === 'es' ? 'Desde' : 'From'))
+                  : (lang === 'fi' ? 'Katso hinta' : (lang === 'es' ? 'Ver precio' : 'Check price'))}
               </p>
             </div>
           </div>
@@ -136,12 +140,12 @@ export default function ExternalTransportCard({ option, lang }: Props) {
 
           <div className="flex pt-2">
             <a 
-              href="https://www.reittiopas.fi/" 
+              href={option.url || "https://www.reittiopas.fi/"} 
               target="_blank"
               rel="noopener noreferrer"
               className="w-full bg-white/5 text-white border border-white/10 px-8 py-4 rounded-2xl hover:bg-brand-purple hover:border-transparent transition-all shadow-xl font-black uppercase tracking-[0.2em] text-xs text-center"
             >
-              {lang === 'fi' ? 'Varaa liput' : (lang === 'es' ? 'Comprar billetes' : 'Book tickets')}
+              {lang === 'fi' ? 'Katso reitti ja aikataulut' : (lang === 'es' ? 'Ver ruta y horarios' : 'View route and schedules')}
             </a>
           </div>
         </div>
