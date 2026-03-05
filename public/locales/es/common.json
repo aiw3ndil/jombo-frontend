@@ -255,7 +255,16 @@
     "deleteAccountConfirm": "Sí, eliminar",
     "deleteAccountCancel": "Cancelar",
     "deleteAccountSuccess": "Cuenta eliminada exitosamente.",
-    "deleteAccountError": "Error al eliminar la cuenta."
+    "deleteAccountError": "Error al eliminar la cuenta.",
+    "changePasswordTitle": "Cambiar Contraseña",
+    "currentPassword": "Contraseña actual",
+    "newPassword": "Nueva contraseña",
+    "confirmNewPassword": "Confirmar nueva contraseña",
+    "changePasswordButton": "Actualizar contraseña",
+    "changingPassword": "Actualizando...",
+    "passwordUpdateSuccess": "Contraseña actualizada exitosamente",
+    "passwordUpdateError": "Error al actualizar la contraseña",
+    "passwordsDoNotMatch": "Las contraseñas no coinciden"
   },
   "footer": {
     "about": "Sobre Jombo",

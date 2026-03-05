@@ -255,7 +255,16 @@
     "deleteAccountConfirm": "Kyllä, poista",
     "deleteAccountCancel": "Peruuta",
     "deleteAccountSuccess": "Tili poistettu onnistuneesti.",
-    "deleteAccountError": "Virhe tilin poistamisessa."
+    "deleteAccountError": "Virhe tilin poistamisessa.",
+    "changePasswordTitle": "Vaihda Salasana",
+    "currentPassword": "Nykyinen salasana",
+    "newPassword": "Uusi salasana",
+    "confirmNewPassword": "Vahvista uusi salasana",
+    "changePasswordButton": "Päivitä salasana",
+    "changingPassword": "Päivitetään...",
+    "passwordUpdateSuccess": "Salasana päivitetty onnistuneesti",
+    "passwordUpdateError": "Virhe salasanan päivityksessä",
+    "passwordsDoNotMatch": "Salasanat eivät täsmää"
   },
   "footer": {
     "about": "Tietoa Jombosta",

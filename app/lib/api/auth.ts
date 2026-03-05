@@ -160,4 +160,39 @@ export async function loginWithFacebook(token: string) {
   return result;
 }
 
-export default { login, register, fetchMe, logout, loginWithGoogle, loginWithFacebook, deleteUser };
+export async function changePassword(currentPassword: string, password: string, passwordConfirmation: string): Promise<any> {
+  const url = `${API_BASE}/api/v1/users/password`;
+  console.log('🔵 Change password request:', { url });
+  
+  const res = await fetch(url, {
+    method: "PATCH",
+    headers: { "Content-Type": "application/json" },
+    credentials: "include",
+    body: JSON.stringify({
+      current_password: currentPassword,
+      password: password,
+      password_confirmation: passwordConfirmation
+    }),
+  });
+
+  console.log('🔵 Change password response status:', res.status);
+
+  const text = await res.text();
+  let json: any = null;
+  try {
+    json = text ? JSON.parse(text) : null;
+  } catch (e) {
+    json = null;
+  }
+
+  if (!res.ok) {
+    const msg = (json && (json.error || json.message || json.errors)) || text || res.statusText;
+    const error = new Error(typeof msg === "string" ? msg : JSON.stringify(msg));
+    (error as any).status = res.status;
+    throw error;
+  }
+
+  return json;
+}
+
+export default { login, register, fetchMe, logout, loginWithGoogle, loginWithFacebook, deleteUser, changePassword };
