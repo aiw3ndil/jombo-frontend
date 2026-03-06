@@ -176,7 +176,14 @@
       "errorLoadingBookings": "Error al cargar las reservas",
       "errorConfirming": "Error al confirmar la reserva",
       "errorRejecting": "Error al rechazar la reserva",
-      "confirmReject": "¿Estás seguro de rechazar esta reserva?"
+      "confirmReject": "¿Estás seguro de rechazar esta reserva?",
+      "deleteTrip": "Eliminar viaje",
+      "deleteTripConfirm": "¿Estás seguro de que quieres eliminar este viaje?",
+      "deleteRecurringTripTitle": "Viaje recurrente",
+      "deleteOnlyThis": "Eliminar solo este viaje",
+      "deleteAllRecurring": "Eliminar toda la serie (viajes futuros)",
+      "deleteSuccess": "Viaje eliminado exitosamente",
+      "deleteError": "Error al eliminar el viaje"
     },
     "myBookings": {
       "title": "Mis Reservas",

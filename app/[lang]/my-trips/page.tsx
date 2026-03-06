@@ -2,9 +2,10 @@
 import { useEffect, useState, useMemo } from "react";
 import { useRouter, useParams } from "next/navigation";
 import Link from "next/link";
-import { getMyTrips, Trip } from "@/app/lib/api/trips";
+import { getMyTrips, deleteTrip, Trip } from "@/app/lib/api/trips";
 import { useTranslation } from "@/app/hooks/useTranslation";
 import { useAuth } from "@/app/contexts/AuthContext";
+import { toast } from "sonner";
 
 export default function MyTrips() {
   const translationNamespaces = useMemo(() => ["common", "myTrips"], []);
@@ -16,6 +17,8 @@ export default function MyTrips() {
 
   const [trips, setTrips] = useState<Trip[]>([]);
   const [loading, setLoading] = useState(true);
+  const [deleteModal, setDeleteModal] = useState<{ isOpen: boolean, trip: Trip | null }>({ isOpen: false, trip: null });
+  const [deleting, setDeleting] = useState(false);
 
   useEffect(() => {
     if (!authLoading && !user) {
@@ -40,6 +43,23 @@ export default function MyTrips() {
       console.error("Error loading trips:", error);
     } finally {
       setLoading(false);
+    }
+  };
+
+  const handleDelete = async (allRecurring: boolean = false) => {
+    if (!deleteModal.trip) return;
+
+    setDeleting(true);
+    try {
+      await deleteTrip(deleteModal.trip.id, allRecurring);
+      toast.success(t("page.myTrips.deleteSuccess") || "Viaje eliminado exitosamente");
+      setDeleteModal({ isOpen: false, trip: null });
+      loadTrips();
+    } catch (error: any) {
+      console.error("Error deleting trip:", error);
+      toast.error(error.message || t("page.myTrips.deleteError") || "Error al eliminar el viaje");
+    } finally {
+      setDeleting(false);
     }
   };
 
@@ -139,10 +159,84 @@ export default function MyTrips() {
                   >
                     {t("page.myTrips.manageTrip") || "Gestionar viaje"}
                   </Link>
+                  <button
+                    onClick={() => setDeleteModal({ isOpen: true, trip })}
+                    className="flex-1 bg-brand-pink/10 text-brand-pink border border-brand-pink/20 px-8 py-4 rounded-2xl hover:bg-brand-pink/20 transition-all font-black uppercase tracking-widest text-xs text-center group/delete"
+                  >
+                    {t("page.myTrips.deleteTrip") || "Eliminar"}
+                  </button>
                 </div>
               </div>
             </div>
           ))}
+        </div>
+      )}
+
+      {/* Delete Confirmation Modal */}
+      {deleteModal.isOpen && deleteModal.trip && (
+        <div className="fixed inset-0 z-[1000] flex items-center justify-center p-4">
+          <div className="absolute inset-0 bg-brand-dark/80 backdrop-blur-md" onClick={() => !deleting && setDeleteModal({ isOpen: false, trip: null })}></div>
+          
+          <div className="relative w-full max-w-lg bg-brand-dark border border-white/10 rounded-[3rem] p-8 md:p-12 shadow-2xl animate-in fade-in zoom-in duration-300">
+            <div className="absolute inset-0 bg-hacker-dots opacity-10 pointer-events-none"></div>
+            
+            <div className="relative text-center space-y-8">
+              <div className="w-20 h-20 bg-brand-pink/10 rounded-full flex items-center justify-center mx-auto border border-brand-pink/20">
+                <svg className="w-10 h-10 text-brand-pink" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16" />
+                </svg>
+              </div>
+
+              <div className="space-y-4">
+                <h2 className="text-3xl font-black text-white uppercase italic tracking-tightest">
+                  {deleteModal.trip.is_recurring ? t("page.myTrips.deleteRecurringTripTitle") : t("page.myTrips.deleteTrip")}
+                </h2>
+                <p className="text-brand-gray font-medium uppercase tracking-widest text-xs">
+                  {t("page.myTrips.deleteTripConfirm")}
+                </p>
+                <div className="bg-white/5 p-4 rounded-2xl border border-white/5 inline-block text-brand-cyan font-black text-xs tracking-widest uppercase">
+                  {deleteModal.trip.departure_location} → {deleteModal.trip.arrival_location}
+                </div>
+              </div>
+
+              <div className="flex flex-col gap-4 pt-4">
+                {deleteModal.trip.is_recurring ? (
+                  <>
+                    <button
+                      onClick={() => handleDelete(false)}
+                      disabled={deleting}
+                      className="w-full bg-white/5 text-white border border-white/10 py-5 rounded-[2rem] font-black uppercase tracking-[0.2em] text-xs transition-all hover:bg-white/10 active:scale-95 disabled:opacity-50"
+                    >
+                      {deleting ? "..." : t("page.myTrips.deleteOnlyThis")}
+                    </button>
+                    <button
+                      onClick={() => handleDelete(true)}
+                      disabled={deleting}
+                      className="w-full bg-brand-gradient text-white py-5 rounded-[2rem] font-black uppercase tracking-[0.2em] text-xs transition-all hover:scale-[1.03] active:scale-95 shadow-xl shadow-brand-cyan/20 disabled:opacity-50"
+                    >
+                      {deleting ? "..." : t("page.myTrips.deleteAllRecurring")}
+                    </button>
+                  </>
+                ) : (
+                  <button
+                    onClick={() => handleDelete(false)}
+                    disabled={deleting}
+                    className="w-full bg-brand-gradient text-white py-5 rounded-[2rem] font-black uppercase tracking-[0.2em] text-xs transition-all hover:scale-[1.03] active:scale-95 shadow-xl shadow-brand-cyan/20 disabled:opacity-50"
+                  >
+                    {deleting ? "..." : t("page.myTrips.deleteTrip")}
+                  </button>
+                )}
+                
+                <button
+                  onClick={() => setDeleteModal({ isOpen: false, trip: null })}
+                  disabled={deleting}
+                  className="w-full text-brand-gray/60 hover:text-white transition-colors font-black uppercase tracking-[0.2em] text-[10px] py-2"
+                >
+                  {t("page.createTrip.cancel") || "Cancelar"}
+                </button>
+              </div>
+            </div>
+          </div>
         </div>
       )}
     </div>

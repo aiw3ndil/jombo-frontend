@@ -43,6 +43,8 @@ export interface Trip {
     email: string;
     picture_url?: string;
   };
+  is_recurring?: boolean;
+  parent_id?: number | null;
   created_at: string;
   updated_at: string;
 }
@@ -218,4 +220,29 @@ export async function createTrip(tripData: CreateTripData): Promise<Trip> {
   return data;
 }
 
-export default { searchTrips, getMyTrips, getTripBookings, createTrip };
+export async function deleteTrip(tripId: number, allRecurring: boolean = false): Promise<void> {
+  const url = `${API_BASE}/api/v1/trips/${tripId}${allRecurring ? '?all_recurring=true' : ''}`;
+
+  console.log('🗑️ Deleting trip:', { tripId, allRecurring, url });
+
+  const res = await fetch(url, {
+    method: "DELETE",
+    headers: {
+      ...getAuthHeaders(),
+    },
+    credentials: "include",
+  });
+
+  if (!res.ok) {
+    let errorMessage = "Error al eliminar el viaje";
+    try {
+      const errorData = await res.json();
+      errorMessage = errorData.error || errorData.message || errorMessage;
+    } catch (e) {
+      // Use default message
+    }
+    throw new Error(errorMessage);
+  }
+}
+
+export default { searchTrips, getMyTrips, getTripBookings, createTrip, deleteTrip };

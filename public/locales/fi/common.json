@@ -176,7 +176,14 @@
       "errorLoadingBookings": "Virhe varausten lataamisessa",
       "errorConfirming": "Virhe varauksen vahvistamisessa",
       "errorRejecting": "Virhe varauksen hylkäämisessä",
-      "confirmReject": "Haluatko varmasti hylätä tämän varauksen?"
+      "confirmReject": "Haluatko varmasti hylätä tämän varauksen?",
+      "deleteTrip": "Poista matka",
+      "deleteTripConfirm": "Haluatko varmasti poistaa tämän matkan?",
+      "deleteRecurringTripTitle": "Toistuva matka",
+      "deleteOnlyThis": "Poista vain tämä matka",
+      "deleteAllRecurring": "Poista koko sarja (tulevat matkat)",
+      "deleteSuccess": "Matka poistettu onnistuneesti",
+      "deleteError": "Virhe matkan poistamisessa"
     },
     "myBookings": {
       "title": "Varaukseni",

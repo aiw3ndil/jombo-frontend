@@ -176,7 +176,14 @@
       "errorLoadingBookings": "Error loading bookings",
       "errorConfirming": "Error confirming booking",
       "errorRejecting": "Error rejecting booking",
-      "confirmReject": "Are you sure you want to reject this booking?"
+      "confirmReject": "Are you sure you want to reject this booking?",
+      "deleteTrip": "Delete trip",
+      "deleteTripConfirm": "Are you sure you want to delete this trip?",
+      "deleteRecurringTripTitle": "Recurring trip",
+      "deleteOnlyThis": "Delete only this trip",
+      "deleteAllRecurring": "Delete entire series (future trips)",
+      "deleteSuccess": "Trip deleted successfully",
+      "deleteError": "Error deleting trip"
     },
     "myBookings": {
       "title": "My Bookings",
