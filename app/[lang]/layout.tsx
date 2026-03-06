@@ -26,7 +26,7 @@ export async function generateMetadata({ params: paramsPromise }: { params: Prom
       }
   
       const title = translations.page.title;
-      const description = translations.footer.description; // Get description
+      const description = translations.page.description; // Get description from page.description
       console.log(`generateMetadata: Title for ${lang}: ${title}`);
 
       const SUPPORTED_LANGS = ['es', 'en', 'fi'];
