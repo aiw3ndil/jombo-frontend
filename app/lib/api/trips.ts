@@ -167,6 +167,9 @@ export interface CreateTripData {
   price: number;
   description?: string;
   region?: string;
+  is_recurring?: boolean;
+  recurrence_pattern?: string;
+  recurrence_until?: string;
 }
 
 export async function createTrip(tripData: CreateTripData): Promise<Trip> {

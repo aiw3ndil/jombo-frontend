@@ -105,7 +105,13 @@
       "cancel": "Cancel",
       "requiredFields": "Please complete all required fields",
       "success": "Trip published successfully",
-      "error": "Error publishing trip"
+      "error": "Error publishing trip",
+      "recurring": "Recurring trip",
+      "recurrencePattern": "Frequency",
+      "daily": "Daily",
+      "weekly": "Weekly",
+      "until": "Repeat until",
+      "recurrenceInfo": "Copies of this trip will be created automatically based on chosen frequency (max. 3 months)."
     },
     "messages": {
       "title": "My Messages",

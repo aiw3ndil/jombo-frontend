@@ -105,7 +105,13 @@
       "cancel": "Peruuta",
       "requiredFields": "Täytä kaikki pakolliset kentät",
       "success": "Matka julkaistu onnistuneesti",
-      "error": "Virhe matkan julkaisussa"
+      "error": "Virhe matkan julkaisussa",
+      "recurring": "Toistuva matka",
+      "recurrencePattern": "Toistuvuus",
+      "daily": "Päivittäin",
+      "weekly": "Viikoittain",
+      "until": "Toista asti",
+      "recurrenceInfo": "Tästä matkasta luodaan automaattisesti kopioita valitun toistuvuuden mukaan (enintään 3 kuukautta)."
     },
     "messages": {
       "title": "Viestini",

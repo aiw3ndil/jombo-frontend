@@ -23,6 +23,9 @@ export default function CreateTrip() {
     pricePerSeat: 0,
     description: "",
     region: "",
+    is_recurring: false,
+    recurrence_pattern: "daily",
+    recurrence_until: "",
   });
 
   const [loading, setLoading] = useState(false);
@@ -67,10 +70,12 @@ export default function CreateTrip() {
   }
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement>) => {
-    const { name, value } = e.target;
+    const { name, value, type } = e.target;
+    const val = type === "checkbox" ? (e.target as HTMLInputElement).checked : value;
+    
     setFormData((prev) => ({
       ...prev,
-      [name]: value,
+      [name]: val,
     }));
   };
 
@@ -80,6 +85,12 @@ export default function CreateTrip() {
       toast.error(t("page.createTrip.requiredFields") || "Por favor completa todos los campos requeridos");
       return;
     }
+
+    if (formData.is_recurring && !formData.recurrence_until) {
+      toast.error(t("page.createTrip.requiredFields") || "Por favor indica hasta cuándo se repite el viaje");
+      return;
+    }
+
     setLoading(true);
     try {
       const departureTime = `${formData.date}T${formData.time}:00`;
@@ -91,6 +102,9 @@ export default function CreateTrip() {
         price: Number(formData.pricePerSeat),
         description: formData.description || undefined,
         region: formData.region,
+        is_recurring: formData.is_recurring,
+        recurrence_pattern: formData.is_recurring ? formData.recurrence_pattern : undefined,
+        recurrence_until: (formData.is_recurring && formData.recurrence_until) ? `${formData.recurrence_until}T${formData.time}:00` : undefined,
       });
       toast.success(t("page.createTrip.success") || "Viaje creado exitosamente");
       router.push(`/${lang}`);
@@ -262,6 +276,67 @@ export default function CreateTrip() {
               className="w-full bg-black/20 border border-white/5 rounded-3xl px-6 py-4 text-white placeholder:text-brand-gray/50 focus:border-brand-cyan/50 focus:ring-0 transition-all outline-none font-medium italic resize-none"
               placeholder={t("page.createTrip.descriptionPlaceholder")}
             />
+          </div>
+
+          {/* Recurrence Section */}
+          <div className="bg-white/5 rounded-[2rem] p-6 border border-white/5 space-y-6">
+            <div className="flex items-center justify-between px-2">
+              <div className="flex items-center gap-3">
+                <div className={`w-10 h-10 rounded-xl flex items-center justify-center transition-colors ${formData.is_recurring ? 'bg-brand-cyan/20 text-brand-cyan' : 'bg-white/5 text-brand-gray'}`}>
+                  <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4 4v5h.582m15.356 2A8.001 8.001 0 004.582 9m0 0H9m11 11v-5h-.581m0 0a8.003 8.003 0 01-15.357-2m15.357 2H15" />
+                  </svg>
+                </div>
+                <div>
+                  <h3 className="text-sm font-black text-white uppercase tracking-wider">{t("page.createTrip.recurring")}</h3>
+                  <p className="text-[10px] text-brand-gray font-bold uppercase tracking-widest">{t("page.createTrip.recurrenceInfo")}</p>
+                </div>
+              </div>
+              <label className="relative inline-flex items-center cursor-pointer">
+                <input 
+                  type="checkbox" 
+                  name="is_recurring"
+                  checked={formData.is_recurring}
+                  onChange={handleChange}
+                  className="sr-only peer" 
+                />
+                <div className="w-14 h-7 bg-white/5 peer-focus:outline-none rounded-full peer peer-checked:after:translate-x-full rtl:peer-checked:after:-translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[4px] after:start-[4px] after:bg-brand-gray after:border-gray-300 after:border after:rounded-full after:h-5 after:w-6 after:transition-all peer-checked:bg-brand-cyan/20 peer-checked:after:bg-brand-cyan after:shadow-lg"></div>
+              </label>
+            </div>
+
+            {formData.is_recurring && (
+              <div className="grid md:grid-cols-2 gap-6 pt-2 animate-in fade-in slide-in-from-top-2 duration-300">
+                <div className="space-y-2">
+                  <label className="block text-xs font-black text-brand-gray/90 uppercase tracking-[0.2em] ml-4">
+                    {t("page.createTrip.recurrencePattern")}
+                  </label>
+                  <select
+                    name="recurrence_pattern"
+                    value={formData.recurrence_pattern}
+                    onChange={handleChange}
+                    className="w-full bg-black/20 border border-white/5 rounded-2xl px-6 py-4 text-white focus:border-brand-cyan/50 focus:ring-0 transition-all outline-none font-bold italic appearance-none cursor-pointer"
+                  >
+                    <option value="daily" className="bg-brand-dark">{t("page.createTrip.daily")}</option>
+                    <option value="weekly" className="bg-brand-dark">{t("page.createTrip.weekly")}</option>
+                  </select>
+                </div>
+
+                <div className="space-y-2">
+                  <label className="block text-xs font-black text-brand-gray/90 uppercase tracking-[0.2em] ml-4">
+                    {t("page.createTrip.until")}
+                  </label>
+                  <input
+                    type="date"
+                    name="recurrence_until"
+                    value={formData.recurrence_until}
+                    onChange={handleChange}
+                    min={formData.date || new Date().toISOString().split('T')[0]}
+                    className="w-full bg-black/20 border border-white/5 rounded-2xl px-6 py-4 text-white focus:border-brand-cyan/50 focus:ring-0 transition-all outline-none font-bold italic"
+                    required={formData.is_recurring}
+                  />
+                </div>
+              </div>
+            )}
           </div>
 
           <div className="flex flex-col sm:flex-row gap-6 pt-8">

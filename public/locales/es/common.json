@@ -105,7 +105,13 @@
       "cancel": "Cancelar",
       "requiredFields": "Por favor completa todos los campos requeridos",
       "success": "Viaje publicado exitosamente",
-      "error": "Error al publicar el viaje"
+      "error": "Error al publicar el viaje",
+      "recurring": "Viaje recurrente",
+      "recurrencePattern": "Frecuencia",
+      "daily": "Diario",
+      "weekly": "Semanal",
+      "until": "Repetir hasta",
+      "recurrenceInfo": "Se crearán automáticamente copias de este viaje según la frecuencia elegida (máx. 3 meses)."
     },
     "messages": {
       "title": "Mis Mensajes",
