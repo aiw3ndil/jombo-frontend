@@ -7,5 +7,18 @@
   "noAccount": "¿No tienes una cuenta?",
   "registerLink": "Regístrate aquí",
   "continueWith": "Continuar con {provider}",
-  "or": "o"
+  "or": "o",
+  "forgotPassword": "¿Has olvidado tu contraseña?",
+  "forgotPasswordTitle": "Recuperar contraseña",
+  "forgotPasswordDescription": "Introduce tu correo electrónico y te enviaremos las instrucciones.",
+  "sendInstructions": "Enviar instrucciones",
+  "backToLogin": "Volver al inicio de sesión",
+  "instructionsSent": "Se han enviado las instrucciones a tu correo electrónico.",
+  "resetPasswordTitle": "Nueva contraseña",
+  "resetPasswordDescription": "Introduce tu nueva contraseña.",
+  "newPassword": "Nueva contraseña",
+  "confirmPassword": "Confirmar contraseña",
+  "resetPasswordSubmit": "Cambiar contraseña",
+  "passwordResetSuccess": "Tu contraseña ha sido restablecida con éxito.",
+  "errorGeneric": "Ha ocurrido un error. Por favor, inténtalo de nuevo."
 }

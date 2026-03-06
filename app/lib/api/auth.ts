@@ -195,4 +195,23 @@ export async function changePassword(currentPassword: string, password: string, 
   return json;
 }
 
-export default { login, register, fetchMe, logout, loginWithGoogle, loginWithFacebook, deleteUser, changePassword };
+export async function forgotPassword(email: string) {
+  return requestJson('/api/v1/password/forgot', { email });
+}
+
+export async function resetPassword(token: string, password: string) {
+  return requestJson('/api/v1/password/reset', { token, password });
+}
+
+export default { 
+  login, 
+  register, 
+  fetchMe, 
+  logout, 
+  loginWithGoogle, 
+  loginWithFacebook, 
+  deleteUser, 
+  changePassword,
+  forgotPassword, 
+  resetPassword 
+};

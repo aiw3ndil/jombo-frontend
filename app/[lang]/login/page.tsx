@@ -125,6 +125,14 @@ export default function Login() {
                   required
                 />
               </div>
+              <div className="flex justify-end px-4 mt-2">
+                <Link 
+                  href={`/${lang}/forgot-password`}
+                  className="text-xs font-bold text-brand-gray/60 hover:text-brand-purple transition-colors uppercase tracking-wider"
+                >
+                  {t("forgotPassword")}
+                </Link>
+              </div>
             </div>
 
             <button

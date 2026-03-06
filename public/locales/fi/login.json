@@ -7,5 +7,18 @@
   "noAccount": "Eikö sinulla ole tiliä?",
   "registerLink": "Rekisteröidy tästä",
   "continueWith": "Jatka {provider}lla",
-  "or": "tai"
+  "or": "tai",
+  "forgotPassword": "Unohditko salasanasi?",
+  "forgotPasswordTitle": "Palauta salasana",
+  "forgotPasswordDescription": "Syötä sähköpostiosoitteesi, niin lähetämme sinulle ohjeet.",
+  "sendInstructions": "Lähetä ohjeet",
+  "backToLogin": "Takaisin kirjautumiseen",
+  "instructionsSent": "Ohjeet on lähetetty sähköpostiisi.",
+  "resetPasswordTitle": "Uusi salasana",
+  "resetPasswordDescription": "Syötä uusi salasanasi.",
+  "newPassword": "Uusi salasana",
+  "confirmPassword": "Vahvista salasana",
+  "resetPasswordSubmit": "Vaihda salasana",
+  "passwordResetSuccess": "Salasanasi on palautettu onnistuneesti.",
+  "errorGeneric": "Tapahtui virhe. Yritä uudelleen."
 }

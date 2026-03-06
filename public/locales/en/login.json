@@ -7,5 +7,18 @@
   "noAccount": "Don't have an account?",
   "registerLink": "Register here",
   "continueWith": "Continue with {provider}",
-  "or": "or"
+  "or": "or",
+  "forgotPassword": "Forgot your password?",
+  "forgotPasswordTitle": "Recover password",
+  "forgotPasswordDescription": "Enter your email and we'll send you instructions.",
+  "sendInstructions": "Send instructions",
+  "backToLogin": "Back to login",
+  "instructionsSent": "Instructions have been sent to your email.",
+  "resetPasswordTitle": "New password",
+  "resetPasswordDescription": "Enter your new password.",
+  "newPassword": "New password",
+  "confirmPassword": "Confirm password",
+  "resetPasswordSubmit": "Change password",
+  "passwordResetSuccess": "Your password has been reset successfully.",
+  "errorGeneric": "An error occurred. Please try again."
 }
