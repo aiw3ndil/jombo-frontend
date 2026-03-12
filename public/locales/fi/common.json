@@ -358,5 +358,12 @@
       "email": "tuki@jombo.fi",
       "note": "Liitä mukaan rekisteröity sähköpostiosoitteesi."
     }
+  },
+  "cookies": {
+    "title": "Evästeilmoitus",
+    "description": "Käytämme omia ja kolmannen osapuolen evästeitä parantaaksemme kokemustasi, analysoidaksemme liikennettä ja personoidaksemme sisältöä. Mikäli jatkat selaamista, katsomme sinun hyväksyvän niiden käytön.",
+    "accept": "Hyväksy",
+    "learnMore": "Lue lisää",
+    "settings": "Asetukset"
   }
 }

@@ -4,6 +4,7 @@ import { headers } from "next/headers";
 import { GoogleAnalytics } from "./components/GoogleAnalytics";
 import { OrganizationSchema, WebSiteSchema } from "./components/StructuredData";
 import GoogleOAuthWrapper from "./components/GoogleOAuthWrapper";
+import CookieConsent from "./components/CookieConsent";
 import { Toaster } from "sonner";
 import "./globals.css";
 
@@ -72,6 +73,7 @@ export default async function RootLayout({
         <GoogleAnalytics />
         <GoogleOAuthWrapper>
           {children}
+          <CookieConsent />
           <Toaster richColors position="top-right" />
         </GoogleOAuthWrapper>
       </body>

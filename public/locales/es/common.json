@@ -358,5 +358,12 @@
       "email": "soporte@jombo.es",
       "note": "Por favor incluye tu dirección de correo electrónico registrada."
     }
+  },
+  "cookies": {
+    "title": "Aviso de Cookies",
+    "description": "Utilizamos cookies propias y de terceros para mejorar tu experiencia, analizar el tráfico y personalizar el contenido. Si continúas navegando, consideramos que aceptas su uso.",
+    "accept": "Aceptar",
+    "learnMore": "Leer más",
+    "settings": "Configurar"
   }
 }
