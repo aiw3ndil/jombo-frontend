@@ -52,6 +52,8 @@ export const metadata: Metadata = {
   },
 };
 
+import { Providers } from "./components/Providers";
+
 export default async function RootLayout({
   children,
 }: Readonly<{
@@ -60,22 +62,25 @@ export default async function RootLayout({
   const headersList = await headers();
   const pathname = headersList.get("x-pathname") || "";
   const lang = pathname.split("/")[1] || "es";
+  const currentLang = ["en", "es", "fi"].includes(lang) ? lang : "es";
 
   return (
-    <html lang={["en", "es", "fi"].includes(lang) ? lang : "es"}>
+    <html lang={currentLang}>
       <head>
         <OrganizationSchema />
         <WebSiteSchema />
       </head>
       <body
-        className={`${geistSans.variable} ${geistMono.variable} antialiased min-h-screen bg-gray-50 text-gray-900`}
+        className={`${geistSans.variable} ${geistMono.variable} antialiased min-h-screen bg-white text-gray-900`}
       >
         <GoogleAnalytics />
-        <GoogleOAuthWrapper>
-          {children}
-          <CookieConsent />
-          <Toaster richColors position="top-right" />
-        </GoogleOAuthWrapper>
+        <Providers lang={currentLang}>
+          <GoogleOAuthWrapper>
+            {children}
+            <CookieConsent />
+            <Toaster richColors position="top-right" />
+          </GoogleOAuthWrapper>
+        </Providers>
       </body>
     </html>
   );

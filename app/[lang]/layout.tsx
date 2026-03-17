@@ -62,10 +62,8 @@ export default async function LangLayout({
   const currentLang = lang || "es";
 
   return (
-    <Providers lang={currentLang}>
-      <ClientLayout lang={currentLang}>
-        {children}
-      </ClientLayout>
-    </Providers>
+    <ClientLayout lang={currentLang}>
+      {children}
+    </ClientLayout>
   );
 }

@@ -27,56 +27,30 @@ export default function CreateTrip() {
     recurrence_pattern: "daily",
     recurrence_until: "",
   });
-
   const [loading, setLoading] = useState(false);
 
-  // Redirigir al login si no está autenticado
   useEffect(() => {
     if (!authLoading && !user) {
       router.push(`/${lang}/login?redirect=/${lang}/create-trip`);
     } else if (user && !formData.region) {
-      setFormData(prev => ({
-        ...prev,
-        region: user.region || (lang === "fi" ? "fi" : "es")
-      }));
+      setFormData((prev) => ({ ...prev, region: user.region || (lang === "fi" ? "fi" : "es") }));
     }
   }, [user, authLoading, router, lang, formData.region]);
 
-  // Wait for translations to load
-  if (translationsLoading) {
+  if (translationsLoading || authLoading) {
     return (
-      <div className="min-h-screen flex items-center justify-center">
-        <div className="relative w-20 h-20">
-          <div className="absolute inset-0 rounded-full border-4 border-white/5 border-t-brand-cyan animate-spin"></div>
-          <div className="absolute inset-2 rounded-full border-4 border-white/5 border-t-brand-purple animate-spin" style={{ animationDuration: '1.5s' }}></div>
-        </div>
+      <div className="min-h-screen flex items-center justify-center bg-white">
+        <div className="spinner"></div>
       </div>
     );
   }
 
-  if (authLoading) {
-    return (
-      <div className="max-w-2xl mx-auto py-24 px-6 flex flex-col items-center justify-center">
-        <div className="animate-pulse flex flex-col items-center">
-          <div className="w-12 h-12 bg-white/5 rounded-full mb-4"></div>
-          <p className="text-brand-gray uppercase tracking-widest text-xs font-black">{t("page.createTrip.loading") || "Cargando..."}</p>
-        </div>
-      </div>
-    );
-  }
-
-  if (!user) {
-    return null;
-  }
+  if (!user) return null;
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement>) => {
     const { name, value, type } = e.target;
     const val = type === "checkbox" ? (e.target as HTMLInputElement).checked : value;
-    
-    setFormData((prev) => ({
-      ...prev,
-      [name]: val,
-    }));
+    setFormData((prev) => ({ ...prev, [name]: val }));
   };
 
   const handleSubmit = async (e: React.FormEvent) => {
@@ -85,12 +59,10 @@ export default function CreateTrip() {
       toast.error(t("page.createTrip.requiredFields") || "Por favor completa todos los campos requeridos");
       return;
     }
-
     if (formData.is_recurring && !formData.recurrence_until) {
-      toast.error(t("page.createTrip.requiredFields") || "Por favor indica hasta cuándo se repite el viaje");
+      toast.error("Por favor indica hasta cuándo se repite el viaje");
       return;
     }
-
     setLoading(true);
     try {
       const departureTime = `${formData.date}T${formData.time}:00`;
@@ -104,12 +76,14 @@ export default function CreateTrip() {
         region: formData.region,
         is_recurring: formData.is_recurring,
         recurrence_pattern: formData.is_recurring ? formData.recurrence_pattern : undefined,
-        recurrence_until: (formData.is_recurring && formData.recurrence_until) ? `${formData.recurrence_until}T${formData.time}:00` : undefined,
+        recurrence_until:
+          formData.is_recurring && formData.recurrence_until
+            ? `${formData.recurrence_until}T${formData.time}:00`
+            : undefined,
       });
       toast.success(t("page.createTrip.success") || "Viaje creado exitosamente");
       router.push(`/${lang}`);
     } catch (error) {
-      console.error("Error creating trip:", error);
       const errorMessage = (error as any)?.message || t("page.createTrip.error") || "Error al crear el viaje";
       toast.error(errorMessage);
     } finally {
@@ -118,253 +92,192 @@ export default function CreateTrip() {
   };
 
   return (
-    <div className="max-w-4xl mx-auto py-12 px-4 sm:px-6 relative">
-      <div className="absolute top-0 left-0 -translate-y-1/2 -translate-x-1/4 w-[400px] h-[400px] bg-brand-purple/5 rounded-full blur-[100px] pointer-events-none"></div>
-
-      <div className="bg-white/5 backdrop-blur-3xl border border-white/10 rounded-[3rem] p-8 md:p-12 shadow-2xl relative overflow-hidden">
-        <div className="absolute inset-0 bg-hacker-dots opacity-5 pointer-events-none"></div>
-
-        <div className="relative mb-12 text-center">
-          <h1 className="text-4xl md:text-5xl font-black text-white tracking-tightest uppercase italic mb-4">
-            {t("page.createTrip.title")}
+    <div className="min-h-screen bg-green-50 py-12 px-4">
+      <div className="max-w-3xl mx-auto">
+        {/* Título */}
+        <div className="text-center mb-8">
+          <h1 className="text-4xl font-bold text-green-900 mb-2">
+            {t("page.createTrip.title") || "Publicar un viaje"}
           </h1>
-          <p className="text-brand-gray font-medium uppercase tracking-[0.2em] text-xs">
-            Comparte tu viaje y ahorra en comunidad
-          </p>
+          <p className="text-green-700 text-lg">Comparte tu ruta y ahorra en comunidad</p>
         </div>
 
-        <form onSubmit={handleSubmit} className="relative space-y-8">
-          <div className="grid md:grid-cols-2 gap-8">
-            <div className="space-y-2">
-              <label className="block text-xs font-black text-brand-gray/90 uppercase tracking-[0.2em] ml-4">
-                {t("page.createTrip.from")} *
-              </label>
-              <div className="relative group/input">
-                <div className="absolute left-6 top-1/2 -translate-y-1/2 text-brand-gray group-focus-within/input:text-brand-cyan transition-colors z-10">
-                  <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z" />
-                  </svg>
-                </div>
-                <LocationInput
-                  name="from"
-                  value={formData.from}
-                  onChange={(val: string) => setFormData(prev => ({ ...prev, from: val }))}
-                  className="w-full bg-black/20 border border-white/5 rounded-3xl pl-14 pr-6 py-4 text-white placeholder:text-brand-gray/50 focus:border-brand-cyan/50 focus:ring-0 transition-all outline-none font-medium italic resize-none"
-                  placeholder={t("page.createTrip.fromPlaceholder")}
-                  required
-                />
-              </div>
-            </div>
+        {/* Card del formulario */}
+        <div className="form-card">
+          <form onSubmit={handleSubmit} className="space-y-7">
 
-            <div className="space-y-2">
-              <label className="block text-xs font-black text-brand-gray/90 uppercase tracking-[0.2em] ml-4">
-                {t("page.createTrip.to")} *
-              </label>
-              <div className="relative group/input">
-                <div className="absolute left-6 top-1/2 -translate-y-1/2 text-brand-gray group-focus-within/input:text-brand-purple transition-colors z-10">
-                  <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z" />
-                  </svg>
-                </div>
-                <LocationInput
-                  name="to"
-                  value={formData.to}
-                  onChange={(val: string) => setFormData(prev => ({ ...prev, to: val }))}
-                  className="w-full bg-black/20 border border-white/5 rounded-3xl pl-14 pr-6 py-4 text-white placeholder:text-brand-gray/50 focus:border-brand-cyan/50 focus:ring-0 transition-all outline-none font-medium italic resize-none"
-                  placeholder={t("page.createTrip.toPlaceholder")}
-                  required
-                />
-              </div>
-            </div>
-          </div>
-
-          <div className="grid grid-cols-2 md:grid-cols-4 gap-6">
-            <div className="space-y-2 col-span-2 md:col-span-1">
-              <label className="block text-xs font-black text-brand-gray/90 uppercase tracking-[0.2em] ml-4">
-                {t("page.createTrip.date")} *
-              </label>
-              <input
-                type="date"
-                name="date"
-                value={formData.date}
-                onChange={handleChange}
-                className="w-full bg-black/20 border border-white/5 rounded-2xl px-6 py-4 text-white focus:border-brand-cyan/50 focus:ring-0 transition-all outline-none font-bold italic"
-                required
-              />
-            </div>
-
-            <div className="space-y-2 col-span-2 md:col-span-1">
-              <label className="block text-xs font-black text-brand-gray/90 uppercase tracking-[0.2em] ml-4">
-                {t("page.createTrip.time")} *
-              </label>
-              <input
-                type="time"
-                name="time"
-                value={formData.time}
-                onChange={handleChange}
-                className="w-full bg-black/20 border border-white/5 rounded-2xl px-6 py-4 text-white focus:border-brand-cyan/50 focus:ring-0 transition-all outline-none font-bold italic"
-                required
-              />
-            </div>
-
-            <div className="space-y-2 col-span-2 md:col-span-1">
-              <label className="block text-xs font-black text-brand-gray/90 uppercase tracking-[0.2em] ml-4">
-                {t("page.createTrip.availableSeats")} *
-              </label>
-              <input
-                type="number"
-                name="availableSeats"
-                value={formData.availableSeats}
-                onChange={handleChange}
-                min="1"
-                max="8"
-                className="w-full bg-black/20 border border-white/5 rounded-2xl px-6 py-4 text-white focus:border-brand-cyan/50 focus:ring-0 transition-all outline-none font-bold italic text-center"
-                required
-              />
-            </div>
-
-            <div className="space-y-2 col-span-2 md:col-span-1">
-              <label className="block text-xs font-black text-brand-gray/90 uppercase tracking-[0.2em] ml-4">
-                {t("page.createTrip.pricePerSeat")} *
-              </label>
-              <div className="relative">
-                <span className="absolute left-6 top-1/2 -translate-y-1/2 text-brand-cyan font-black text-sm">€</span>
-                <input
-                  type="number"
-                  name="pricePerSeat"
-                  value={formData.pricePerSeat}
-                  onChange={handleChange}
-                  min="0"
-                  step="0.01"
-                  className="w-full bg-black/20 border border-white/5 rounded-2xl pl-12 pr-6 py-4 text-white focus:border-brand-cyan/50 focus:ring-0 transition-all outline-none font-bold italic"
-                  required
-                />
-              </div>
-            </div>
-
-            <div className="space-y-2 col-span-2 md:col-span-1">
-              <label className="block text-xs font-black text-brand-gray/90 uppercase tracking-[0.2em] ml-4">
-                {t("page.createTrip.region") || "Región"} *
-              </label>
-              <div className="relative group/input">
-                <div className="absolute left-6 top-1/2 -translate-y-1/2 text-brand-gray group-focus-within/input:text-brand-cyan transition-colors">
-                  <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M3.055 11H5a2 2 0 012 2v1a2 2 0 002 2 2 2 0 012 2v2.945M8 3.935V5.5A2.5 2.5 0 0010.5 8h.5a2 2 0 012 2 2 2 0 104 0 2 2 0 012-2h1.064M15 20.488V18a2 2 0 012-2h3.064M21 12a9 9 0 11-18 0 9 9 0 0118 0z" /></svg>
-                </div>
-                <select
-                  name="region"
-                  value={formData.region}
-                  onChange={handleChange}
-                  className="w-full bg-black/20 border border-white/5 rounded-2xl pl-14 pr-10 py-4 text-white focus:border-brand-cyan/50 focus:ring-0 transition-all outline-none font-bold italic appearance-none cursor-pointer"
-                  required
-                >
-                  <option value="es" className="bg-brand-dark">{t("page.createTrip.regionSpain") || "España"}</option>
-                  <option value="fi" className="bg-brand-dark">{t("page.createTrip.regionFinland") || "Finlandia"}</option>
-                </select>
-              </div>
-            </div>
-          </div>
-
-          <div className="space-y-2">
-            <label className="block text-xs font-black text-brand-gray/90 uppercase tracking-[0.2em] ml-4">
-              {t("page.createTrip.description")}
-            </label>
-            <textarea
-              name="description"
-              value={formData.description}
-              onChange={handleChange}
-              rows={4}
-              className="w-full bg-black/20 border border-white/5 rounded-3xl px-6 py-4 text-white placeholder:text-brand-gray/50 focus:border-brand-cyan/50 focus:ring-0 transition-all outline-none font-medium italic resize-none"
-              placeholder={t("page.createTrip.descriptionPlaceholder")}
-            />
-          </div>
-
-          {/* Recurrence Section */}
-          <div className="bg-white/5 rounded-[2rem] p-6 border border-white/5 space-y-6">
-            <div className="flex items-center justify-between px-2">
-              <div className="flex items-center gap-3">
-                <div className={`w-10 h-10 rounded-xl flex items-center justify-center transition-colors ${formData.is_recurring ? 'bg-brand-cyan/20 text-brand-cyan' : 'bg-white/5 text-brand-gray'}`}>
-                  <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4 4v5h.582m15.356 2A8.001 8.001 0 004.582 9m0 0H9m11 11v-5h-.581m0 0a8.003 8.003 0 01-15.357-2m15.357 2H15" />
-                  </svg>
-                </div>
-                <div>
-                  <h3 className="text-sm font-black text-white uppercase tracking-wider">{t("page.createTrip.recurring")}</h3>
-                  <p className="text-[10px] text-brand-gray font-bold uppercase tracking-widest">{t("page.createTrip.recurrenceInfo")}</p>
-                </div>
-              </div>
-              <label className="relative inline-flex items-center cursor-pointer">
-                <input 
-                  type="checkbox" 
-                  name="is_recurring"
-                  checked={formData.is_recurring}
-                  onChange={handleChange}
-                  className="sr-only peer" 
-                />
-                <div className="w-14 h-7 bg-white/5 peer-focus:outline-none rounded-full peer peer-checked:after:translate-x-full rtl:peer-checked:after:-translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[4px] after:start-[4px] after:bg-brand-gray after:border-gray-300 after:border after:rounded-full after:h-5 after:w-6 after:transition-all peer-checked:bg-brand-cyan/20 peer-checked:after:bg-brand-cyan after:shadow-lg"></div>
-              </label>
-            </div>
-
-            {formData.is_recurring && (
-              <div className="grid md:grid-cols-2 gap-6 pt-2 animate-in fade-in slide-in-from-top-2 duration-300">
-                <div className="space-y-2">
-                  <label className="block text-xs font-black text-brand-gray/90 uppercase tracking-[0.2em] ml-4">
-                    {t("page.createTrip.recurrencePattern")}
-                  </label>
-                  <select
-                    name="recurrence_pattern"
-                    value={formData.recurrence_pattern}
-                    onChange={handleChange}
-                    className="w-full bg-black/20 border border-white/5 rounded-2xl px-6 py-4 text-white focus:border-brand-cyan/50 focus:ring-0 transition-all outline-none font-bold italic appearance-none cursor-pointer"
-                  >
-                    <option value="daily" className="bg-brand-dark">{t("page.createTrip.daily")}</option>
-                    <option value="weekly" className="bg-brand-dark">{t("page.createTrip.weekly")}</option>
-                  </select>
-                </div>
-
-                <div className="space-y-2">
-                  <label className="block text-xs font-black text-brand-gray/90 uppercase tracking-[0.2em] ml-4">
-                    {t("page.createTrip.until")}
-                  </label>
-                  <input
-                    type="date"
-                    name="recurrence_until"
-                    value={formData.recurrence_until}
-                    onChange={handleChange}
-                    min={formData.date || new Date().toISOString().split('T')[0]}
-                    className="w-full bg-black/20 border border-white/5 rounded-2xl px-6 py-4 text-white focus:border-brand-cyan/50 focus:ring-0 transition-all outline-none font-bold italic"
-                    required={formData.is_recurring}
+            {/* Origen y Destino */}
+            <div className="grid md:grid-cols-2 gap-6">
+              <div>
+                <label className="form-label">{t("page.createTrip.from") || "Origen"} *</label>
+                <div className="relative">
+                  <div className="absolute left-3 top-1/2 -translate-y-1/2 text-green-500">
+                    <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z" />
+                    </svg>
+                  </div>
+                  <LocationInput
+                    name="from"
+                    value={formData.from}
+                    onChange={(val: string) => setFormData((prev) => ({ ...prev, from: val }))}
+                    className="form-input form-input-icon"
+                    placeholder={t("page.createTrip.fromPlaceholder") || "Ciudad de salida"}
+                    required
                   />
                 </div>
               </div>
-            )}
-          </div>
 
-          <div className="flex flex-col sm:flex-row gap-6 pt-8">
-            <button
-              type="submit"
-              disabled={loading}
-              className="flex-1 bg-brand-gradient text-white px-8 py-5 rounded-[2rem] font-black uppercase tracking-[0.2em] text-xs transition-all hover:scale-[1.03] active:scale-95 shadow-2xl shadow-brand-cyan/20 disabled:opacity-50 disabled:grayscale disabled:cursor-not-allowed group"
-            >
-              {loading ? (
-                <span className="flex items-center justify-center gap-2">
-                  <svg className="w-4 h-4 animate-spin" fill="none" viewBox="0 0 24 24">
-                    <circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4"></circle>
-                    <path className="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path>
+              <div>
+                <label className="form-label">{t("page.createTrip.to") || "Destino"} *</label>
+                <div className="relative">
+                  <div className="absolute left-3 top-1/2 -translate-y-1/2 text-green-500">
+                    <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z" />
+                    </svg>
+                  </div>
+                  <LocationInput
+                    name="to"
+                    value={formData.to}
+                    onChange={(val: string) => setFormData((prev) => ({ ...prev, to: val }))}
+                    className="form-input form-input-icon"
+                    placeholder={t("page.createTrip.toPlaceholder") || "Ciudad de destino"}
+                    required
+                  />
+                </div>
+              </div>
+            </div>
+
+            {/* Fecha, Hora, Asientos, Precio, Región */}
+            <div className="grid grid-cols-2 md:grid-cols-4 gap-5">
+              <div className="col-span-2 md:col-span-1">
+                <label className="form-label">{t("page.createTrip.date") || "Fecha"} *</label>
+                <input type="date" name="date" value={formData.date} onChange={handleChange} className="form-input" required />
+              </div>
+              <div className="col-span-2 md:col-span-1">
+                <label className="form-label">{t("page.createTrip.time") || "Hora"} *</label>
+                <input type="time" name="time" value={formData.time} onChange={handleChange} className="form-input" required />
+              </div>
+              <div className="col-span-1">
+                <label className="form-label">{t("page.createTrip.availableSeats") || "Plazas"} *</label>
+                <input type="number" name="availableSeats" value={formData.availableSeats} onChange={handleChange} min="1" max="8" className="form-input text-center" required />
+              </div>
+              <div className="col-span-1">
+                <label className="form-label">{t("page.createTrip.pricePerSeat") || "Precio/plaza"} *</label>
+                <div className="relative">
+                  <span className="absolute left-3 top-1/2 -translate-y-1/2 text-green-600 font-bold">€</span>
+                  <input type="number" name="pricePerSeat" value={formData.pricePerSeat} onChange={handleChange} min="0" step="0.01" className="form-input form-input-icon" required />
+                </div>
+              </div>
+            </div>
+
+            {/* Región */}
+            <div className="max-w-xs">
+              <label className="form-label">{t("page.createTrip.region") || "Región"} *</label>
+              <div className="relative">
+                <select name="region" value={formData.region} onChange={handleChange} className="form-select" required>
+                  <option value="es">{t("page.createTrip.regionSpain") || "España"}</option>
+                  <option value="fi">{t("page.createTrip.regionFinland") || "Finlandia"}</option>
+                </select>
+                <div className="absolute right-3 top-1/2 -translate-y-1/2 text-green-500 pointer-events-none">
+                  <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 9l-7 7-7-7" />
                   </svg>
-                  {t("page.createTrip.creating") || "Procesando..."}
-                </span>
-              ) : t("page.createTrip.submit") || "Publicar Viaje"}
-            </button>
-            <button
-              type="button"
-              onClick={() => router.back()}
-              disabled={loading}
-              className="px-12 py-5 rounded-[2rem] bg-white/5 text-brand-gray hover:text-white hover:bg-white/10 border border-white/5 transition-all font-black uppercase tracking-[0.2em] text-xs disabled:opacity-50"
-            >
-              {t("page.createTrip.cancel")}
-            </button>
-          </div>
-        </form>
+                </div>
+              </div>
+            </div>
+
+            {/* Descripción */}
+            <div>
+              <label className="form-label">{t("page.createTrip.description") || "Descripción (opcional)"}</label>
+              <textarea
+                name="description"
+                value={formData.description}
+                onChange={handleChange}
+                rows={3}
+                className="form-input"
+                placeholder={t("page.createTrip.descriptionPlaceholder") || "Añade información útil para los pasajeros..."}
+              />
+            </div>
+
+            {/* Viaje recurrente */}
+            <div className="section-pale">
+              <div className="flex items-center justify-between">
+                <div>
+                  <h3 className="font-bold text-green-900 text-lg">{t("page.createTrip.recurring") || "Viaje recurrente"}</h3>
+                  <p className="text-green-700 text-sm mt-1">{t("page.createTrip.recurrenceInfo") || "Este viaje se repite con regularidad"}</p>
+                </div>
+                <label className="relative inline-flex items-center cursor-pointer">
+                  <input
+                    type="checkbox"
+                    name="is_recurring"
+                    checked={formData.is_recurring}
+                    onChange={handleChange}
+                    className="sr-only peer"
+                  />
+                  <div className="w-14 h-7 bg-green-200 rounded-full peer peer-checked:bg-green-600 after:content-[''] after:absolute after:top-[4px] after:start-[4px] after:bg-white after:rounded-full after:h-5 after:w-6 after:transition-all peer-checked:after:translate-x-full"></div>
+                </label>
+              </div>
+
+              {formData.is_recurring && (
+                <div className="grid md:grid-cols-2 gap-5 mt-5">
+                  <div>
+                    <label className="form-label">{t("page.createTrip.recurrencePattern") || "Frecuencia"}</label>
+                    <div className="relative">
+                      <select name="recurrence_pattern" value={formData.recurrence_pattern} onChange={handleChange} className="form-select">
+                        <option value="daily">{t("page.createTrip.daily") || "Diario"}</option>
+                        <option value="weekly">{t("page.createTrip.weekly") || "Semanal"}</option>
+                      </select>
+                      <div className="absolute right-3 top-1/2 -translate-y-1/2 text-green-500 pointer-events-none">
+                        <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 9l-7 7-7-7" />
+                        </svg>
+                      </div>
+                    </div>
+                  </div>
+                  <div>
+                    <label className="form-label">{t("page.createTrip.until") || "Hasta la fecha"}</label>
+                    <input
+                      type="date"
+                      name="recurrence_until"
+                      value={formData.recurrence_until}
+                      onChange={handleChange}
+                      min={formData.date || new Date().toISOString().split("T")[0]}
+                      className="form-input"
+                      required={formData.is_recurring}
+                    />
+                  </div>
+                </div>
+              )}
+            </div>
+
+            {/* Botones */}
+            <div className="flex flex-col sm:flex-row gap-4 pt-2">
+              <button
+                type="submit"
+                disabled={loading}
+                className="flex-1 bg-green-600 hover:bg-green-700 text-white py-4 rounded-xl font-bold text-lg transition-colors shadow-md disabled:opacity-50 disabled:cursor-not-allowed"
+              >
+                {loading ? (
+                  <span className="flex items-center justify-center gap-2">
+                    <svg className="w-5 h-5 animate-spin" fill="none" viewBox="0 0 24 24">
+                      <circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4"></circle>
+                      <path className="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path>
+                    </svg>
+                    {t("page.createTrip.creating") || "Publicando..."}
+                  </span>
+                ) : t("page.createTrip.submit") || "Publicar Viaje"}
+              </button>
+              <button
+                type="button"
+                onClick={() => router.back()}
+                disabled={loading}
+                className="px-10 py-4 rounded-xl bg-white border-2 border-green-200 text-green-700 hover:bg-green-50 font-bold text-lg transition-colors disabled:opacity-50"
+              >
+                {t("page.createTrip.cancel") || "Cancelar"}
+              </button>
+            </div>
+          </form>
+        </div>
       </div>
     </div>
   );

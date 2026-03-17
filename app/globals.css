@@ -1,47 +1,73 @@
 @import "tailwindcss";
 
 :root {
-  --background: #120d2b;
-  --foreground: #ffffff;
-  --brand-dark: #120d2b;
-  --brand-gray: #717285;
-  --brand-blue: #5471E9;
-  --brand-deep: #0051B3;
-  --brand-pink: #FF419C;
-  --brand-cyan: #0BB1D3;
-  --brand-purple: #9F2FFF;
-  --brand-gradient: linear-gradient(89.8deg, #0BB1D3 0%, #9F2FFF 100%);
+  /* Colores Principales - Contraste alto para accesibilidad */
+  --background: #ffffff;
+  --foreground: #0a2e0a; /* Verde muy oscuro casi negro */
+
+  /* Paleta de Verdes Retro/Limpios */
+  --brand-green: #228b22; /* ForestGreen */
+  --brand-green-light: #4cbb17; /* Kelly Green */
+  --brand-green-dark: #004d00;
+  --brand-green-pale: #f0fff0; /* Honeydew */
+  --brand-border: #000000; /* Bordes negros para estilo retro/claro */
+  
+  --font-sans: var(--font-geist-sans), system-ui, -apple-system, sans-serif;
 }
 
 @theme inline {
   --color-background: var(--background);
   --color-foreground: var(--foreground);
-  --color-brand-dark: var(--brand-dark);
-  --color-brand-gray: var(--brand-gray);
-  --color-brand-blue: var(--brand-blue);
-  --color-brand-deep: var(--brand-deep);
-  --color-brand-pink: var(--brand-pink);
-  --color-brand-cyan: var(--brand-cyan);
-  --color-brand-purple: var(--brand-purple);
-  --font-sans: var(--font-geist-sans);
-  --font-mono: var(--font-geist-mono);
+  --color-brand-green: var(--brand-green);
+  --color-brand-green-light: var(--brand-green-light);
+  --color-brand-green-dark: var(--brand-green-dark);
+  --color-brand-green-pale: var(--brand-green-pale);
+  --color-brand-border: var(--brand-border);
+  
+  /* Tamaños de fuente aumentados para legibilidad */
+  --text-base: 1.125rem; /* 18px */
+  --text-lg: 1.25rem;    /* 20px */
+  --text-xl: 1.5rem;     /* 24px */
+  --text-2xl: 1.875rem;  /* 30px */
 }
 
-.bg-hacker-dots {
-  background-image: radial-gradient(rgba(113, 114, 133, 0.1) 1px, transparent 1px);
-  background-size: 20px 20px;
-}
-
-.bg-brand-gradient {
-  background: var(--brand-gradient);
-}
-
+/* Estilos Globales Retro-Limpios */
 body {
-  background: var(--background);
+  font-family: var(--font-sans);
+  background-color: var(--background);
   color: var(--foreground);
-  font-family: Arial, Helvetica, sans-serif;
-  font-size: 1.1rem;
   line-height: 1.6;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
+}
+
+/* Botones Grandes y Claros */
+.btn-retro {
+  @apply px-8 py-4 bg-brand-green text-white font-bold rounded-none border-2 border-black shadow-[4px_4px_0px_0px_rgba(0,0,0,1)] hover:shadow-none hover:translate-x-[2px] hover:translate-y-[2px] transition-all text-lg uppercase tracking-tight;
+}
+
+.btn-retro-secondary {
+  @apply px-8 py-4 bg-white text-brand-green-dark font-bold rounded-none border-2 border-black shadow-[4px_4px_0px_0px_rgba(0,0,0,1)] hover:shadow-none hover:translate-x-[2px] hover:translate-y-[2px] transition-all text-lg uppercase tracking-tight;
+}
+
+/* Contenedores con bordes marcados */
+.card-retro {
+  @apply bg-white border-2 border-black p-6 shadow-[6px_6px_0px_0px_rgba(0,0,0,1)] rounded-none;
+}
+
+/* Inputs claros */
+input, select, textarea {
+  @apply border-2 border-black p-4 text-lg bg-white focus:outline-none focus:ring-2 focus:ring-brand-green rounded-none;
+}
+
+/* Títulos marcados */
+h1, h2, h3, h4 {
+  @apply font-black tracking-tight text-brand-green-dark;
+}
+
+/* Utilidades de espaciado */
+.section-padding {
+  @apply py-16 px-4 md:px-8;
+}
+
+.max-container {
+  @apply max-w-5xl mx-auto;
 }

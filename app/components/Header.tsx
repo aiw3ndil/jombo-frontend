@@ -64,9 +64,8 @@ export default function Header({ lang }: { lang: string }) {
   };
 
   return (
-    <header className="p-4 bg-brand-dark text-white shadow-xl flex justify-between items-center transition-all duration-300 relative z-[100] border-b border-white/5">
-      <div className="absolute inset-0 bg-hacker-dots opacity-30 pointer-events-none"></div>
-      <Link href={`/${lang}`} className="relative flex items-center gap-2 hover:opacity-90 transition-opacity">
+    <header className="px-6 py-4 bg-white flex justify-between items-center transition-all duration-300 relative z-[100] border-b-2 border-green-200 shadow-sm">
+      <Link href={`/${lang}`} className="flex items-center gap-2 hover:opacity-85 transition-opacity">
         <img
           src="/images/jombo-logo.svg"
           alt="Jombo"
@@ -77,13 +76,15 @@ export default function Header({ lang }: { lang: string }) {
         <LanguageSwitcher />
         {user ? (
           <>
+            {/* Campana de notificaciones */}
             <div className="relative notifications-dropdown">
               <button
                 onClick={() => setIsNotificationsOpen(!isNotificationsOpen)}
-                className="relative"
+                className="relative p-2 rounded-lg hover:bg-green-50 transition-colors"
+                aria-label="Notificaciones"
               >
                 <svg
-                  className="w-6 h-6 text-white"
+                  className="w-7 h-7 text-green-700"
                   fill="none"
                   stroke="currentColor"
                   viewBox="0 0 24 24"
@@ -97,7 +98,7 @@ export default function Header({ lang }: { lang: string }) {
                   />
                 </svg>
                 {unreadCount > 0 && (
-                  <span className="absolute -top-1 -right-1 bg-red-500 text-white rounded-full text-xs w-4 h-4 flex items-center justify-center">
+                  <span className="absolute -top-0.5 -right-0.5 bg-red-500 text-white rounded-full text-xs w-5 h-5 flex items-center justify-center font-bold">
                     {unreadCount}
                   </span>
                 )}
@@ -109,28 +110,30 @@ export default function Header({ lang }: { lang: string }) {
                 />
               )}
             </div>
+
+            {/* Menú de usuario */}
             <div className="relative user-dropdown">
               <button
                 onClick={(e) => {
                   e.stopPropagation();
                   setIsDropdownOpen(!isDropdownOpen);
                 }}
-                className="relative bg-white/5 text-white border border-white/10 px-4 py-2 rounded-xl hover:bg-white/10 transition-all flex items-center gap-2 backdrop-blur-md"
+                className="flex items-center gap-2 bg-green-50 border-2 border-green-200 text-green-800 px-4 py-2 rounded-xl hover:bg-green-100 transition-all font-semibold"
               >
                 {(user.picture_url || user.picture) ? (
                   <img
                     src={user.picture_url || user.picture}
                     alt={user.name || user.email}
-                    className="w-8 h-8 rounded-full object-cover"
+                    className="w-8 h-8 rounded-full object-cover border-2 border-green-300"
                   />
                 ) : (
-                  <div className="w-8 h-8 rounded-full bg-blue-500 flex items-center justify-center text-white font-bold">
+                  <div className="w-8 h-8 rounded-full bg-green-600 flex items-center justify-center text-white font-bold text-sm">
                     {(user.name || user.email || 'U').charAt(0).toUpperCase()}
                   </div>
                 )}
-                <span className="hidden sm:inline">{user.name || user.email}</span>
+                <span className="hidden sm:inline text-green-900">{user.name || user.email}</span>
                 <svg
-                  className={`w-4 h-4 transition-transform ${isDropdownOpen ? "rotate-180" : ""}`}
+                  className={`w-4 h-4 text-green-600 transition-transform ${isDropdownOpen ? "rotate-180" : ""}`}
                   fill="none"
                   stroke="currentColor"
                   viewBox="0 0 24 24"
@@ -138,49 +141,47 @@ export default function Header({ lang }: { lang: string }) {
                   <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 9l-7 7-7-7" />
                 </svg>
               </button>
+
               {isDropdownOpen && (
-                <div className="absolute right-0 mt-4 w-56 bg-brand-dark rounded-2xl shadow-2xl py-3 z-50 border border-white/10 backdrop-blur-xl animate-in fade-in slide-in-from-top-2 duration-200">
-                  <div className="absolute inset-0 bg-hacker-dots opacity-10 pointer-events-none"></div>
-                  <div className="relative">
-                    <Link
-                      href={`/${lang}/profile`}
-                      onClick={() => setIsDropdownOpen(false)}
-                      className="block w-full text-left px-4 py-3 text-sm text-gray-300 hover:bg-white/5 hover:text-white transition-colors"
-                    >
-                      {t("menu.profile")}
-                    </Link>
-                    <Link
-                      href={`/${lang}/messages`}
-                      onClick={() => setIsDropdownOpen(false)}
-                      className="block w-full text-left px-4 py-3 text-sm text-gray-300 hover:bg-white/5 hover:text-white transition-colors"
-                    >
-                      {t("menu.messages")}
-                    </Link>
-                    <Link
-                      href={`/${lang}/my-bookings`}
-                      onClick={() => setIsDropdownOpen(false)}
-                      className="block w-full text-left px-4 py-3 text-sm text-gray-300 hover:bg-white/5 hover:text-white transition-colors"
-                    >
-                      {t("menu.myBookings")}
-                    </Link>
-                    <Link
-                      href={`/${lang}/my-trips`}
-                      onClick={() => setIsDropdownOpen(false)}
-                      className="block w-full text-left px-4 py-3 text-sm text-gray-300 hover:bg-white/5 hover:text-white transition-colors"
-                    >
-                      {t("menu.myTrips")}
-                    </Link>
-                    <div className="h-px bg-white/5 my-2"></div>
-                    <button
-                      onClick={() => {
-                        logout();
-                        setIsDropdownOpen(false);
-                      }}
-                      className="block w-full text-left px-4 py-3 text-sm text-brand-pink font-bold hover:bg-brand-pink/5 transition-colors"
-                    >
-                      {t("menu.logout")}
-                    </button>
-                  </div>
+                <div className="absolute right-0 mt-2 w-60 bg-white rounded-xl shadow-xl py-2 z-50 border-2 border-green-100">
+                  <Link
+                    href={`/${lang}/profile`}
+                    onClick={() => setIsDropdownOpen(false)}
+                    className="flex items-center gap-3 px-5 py-3 text-green-800 hover:bg-green-50 transition-colors font-medium text-base"
+                  >
+                    {t("menu.profile")}
+                  </Link>
+                  <Link
+                    href={`/${lang}/messages`}
+                    onClick={() => setIsDropdownOpen(false)}
+                    className="flex items-center gap-3 px-5 py-3 text-green-800 hover:bg-green-50 transition-colors font-medium text-base"
+                  >
+                    {t("menu.messages")}
+                  </Link>
+                  <Link
+                    href={`/${lang}/my-bookings`}
+                    onClick={() => setIsDropdownOpen(false)}
+                    className="flex items-center gap-3 px-5 py-3 text-green-800 hover:bg-green-50 transition-colors font-medium text-base"
+                  >
+                    {t("menu.myBookings")}
+                  </Link>
+                  <Link
+                    href={`/${lang}/my-trips`}
+                    onClick={() => setIsDropdownOpen(false)}
+                    className="flex items-center gap-3 px-5 py-3 text-green-800 hover:bg-green-50 transition-colors font-medium text-base"
+                  >
+                    {t("menu.myTrips")}
+                  </Link>
+                  <div className="h-px bg-green-100 my-1 mx-3"></div>
+                  <button
+                    onClick={() => {
+                      logout();
+                      setIsDropdownOpen(false);
+                    }}
+                    className="block w-full text-left px-5 py-3 text-red-600 font-semibold hover:bg-red-50 transition-colors text-base"
+                  >
+                    {t("menu.logout")}
+                  </button>
                 </div>
               )}
             </div>
@@ -188,7 +189,7 @@ export default function Header({ lang }: { lang: string }) {
         ) : (
           <Link
             href={`/${lang}/login`}
-            className="relative bg-brand-gradient text-white px-8 py-2.5 rounded-xl hover:opacity-90 transition-all shadow-lg shadow-brand-cyan/20 active:scale-95 font-black uppercase tracking-widest text-xs"
+            className="bg-green-600 text-white px-7 py-3 rounded-xl hover:bg-green-700 transition-colors font-bold text-base shadow-sm active:scale-95"
           >
             Login
           </Link>

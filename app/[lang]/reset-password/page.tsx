@@ -21,17 +21,14 @@ export default function ResetPassword() {
 
   useEffect(() => {
     if (!token && !translationsLoading) {
-      setError("Token is missing or invalid.");
+      setError("Token de recuperación inválido o expirado.");
     }
   }, [token, translationsLoading]);
 
   if (translationsLoading) {
     return (
-      <div className="min-h-screen flex items-center justify-center">
-        <div className="relative w-20 h-20">
-          <div className="absolute inset-0 rounded-full border-4 border-white/5 border-t-brand-cyan animate-spin"></div>
-          <div className="absolute inset-2 rounded-full border-4 border-white/5 border-t-brand-purple animate-spin" style={{ animationDuration: '1.5s' }}></div>
-        </div>
+      <div className="min-h-screen flex items-center justify-center bg-white">
+        <div className="spinner"></div>
       </div>
     );
   }
@@ -39,129 +36,98 @@ export default function ResetPassword() {
   const handleSubmit = async (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     if (password !== confirmPassword) {
-      setError("Passwords do not match.");
+      setError("Las contraseñas no coinciden.");
       return;
     }
-
     if (!token) {
-      setError("Token is missing.");
+      setError("Token de recuperación no encontrado.");
       return;
     }
-
     setIsLoading(true);
     setError(null);
     try {
       await resetPassword(token, password);
       setSuccess(true);
-      setTimeout(() => {
-        router.push(`/${lang}/login`);
-      }, 3000);
+      setTimeout(() => { router.push(`/${lang}/login`); }, 3000);
     } catch (err: any) {
-      console.error('🔵 Reset password error:', err);
-      setError(err.message || t("errorGeneric"));
+      setError(err.message || t("errorGeneric") || "Ha ocurrido un error");
     } finally {
       setIsLoading(false);
     }
   };
 
   return (
-    <div className="max-w-md mx-auto py-12 px-4 sm:px-0 relative">
-      <div className="absolute top-0 right-0 -translate-y-1/2 translate-x-1/4 w-[300px] h-[300px] bg-brand-cyan/10 rounded-full blur-[100px] pointer-events-none"></div>
-
-      <div className="bg-white/5 backdrop-blur-3xl border border-white/10 rounded-[3rem] p-8 md:p-10 shadow-2xl relative overflow-hidden text-center">
-        <div className="absolute inset-0 bg-hacker-dots opacity-5 pointer-events-none"></div>
-
-        <div className="relative mb-10">
-          <h2 className="text-4xl font-black text-white tracking-tightest uppercase italic mb-2">
-            {t("resetPasswordTitle")}
-          </h2>
-          <p className="text-brand-gray/80 font-bold uppercase tracking-[0.2em] text-xs px-4">
-            {t("resetPasswordDescription")}
+    <div className="min-h-screen bg-green-50 py-16 px-4">
+      <div className="max-w-md mx-auto">
+        <div className="text-center mb-8">
+          <h1 className="text-4xl font-bold text-green-900 mb-2">
+            {t("resetPasswordTitle") || "Nueva contraseña"}
+          </h1>
+          <p className="text-green-700 text-lg">
+            {t("resetPasswordDescription") || "Elige una nueva contraseña segura para tu cuenta."}
           </p>
         </div>
 
-        {error && (
-          <div className="relative bg-brand-pink/10 border border-brand-pink/20 text-brand-pink px-4 py-3 rounded-2xl text-xs font-bold mb-6 flex items-center justify-center gap-2">
-            <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 8v4m0 4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
-            </svg>
-            {error}
-          </div>
-        )}
+        <div className="form-card">
+          {error && <div className="form-error mb-6">{error}</div>}
 
-        {success ? (
-          <div className="relative space-y-8">
-            <div className="bg-brand-cyan/10 border border-brand-cyan/20 text-brand-cyan px-6 py-8 rounded-3xl text-sm font-bold flex flex-col items-center gap-4">
-              <div className="w-12 h-12 bg-brand-cyan/20 rounded-full flex items-center justify-center">
-                <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={3} d="M5 13l4 4L19 7" />
-                </svg>
-              </div>
-              {t("passwordResetSuccess")}
-            </div>
-            <p className="text-brand-gray/60 text-xs uppercase font-bold tracking-widest">
-              Redirigiendo al login...
-            </p>
-          </div>
-        ) : (
-          <form className="relative space-y-6" onSubmit={handleSubmit}>
-            <div className="space-y-2 text-left">
-              <label className="block text-xs font-black text-brand-gray/90 uppercase tracking-[0.2em] ml-4">{t("newPassword")}</label>
-              <div className="relative group/input">
-                <div className="absolute left-6 top-1/2 -translate-y-1/2 text-brand-gray group-focus-within/input:text-brand-purple transition-colors">
-                  <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 15v2m-6 4h12a2 2 0 002-2v-6a2 2 0 00-2-2H6a2 2 0 00-2 2v6a2 2 0 002 2zm10-10V7a4 4 0 00-8 0v4h8z" />
+          {success ? (
+            <div className="space-y-6 text-center">
+              <div className="bg-green-50 border-2 border-green-300 rounded-xl p-8 flex flex-col items-center gap-4">
+                <div className="w-14 h-14 bg-green-100 rounded-full flex items-center justify-center">
+                  <svg className="w-8 h-8 text-green-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={3} d="M5 13l4 4L19 7" />
                   </svg>
                 </div>
+                <p className="text-green-800 font-semibold text-lg">{t("passwordResetSuccess") || "¡Contraseña actualizada correctamente!"}</p>
+                <p className="text-green-600 text-base">Redirigiendo al inicio de sesión...</p>
+              </div>
+            </div>
+          ) : (
+            <form className="space-y-5" onSubmit={handleSubmit}>
+              <div>
+                <label className="form-label">{t("newPassword") || "Nueva contraseña"}</label>
                 <input
                   type="password"
                   value={password}
                   onChange={(e) => setPassword(e.target.value)}
-                  className="w-full bg-black/20 border border-white/5 rounded-2xl pl-14 pr-6 py-4 text-white placeholder:text-brand-gray/50 focus:border-brand-purple/50 focus:ring-0 transition-all outline-none font-bold italic"
+                  className="form-input"
                   placeholder="••••••••"
                   required
                   minLength={6}
                 />
               </div>
-            </div>
-
-            <div className="space-y-2 text-left">
-              <label className="block text-xs font-black text-brand-gray/90 uppercase tracking-[0.2em] ml-4">{t("confirmPassword")}</label>
-              <div className="relative group/input">
-                <div className="absolute left-6 top-1/2 -translate-y-1/2 text-brand-gray group-focus-within/input:text-brand-purple transition-colors">
-                  <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 15v2m-6 4h12a2 2 0 002-2v-6a2 2 0 00-2-2H6a2 2 0 00-2 2v6a2 2 0 002 2zm10-10V7a4 4 0 00-8 0v4h8z" />
-                  </svg>
-                </div>
+              <div>
+                <label className="form-label">{t("confirmPassword") || "Confirmar contraseña"}</label>
                 <input
                   type="password"
                   value={confirmPassword}
                   onChange={(e) => setConfirmPassword(e.target.value)}
-                  className="w-full bg-black/20 border border-white/5 rounded-2xl pl-14 pr-6 py-4 text-white placeholder:text-brand-gray/50 focus:border-brand-purple/50 focus:ring-0 transition-all outline-none font-bold italic"
+                  className="form-input"
                   placeholder="••••••••"
                   required
                   minLength={6}
                 />
               </div>
-            </div>
 
-            <button
-              type="submit"
-              className="w-full bg-brand-gradient text-white py-5 rounded-[2rem] font-black uppercase tracking-[0.2em] text-xs transition-all hover:scale-[1.03] active:scale-95 shadow-2xl shadow-brand-cyan/20 disabled:opacity-50 mt-4"
-              disabled={isLoading || !token}
-            >
-              {isLoading ? (
-                <span className="flex items-center justify-center gap-2">
-                  <svg className="w-4 h-4 animate-spin" fill="none" viewBox="0 0 24 24">
-                    <circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4"></circle>
-                    <path className="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path>
-                  </svg>
-                  {t("loading")}
-                </span>
-              ) : t("resetPasswordSubmit")}
-            </button>
-          </form>
-        )}
+              <button
+                type="submit"
+                className="w-full bg-green-600 hover:bg-green-700 text-white py-4 rounded-xl font-bold text-lg transition-colors shadow-md disabled:opacity-50"
+                disabled={isLoading || !token}
+              >
+                {isLoading ? (
+                  <span className="flex items-center justify-center gap-2">
+                    <svg className="w-5 h-5 animate-spin" fill="none" viewBox="0 0 24 24">
+                      <circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4"></circle>
+                      <path className="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path>
+                    </svg>
+                    {t("loading") || "Guardando..."}
+                  </span>
+                ) : t("resetPasswordSubmit") || "Guardar nueva contraseña"}
+              </button>
+            </form>
+          )}
+        </div>
       </div>
     </div>
   );

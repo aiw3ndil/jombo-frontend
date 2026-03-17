@@ -4,9 +4,9 @@ import React from "react";
 interface RejectBookingModalProps {
   isOpen: boolean;
   onClose: () => void;
-  onConfirm: () => void; // No seats needed for rejection
-  loading: boolean; // For rejection confirmation loading state
-  t: (key: string, defaultValue?: string) => string; // Translation function
+  onConfirm: () => void;
+  loading: boolean;
+  t: (key: string, defaultValue?: string) => string;
   bookingDetails: {
     userName: string;
     seats: number;
@@ -24,32 +24,44 @@ const RejectBookingModal: React.FC<RejectBookingModalProps> = ({
   if (!isOpen || !bookingDetails) return null;
 
   return (
-    <div className="fixed inset-0 bg-gray-600 bg-opacity-50 flex justify-center items-center p-4 z-50">
-      <div className="bg-white rounded-lg shadow-xl p-6 w-full max-w-sm">
-        <h3 className="text-lg font-bold text-gray-900 mb-4">
-          {t("rejectBookingModalTitle") || "Rechazar Reserva"}
-        </h3>
-        <p className="text-gray-700 mb-4">
-          {t("rejectBookingModalMessage")
-            .replace("{{userName}}", bookingDetails.userName)
-            .replace("{{seats}}", String(bookingDetails.seats)) ||
-            `¿Estás seguro de rechazar la reserva de ${bookingDetails.userName} para ${bookingDetails.seats} asiento(s)?`}
-        </p>
+    <div className="fixed inset-0 bg-green-900/40 backdrop-blur-sm flex justify-center items-center p-4 z-[1000]">
+      <div className="bg-white rounded-[2.5rem] shadow-2xl p-8 md:p-12 w-full max-w-lg border-2 border-red-50 text-center relative overflow-hidden">
+        <div className="w-20 h-20 bg-red-50 rounded-full flex items-center justify-center mx-auto mb-8 border-2 border-red-100">
+          <svg className="w-10 h-10 text-red-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
+          </svg>
+        </div>
 
-        <div className="flex justify-end gap-3">
+        <h3 className="text-3xl font-bold text-red-700 mb-6 font-serif italic">
+          {t("rejectBookingModalTitle") || "¿Rechazar Reserva?"}
+        </h3>
+        
+        <div className="bg-red-50 p-6 rounded-2xl mb-10 border border-red-100">
+          <p className="text-red-900 font-bold text-lg leading-relaxed">
+            {t("rejectBookingModalMessage")
+              .replace("{{userName}}", bookingDetails.userName)
+              .replace("{{seats}}", String(bookingDetails.seats)) ||
+              `¿Estás seguro de rechazar la reserva de ${bookingDetails.userName} por ${bookingDetails.seats} plaza(s)?`}
+          </p>
+          <p className="text-red-600/70 text-sm mt-4 font-medium italic">
+            Esta acción liberará las plazas para otros viajeros.
+          </p>
+        </div>
+
+        <div className="flex flex-col sm:flex-row gap-4">
           <button
             onClick={onClose}
             disabled={loading}
-            className="px-4 py-2 rounded-lg border border-gray-300 text-gray-700 hover:bg-gray-50 disabled:opacity-50 disabled:cursor-not-allowed"
+            className="flex-1 px-8 py-4 rounded-xl bg-gray-100 text-gray-500 font-bold hover:bg-gray-200 transition-all uppercase tracking-widest text-sm"
           >
-            {t("cancel") || "Cancelar"}
+            {t("cancel") || "VOLVER"}
           </button>
           <button
             onClick={onConfirm}
             disabled={loading}
-            className="px-4 py-2 rounded-lg bg-red-600 text-white hover:bg-red-700 disabled:opacity-50 disabled:cursor-not-allowed"
+            className="flex-[1.5] px-8 py-4 rounded-xl bg-red-600 text-white font-bold hover:bg-red-700 transition-all shadow-lg uppercase tracking-widest text-sm"
           >
-            {loading ? (t("rejecting") || "Rechazando...") : (t("reject") || "Rechazar")}
+            {loading ? (t("rejecting") || "CARGANDO...") : (t("reject") || "SÍ, RECHAZAR")}
           </button>
         </div>
       </div>

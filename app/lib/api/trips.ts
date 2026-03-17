@@ -66,7 +66,7 @@ export async function searchTrips(
   if (arrivalLocation) params.set("arrival_location", arrivalLocation);
   if (region) params.set("region", region);
 
-  let url = `${API_BASE}/api/v1/trips/search/${departureLocation}?${params.toString()}`;
+  let url = `${API_BASE}/api/v1/trips/search?${params.toString()}`;
   if (departureLocation && arrivalLocation) {
     // Si tenemos ambos, usamos la ruta SEO que es más específica
     const seoPath = `${departureLocation.toLowerCase()}-${arrivalLocation.toLowerCase()}`;
