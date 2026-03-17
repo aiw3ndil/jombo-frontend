@@ -1,6 +1,6 @@
 "use client";
 
-import React, { createContext, useContext, ReactNode } from "react";
+import React, { createContext, useContext, ReactNode, useMemo } from "react";
 import { useJsApiLoader } from "@react-google-maps/api";
 
 interface GoogleMapsContextType {
@@ -10,9 +10,8 @@ interface GoogleMapsContextType {
 
 const GoogleMapsContext = createContext<GoogleMapsContextType | undefined>(undefined);
 
-// Static libraries and global variable for options
+// Static libraries
 const LIBRARIES: any = ["places"];
-let globalLoaderOptions: any = null;
 
 export function GoogleMapsProvider({ 
     children, 
@@ -25,16 +24,14 @@ export function GoogleMapsProvider({
 }) {
     const apiKey = process.env.NEXT_PUBLIC_GOOGLE_MAPS_API_KEY || "";
     
-    if (!globalLoaderOptions) {
-        globalLoaderOptions = {
-            googleMapsApiKey: apiKey,
-            libraries: LIBRARIES,
-            language,
-            region,
-        };
-    }
+    const loaderOptions = useMemo(() => ({
+        googleMapsApiKey: apiKey,
+        libraries: LIBRARIES,
+        language,
+        region,
+    }), [apiKey, language, region]);
 
-    const { isLoaded, loadError } = useJsApiLoader(globalLoaderOptions);
+    const { isLoaded, loadError } = useJsApiLoader(loaderOptions);
 
     return (
         <GoogleMapsContext.Provider value={{ isLoaded, loadError }}>

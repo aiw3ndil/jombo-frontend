@@ -439,8 +439,9 @@ export default function SearchPage() {
         />
       )}
 
-      {bookTripModalOpen && (
+      {bookTripModalOpen && selectedTripForBooking && (
         <BookTripModal
+          key={selectedTripForBooking.id}
           isOpen={bookTripModalOpen}
           onClose={() => {
             setBookTripModalOpen(false);

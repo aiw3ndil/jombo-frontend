@@ -164,8 +164,8 @@ export default function MessagesPage() {
                           </p>
                         </div>
                         <p className="text-white font-medium italic opacity-70 leading-relaxed">
-                          "{conversation.last_message.content.substring(0, 100)}
-                          {conversation.last_message.content.length > 100 ? "..." : ""}"
+                          &quot;{conversation.last_message.content.substring(0, 100)}
+                          {conversation.last_message.content.length > 100 ? "..." : ""}&quot;
                         </p>
                         <p className="text-xs font-black text-brand-gray/60 mt-3 uppercase font-mono tracking-tighter">
                           {new Date(conversation.last_message.created_at).toLocaleTimeString(lang, { hour: '2-digit', minute: '2-digit' })}

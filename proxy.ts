@@ -21,7 +21,7 @@ const PUBLIC_FILE_SUFFIXES = [
   '.map',
 ];
 
-export function middleware(request: NextRequest) {
+export function proxy(request: NextRequest) {
   const { pathname } = request.nextUrl;
 
   // Initialize a response that will be potentially modified or replaced

@@ -25,13 +25,6 @@ const BookTripModal: React.FC<BookTripModalProps> = ({
 }) => {
   const [selectedSeats, setSelectedSeats] = useState(1);
 
-  useEffect(() => {
-    if (isOpen && trip) {
-      // Reset to 1 seat when modal opens
-      setSelectedSeats(1);
-    }
-  }, [isOpen, trip]);
-
   if (!isOpen || !trip) return null;
 
   const maxSelectableSeats = Math.min(trip.available_seats, 10); // Cap at 10 seats for practical dropdown size
