@@ -1,6 +1,7 @@
 "use client";
 import { useEffect, useState } from "react";
 import { useSearchParams, useRouter, useParams } from "next/navigation";
+import Link from "next/link";
 import { createBooking, getBookings } from "@/app/lib/api/bookings";
 import { useTranslation } from "@/app/hooks/useTranslation";
 import { useAuth } from "@/app/contexts/AuthContext";
@@ -170,211 +171,247 @@ export default function SearchPage() {
 
   return (
     <div className="min-h-screen bg-white">
-      {/* Barra de búsqueda superior */}
-      <div className="bg-green-50 border-b-2 border-green-100 py-6 px-4">
-        <div className="max-w-4xl mx-auto">
-          <form onSubmit={handleSearch} className="flex flex-col lg:flex-row gap-3">
-            <div className="flex-1 flex items-center gap-2 bg-white border-2 border-green-300 rounded-xl px-4 py-3 focus-within:border-green-500 transition-colors">
-              <svg className="w-5 h-5 text-green-500 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z" />
-              </svg>
+      {/* ── HERO / SEARCH BAR ── */}
+      <section className="bg-green-50 border-b-2 border-green-100 py-20 px-4">
+        <div className="max-w-5xl mx-auto">
+          <div className="text-center mb-12">
+            <h1 className="text-4xl md:text-5xl font-bold text-green-900 mb-4">
+              {from} <span className="text-green-300 mx-2">→</span> {to}
+            </h1>
+            <p className="text-lg text-green-700 font-medium">
+              {t("page.search.results") || "Explora las mejores opciones para tu trayecto"}
+            </p>
+          </div>
+
+          <form onSubmit={handleSearch} className="bg-white p-4 rounded-[2.5rem] shadow-xl border-2 border-green-100 flex flex-col lg:flex-row gap-4">
+            <div className="flex-1 relative group">
+              <div className="absolute left-4 top-1/2 -translate-y-1/2 text-green-400 group-focus-within:text-green-600 transition-colors z-10">
+                <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z" />
+                </svg>
+              </div>
               <LocationInput
                 value={searchFrom}
                 onChange={(val: string) => setSearchFrom(val)}
-                placeholder={t("page.home.from") || "Desde"}
-                className="w-full bg-transparent border-none outline-none text-green-900 text-lg font-medium placeholder:text-green-400"
+                placeholder={t("page.home.from") || "Origen"}
+                className="form-input pl-12 border-transparent bg-green-50/30 focus:bg-white"
               />
             </div>
-            <div className="flex-1 flex items-center gap-2 bg-white border-2 border-green-300 rounded-xl px-4 py-3 focus-within:border-green-500 transition-colors">
-              <svg className="w-5 h-5 text-green-500 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z" />
-              </svg>
+            <div className="flex-1 relative group">
+              <div className="absolute left-4 top-1/2 -translate-y-1/2 text-green-400 group-focus-within:text-green-600 transition-colors z-10">
+                <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z" />
+                </svg>
+              </div>
               <LocationInput
                 value={searchTo}
                 onChange={(val: string) => setSearchTo(val)}
-                placeholder={t("page.home.to") || "Hasta"}
-                className="w-full bg-transparent border-none outline-none text-green-900 text-lg font-medium placeholder:text-green-400"
+                placeholder={t("page.home.to") || "Destino"}
+                className="form-input pl-12 border-transparent bg-green-50/30 focus:bg-white"
               />
             </div>
             <button
               type="submit"
-              className="bg-green-600 hover:bg-green-700 text-white px-8 py-3 rounded-xl font-bold text-lg transition-colors flex items-center gap-2 justify-center"
+              className="btn-primary px-10 py-4 shadow-lg lg:w-auto w-full"
             >
               <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                 <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" />
               </svg>
-              {t("page.home.search") || "Buscar"}
+              {t("page.home.search") || "Actualizar"}
             </button>
           </form>
         </div>
-      </div>
+      </section>
 
-      {/* Contenido de resultados */}
-      <div className="max-w-4xl mx-auto py-10 px-4">
-        {/* Cabecera resultados */}
-        <div className="flex justify-between items-center mb-8">
-          <div>
-            <h1 className="text-3xl font-bold text-green-900">
-              {from}{to ? ` → ${to}` : ""}
-            </h1>
-            <p className="text-green-600 text-base mt-1">{t("page.search.results") || "Resultados de búsqueda"}</p>
-          </div>
-          <button
-            onClick={() => router.push(`/${lang}`)}
-            className="flex items-center gap-2 bg-white border-2 border-green-200 text-green-700 hover:bg-green-50 px-5 py-2.5 rounded-xl font-semibold text-base transition-colors"
-          >
-            <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M10 19l-7-7m0 0l7-7m-7 7h18" />
-            </svg>
-            {t("page.search.back") || "Volver"}
-          </button>
-        </div>
-
-        {/* Aviso de transporte público */}
-        {source === "digitransit" && (
-          <div className="mb-8 p-5 bg-green-50 border-2 border-green-200 rounded-xl flex items-start gap-4">
-            <div className="w-10 h-10 bg-green-100 rounded-full flex items-center justify-center flex-shrink-0 mt-0.5">
-              <svg className="w-5 h-5 text-green-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
-              </svg>
+      {/* ── CONTENIDO ── */}
+      <section className="py-20 px-4 min-h-[60vh]">
+        <div className="max-w-5xl mx-auto">
+          {/* Aviso de transporte público */}
+          {source === "digitransit" && (
+            <div className="mb-12 p-8 bg-green-50 border-2 border-green-200 rounded-[2.5rem] flex items-center gap-6 animate-in fade-in slide-in-from-top-4">
+              <div className="w-14 h-14 bg-white rounded-full flex items-center justify-center flex-shrink-0 shadow-sm border border-green-100">
+                <svg className="w-7 h-7 text-green-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
+                </svg>
+              </div>
+              <div>
+                <p className="text-green-900 font-black text-lg">
+                  {lang === "fi" ? "Ei kimppakyytejä löytynyt" : lang === "es" ? "No se encontraron viajes compartidos" : "No carpools found"}
+                </p>
+                <p className="text-green-700 text-lg font-medium opacity-80">
+                  {lang === "fi" ? "Näytetään julkisen liikenteen vaihtoehdot" : lang === "es" ? "Mostrando alternativas de transporte público" : "Showing public transport alternatives"}
+                </p>
+              </div>
             </div>
-            <div>
-              <p className="text-green-900 font-bold text-base mb-1">
-                {lang === "fi" ? "Ei kimppakyytejä löytynyt" : lang === "es" ? "No se encontraron viajes compartidos" : "No carpools found"}
-              </p>
-              <p className="text-green-700 text-base">
-                {lang === "fi" ? "Näytetään julkisen liikenteen vaihtoehdot" : lang === "es" ? "Mostrando alternativas de transporte público entre " : "Showing public transport alternatives between "}
-                <strong>{from} – {to}</strong>
-              </p>
+          )}
+
+          {/* Sin resultados */}
+          {trips.length === 0 && externalOptions.length === 0 ? (
+            <div className="text-center py-24 bg-green-50/30 rounded-[3rem] border-2 border-dashed border-green-200">
+              <div className="w-24 h-24 bg-white rounded-full flex items-center justify-center mx-auto mb-8 shadow-sm border-2 border-green-100 text-green-400">
+                <svg className="w-12 h-12" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9.172 9.172a4 4 0 015.656 0M9 10h.01M15 10h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
+                </svg>
+              </div>
+              <h2 className="text-3xl font-bold text-green-900 mb-4">{t("page.search.noResults") || "No hay viajes disponibles"}</h2>
+              <p className="text-green-700 text-lg mb-8 max-w-md mx-auto font-medium">Intenta cambiar las ciudades o busca de nuevo más tarde.</p>
+              <button onClick={() => router.push(`/${lang}`)} className="btn-secondary px-8 py-4">
+                {t("page.search.back") || "Ver otros trayectos"}
+              </button>
             </div>
-          </div>
-        )}
+          ) : (
+            <div className="space-y-10">
+              {/* Viajes locales */}
+              {trips.map((trip) => {
+                const driverPictureUrl = trip.driver?.picture_url
+                  ? trip.driver.picture_url.startsWith("http")
+                    ? trip.driver.picture_url
+                    : `${API_BASE}${trip.driver.picture_url}`
+                  : null;
 
-        {/* Sin resultados */}
-        {trips.length === 0 && externalOptions.length === 0 ? (
-          <div className="text-center py-20 bg-green-50 rounded-2xl border-2 border-green-100">
-            <div className="w-16 h-16 bg-green-100 rounded-full flex items-center justify-center mx-auto mb-5">
-              <svg className="w-8 h-8 text-green-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9.172 9.172a4 4 0 015.656 0M9 10h.01M15 10h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
-              </svg>
-            </div>
-            <p className="text-xl text-green-700 font-semibold mb-2">{t("page.search.noResults") || "No hay viajes disponibles"}</p>
-            <p className="text-green-600 text-base">Intenta con otras fechas o ciudades</p>
-          </div>
-        ) : (
-          <div className="space-y-5">
-            {/* Viajes locales */}
-            {trips.map((trip) => {
-              const driverPictureUrl = trip.driver?.picture_url
-                ? trip.driver.picture_url.startsWith("http")
-                  ? trip.driver.picture_url
-                  : `${API_BASE}${trip.driver.picture_url}`
-                : null;
+                const bookingStatus = userBookings.get(trip.id);
 
-              const bookingStatus = userBookings.get(trip.id);
-
-              return (
-                <div key={trip.id} className="result-card">
-                  <div className="flex flex-col md:flex-row gap-6 items-start">
-                    {/* Avatar conductor */}
-                    <div className="flex-shrink-0 text-center">
-                      <div className="relative inline-block">
-                        {driverPictureUrl ? (
-                          <img
-                            src={driverPictureUrl}
-                            alt={trip.driver.name}
-                            className="w-20 h-20 rounded-full object-cover border-2 border-green-200"
-                            onError={(e) => {
-                              const t = e.target as HTMLImageElement;
-                              t.style.display = "none";
-                              t.nextElementSibling?.classList.remove("hidden");
-                            }}
-                          />
-                        ) : null}
-                        <div className={`w-20 h-20 rounded-full bg-green-600 flex items-center justify-center text-white text-2xl font-bold ${driverPictureUrl ? "hidden" : ""}`}>
-                          {trip.driver.name.charAt(0).toUpperCase()}
+                return (
+                  <div key={trip.id} className="result-card group">
+                    <div className="absolute top-0 left-0 w-2 h-full bg-green-500 group-hover:bg-green-600 transition-colors"></div>
+                    
+                    <div className="flex flex-col xl:flex-row gap-10">
+                      {/* Lado Izquierdo: Conductor */}
+                      <div className="flex-shrink-0 flex flex-col items-center">
+                        <div className="relative p-1 bg-green-50 rounded-full border-2 border-green-100 group-hover:border-green-300 transition-colors">
+                          <div className="w-24 h-24 rounded-full overflow-hidden shadow-inner bg-green-100 flex items-center justify-center">
+                            {driverPictureUrl ? (
+                              <img
+                                src={driverPictureUrl}
+                                alt={trip.driver.name}
+                                className="w-full h-full object-cover"
+                                onError={(e) => {
+                                  (e.target as HTMLImageElement).src = `https://ui-avatars.com/api/?name=${encodeURIComponent(trip.driver.name)}&background=15803d&color=fff`;
+                                }}
+                              />
+                            ) : (
+                              <span className="text-3xl font-black text-green-700">
+                                {trip.driver.name.charAt(0).toUpperCase()}
+                              </span>
+                            )}
+                          </div>
+                          <div className="absolute -bottom-1 -right-1 w-9 h-9 bg-white rounded-full border-2 border-green-100 flex items-center justify-center shadow-lg">
+                            <svg className="w-5 h-5 text-yellow-500 fill-current" viewBox="0 0 20 20">
+                              <path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z" />
+                            </svg>
+                          </div>
                         </div>
-                        {/* Estrella */}
-                        <div className="absolute -bottom-1 -right-1 w-7 h-7 bg-white rounded-full border border-green-200 flex items-center justify-center shadow-sm">
-                          <svg className="w-4 h-4 text-yellow-500" fill="currentColor" viewBox="0 0 20 20">
-                            <path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z" />
-                          </svg>
-                        </div>
-                      </div>
-                      <button
-                        onClick={() => handleOpenReviews(trip.driver.id, trip.driver.name)}
-                        className="text-green-600 hover:text-green-800 text-sm font-semibold underline mt-2 block"
-                      >
-                        {t("page.search.seeReviews") || "Ver reseñas"}
-                      </button>
-                    </div>
-
-                    {/* Info del viaje */}
-                    <div className="flex-1 space-y-4">
-                      <div className="flex flex-col sm:flex-row justify-between items-start gap-3">
-                        <div>
-                          <p className="text-green-600 font-semibold text-sm mb-1">{trip.driver.name} · {new Date(trip.departure_time).toLocaleDateString(lang, { day: "numeric", month: "short" })}</p>
-                          <h2 className="text-2xl font-bold text-green-900">
-                            {trip.departure_location} → {trip.arrival_location}
-                          </h2>
-                        </div>
-                        <div className="text-right">
-                          <p className="text-3xl font-bold text-green-800">€{Number(trip.price || 0).toFixed(2)}</p>
-                          <p className="text-green-500 text-sm font-medium">{t("page.search.perSeat") || "por plaza"}</p>
-                        </div>
+                        <p className="mt-4 font-black text-green-900 text-lg">{trip.driver.name}</p>
+                        <button
+                          onClick={() => handleOpenReviews(trip.driver.id, trip.driver.name)}
+                          className="text-green-600 hover:text-green-800 text-sm font-bold uppercase tracking-widest mt-2 transition-colors cursor-pointer"
+                        >
+                          {t("page.search.seeReviews") || "Reseñas"}
+                        </button>
                       </div>
 
-                      {/* Detalles */}
-                      <div className="grid grid-cols-2 gap-4 bg-green-50 rounded-xl p-4 border border-green-100">
-                        <div>
-                          <p className="text-green-500 font-semibold text-xs uppercase tracking-wide mb-1">{t("page.search.departure") || "Salida"}</p>
-                          <p className="text-green-900 font-bold text-base">{new Date(trip.departure_time).toLocaleTimeString(lang, { hour: "2-digit", minute: "2-digit" })} h</p>
+                      {/* Lado Central: Info Viaje */}
+                      <div className="flex-1 space-y-8">
+                        <div className="flex flex-wrap items-center gap-4">
+                          <div className="flex items-center gap-2 text-green-600 font-bold bg-green-50 px-5 py-2 rounded-full border border-green-100 shadow-sm">
+                            <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z" />
+                            </svg>
+                            <span className="uppercase tracking-wider">
+                              {new Date(trip.departure_time).toLocaleDateString(lang, { day: 'numeric', month: 'long' })}
+                            </span>
+                            <span className="text-green-300 mx-1">|</span>
+                            <span className="text-green-800">
+                              {new Date(trip.departure_time).toLocaleTimeString(lang, { hour: '2-digit', minute: '2-digit' })}h
+                            </span>
+                          </div>
+                          {trip.available_seats <= 2 && trip.available_seats > 0 && (
+                            <span className="bg-red-50 text-red-600 border border-red-100 px-4 py-2 rounded-full text-xs font-black uppercase tracking-widest animate-pulse">
+                              Últimas plazas
+                            </span>
+                          )}
                         </div>
+
                         <div>
-                          <p className="text-green-500 font-semibold text-xs uppercase tracking-wide mb-1">{t("page.search.availableSeats") || "Plazas disponibles"}</p>
-                          <p className={`font-bold text-base ${trip.available_seats <= 1 ? "text-red-600" : "text-green-700"}`}>
-                            {trip.available_seats} {t("common.seats") || "asientos"}
-                          </p>
+                          <h3 className="text-4xl font-black text-green-900 leading-tight tracking-tight">
+                            {trip.departure_location} <span className="text-green-300 mx-2">→</span> {trip.arrival_location}
+                          </h3>
+                        </div>
+
+                        <div className="grid grid-cols-2 gap-6">
+                           <div className="bg-green-50/50 border border-green-100 rounded-2xl p-4">
+                            <p className="text-xs font-bold text-green-400 uppercase tracking-widest mb-1">{t("page.search.availableSeats") || "Plazas Libres"}</p>
+                            <p className={`text-xl font-black ${trip.available_seats === 0 ? "text-red-500" : "text-green-900"}`}>
+                              {trip.available_seats} <span className="text-sm font-bold text-green-700/60 lowercase">disponibles</span>
+                            </p>
+                          </div>
+                          <div className="bg-green-50/50 border border-green-100 rounded-2xl p-4">
+                            <p className="text-xs font-bold text-green-400 uppercase tracking-widest mb-1">{t("page.search.price") || "Precio"}</p>
+                            <p className="text-2xl font-black text-green-700 italic">€{Number(trip.price).toFixed(2)}</p>
+                          </div>
                         </div>
                       </div>
 
-                      {/* Botón reservar */}
-                      <button
-                        onClick={() => handleBookTrip(trip)}
-                        disabled={bookingLoading === trip.id || trip.available_seats === 0 || !!bookingStatus}
-                        className={`w-full py-4 rounded-xl font-bold text-base transition-colors ${
-                          bookingStatus === "confirmed"
-                            ? "bg-green-100 text-green-700 border-2 border-green-300 cursor-default"
+                      {/* Lado Derecho: Acciones */}
+                      <div className="flex flex-col justify-center items-stretch min-w-[240px] gap-4">
+                        <button
+                          onClick={() => handleBookTrip(trip)}
+                          disabled={bookingLoading === trip.id || trip.available_seats === 0 || !!bookingStatus}
+                          className={`w-full py-6 rounded-[1.5rem] font-bold text-lg shadow-xl transform transition-all active:scale-95 ${
+                            bookingStatus === "confirmed"
+                              ? "bg-green-100 text-green-700 border-2 border-green-400 cursor-default"
+                              : bookingStatus === "pending"
+                              ? "bg-yellow-50 text-yellow-700 border-2 border-yellow-400 cursor-default"
+                              : trip.available_seats === 0
+                              ? "bg-gray-100 text-gray-400 border-2 border-gray-200 cursor-not-allowed shadow-none"
+                              : "btn-primary"
+                          }`}
+                        >
+                          {bookingLoading === trip.id
+                            ? "..."
                             : bookingStatus === "pending"
-                            ? "bg-yellow-50 text-yellow-700 border-2 border-yellow-300 cursor-default"
+                            ? "SOLICITADO ✓"
+                            : bookingStatus === "confirmed"
+                            ? "RESERVADO ✓"
                             : trip.available_seats === 0
-                            ? "bg-gray-100 text-gray-500 border-2 border-gray-200 cursor-not-allowed"
-                            : "bg-green-600 hover:bg-green-700 text-white shadow-md"
-                        } disabled:opacity-70`}
-                      >
-                        {bookingLoading === trip.id
-                          ? (t("page.search.booking") || "Procesando...")
-                          : bookingStatus === "pending"
-                          ? (t("page.search.statusPending") || "Solicitud enviada ✓")
-                          : bookingStatus === "confirmed"
-                          ? (t("page.search.statusConfirmed") || "Reserva Confirmada ✓")
-                          : trip.available_seats === 0
-                          ? (t("page.search.noSeats") || "Completo")
-                          : t("page.search.book") || "Reservar plaza"}
-                      </button>
+                            ? "COMPLETO"
+                            : t("page.search.book") || "RESERVAR AHORA"}
+                        </button>
+                        
+                        {bookingStatus && (
+                          <Link 
+                            href={`/${lang}/my-bookings`} 
+                            className="text-center text-sm font-bold text-green-600 hover:text-green-800 transition-colors uppercase tracking-widest underline decoration-2 underline-offset-4"
+                          >
+                            Ver mis reservas
+                          </Link>
+                        )}
+                      </div>
                     </div>
                   </div>
-                </div>
-              );
-            })}
+                );
+              })}
 
-            {/* Opciones externas de transporte */}
-            {externalOptions.map((option, idx) => (
-              <ExternalTransportCard key={`ext-${idx}`} option={option} lang={lang} />
-            ))}
-          </div>
-        )}
-      </div>
+              {/* Opciones externas de transporte */}
+              {externalOptions.length > 0 && (
+                <div className="pt-10">
+                  <h2 className="text-2xl font-bold text-green-900 mb-8 flex items-center gap-3">
+                    <svg className="w-8 h-8 text-green-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M8 7h12m0 0l-4-4m4 4l-4 4m0 6H4m0 0l4 4m-4-4l4-4" />
+                    </svg>
+                    {t("page.search.externalOptions") || "Otras alternativas de transporte"}
+                  </h2>
+                  <div className="space-y-6">
+                    {externalOptions.map((option, idx) => (
+                      <ExternalTransportCard key={`ext-${idx}`} option={option} lang={lang} />
+                    ))}
+                  </div>
+                </div>
+              )}
+            </div>
+          )}
+        </div>
+      </section>
 
       {/* Modals */}
       {reviewsModalOpen && selectedDriver && (

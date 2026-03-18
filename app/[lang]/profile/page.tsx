@@ -200,165 +200,258 @@ export default function ProfilePage({ params }: { params: Promise<{ lang: string
   }
 
   return (
-    <div className="min-h-screen bg-green-50 py-12 px-4">
-      <div className="max-w-4xl mx-auto">
-        <div className="mb-10 text-center">
-          <h1 className="text-4xl md:text-5xl font-bold text-green-900 mb-2">
-            {t("profile.title") || "Mi Perfil"}
+    <div className="min-h-screen bg-white">
+      {/* ── HERO ── */}
+      <section className="bg-green-50 border-b-2 border-green-100 py-20 px-4">
+        <div className="max-w-5xl mx-auto text-center md:text-left">
+          <div className="inline-flex items-center gap-2 bg-green-100 border border-green-300 text-green-800 px-5 py-2 rounded-full text-sm font-bold mb-6 uppercase tracking-wide">
+            <span className="w-2 h-2 rounded-full bg-green-600"></span>
+            {t("profile.badge")}
+          </div>
+          <h1 className="text-5xl md:text-6xl font-bold text-green-900 leading-tight mb-6">
+            {t("profile.title")}
           </h1>
-          <p className="text-green-700 text-lg">
-            Gestiona tu información personal y seguridad
+          <p className="text-xl md:text-2xl text-green-700 max-w-2xl leading-relaxed font-normal">
+            {t("profile.subtitle")}
           </p>
         </div>
+      </section>
 
-        {message && (
-          <div className={`mb-8 p-4 rounded-xl border-2 flex items-center gap-4 ${
-            message.type === "success" ? "bg-green-100 border-green-200 text-green-800" : "form-error"
-          }`}>
-            <span className="font-bold">{message.text}</span>
-          </div>
-        )}
+      {/* ── CONTENIDO ── */}
+      <section className="py-20 px-4">
+        <div className="max-w-5xl mx-auto space-y-12">
+          
+          {message && (
+            <div className={`p-6 rounded-2xl border-2 flex items-center gap-4 animate-shake ${
+              message.type === "success" ? "bg-green-100 border-green-200 text-green-800" : "form-error"
+            }`}>
+              <div className={`w-10 h-10 rounded-full flex items-center justify-center ${message.type === 'success' ? 'bg-green-200' : 'bg-red-100'}`}>
+                {message.type === 'success' ? '✓' : '!'}
+              </div>
+              <span className="font-bold text-lg">{message.text}</span>
+            </div>
+          )}
 
-        <div className="grid grid-cols-1 gap-8">
-          {/* Información Principal */}
+          {/* Sección: Datos Personales */}
           <div className="form-card">
-            <h2 className="text-2xl font-bold text-green-900 mb-8 border-b-2 border-green-100 pb-2">Datos Personales</h2>
-            <form onSubmit={handleSubmit} className="space-y-8">
-              {/* Avatar Section */}
-              <div className="flex flex-col sm:flex-row items-center gap-8 bg-green-50 p-6 rounded-2xl border-2 border-green-100">
+            <div className="flex flex-col md:flex-row justify-between items-start md:items-center gap-6 mb-12 border-b-2 border-green-50 pb-8">
+              <div>
+                <h2 className="text-3xl font-bold text-green-900 mb-2">{t("profile.personalInfoTitle")}</h2>
+                <p className="text-green-600 font-medium">{t("profile.personalInfoDescription")}</p>
+              </div>
+            </div>
+
+            <form onSubmit={handleSubmit} className="space-y-10">
+              {/* Avatar Upload */}
+              <div className="flex flex-col sm:flex-row items-center gap-10 bg-green-50/50 p-8 rounded-[2rem] border-2 border-green-100 shadow-inner">
                 <div className="relative group">
-                  <div className="relative w-32 h-32 rounded-full overflow-hidden border-4 border-white shadow-md">
+                  <div className="relative w-40 h-40 rounded-full overflow-hidden border-4 border-white shadow-xl bg-white">
                     {picturePreview ? (
                       <img
                         src={picturePreview}
                         alt="Profile"
-                        className="w-full h-full object-cover"
+                        className="w-full h-full object-cover transition-transform group-hover:scale-110"
                       />
                     ) : (
-                      <div className="w-full h-full bg-green-600 flex items-center justify-center text-white text-4xl font-bold">
+                      <div className="w-full h-full bg-green-700 flex items-center justify-center text-white text-5xl font-bold">
                         {formData.name.charAt(0).toUpperCase()}
                       </div>
                     )}
+                    <div className="absolute inset-0 bg-black/20 opacity-0 group-hover:opacity-100 transition-opacity flex items-center justify-center">
+                       <svg className="w-10 h-10 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M3 9a2 2 0 012-2h.93a2 2 0 001.664-.89l.812-1.22A2 2 0 0110.07 4h3.86a2 2 0 011.664.89l.812 1.22A2 2 0 0018.07 7H19a2 2 0 012 2v9a2 2 0 01-2 2H5a2 2 0 01-2-2V9z" />
+                       </svg>
+                    </div>
                   </div>
-                  <label className="absolute bottom-0 right-0 w-10 h-10 bg-green-700 rounded-full flex items-center justify-center cursor-pointer hover:bg-green-800 transition-colors shadow-lg border-2 border-white">
-                    <svg className="w-5 h-5 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M3 9a2 2 0 012-2h.93a2 2 0 001.664-.89l.812-1.22A2 2 0 0110.07 4h3.86a2 2 0 011.664.89l.812 1.22A2 2 0 0018.07 7H19a2 2 0 012 2v9a2 2 0 01-2 2H5a2 2 0 01-2-2V9z" />
+                  <label className="absolute bottom-2 right-2 w-12 h-12 bg-green-600 rounded-full flex items-center justify-center cursor-pointer hover:bg-green-700 transition-all shadow-xl border-4 border-white active:scale-90">
+                    <svg className="w-6 h-6 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 4v16m8-8H4" />
                     </svg>
                     <input type="file" onChange={handlePictureChange} className="hidden" accept="image/*" />
                   </label>
                 </div>
-                <div className="flex-1 text-center sm:text-left">
-                  <p className="text-2xl font-bold text-green-900">{formData.name}</p>
-                  <p className="text-green-600 font-medium">{formData.email}</p>
-                  <p className="text-green-500 text-sm mt-1 uppercase tracking-wider font-bold">Haz clic en la cámara para subir foto</p>
+                <div className="flex-1 text-center sm:text-left space-y-2">
+                  <h4 className="text-2xl font-black text-green-900">{formData.name || t("profile.name")}</h4>
+                  <p className="bg-green-100 text-green-700 px-4 py-1.5 rounded-lg text-sm font-bold inline-block border border-green-200">
+                    {formData.email}
+                  </p>
+                  <p className="text-green-500 text-sm font-bold uppercase tracking-widest block pt-2">{t("profile.avatarInfo")}</p>
                 </div>
               </div>
 
-              <div className="grid md:grid-cols-2 gap-6">
-                <div>
-                  <label className="form-label">{t("profile.name") || "Nombre Público"}</label>
-                  <input type="text" name="name" value={formData.name} onChange={handleChange} className="form-input" required />
+              <div className="grid md:grid-cols-2 gap-8">
+                <div className="space-y-2">
+                  <label className="form-label">{t("profile.name")}</label>
+                  <input 
+                    type="text" 
+                    name="name" 
+                    value={formData.name} 
+                    onChange={handleChange} 
+                    className="form-input" 
+                    placeholder={t("profile.namePlaceholder")}
+                    required 
+                  />
                 </div>
-                <div>
-                  <label className="form-label">{t("profile.language") || "Idioma"}</label>
+                <div className="space-y-2">
+                  <label className="form-label">{t("profile.language") || "Idioma de la APP"}</label>
                   <div className="relative">
                     <select name="language" value={formData.language} onChange={handleChange} className="form-select">
                       <option value="es">Español</option>
                       <option value="en">English</option>
                       <option value="fi">Suomi</option>
                     </select>
+                    <div className="absolute right-6 top-1/2 -translate-y-1/2 pointer-events-none text-green-600">
+                      <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 9l-7 7-7-7" />
+                      </svg>
+                    </div>
                   </div>
                 </div>
-                <div>
-                  <label className="form-label">{t("profile.region") || "Región"}</label>
+                <div className="space-y-2">
+                  <label className="form-label">{t("profile.region") || "Región / País"}</label>
                   <div className="relative">
                     <select name="region" value={formData.region} onChange={handleChange} className="form-select">
                       <option value="es">{t("profile.regionSpain") || "España"}</option>
                       <option value="fi">{t("profile.regionFinland") || "Finlandia"}</option>
                     </select>
+                    <div className="absolute right-6 top-1/2 -translate-y-1/2 pointer-events-none text-green-600">
+                      <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 9l-7 7-7-7" />
+                      </svg>
+                    </div>
                   </div>
                 </div>
               </div>
 
-              <button type="submit" disabled={loading} className="btn-primary w-full py-4 text-lg">
-                {loading ? "Actualizando..." : t("profile.save") || "Guardar cambios"}
-              </button>
+              <div className="pt-4">
+                <button type="submit" disabled={loading} className="btn-primary w-full md:w-auto min-w-[240px]">
+                  {loading ? (
+                    <span className="flex items-center gap-3">
+                      <div className="w-5 h-5 border-3 border-white/30 border-t-white rounded-full animate-spin"></div>
+                      {t("profile.saving") || "Guardando..."}
+                    </span>
+                  ) : (t("profile.save") || "Actualizar Perfil")}
+                </button>
+              </div>
             </form>
           </div>
 
-          {/* Seguridad */}
+          {/* Sección: Seguridad */}
           <div className="form-card">
-            <h2 className="text-2xl font-bold text-green-900 mb-8 border-b-2 border-green-100 pb-2">Seguridad</h2>
+            <div className="mb-12 border-b-2 border-green-50 pb-8">
+              <h2 className="text-3xl font-bold text-green-900 mb-2">{t("profile.securityTitle")}</h2>
+              <p className="text-green-600 font-medium">{t("profile.securityDescription")}</p>
+            </div>
+
             {passwordMessage && (
-              <div className={`mb-6 p-4 rounded-xl border-2 ${
+              <div className={`mb-8 p-6 rounded-2xl border-2 animate-shake ${
                 passwordMessage.type === "success" ? "bg-green-100 border-green-200 text-green-800" : "form-error"
               }`}>
-                {passwordMessage.text}
+                <span className="font-bold">{passwordMessage.text}</span>
               </div>
             )}
-            <form onSubmit={handlePasswordSubmit} className="space-y-6">
-              <div>
+
+            <form onSubmit={handlePasswordSubmit} className="space-y-8">
+              <div className="max-w-md">
                 <label className="form-label">{t("profile.currentPassword") || "Contraseña Actual"}</label>
-                <input type="password" name="current_password" value={passwordData.current_password} onChange={handlePasswordChange} className="form-input" required />
+                <input 
+                  type="password" 
+                  name="current_password" 
+                  value={passwordData.current_password} 
+                  onChange={handlePasswordChange} 
+                  className="form-input" 
+                  required 
+                />
               </div>
-              <div className="grid md:grid-cols-2 gap-6">
-                <div>
+              
+              <div className="grid md:grid-cols-2 gap-8">
+                <div className="space-y-2">
                   <label className="form-label">{t("profile.newPassword") || "Nueva Contraseña"}</label>
-                  <input type="password" name="password" value={passwordData.password} onChange={handlePasswordChange} className="form-input" required />
+                  <input 
+                    type="password" 
+                    name="password" 
+                    value={passwordData.password} 
+                    onChange={handlePasswordChange} 
+                    className="form-input" 
+                    required 
+                  />
                 </div>
-                <div>
+                <div className="space-y-2">
                   <label className="form-label">{t("profile.confirmNewPassword") || "Confirmar Nueva"}</label>
-                  <input type="password" name="password_confirmation" value={passwordData.password_confirmation} onChange={handlePasswordChange} className="form-input" required />
+                  <input 
+                    type="password" 
+                    name="password_confirmation" 
+                    value={passwordData.password_confirmation} 
+                    onChange={handlePasswordChange} 
+                    className="form-input" 
+                    required 
+                  />
                 </div>
               </div>
-              <button type="submit" disabled={passwordLoading} className="w-full bg-white border-2 border-green-600 text-green-700 py-4 rounded-xl font-bold hover:bg-green-50 transition-colors disabled:opacity-50">
-                {passwordLoading ? "Cambiando..." : t("profile.changePasswordButton") || "Cambiar Contraseña"}
-              </button>
+
+              <div className="pt-4">
+                <button 
+                  type="submit" 
+                  disabled={passwordLoading} 
+                  className="btn-secondary w-full md:w-auto min-w-[240px]"
+                >
+                  {passwordLoading ? t("profile.processing") : t("profile.changePasswordButton")}
+                </button>
+              </div>
             </form>
           </div>
 
-          {/* Danger Zone */}
-          <div className="bg-red-50 border-2 border-red-100 rounded-3xl p-8 mb-12">
-            <h2 className="text-2xl font-bold text-red-700 mb-4">{t("profile.dangerZone") || "Zona Crítica"}</h2>
-            <p className="text-red-600 mb-6 font-medium">
-              {t("profile.deleteAccountWarning") || "La eliminación de la cuenta es irreversible. Se borrarán todos tus datos."}
-            </p>
-            <button
-              onClick={() => setShowDeleteModal(true)}
-              className="bg-white border-2 border-red-200 text-red-600 px-8 py-3 rounded-xl font-bold hover:bg-red-100 hover:border-red-300 transition-all"
-            >
-              {t("profile.deleteAccountButton") || "Eliminar mi cuenta"}
-            </button>
+          {/* Sección: Zona de Peligro */}
+          <div className="bg-red-50 border-2 border-red-100 rounded-[3rem] p-10 md:p-16 overflow-hidden relative shadow-sm">
+             {/* Decoración */}
+            <div className="absolute top-0 right-0 w-32 h-32 bg-red-100/50 rounded-full -mr-16 -mt-16 blur-3xl"></div>
+            
+            <div className="relative z-10 flex flex-col md:flex-row items-center justify-between gap-10">
+              <div className="text-center md:text-left">
+                <h2 className="text-3xl font-black text-red-700 mb-4">{t("profile.dangerZone") || "Zona de Riesgo"}</h2>
+                <p className="text-red-600/80 text-lg max-w-xl font-medium leading-relaxed">
+                  {t("profile.deleteAccountWarning") || "Si eliminas tu cuenta, perderás todos tus datos de forma permanente. Esta acción es irreversible."}
+                </p>
+              </div>
+              <button
+                onClick={() => setShowDeleteModal(true)}
+                className="bg-white border-2 border-red-200 text-red-600 px-10 py-5 rounded-2xl font-black hover:bg-red-600 hover:text-white hover:border-red-600 transition-all shadow-md active:scale-95 whitespace-nowrap"
+              >
+                {t("profile.deleteAccountButton") || "Eliminar Cuenta"}
+              </button>
+            </div>
           </div>
         </div>
-      </div>
+      </section>
 
-      {/* Delete Modal */}
+      {/* Delete Account Modal */}
       {showDeleteModal && (
-        <div className="fixed inset-0 z-[200] flex items-center justify-center p-4 bg-green-900/40 backdrop-blur-sm">
-          <div className="bg-white rounded-[2.5rem] p-8 md:p-12 w-full max-w-lg shadow-2xl text-center border-2 border-red-100">
-            <div className="w-20 h-20 bg-red-50 rounded-full flex items-center justify-center mx-auto mb-6 border-2 border-red-100">
-              <svg className="w-10 h-10 text-red-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z" />
+        <div className="fixed inset-0 z-[200] flex items-center justify-center p-4 bg-green-900/60 backdrop-blur-md">
+          <div className="bg-white rounded-[3rem] p-10 md:p-16 w-full max-w-xl shadow-2xl text-center border-2 border-red-50 relative overflow-hidden">
+            <div className="absolute top-0 left-0 w-full h-2 bg-red-600"></div>
+            
+            <div className="w-24 h-24 bg-red-50 rounded-full flex items-center justify-center mx-auto mb-8 border-2 border-red-100">
+              <svg className="w-12 h-12 text-red-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16" />
               </svg>
             </div>
-            <h3 className="text-3xl font-bold text-red-700 mb-4">{t("profile.deleteAccountModalTitle") || "¿Seguro?"}</h3>
-            <p className="text-gray-600 mb-10 text-lg leading-relaxed">
-              {t("profile.deleteAccountModalMessage") || "Esta acción no se puede deshacer. Se borrarán tus viajes, mensajes y perfil."}
+            <h3 className="text-4xl font-bold text-red-700 mb-6">{t("profile.deleteAccountModalTitle") || "¿Confirmar Eliminación?"}</h3>
+            <p className="text-gray-500 mb-12 text-xl leading-relaxed">
+              {t("profile.deleteAccountModalMessage") || "Esta acción es definitiva. Se borrarán tus viajes, mensajes y toda tu actividad en Jombo."}
             </p>
             <div className="flex flex-col sm:flex-row gap-4">
               <button
                 onClick={() => setShowDeleteModal(false)}
-                className="flex-1 px-8 py-4 rounded-xl bg-gray-100 text-gray-700 font-bold hover:bg-gray-200 transition-all"
+                className="flex-1 px-8 py-5 rounded-2xl bg-gray-100 text-gray-700 font-bold hover:bg-gray-200 transition-all text-lg"
               >
-                {t("profile.deleteAccountCancel") || "No, cancelar"}
+                {t("profile.deleteAccountCancel") || "Cancelar"}
               </button>
               <button
                 onClick={handleDeleteAccount}
                 disabled={deleting}
-                className="flex-1 px-8 py-4 rounded-xl bg-red-600 text-white font-bold hover:bg-red-700 transition-all shadow-lg"
+                className="flex-1 px-8 py-5 rounded-2xl bg-red-600 text-white font-bold hover:bg-red-700 transition-all shadow-lg text-lg active:scale-95"
               >
-                {deleting ? "Eliminando..." : t("profile.deleteAccountConfirm") || "Sí, eliminar"}
+                {deleting ? t("profile.deletingAccount") || "Procesando..." : t("profile.deleteAccountConfirm") || "Eliminar"}
               </button>
             </div>
           </div>

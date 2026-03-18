@@ -1,73 +1,74 @@
 @import "tailwindcss";
 
-:root {
-  /* Colores Principales - Contraste alto para accesibilidad */
-  --background: #ffffff;
-  --foreground: #0a2e0a; /* Verde muy oscuro casi negro */
+@layer base {
+  :root {
+    --background: #ffffff;
+    --foreground: #064e3b; /* green-900 */
+    --primary: #15803d;    /* green-700 (darker primary as requested) */
+    --primary-hover: #166534; /* green-800 */
+    --secondary: #f0fdf4;  /* green-50 */
+    --accent: #22c55e;     /* green-500 */
+    --border: #dcfce7;     /* green-100 */
+  }
 
-  /* Paleta de Verdes Retro/Limpios */
-  --brand-green: #228b22; /* ForestGreen */
-  --brand-green-light: #4cbb17; /* Kelly Green */
-  --brand-green-dark: #004d00;
-  --brand-green-pale: #f0fff0; /* Honeydew */
-  --brand-border: #000000; /* Bordes negros para estilo retro/claro */
-  
-  --font-sans: var(--font-geist-sans), system-ui, -apple-system, sans-serif;
+  body {
+    @apply bg-white text-green-900 antialiased font-sans;
+    font-feature-settings: "cv02", "cv03", "cv04", "cv11";
+  }
+
+  h1, h2, h3, h4, h5, h6 {
+    @apply font-bold tracking-tight text-green-900;
+  }
 }
 
-@theme inline {
-  --color-background: var(--background);
-  --color-foreground: var(--foreground);
-  --color-brand-green: var(--brand-green);
-  --color-brand-green-light: var(--brand-green-light);
-  --color-brand-green-dark: var(--brand-green-dark);
-  --color-brand-green-pale: var(--brand-green-pale);
-  --color-brand-border: var(--brand-border);
-  
-  /* Tamaños de fuente aumentados para legibilidad */
-  --text-base: 1.125rem; /* 18px */
-  --text-lg: 1.25rem;    /* 20px */
-  --text-xl: 1.5rem;     /* 24px */
-  --text-2xl: 1.875rem;  /* 30px */
+@utility btn-primary {
+  @apply bg-green-700 hover:bg-green-800 text-white px-8 py-4 rounded-2xl font-bold text-lg transition-all shadow-md inline-flex items-center justify-center gap-2 active:scale-95 disabled:opacity-50 disabled:pointer-events-none;
 }
 
-/* Estilos Globales Retro-Limpios */
-body {
-  font-family: var(--font-sans);
-  background-color: var(--background);
-  color: var(--foreground);
-  line-height: 1.6;
+@utility btn-secondary {
+  @apply bg-white border-2 border-green-200 text-green-700 hover:bg-green-50 px-8 py-4 rounded-2xl font-bold text-lg transition-all shadow-sm inline-flex items-center justify-center gap-2 active:scale-95 disabled:opacity-50;
 }
 
-/* Botones Grandes y Claros */
-.btn-retro {
-  @apply px-8 py-4 bg-brand-green text-white font-bold rounded-none border-2 border-black shadow-[4px_4px_0px_0px_rgba(0,0,0,1)] hover:shadow-none hover:translate-x-[2px] hover:translate-y-[2px] transition-all text-lg uppercase tracking-tight;
+@utility form-card {
+  @apply bg-white border-2 border-green-100 rounded-[2.5rem] p-8 md:p-12 shadow-sm focus-within:border-green-300 transition-colors;
 }
 
-.btn-retro-secondary {
-  @apply px-8 py-4 bg-white text-brand-green-dark font-bold rounded-none border-2 border-black shadow-[4px_4px_0px_0px_rgba(0,0,0,1)] hover:shadow-none hover:translate-x-[2px] hover:translate-y-[2px] transition-all text-lg uppercase tracking-tight;
+@utility form-label {
+  @apply block text-sm font-bold text-green-700 uppercase tracking-widest mb-3 ml-1;
 }
 
-/* Contenedores con bordes marcados */
-.card-retro {
-  @apply bg-white border-2 border-black p-6 shadow-[6px_6px_0px_0px_rgba(0,0,0,1)] rounded-none;
+@utility form-input {
+  @apply w-full bg-green-50/50 border-2 border-green-100 rounded-2xl px-6 py-4 text-green-900 placeholder:text-green-300 focus:outline-none focus:border-green-500 focus:bg-white transition-all text-lg font-medium shadow-sm;
 }
 
-/* Inputs claros */
-input, select, textarea {
-  @apply border-2 border-black p-4 text-lg bg-white focus:outline-none focus:ring-2 focus:ring-brand-green rounded-none;
+@utility form-select {
+  @apply w-full bg-green-50/50 border-2 border-green-100 rounded-2xl px-6 py-4 text-green-900 focus:outline-none focus:border-green-500 focus:bg-white transition-all text-lg font-medium appearance-none cursor-pointer shadow-sm;
 }
 
-/* Títulos marcados */
-h1, h2, h3, h4 {
-  @apply font-black tracking-tight text-brand-green-dark;
+@utility animate-shake {
+  animation: shake 0.2s ease-in-out 0s 2;
 }
 
-/* Utilidades de espaciado */
-.section-padding {
-  @apply py-16 px-4 md:px-8;
+@utility form-error {
+  @apply bg-red-50 border-2 border-red-200 text-red-700 p-4 rounded-2xl text-sm font-bold animate-shake;
 }
 
-.max-container {
-  @apply max-w-5xl mx-auto;
+@utility result-card {
+  @apply bg-white border-2 border-green-100 rounded-[2.5rem] p-8 hover:border-green-300 hover:shadow-xl transition-all relative overflow-hidden;
 }
+
+@utility spinner {
+  @apply w-12 h-12 border-4 border-green-200 border-t-green-700 rounded-full animate-spin;
+}
+
+/* Retro compatibility mappings */
+@utility btn-retro { @apply btn-primary; }
+@utility btn-retro-secondary { @apply btn-secondary; }
+@utility card-retro { @apply form-card; }
+
+@keyframes shake {
+  0%, 100% { transform: translateX(0); }
+  25% { transform: translateX(-4px); }
+  75% { transform: translateX(4px); }
+}
+

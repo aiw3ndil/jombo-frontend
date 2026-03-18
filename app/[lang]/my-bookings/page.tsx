@@ -144,139 +144,190 @@ export default function MyBookings() {
   };
 
   return (
-    <div className="min-h-screen bg-white py-12 px-4">
-      <div className="max-w-5xl mx-auto">
-        {/* Cabecera */}
-        <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-6 mb-12">
-          <div>
-            <h1 className="text-4xl md:text-5xl font-bold text-green-900 mb-2">
+    <div className="min-h-screen bg-white">
+      {/* ── HERO ── */}
+      <section className="bg-green-50 border-b-2 border-green-100 py-20 px-4">
+        <div className="max-w-5xl mx-auto flex flex-col md:flex-row justify-between items-center gap-8 text-center md:text-left">
+          <div className="flex-1">
+            <div className="inline-flex items-center gap-2 bg-green-100 border border-green-300 text-green-800 px-5 py-2 rounded-full text-sm font-bold mb-6 uppercase tracking-wide">
+              <span className="w-2 h-2 rounded-full bg-green-600"></span>
+              {t("page.myBookings.badge") || "Mis Viajes"}
+            </div>
+            <h1 className="text-5xl md:text-6xl font-bold text-green-900 leading-tight mb-6">
               {t("page.myBookings.title") || "Mis Reservas"}
             </h1>
-            <p className="text-green-700 text-lg">
-              {t("page.myBookings.subtitle") || "Gestiona tus solicitudes de viaje"}
+            <p className="text-xl md:text-2xl text-green-700 max-w-2xl leading-relaxed font-normal">
+              {t("page.myBookings.subtitle") || "Gestiona tus solicitudes de viaje y consulta tus trayectos confirmados."}
             </p>
           </div>
           <button
             onClick={() => router.push(`/${lang}`)}
-            className="bg-green-50 text-green-700 border-2 border-green-200 px-8 py-3 rounded-xl font-bold hover:bg-green-100 transition-all shadow-sm"
+            className="btn-secondary px-10 py-4 shadow-md bg-white hover:bg-green-50"
           >
-            {t("page.myBookings.back") || "Volver"}
+            <svg className="w-5 h-5 mr-3" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M10 19l-7-7m0 0l7-7m-7 7h18" />
+            </svg>
+            {t("page.myBookings.back") || "Volver al inicio"}
           </button>
         </div>
+      </section>
 
-        {bookings.length === 0 ? (
-          <div className="text-center py-24 bg-green-50 rounded-[3rem] border-2 border-green-100">
-            <div className="w-20 h-20 bg-green-100 rounded-full flex items-center justify-center mx-auto mb-8 border-2 border-green-200 text-green-600">
-              <svg className="w-10 h-10" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z" />
-              </svg>
+      {/* ── CONTENIDO ── */}
+      <section className="py-20 px-4 min-h-[50vh]">
+        <div className="max-w-5xl mx-auto">
+          {bookings.length === 0 ? (
+            <div className="text-center py-24 bg-green-50/50 rounded-[3rem] border-2 border-dashed border-green-200">
+              <div className="w-24 h-24 bg-white rounded-full flex items-center justify-center mx-auto mb-8 shadow-sm border-2 border-green-100 text-green-600">
+                <svg className="w-12 h-12" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2-2v12a2 2 0 002 2z" />
+                </svg>
+              </div>
+              <h2 className="text-3xl font-bold text-green-900 mb-4">
+                {t("page.myBookings.noBookings") || "Aún no tienes reservas"}
+              </h2>
+              <p className="text-green-700 text-lg mb-12 max-w-md mx-auto">
+                {t("page.myBookings.noBookingsInfo") || "Busca un viaje que te interese y reserva tu plaza de forma gratuita."}
+              </p>
+              <button
+                onClick={() => router.push(`/${lang}`)}
+                className="btn-primary px-12 py-5 shadow-lg"
+              >
+                {t("page.myBookings.searchTrips") || "Buscar viajes ahora"}
+              </button>
             </div>
-            <p className="text-2xl text-green-900 font-bold mb-10">
-              {t("page.myBookings.noBookings") || "No tienes reservas registradas"}
-            </p>
-            <button
-              onClick={() => router.push(`/${lang}`)}
-              className="btn-primary px-10 py-5 text-base"
-            >
-              {t("page.myBookings.searchTrips") || "Buscar viajes"}
-            </button>
-          </div>
-        ) : (
-          <div className="space-y-6">
-            {bookings.map((booking) => (
-              <div key={booking.id} className="result-card">
-                <div className="flex flex-col xl:flex-row justify-between gap-8">
-                  <div className="flex-1 space-y-6">
-                    <div className="flex flex-wrap items-center gap-4">
-                      <span className={`px-4 py-1.5 rounded-full text-xs font-bold uppercase tracking-widest border-2 ${getStatusClasses(booking.status)}`}>
-                        {getStatusText(booking.status)}
-                      </span>
-                      <span className="text-green-600 font-bold text-sm uppercase tracking-wider">{new Date(booking.created_at).toLocaleDateString(lang, { day: 'numeric', month: 'short', year: 'numeric' })}</span>
-                    </div>
+          ) : (
+            <div className="space-y-10">
+              {bookings.map((booking) => (
+                <div key={booking.id} className="result-card group">
+                  {/* Decoración superior */}
+                  <div className={`absolute top-0 left-0 w-full h-1.5 ${
+                    booking.status === 'confirmed' ? 'bg-green-500' : 
+                    booking.status === 'pending' ? 'bg-yellow-400' : 'bg-red-400'
+                  }`}></div>
 
-                    <div className="space-y-4">
-                      <h2 className="text-3xl font-bold text-green-900 leading-tight">
-                        {booking.trip?.departure_location} → {booking.trip?.arrival_location}
-                      </h2>
-                      <div className="flex items-center gap-3 bg-green-50 p-3 rounded-xl border border-green-100 w-fit">
-                        <div className="w-10 h-10 rounded-full bg-green-600 flex items-center justify-center text-white font-bold overflow-hidden shadow-sm">
-                          {booking.trip?.driver?.picture_url ? (
-                            <img src={booking.trip.driver.picture_url} className="w-full h-full object-cover" alt="" />
-                          ) : (
-                            booking.trip?.driver?.name?.charAt(0)
-                          )}
+                  <div className="flex flex-col xl:flex-row justify-between gap-10">
+                    <div className="flex-1 space-y-8">
+                      <div className="flex flex-wrap items-center gap-4">
+                        <span className={`px-5 py-2 rounded-full text-xs font-bold uppercase tracking-widest border-2 shadow-sm ${getStatusClasses(booking.status)}`}>
+                          {getStatusText(booking.status)}
+                        </span>
+                        <div className="flex items-center gap-2 text-green-600 font-bold text-sm bg-green-50 px-4 py-1.5 rounded-lg border border-green-100">
+                          <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2-2v12a2 2 0 002 2z" />
+                          </svg>
+                          {new Date(booking.created_at).toLocaleDateString(lang, { day: 'numeric', month: 'long', year: 'numeric' })}
                         </div>
-                        <p className="font-bold text-green-800">
-                          {t("page.myBookings.driver") || "Conductor"}: <span className="text-green-600">{booking.trip?.driver?.name}</span>
-                        </p>
                       </div>
-                    </div>
 
-                    <div className="grid grid-cols-1 sm:grid-cols-3 gap-4">
-                      <div className="bg-white border-2 border-green-100 rounded-2xl p-4">
-                        <p className="text-xs font-bold text-green-400 uppercase tracking-widest mb-1">{t("page.myBookings.departure") || "HORARIO"}</p>
-                        <p className="font-bold text-green-900">
-                          {booking.trip?.departure_time ? (
-                            <>
-                              {new Date(booking.trip.departure_time).toLocaleDateString(lang)} · {new Date(booking.trip.departure_time).toLocaleTimeString(lang, { hour: '2-digit', minute: '2-digit' })}h
-                            </>
-                          ) : "-"}
-                        </p>
-                      </div>
-                      <div className="bg-white border-2 border-green-100 rounded-2xl p-4">
-                        <p className="text-xs font-bold text-green-400 uppercase tracking-widest mb-1">{t("page.myBookings.seats") || "ASIENTOS"}</p>
-                        <p className="font-bold text-green-900">{booking.seats} {t("common.seats") || "plazas"}</p>
-                      </div>
-                      <div className="bg-white border-2 border-green-100 rounded-2xl p-4">
-                        <p className="text-xs font-bold text-green-400 uppercase tracking-widest mb-1">{t("page.myBookings.totalPrice") || "TOTAL"}</p>
-                        <p className="font-bold text-green-700 text-lg">
-                          €{booking.trip?.price ? (Number(booking.trip.price) * booking.seats).toFixed(2) : "0.00"}
-                        </p>
-                      </div>
-                    </div>
-                  </div>
-
-                  <div className="flex flex-col sm:flex-row xl:flex-col gap-3 min-w-[200px] justify-center">
-                    {booking.status !== "cancelled" && booking.status !== "rejected" && (
-                      <>
-                        {canReview(booking) && (
-                          <button
-                            onClick={() => handleOpenReview(booking)}
-                            className="bg-yellow-400 hover:bg-yellow-500 text-yellow-900 px-8 py-4 rounded-xl font-bold transition-all shadow-md"
-                          >
-                            ⭐ {t("page.myBookings.review") || "Calificar viaje"}
-                          </button>
-                        )}
-                        {bookingReviews[booking.id] && (
-                          <div className="flex items-center justify-center gap-2 text-green-700 bg-green-50 border-2 border-green-200 px-8 py-4 rounded-xl text-sm font-bold">
-                            <svg className="w-5 h-5" fill="currentColor" viewBox="0 0 20 20">
-                              <path fillRule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clipRule="evenodd" />
-                            </svg>
-                            {t("page.myBookings.reviewed") || "CALIFICADO"}
+                      <div className="space-y-6">
+                        <div className="flex items-start gap-4">
+                           <div className="w-12 h-12 bg-green-100 rounded-2xl flex items-center justify-center text-green-700 flex-shrink-0">
+                              <svg className="w-7 h-7" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z" />
+                              </svg>
+                           </div>
+                           <h2 className="text-4xl font-bold text-green-900 leading-tight tracking-tight">
+                            {booking.trip?.departure_location} <span className="text-green-300 mx-2">→</span> {booking.trip?.arrival_location}
+                          </h2>
+                        </div>
+                        
+                        <div className="flex items-center gap-4 bg-green-50/50 p-4 rounded-2xl border border-green-100 w-fit group-hover:bg-green-50 transition-colors">
+                          <div className="w-12 h-12 rounded-full bg-green-600 flex items-center justify-center text-white font-bold overflow-hidden shadow-md border-2 border-white">
+                            {booking.trip?.driver?.picture_url ? (
+                              <img src={booking.trip.driver.picture_url} className="w-full h-full object-cover" alt="" />
+                            ) : (
+                              booking.trip?.driver?.name?.charAt(0)
+                            )}
                           </div>
-                        )}
-
-                        <button
-                          onClick={() => handleCancelBooking(booking.id)}
-                          disabled={cancellingId === booking.id}
-                          className="bg-white border-2 border-red-100 text-red-600 px-8 py-4 rounded-xl font-bold hover:bg-red-50 transition-all"
-                        >
-                          {cancellingId === booking.id ? "Cancelando..." : (t("page.myBookings.cancel") || "Cancelar reserva")}
-                        </button>
-                      </>
-                    )}
-                    {(booking.status === "cancelled" || booking.status === "rejected") && (
-                      <div className="px-8 py-4 text-center grayscale opacity-50 bg-gray-50 rounded-xl border-2 border-gray-100">
-                        <span className="text-sm font-bold text-gray-400 uppercase tracking-widest italic">{t("page.myBookings.inactive") || "Finalizada"}</span>
+                          <div>
+                            <p className="text-xs font-bold text-green-400 uppercase tracking-widest">{t("page.myBookings.driver") || "Conductor"}</p>
+                            <p className="font-bold text-green-900 text-lg">
+                              {booking.trip?.driver?.name}
+                            </p>
+                          </div>
+                        </div>
                       </div>
-                    )}
+
+                      <div className="grid grid-cols-1 sm:grid-cols-3 gap-6">
+                        <div className="bg-green-50/30 border-2 border-green-100 rounded-[1.5rem] p-5 hover:bg-white hover:border-green-300 transition-all shadow-sm">
+                          <p className="text-xs font-bold text-green-400 uppercase tracking-widest mb-2 flex items-center gap-2">
+                             <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z" /></svg>
+                             {t("page.myBookings.departure") || "HORARIO"}
+                          </p>
+                          <p className="font-bold text-green-900 text-base">
+                            {booking.trip?.departure_time ? (
+                              <>
+                                {new Date(booking.trip.departure_time).toLocaleDateString(lang)} · {new Date(booking.trip.departure_time).toLocaleTimeString(lang, { hour: '2-digit', minute: '2-digit' })}h
+                              </>
+                            ) : "-"}
+                          </p>
+                        </div>
+                        <div className="bg-green-50/30 border-2 border-green-100 rounded-[1.5rem] p-5 hover:bg-white hover:border-green-300 transition-all shadow-sm">
+                          <p className="text-xs font-bold text-green-400 uppercase tracking-widest mb-2 flex items-center gap-2">
+                             <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z" /></svg>
+                             {t("page.myBookings.seats") || "ASIENTOS"}
+                          </p>
+                          <p className="font-bold text-green-900 text-base underline decoration-green-300 underline-offset-4 decoration-2">{booking.seats} {t("common.seats") || "plazas"}</p>
+                        </div>
+                        <div className="bg-green-50 border-2 border-green-200 rounded-[1.5rem] p-5 shadow-inner">
+                          <p className="text-xs font-bold text-green-400 uppercase tracking-widest mb-2">{t("page.myBookings.totalPrice") || "PAGO TOTAL"}</p>
+                          <p className="font-black text-green-700 text-2xl">
+                            €{booking.trip?.price ? (Number(booking.trip.price) * booking.seats).toFixed(2) : "0.00"}
+                          </p>
+                        </div>
+                      </div>
+                    </div>
+
+                    <div className="flex flex-col sm:flex-row xl:flex-col gap-4 min-w-[240px] justify-center items-stretch">
+                      {booking.status !== "cancelled" && booking.status !== "rejected" && (
+                        <>
+                          {canReview(booking) && (
+                            <button
+                              onClick={() => handleOpenReview(booking)}
+                              className="btn-primary w-full shadow-lg"
+                            >
+                              <span className="text-xl mr-2">⭐</span> {t("page.myBookings.review") || "Calificar viaje"}
+                            </button>
+                          )}
+                          {bookingReviews[booking.id] && (
+                            <div className="flex items-center justify-center gap-3 text-green-700 bg-green-50 border-2 border-green-200 px-8 py-5 rounded-2xl text-base font-bold shadow-sm">
+                              <svg className="w-6 h-6 text-green-500" fill="currentColor" viewBox="0 0 20 20">
+                                <path fillRule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clipRule="evenodd" />
+                              </svg>
+                              {t("page.myBookings.reviewed") || "CALIFICADO"}
+                            </div>
+                          )}
+
+                          <button
+                            onClick={() => handleCancelBooking(booking.id)}
+                            disabled={cancellingId === booking.id}
+                            className="bg-white border-2 border-red-100 text-red-600 px-8 py-5 rounded-2xl font-bold hover:bg-red-50 hover:border-red-200 transition-all disabled:opacity-50 shadow-sm text-lg"
+                          >
+                            {cancellingId === booking.id ? (
+                              <span className="flex items-center justify-center gap-3">
+                                <div className="w-5 h-5 border-3 border-red-200 border-t-red-600 rounded-full animate-spin"></div>
+                                Procesando...
+                              </span>
+                            ) : (t("page.myBookings.cancel") || "Cancelar reserva")}
+                          </button>
+                        </>
+                      )}
+                      {(booking.status === "cancelled" || booking.status === "rejected") && (
+                        <div className="px-10 py-6 text-center grayscale opacity-40 bg-gray-50 rounded-[2rem] border-2 border-dashed border-gray-200 flex flex-col items-center justify-center gap-2">
+                           <svg className="w-8 h-8 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 8v4m0 4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
+                           </svg>
+                          <span className="text-sm font-bold text-gray-400 uppercase tracking-widest italic">{t("page.myBookings.inactive") || "Reserva Finalizada"}</span>
+                        </div>
+                      )}
+                    </div>
                   </div>
                 </div>
-              </div>
-            ))}
-          </div>
-        )}
-      </div>
+              ))}
+            </div>
+          )}
+        </div>
+      </section>
 
       {reviewModalOpen && selectedBooking && (
         <ReviewModal

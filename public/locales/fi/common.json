@@ -81,11 +81,7 @@
         "anonymous": "Anonyymi",
         "close": "Sulje"
       }
-    },
-    "trips": {
-      "title": "Saatavilla olevat matkat",
-      "seat": "Paikka"
-    },
+  },
     "createTrip": {
       "title": "Julkaise matka",
       "from": "Lähtöpaikka",
@@ -280,20 +276,62 @@
     "changingPassword": "Päivitetään...",
     "passwordUpdateSuccess": "Salasana päivitetty onnistuneesti",
     "passwordUpdateError": "Virhe salasanan päivityksessä",
-    "passwordsDoNotMatch": "Salasanat eivät täsmää"
+    "passwordsDoNotMatch": "Salasanat eivät täsmää",
+    "badge": "Asetukseni",
+    "subtitle": "Hallinnoi identiteettiäsi, mieltymyksiäsi ja tilisi turvallisuutta Jombossa.",
+    "personalInfoTitle": "Henkilötiedot",
+    "personalInfoDescription": "Nämä tiedot näkyvät muille käyttäjille, kun matkustat heidän kanssaan.",
+    "namePlaceholder": "Kirjoita nimesi...",
+    "avatarInfo": "Lataa selkeä kuva luottamuksen lisäämiseksi",
+    "securityTitle": "Tilun Turvallisuus",
+    "securityDescription": "Pidä tilisi suojatuna vahvalla salasanalla.",
+    "processing": "Käsitellään..."
+  },
+  "trips": {
+    "title": "Saatavilla olevat matkat",
+    "seat": "Paikka",
+    "routeSnapshot": "Reitin yhteenveto",
+    "distance": "Keskimääräinen etäisyys",
+    "duration": "Arvioitu kesto",
+    "co2Saved": "Säästetty CO2",
+    "trustTitle": "Matkusta täysin huoletta",
+    "popularRoute": "SUOSITTU REITTI",
+    "optionsFound": "Löydettyä vaihtoehtoa",
+    "communityTitle": "Jombo Yhteisö",
+    "communitySubtitle": "Tälle reitille on ilmoitettu suoria kyytejä Jombo-käyttäjien toimesta.",
+    "everythingAbout": "Kaikki matkasta",
+    "smartSavingTitle": "Fiksua säästämistä",
+    "smartSavingDesc": "Kimppakyyti on usein edullisin tapa matkustaa. Jakamalla polttoainekulut voit säästää jopa 75% matkakuluissasi verrattuna yksin ajamiseen tai junaan.",
+    "ecoCommitmentTitle": "Aito ympäristöteko",
+    "ecoCommitmentDesc": "Jombo on luotu vähentämään hiilijalanjälkeämme. Täyttämällä tyhjät paikat vähennämme päästöjä ja ruuhkia, tehden matkasta paremman kaikille.",
+    "description": "Löydä tai tarjoa kimppakyyti välille {from} ja {to}. Jombo on Suomen ensimmäinen 100% ilmainen alusta, jossa jaat vain matkakulut ilman piilokuluja.",
+    "noTripsFound": "Ei kimppakyytejä tänään. Näytetään julkinen liikenne välille {from} ja {to}",
+    "joinThousands": "Liity tuhansiin jotka jo säästävät kyydeistä.",
+    "registerFree": "Rekisteröidy ilmaiseksi",
+    "routeReadyTitle": "Reitti valmiina ensimmäiselle matkalle",
+    "routeReadyDesc": "Ole ensimmäinen, joka ilmoittaa matkan välille {from} ja {to} ja aloita kulujen jakaminen muiden kanssa.",
+    "publishFirst": "Ilmoita ensimmäinen matka"
   },
   "footer": {
     "about": "Tietoa Jombosta",
+    "aboutDescription": "Jombo on aloite ihmisten yhdistämiseksi ja hiilijalanjäljen pienentämiseksi kyydinjaon avulla.",
     "description": "Ilmainen alusta kyydinjakoon. Yhdistä ihmisiin, jotka matkustavat samaan paikkaan ja säästä rahaa.",
     "links": "Linkit",
     "terms": "Käyttöehdot",
     "home": "Koti",
     "contact": "Yhteystiedot",
+    "supportEmail": "Tukisähköposti",
+    "status": "Tila",
+    "supportStatus": "Aktiivinen tuki 24/7",
+    "madeWith": "Tehty ❤️ planeetalle",
+    "trustedBy": "Yli 10 000 käyttäjän luottama",
     "dataDeletion": "Tietojen Poistaminen",
     "rights": "Kaikki oikeudet pidätetään."
   },
   "terms": {
     "title": "Käyttöehdot",
+    "badge": "Lakitiedot",
+    "subtitle": "Opas turvalliseen ja reiluun yhteiseloon Jombo-yhteisössä.",
     "section1": {
       "title": "1. Ehtojen Hyväksyminen",
       "content": "Käyttämällä Jomboa hyväksyt nämä käyttöehdot kokonaisuudessaan. Jos et hyväksy näitä ehtoja, et saa käyttää palveluamme."
@@ -324,11 +362,13 @@
       "content": "Jombo pidättää oikeuden muuttaa näitä ehtoja milloin tahansa. Muutokset tulevat voimaan välittömästi julkaisun jälkeen alustalla."
     },
     "lastUpdate": "Viimeksi päivitetty",
-    "updateDate": "3. joulukuuta 2025"
+    "updateDate": "3. joulukuuta 2025",
+    "documentVigente": "Voimassa oleva asiakirja"
   },
   "dataDeletion": {
     "title": "Tietojen Poistamisohjeet",
-    "description": "Me Jombossa arvostamme yksityisyyttäsi. Voit pyytää tietojesi poistamista milloin tahansa.",
+    "badge": "Yksityisyys",
+    "description": "Jombossa uskomme läpinäkyvyyteen. Täältä löydät kaiken tarvittavan tietojesi hallintaan tai poistamiseen lopullisesti.",
     "section1": {
       "title": "Käyttäjätietojen Poistaminen",
       "content": "Facebookin alustaehtojen ja GDPR:n mukaisesti tarjoamme käyttäjille mekanismin tietojen poistamisen pyytämiseen."
@@ -348,17 +388,18 @@
     },
     "section4": {
       "title": "Kuinka Poistaa Tiedot",
-      "subtitle": "Tapa 1: Automaattinen Poisto Sovelluksessa (Suositeltu)",
+      "subtitle": "Vaiheet",
+      "method1": "Tapa 1: Automaattinen Poisto Sovelluksessa (Suositeltu)",
       "step1": "Kirjaudu sisään Jombo-tilillesi",
       "step2": "Mene 'Profiilini'-osioon",
       "step3": "Vieritä alas 'Vaaravyöhyke'-kohtaan",
       "step4": "Klikkaa 'Poista Tili' ja vahvista toiminto"
     },
     "section5": {
-      "subtitle": "Tapa 2: Manuaalinen Pyyntö",
-      "content": "Jos et pääse tilillesi, voit pyytää tietojen poistoa lähettämällä sähköpostia osoitteeseen:",
+      "subtitle": "Suora Tuki",
+      "content": "Jos haluat meidän tekevän sen puolestasi, ota yhteyttä:",
       "email": "tuki@jombo.fi",
-      "note": "Liitä mukaan rekisteröity sähköpostiosoitteesi."
+      "note": "Huom: Käsittelemme pyyntösi viimeistään 48 arkityötunnin kuluessa."
     }
   },
   "cookies": {
