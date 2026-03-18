@@ -1,47 +1,74 @@
 @import "tailwindcss";
 
-:root {
-  --background: #120d2b;
-  --foreground: #ffffff;
-  --brand-dark: #120d2b;
-  --brand-gray: #717285;
-  --brand-blue: #5471E9;
-  --brand-deep: #0051B3;
-  --brand-pink: #FF419C;
-  --brand-cyan: #0BB1D3;
-  --brand-purple: #9F2FFF;
-  --brand-gradient: linear-gradient(89.8deg, #0BB1D3 0%, #9F2FFF 100%);
+@layer base {
+  :root {
+    --background: #ffffff;
+    --foreground: #064e3b; /* green-900 */
+    --primary: #15803d;    /* green-700 (darker primary as requested) */
+    --primary-hover: #166534; /* green-800 */
+    --secondary: #f0fdf4;  /* green-50 */
+    --accent: #22c55e;     /* green-500 */
+    --border: #dcfce7;     /* green-100 */
+  }
+
+  body {
+    @apply bg-white text-green-900 antialiased font-sans;
+    font-feature-settings: "cv02", "cv03", "cv04", "cv11";
+  }
+
+  h1, h2, h3, h4, h5, h6 {
+    @apply font-bold tracking-tight text-green-900;
+  }
 }
 
-@theme inline {
-  --color-background: var(--background);
-  --color-foreground: var(--foreground);
-  --color-brand-dark: var(--brand-dark);
-  --color-brand-gray: var(--brand-gray);
-  --color-brand-blue: var(--brand-blue);
-  --color-brand-deep: var(--brand-deep);
-  --color-brand-pink: var(--brand-pink);
-  --color-brand-cyan: var(--brand-cyan);
-  --color-brand-purple: var(--brand-purple);
-  --font-sans: var(--font-geist-sans);
-  --font-mono: var(--font-geist-mono);
+@utility btn-primary {
+  @apply bg-green-700 hover:bg-green-800 text-white px-8 py-4 rounded-2xl font-bold text-lg transition-all shadow-md inline-flex items-center justify-center gap-2 active:scale-95 disabled:opacity-50 disabled:pointer-events-none;
 }
 
-.bg-hacker-dots {
-  background-image: radial-gradient(rgba(113, 114, 133, 0.1) 1px, transparent 1px);
-  background-size: 20px 20px;
+@utility btn-secondary {
+  @apply bg-white border-2 border-green-200 text-green-700 hover:bg-green-50 px-8 py-4 rounded-2xl font-bold text-lg transition-all shadow-sm inline-flex items-center justify-center gap-2 active:scale-95 disabled:opacity-50;
 }
 
-.bg-brand-gradient {
-  background: var(--brand-gradient);
+@utility form-card {
+  @apply bg-white border-2 border-green-100 rounded-[2.5rem] p-8 md:p-12 shadow-sm focus-within:border-green-300 transition-colors;
 }
 
-body {
-  background: var(--background);
-  color: var(--foreground);
-  font-family: Arial, Helvetica, sans-serif;
-  font-size: 1.1rem;
-  line-height: 1.6;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
+@utility form-label {
+  @apply block text-sm font-bold text-green-700 uppercase tracking-widest mb-3 ml-1;
 }
+
+@utility form-input {
+  @apply w-full bg-green-50/50 border-2 border-green-100 rounded-2xl px-6 py-4 text-green-900 placeholder:text-green-300 focus:outline-none focus:border-green-500 focus:bg-white transition-all text-lg font-medium shadow-sm;
+}
+
+@utility form-select {
+  @apply w-full bg-green-50/50 border-2 border-green-100 rounded-2xl px-6 py-4 text-green-900 focus:outline-none focus:border-green-500 focus:bg-white transition-all text-lg font-medium appearance-none cursor-pointer shadow-sm;
+}
+
+@utility animate-shake {
+  animation: shake 0.2s ease-in-out 0s 2;
+}
+
+@utility form-error {
+  @apply bg-red-50 border-2 border-red-200 text-red-700 p-4 rounded-2xl text-sm font-bold animate-shake;
+}
+
+@utility result-card {
+  @apply bg-white border-2 border-green-100 rounded-[2.5rem] p-8 hover:border-green-300 hover:shadow-xl transition-all relative overflow-hidden;
+}
+
+@utility spinner {
+  @apply w-12 h-12 border-4 border-green-200 border-t-green-700 rounded-full animate-spin;
+}
+
+/* Retro compatibility mappings */
+@utility btn-retro { @apply btn-primary; }
+@utility btn-retro-secondary { @apply btn-secondary; }
+@utility card-retro { @apply form-card; }
+
+@keyframes shake {
+  0%, 100% { transform: translateX(0); }
+  25% { transform: translateX(-4px); }
+  75% { transform: translateX(4px); }
+}
+

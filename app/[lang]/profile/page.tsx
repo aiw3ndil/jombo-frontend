@@ -26,8 +26,8 @@ export default function ProfilePage({ params }: { params: Promise<{ lang: string
   const [picturePreview, setPicturePreview] = useState<string | null>(null);
   const [loading, setLoading] = useState(false);
   const [passwordLoading, setPasswordLoading] = useState(false);
-  const [deleting, setDeleting] = useState(false); // New state for delete loading
-  const [showDeleteModal, setShowDeleteModal] = useState(false); // State for delete confirmation modal
+  const [deleting, setDeleting] = useState(false);
+  const [showDeleteModal, setShowDeleteModal] = useState(false);
   const [message, setMessage] = useState<{ type: "success" | "error"; text: string } | null>(null);
   const [passwordMessage, setPasswordMessage] = useState<{ type: "success" | "error"; text: string } | null>(null);
   const [isReady, setIsReady] = useState(false);
@@ -48,7 +48,6 @@ export default function ProfilePage({ params }: { params: Promise<{ lang: string
         language: user.language || lang,
         region: user.region || (lang === "fi" ? "fi" : "es")
       });
-      // Backend puede retornar 'picture' o 'picture_url'
       const pictureUrl = user.picture_url || user.picture;
       if (pictureUrl) {
         setPicturePreview(pictureUrl);
@@ -60,11 +59,10 @@ export default function ProfilePage({ params }: { params: Promise<{ lang: string
   const handlePictureChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const file = e.target.files?.[0];
     if (file) {
-      // Validate file size (max 5MB)
-      const maxSize = 5 * 1024 * 1024; // 5MB in bytes
+      const maxSize = 5 * 1024 * 1024;
       if (file.size > maxSize) {
         toast.error("La imagen es demasiado grande. El tamaño máximo es 5MB.");
-        e.target.value = ''; // Clear the input
+        e.target.value = '';
         return;
       }
 
@@ -89,60 +87,35 @@ export default function ProfilePage({ params }: { params: Promise<{ lang: string
       formDataToSend.append("region", formData.region);
 
       if (pictureFile) {
-        console.log("📸 Uploading picture:", pictureFile.name, pictureFile.type);
         formDataToSend.append("picture", pictureFile);
       }
 
       const API_BASE_URL = process.env.NEXT_PUBLIC_API_BASE_URL || "http://localhost:3001";
-      console.log("🚀 Sending profile update directly to backend:", `${API_BASE_URL}/api/v1/users/profile`);
-
       const response = await fetch(`${API_BASE_URL}/api/v1/users/profile`, {
         method: "PATCH",
         credentials: "include",
         body: formDataToSend,
       });
 
-      console.log("📥 Response status:", response.status);
-      console.log("📥 Response headers:", Object.fromEntries(response.headers.entries()));
-
-      const contentType = response.headers.get("content-type");
       const responseText = await response.text();
-      console.log("📥 Response text:", responseText.substring(0, 500));
-
       if (!response.ok) {
         let errorData;
         try {
           errorData = responseText ? JSON.parse(responseText) : {};
         } catch (e) {
-          console.error("❌ Response is not JSON:", responseText);
-
-          // Handle specific status codes
-          if (response.status === 500) {
-            throw new Error("Error del servidor al procesar la solicitud. Intenta sin subir imagen o contacta con soporte.");
-          }
-
-          throw new Error(`Server error: ${response.status} - ${responseText.substring(0, 100) || "Sin respuesta del servidor"}`);
+          throw new Error(`Error del servidor: ${response.status}`);
         }
-        console.error("❌ Profile update failed:", errorData);
-        console.error("❌ Full error context:", { status: response.status, responseText, errorData });
-        throw new Error(errorData.error || errorData.message || (Object.keys(errorData).length === 0 ? "Error desconocido al actualizar el perfil." : `Error del servidor (${response.status})`));
+        throw new Error(errorData.error || errorData.message || "Error al actualizar el perfil");
       }
 
-      let data;
-      try {
-        data = responseText ? JSON.parse(responseText) : {};
-      } catch (e) {
-        console.error("❌ Success response is not JSON:", responseText);
-        throw new Error("Invalid server response");
-      }
-
-      console.log("✅ Profile updated successfully:", data);
+      const data = responseText ? JSON.parse(responseText) : {};
       updateUser(data.user || data);
       setPictureFile(null);
       setMessage({ type: "success", text: t("profile.updateSuccess") || "Perfil actualizado exitosamente" });
+      toast.success(t("profile.updateSuccess") || "Perfil actualizado");
     } catch (error: any) {
-      console.error("Error updating profile:", error);
       setMessage({ type: "error", text: error.message || t("profile.updateError") || "Error al actualizar el perfil" });
+      toast.error(error.message);
     } finally {
       setLoading(false);
     }
@@ -191,12 +164,13 @@ export default function ProfilePage({ params }: { params: Promise<{ lang: string
         password: "",
         password_confirmation: ""
       });
+      toast.success(t("profile.passwordUpdateSuccess") || "Contraseña actualizada");
     } catch (error: any) {
-      console.error("Error changing password:", error);
       setPasswordMessage({ 
         type: "error", 
         text: error.message || t("profile.passwordUpdateError") || "Error al actualizar la contraseña" 
       });
+      toast.error(error.message);
     } finally {
       setPasswordLoading(false);
     }
@@ -206,11 +180,10 @@ export default function ProfilePage({ params }: { params: Promise<{ lang: string
     setDeleting(true);
     try {
       await deleteUser();
-      await logout(); // Logout the user after successful deletion
+      await logout();
       toast.success(t("profile.deleteAccountSuccess") || "Cuenta eliminada exitosamente.");
-      router.push(`/${lang}/`); // Redirect to home or login page
+      router.push(`/${lang}/`);
     } catch (error: any) {
-      console.error("Error deleting account:", error);
       toast.error(error.message || t("profile.deleteAccountError") || "Error al eliminar la cuenta.");
     } finally {
       setDeleting(false);
@@ -220,328 +193,265 @@ export default function ProfilePage({ params }: { params: Promise<{ lang: string
 
   if (!isReady || !user) {
     return (
-      <div className="max-w-4xl mx-auto py-12 px-6 flex flex-col items-center justify-center min-h-[60vh]">
-        <div className="relative w-24 h-24 mb-8">
-          <div className="absolute inset-0 rounded-full border-4 border-white/5 border-t-brand-cyan animate-spin"></div>
-          <div className="absolute inset-2 rounded-full border-4 border-white/5 border-t-brand-purple animate-spin" style={{ animationDuration: '1.5s' }}></div>
-        </div>
-        <p className="text-brand-gray uppercase tracking-widest text-xs font-black animate-pulse">Autenticando...</p>
+      <div className="min-h-screen flex items-center justify-center bg-white">
+        <div className="spinner"></div>
       </div>
     );
   }
 
   return (
-    <div className="max-w-4xl mx-auto py-12 px-4 sm:px-6 relative">
-      <div className="absolute top-0 right-0 -translate-y-1/2 translate-x-1/4 w-[400px] h-[400px] bg-brand-cyan/5 rounded-full blur-[100px] pointer-events-none"></div>
-
-      <div className="mb-12">
-        <h1 className="text-4xl md:text-5xl font-black text-white tracking-tightest uppercase italic mb-2">
-          {t("profile.title") || "Mi Perfil"}
-        </h1>
-        <p className="text-brand-gray/80 font-bold uppercase tracking-[0.2em] text-xs">
-          Configura tu identidad en el sistema
-        </p>
-      </div>
-
-      {message && (
-        <div
-          className={`mb-8 p-6 rounded-3xl border backdrop-blur-xl relative overflow-hidden flex items-center gap-4 ${message.type === "success"
-            ? "bg-brand-cyan/10 border-brand-cyan/20 text-brand-cyan"
-            : "bg-brand-pink/10 border-brand-pink/20 text-brand-pink"
-            }`}
-        >
-          <div className={`w-8 h-8 rounded-full flex items-center justify-center flex-shrink-0 ${message.type === "success" ? "bg-brand-cyan/20" : "bg-brand-pink/20"}`}>
-            {message.type === "success" ? (
-              <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={3} d="M5 13l4 4L19 7" /></svg>
-            ) : (
-              <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={3} d="M6 18L18 6M6 6l12 12" /></svg>
-            )}
+    <div className="min-h-screen bg-white">
+      {/* ── HERO ── */}
+      <section className="bg-green-50 border-b-2 border-green-100 py-20 px-4">
+        <div className="max-w-5xl mx-auto text-center md:text-left">
+          <div className="inline-flex items-center gap-2 bg-green-100 border border-green-300 text-green-800 px-5 py-2 rounded-full text-sm font-bold mb-6 uppercase tracking-wide">
+            <span className="w-2 h-2 rounded-full bg-green-600"></span>
+            {t("profile.badge")}
           </div>
-          <span className="font-bold text-sm tracking-tight">{message.text}</span>
-        </div>
-      )}
-
-      <form onSubmit={handleSubmit} className="bg-white/5 backdrop-blur-3xl border border-white/10 rounded-[3rem] p-8 md:p-12 shadow-2xl relative overflow-hidden space-y-10">
-        <div className="absolute inset-0 bg-hacker-dots opacity-5 pointer-events-none"></div>
-
-        <div className="relative">
-          <label className="block text-xs font-black text-brand-gray/90 uppercase tracking-[0.2em] ml-4 mb-4">
-            {t("profile.picture") || "Imagen de Usuario"}
-          </label>
-          <div className="flex flex-col sm:flex-row items-center gap-8">
-            <div className="relative group">
-              <div className="absolute inset-0 bg-brand-gradient opacity-20 blur-xl rounded-full scale-110 group-hover:opacity-40 transition-opacity"></div>
-              {picturePreview ? (
-                <img
-                  src={picturePreview}
-                  alt="Profile preview"
-                  className="relative w-32 h-32 rounded-full object-cover border-2 border-white/10 shadow-2xl transition-transform group-hover:scale-[1.02]"
-                />
-              ) : (
-                <div className="relative w-32 h-32 rounded-full bg-brand-gradient flex items-center justify-center text-white text-4xl font-black">
-                  {formData.name.charAt(0).toUpperCase()}
-                </div>
-              )}
-              <div className="absolute -bottom-1 -right-1 w-10 h-10 bg-brand-dark rounded-full border border-white/10 flex items-center justify-center shadow-lg group-hover:border-brand-cyan/50 transition-colors">
-                <svg className="w-5 h-5 text-brand-cyan" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M3 9a2 2 0 012-2h.93a2 2 0 001.664-.89l.812-1.22A2 2 0 0110.07 4h3.86a2 2 0 011.664.89l.812 1.22A2 2 0 0018.07 7H19a2 2 0 012 2v9a2 2 0 01-2 2H5a2 2 0 01-2-2V9z" />
-                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 13a3 3 0 11-6 0 3 3 0 016 0z" />
-                </svg>
-              </div>
-              <input
-                type="file"
-                id="picture"
-                accept="image/*"
-                onChange={handlePictureChange}
-                className="absolute inset-0 opacity-0 cursor-pointer z-10"
-              />
-            </div>
-            <div className="space-y-1">
-              <p className="text-white font-black text-lg">{formData.name}</p>
-              <p className="text-brand-gray text-xs uppercase tracking-widest">{t("profile.email")}: {formData.email}</p>
-            </div>
-          </div>
-        </div>
-
-        <div className="grid md:grid-cols-2 gap-8 relative">
-          <div className="space-y-2">
-            <label htmlFor="name" className="block text-xs font-black text-brand-gray/90 uppercase tracking-[0.2em] ml-4">
-              {t("profile.name") || "Nombre Público"}
-            </label>
-            <div className="relative group/input">
-              <div className="absolute left-6 top-1/2 -translate-y-1/2 text-brand-gray group-focus-within/input:text-brand-cyan transition-colors">
-                <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z" /></svg>
-              </div>
-              <input
-                type="text"
-                id="name"
-                name="name"
-                value={formData.name}
-                onChange={handleChange}
-                className="w-full bg-black/20 border border-white/5 rounded-2xl pl-14 pr-6 py-4 text-white focus:border-brand-cyan/50 focus:ring-0 transition-all outline-none font-bold italic"
-                required
-              />
-            </div>
-          </div>
-
-          <div className="space-y-2">
-            <label htmlFor="language" className="block text-xs font-black text-brand-gray/90 uppercase tracking-[0.2em] ml-4">
-              {t("profile.language") || "Interfaz"}
-            </label>
-            <div className="relative group/input">
-              <div className="absolute left-6 top-1/2 -translate-y-1/2 text-brand-gray group-focus-within/input:text-brand-purple transition-colors">
-                <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M3 5h12M9 3v2m1.048 9.5a18.022 18.022 0 01-3.827-5.802M10.5 9h-5M3 13l2 2m5-5c1.11 0 2.08.406 2.599 1m1.401 3L14 18l1.5-3" /></svg>
-              </div>
-              <select
-                id="language"
-                name="language"
-                value={formData.language}
-                onChange={handleChange}
-                className="w-full bg-black/20 border border-white/5 rounded-2xl pl-14 pr-10 py-4 text-white focus:border-brand-purple/50 focus:ring-0 transition-all outline-none font-bold italic appearance-none cursor-pointer"
-              >
-                <option value="es" className="bg-brand-dark">Español</option>
-                <option value="en" className="bg-brand-dark">English</option>
-                <option value="fi" className="bg-brand-dark">Suomi</option>
-              </select>
-            </div>
-          </div>
-
-          <div className="space-y-2">
-            <label htmlFor="region" className="block text-xs font-black text-brand-gray/90 uppercase tracking-[0.2em] ml-4">
-              {t("profile.region") || "Región"}
-            </label>
-            <div className="relative group/input">
-              <div className="absolute left-6 top-1/2 -translate-y-1/2 text-brand-gray group-focus-within/input:text-brand-cyan transition-colors">
-                <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M3.055 11H5a2 2 0 012 2v1a2 2 0 002 2 2 2 0 012 2v2.945M8 3.935V5.5A2.5 2.5 0 0010.5 8h.5a2 2 0 012 2 2 2 0 104 0 2 2 0 012-2h1.064M15 20.488V18a2 2 0 012-2h3.064M21 12a9 9 0 11-18 0 9 9 0 0118 0z" /></svg>
-              </div>
-              <select
-                id="region"
-                name="region"
-                value={formData.region}
-                onChange={handleChange}
-                className="w-full bg-black/20 border border-white/5 rounded-2xl pl-14 pr-10 py-4 text-white focus:border-brand-cyan/50 focus:ring-0 transition-all outline-none font-bold italic appearance-none cursor-pointer"
-              >
-                <option value="es" className="bg-brand-dark">{t("profile.regionSpain") || "España"}</option>
-                <option value="fi" className="bg-brand-dark">{t("profile.regionFinland") || "Finlandia"}</option>
-              </select>
-            </div>
-          </div>
-        </div>
-
-        <div className="pt-6 relative">
-          <button
-            type="submit"
-            disabled={loading}
-            className="w-full bg-brand-gradient text-white py-5 rounded-[2rem] font-black uppercase tracking-[0.2em] text-xs transition-all hover:scale-[1.02] active:scale-95 shadow-2xl shadow-brand-cyan/20 disabled:opacity-50 disabled:grayscale disabled:cursor-not-allowed group"
-          >
-            {loading ? (
-              <span className="flex items-center justify-center gap-2">
-                <svg className="w-4 h-4 animate-spin" fill="none" viewBox="0 0 24 24"><circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4"></circle><path className="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path></svg>
-                {t("profile.saving") || "PROCESANDO"}
-              </span>
-            ) : (t("profile.save") || "ACTUALIZAR PERFIL")}
-          </button>
-        </div>
-      </form>
-
-      {/* Change Password Form */}
-      <form onSubmit={handlePasswordSubmit} className="mt-12 bg-white/5 backdrop-blur-3xl border border-white/10 rounded-[3rem] p-8 md:p-12 shadow-2xl relative overflow-hidden space-y-10">
-        <div className="absolute inset-0 bg-hacker-dots opacity-5 pointer-events-none"></div>
-
-        <div>
-          <h2 className="text-2xl font-black text-white tracking-tightest uppercase italic mb-2">
-            {t("profile.changePasswordTitle") || "Cambiar Contraseña"}
-          </h2>
-          <p className="text-brand-gray/80 font-bold uppercase tracking-[0.2em] text-[10px]">
-            Protege tu cuenta con una clave segura
+          <h1 className="text-5xl md:text-6xl font-bold text-green-900 leading-tight mb-6">
+            {t("profile.title")}
+          </h1>
+          <p className="text-xl md:text-2xl text-green-700 max-w-2xl leading-relaxed font-normal">
+            {t("profile.subtitle")}
           </p>
         </div>
+      </section>
 
-        {passwordMessage && (
-          <div
-            className={`p-6 rounded-3xl border backdrop-blur-xl relative overflow-hidden flex items-center gap-4 ${passwordMessage.type === "success"
-              ? "bg-brand-cyan/10 border-brand-cyan/20 text-brand-cyan"
-              : "bg-brand-pink/10 border-brand-pink/20 text-brand-pink"
-              }`}
-          >
-            <div className={`w-8 h-8 rounded-full flex items-center justify-center flex-shrink-0 ${passwordMessage.type === "success" ? "bg-brand-cyan/20" : "bg-brand-pink/20"}`}>
-              {passwordMessage.type === "success" ? (
-                <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={3} d="M5 13l4 4L19 7" /></svg>
-              ) : (
-                <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={3} d="M6 18L18 6M6 6l12 12" /></svg>
-              )}
-            </div>
-            <span className="font-bold text-sm tracking-tight">{passwordMessage.text}</span>
-          </div>
-        )}
-
-        <div className="space-y-8 relative">
-          <div className="space-y-2">
-            <label htmlFor="current_password" className="block text-xs font-black text-brand-gray/90 uppercase tracking-[0.2em] ml-4">
-              {t("profile.currentPassword") || "Contraseña Actual"}
-            </label>
-            <div className="relative group/input">
-              <div className="absolute left-6 top-1/2 -translate-y-1/2 text-brand-gray group-focus-within/input:text-brand-cyan transition-colors">
-                <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 15v2m-6 4h12a2 2 0 002-2v-6a2 2 0 00-2-2H6a2 2 0 00-2 2v6a2 2 0 002 2zm10-10V7a4 4 0 00-8 0v4h8z" /></svg>
+      {/* ── CONTENIDO ── */}
+      <section className="py-20 px-4">
+        <div className="max-w-5xl mx-auto space-y-12">
+          
+          {message && (
+            <div className={`p-6 rounded-2xl border-2 flex items-center gap-4 animate-shake ${
+              message.type === "success" ? "bg-green-100 border-green-200 text-green-800" : "form-error"
+            }`}>
+              <div className={`w-10 h-10 rounded-full flex items-center justify-center ${message.type === 'success' ? 'bg-green-200' : 'bg-red-100'}`}>
+                {message.type === 'success' ? '✓' : '!'}
               </div>
-              <input
-                type="password"
-                id="current_password"
-                name="current_password"
-                value={passwordData.current_password}
-                onChange={handlePasswordChange}
-                className="w-full bg-black/20 border border-white/5 rounded-2xl pl-14 pr-6 py-4 text-white focus:border-brand-cyan/50 focus:ring-0 transition-all outline-none font-bold italic"
-                required
-              />
+              <span className="font-bold text-lg">{message.text}</span>
             </div>
+          )}
+
+          {/* Sección: Datos Personales */}
+          <div className="form-card">
+            <div className="flex flex-col md:flex-row justify-between items-start md:items-center gap-6 mb-12 border-b-2 border-green-50 pb-8">
+              <div>
+                <h2 className="text-3xl font-bold text-green-900 mb-2">{t("profile.personalInfoTitle")}</h2>
+                <p className="text-green-600 font-medium">{t("profile.personalInfoDescription")}</p>
+              </div>
+            </div>
+
+            <form onSubmit={handleSubmit} className="space-y-10">
+              {/* Avatar Upload */}
+              <div className="flex flex-col sm:flex-row items-center gap-10 bg-green-50/50 p-8 rounded-[2rem] border-2 border-green-100 shadow-inner">
+                <div className="relative group">
+                  <div className="relative w-40 h-40 rounded-full overflow-hidden border-4 border-white shadow-xl bg-white">
+                    {picturePreview ? (
+                      <img
+                        src={picturePreview}
+                        alt="Profile"
+                        className="w-full h-full object-cover transition-transform group-hover:scale-110"
+                      />
+                    ) : (
+                      <div className="w-full h-full bg-green-700 flex items-center justify-center text-white text-5xl font-bold">
+                        {formData.name.charAt(0).toUpperCase()}
+                      </div>
+                    )}
+                    <div className="absolute inset-0 bg-black/20 opacity-0 group-hover:opacity-100 transition-opacity flex items-center justify-center">
+                       <svg className="w-10 h-10 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M3 9a2 2 0 012-2h.93a2 2 0 001.664-.89l.812-1.22A2 2 0 0110.07 4h3.86a2 2 0 011.664.89l.812 1.22A2 2 0 0018.07 7H19a2 2 0 012 2v9a2 2 0 01-2 2H5a2 2 0 01-2-2V9z" />
+                       </svg>
+                    </div>
+                  </div>
+                  <label className="absolute bottom-2 right-2 w-12 h-12 bg-green-600 rounded-full flex items-center justify-center cursor-pointer hover:bg-green-700 transition-all shadow-xl border-4 border-white active:scale-90">
+                    <svg className="w-6 h-6 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 4v16m8-8H4" />
+                    </svg>
+                    <input type="file" onChange={handlePictureChange} className="hidden" accept="image/*" />
+                  </label>
+                </div>
+                <div className="flex-1 text-center sm:text-left space-y-2">
+                  <h4 className="text-2xl font-black text-green-900">{formData.name || t("profile.name")}</h4>
+                  <p className="bg-green-100 text-green-700 px-4 py-1.5 rounded-lg text-sm font-bold inline-block border border-green-200">
+                    {formData.email}
+                  </p>
+                  <p className="text-green-500 text-sm font-bold uppercase tracking-widest block pt-2">{t("profile.avatarInfo")}</p>
+                </div>
+              </div>
+
+              <div className="grid md:grid-cols-2 gap-8">
+                <div className="space-y-2">
+                  <label className="form-label">{t("profile.name")}</label>
+                  <input 
+                    type="text" 
+                    name="name" 
+                    value={formData.name} 
+                    onChange={handleChange} 
+                    className="form-input" 
+                    placeholder={t("profile.namePlaceholder")}
+                    required 
+                  />
+                </div>
+                <div className="space-y-2">
+                  <label className="form-label">{t("profile.language") || "Idioma de la APP"}</label>
+                  <div className="relative">
+                    <select name="language" value={formData.language} onChange={handleChange} className="form-select">
+                      <option value="es">Español</option>
+                      <option value="en">English</option>
+                      <option value="fi">Suomi</option>
+                    </select>
+                    <div className="absolute right-6 top-1/2 -translate-y-1/2 pointer-events-none text-green-600">
+                      <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 9l-7 7-7-7" />
+                      </svg>
+                    </div>
+                  </div>
+                </div>
+                <div className="space-y-2">
+                  <label className="form-label">{t("profile.region") || "Región / País"}</label>
+                  <div className="relative">
+                    <select name="region" value={formData.region} onChange={handleChange} className="form-select">
+                      <option value="es">{t("profile.regionSpain") || "España"}</option>
+                      <option value="fi">{t("profile.regionFinland") || "Finlandia"}</option>
+                    </select>
+                    <div className="absolute right-6 top-1/2 -translate-y-1/2 pointer-events-none text-green-600">
+                      <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 9l-7 7-7-7" />
+                      </svg>
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+              <div className="pt-4">
+                <button type="submit" disabled={loading} className="btn-primary w-full md:w-auto min-w-[240px]">
+                  {loading ? (
+                    <span className="flex items-center gap-3">
+                      <div className="w-5 h-5 border-3 border-white/30 border-t-white rounded-full animate-spin"></div>
+                      {t("profile.saving") || "Guardando..."}
+                    </span>
+                  ) : (t("profile.save") || "Actualizar Perfil")}
+                </button>
+              </div>
+            </form>
           </div>
 
-          <div className="grid md:grid-cols-2 gap-8">
-            <div className="space-y-2">
-              <label htmlFor="password" className="block text-xs font-black text-brand-gray/90 uppercase tracking-[0.2em] ml-4">
-                {t("profile.newPassword") || "Nueva Contraseña"}
-              </label>
-              <div className="relative group/input">
-                <div className="absolute left-6 top-1/2 -translate-y-1/2 text-brand-gray group-focus-within/input:text-brand-purple transition-colors">
-                  <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 7a2 2 0 012 2m4 0a6 6 0 01-7.743 5.743L11 17H9v2H7v2H4a1 1 0 01-1-1v-2.586a1 1 0 01.293-.707l5.964-5.964A6 6 0 1121 9z" /></svg>
-                </div>
-                <input
-                  type="password"
-                  id="password"
-                  name="password"
-                  value={passwordData.password}
-                  onChange={handlePasswordChange}
-                  className="w-full bg-black/20 border border-white/5 rounded-2xl pl-14 pr-6 py-4 text-white focus:border-brand-purple/50 focus:ring-0 transition-all outline-none font-bold italic"
-                  required
+          {/* Sección: Seguridad */}
+          <div className="form-card">
+            <div className="mb-12 border-b-2 border-green-50 pb-8">
+              <h2 className="text-3xl font-bold text-green-900 mb-2">{t("profile.securityTitle")}</h2>
+              <p className="text-green-600 font-medium">{t("profile.securityDescription")}</p>
+            </div>
+
+            {passwordMessage && (
+              <div className={`mb-8 p-6 rounded-2xl border-2 animate-shake ${
+                passwordMessage.type === "success" ? "bg-green-100 border-green-200 text-green-800" : "form-error"
+              }`}>
+                <span className="font-bold">{passwordMessage.text}</span>
+              </div>
+            )}
+
+            <form onSubmit={handlePasswordSubmit} className="space-y-8">
+              <div className="max-w-md">
+                <label className="form-label">{t("profile.currentPassword") || "Contraseña Actual"}</label>
+                <input 
+                  type="password" 
+                  name="current_password" 
+                  value={passwordData.current_password} 
+                  onChange={handlePasswordChange} 
+                  className="form-input" 
+                  required 
                 />
               </div>
-            </div>
-
-            <div className="space-y-2">
-              <label htmlFor="password_confirmation" className="block text-xs font-black text-brand-gray/90 uppercase tracking-[0.2em] ml-4">
-                {t("profile.confirmNewPassword") || "Confirmar Nueva"}
-              </label>
-              <div className="relative group/input">
-                <div className="absolute left-6 top-1/2 -translate-y-1/2 text-brand-gray group-focus-within/input:text-brand-purple transition-colors">
-                  <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z" /></svg>
+              
+              <div className="grid md:grid-cols-2 gap-8">
+                <div className="space-y-2">
+                  <label className="form-label">{t("profile.newPassword") || "Nueva Contraseña"}</label>
+                  <input 
+                    type="password" 
+                    name="password" 
+                    value={passwordData.password} 
+                    onChange={handlePasswordChange} 
+                    className="form-input" 
+                    required 
+                  />
                 </div>
-                <input
-                  type="password"
-                  id="password_confirmation"
-                  name="password_confirmation"
-                  value={passwordData.password_confirmation}
-                  onChange={handlePasswordChange}
-                  className="w-full bg-black/20 border border-white/5 rounded-2xl pl-14 pr-6 py-4 text-white focus:border-brand-purple/50 focus:ring-0 transition-all outline-none font-bold italic"
-                  required
-                />
+                <div className="space-y-2">
+                  <label className="form-label">{t("profile.confirmNewPassword") || "Confirmar Nueva"}</label>
+                  <input 
+                    type="password" 
+                    name="password_confirmation" 
+                    value={passwordData.password_confirmation} 
+                    onChange={handlePasswordChange} 
+                    className="form-input" 
+                    required 
+                  />
+                </div>
               </div>
+
+              <div className="pt-4">
+                <button 
+                  type="submit" 
+                  disabled={passwordLoading} 
+                  className="btn-secondary w-full md:w-auto min-w-[240px]"
+                >
+                  {passwordLoading ? t("profile.processing") : t("profile.changePasswordButton")}
+                </button>
+              </div>
+            </form>
+          </div>
+
+          {/* Sección: Zona de Peligro */}
+          <div className="bg-red-50 border-2 border-red-100 rounded-[3rem] p-10 md:p-16 overflow-hidden relative shadow-sm">
+             {/* Decoración */}
+            <div className="absolute top-0 right-0 w-32 h-32 bg-red-100/50 rounded-full -mr-16 -mt-16 blur-3xl"></div>
+            
+            <div className="relative z-10 flex flex-col md:flex-row items-center justify-between gap-10">
+              <div className="text-center md:text-left">
+                <h2 className="text-3xl font-black text-red-700 mb-4">{t("profile.dangerZone") || "Zona de Riesgo"}</h2>
+                <p className="text-red-600/80 text-lg max-w-xl font-medium leading-relaxed">
+                  {t("profile.deleteAccountWarning") || "Si eliminas tu cuenta, perderás todos tus datos de forma permanente. Esta acción es irreversible."}
+                </p>
+              </div>
+              <button
+                onClick={() => setShowDeleteModal(true)}
+                className="bg-white border-2 border-red-200 text-red-600 px-10 py-5 rounded-2xl font-black hover:bg-red-600 hover:text-white hover:border-red-600 transition-all shadow-md active:scale-95 whitespace-nowrap"
+              >
+                {t("profile.deleteAccountButton") || "Eliminar Cuenta"}
+              </button>
             </div>
           </div>
         </div>
+      </section>
 
-        <div className="pt-6 relative">
-          <button
-            type="submit"
-            disabled={passwordLoading}
-            className="w-full bg-white/10 text-white py-5 rounded-[2rem] font-black uppercase tracking-[0.2em] text-xs transition-all hover:bg-white/20 hover:scale-[1.02] active:scale-95 border border-white/10 disabled:opacity-50 disabled:grayscale disabled:cursor-not-allowed"
-          >
-            {passwordLoading ? (
-              <span className="flex items-center justify-center gap-2">
-                <svg className="w-4 h-4 animate-spin" fill="none" viewBox="0 0 24 24"><circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4"></circle><path className="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path></svg>
-                {t("profile.changingPassword") || "ACTUALIZANDO..."}
-              </span>
-            ) : (t("profile.changePasswordButton") || "ACTUALIZAR CONTRASEÑA")}
-          </button>
-        </div>
-      </form>
-
-      <div className="mt-20 pt-12 border-t border-white/5 relative">
-        <div className="absolute top-0 right-0 w-64 h-64 bg-brand-pink/5 blur-[100px] pointer-events-none"></div>
-        <div className="flex flex-col md:flex-row justify-between items-start md:items-center gap-8 bg-brand-pink/5 backdrop-blur-3xl border border-brand-pink/10 rounded-[2.5rem] p-8 md:p-10 overflow-hidden">
-          <div className="relative space-y-2">
-            <h2 className="text-2xl font-black text-brand-pink tracking-tightest uppercase italic">
-              {t("profile.dangerZone") || "ZONA CRÍTICA"}
-            </h2>
-            <p className="text-brand-gray text-xs font-medium uppercase tracking-[0.1em] max-w-md">
-              {t("profile.deleteAccountWarning") || "La eliminación de la cuenta es irreversible. Se purgarán todos tus datos del sistema."}
-            </p>
-          </div>
-          <button
-            onClick={() => setShowDeleteModal(true)}
-            disabled={deleting}
-            className="relative px-8 py-4 rounded-2xl bg-brand-pink/10 text-brand-pink border border-brand-pink/20 hover:bg-brand-pink hover:text-white transition-all font-black uppercase tracking-widest text-xs disabled:opacity-50"
-          >
-            {deleting ? (t("profile.deletingAccount") || "ELIMINANDO...") : (t("profile.deleteAccountButton") || "ELIMINAR MI CUENTA")}
-          </button>
-        </div>
-      </div>
-
+      {/* Delete Account Modal */}
       {showDeleteModal && (
-        <div className="fixed inset-0 z-[200] flex items-center justify-center p-4">
-          <div className="absolute inset-0 bg-brand-dark/80 backdrop-blur-sm" onClick={() => setShowDeleteModal(false)}></div>
-          <div className="relative bg-[#1a1435] border border-white/10 rounded-[3rem] p-8 md:p-12 w-full max-w-lg shadow-2xl overflow-hidden text-center">
-            <div className="absolute inset-0 bg-hacker-dots opacity-10 pointer-events-none"></div>
-            <div className="w-20 h-20 bg-brand-pink/10 rounded-full flex items-center justify-center mx-auto mb-8 border border-brand-pink/20">
-              <svg className="w-10 h-10 text-brand-pink" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z" /></svg>
+        <div className="fixed inset-0 z-[200] flex items-center justify-center p-4 bg-green-900/60 backdrop-blur-md">
+          <div className="bg-white rounded-[3rem] p-10 md:p-16 w-full max-w-xl shadow-2xl text-center border-2 border-red-50 relative overflow-hidden">
+            <div className="absolute top-0 left-0 w-full h-2 bg-red-600"></div>
+            
+            <div className="w-24 h-24 bg-red-50 rounded-full flex items-center justify-center mx-auto mb-8 border-2 border-red-100">
+              <svg className="w-12 h-12 text-red-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16" />
+              </svg>
             </div>
-            <h3 className="text-3xl font-black text-white mb-4 tracking-tightest uppercase italic">{t("profile.deleteAccountModalTitle") || "¿PROCEDER?"}</h3>
-            <p className="text-brand-gray font-medium mb-10 text-sm leading-relaxed">
-              {t("profile.deleteAccountModalMessage") || "Esta acción es definitiva. Al confirmar, iniciaremos el protocolo de eliminación permanente de tu identidad y registros."}
+            <h3 className="text-4xl font-bold text-red-700 mb-6">{t("profile.deleteAccountModalTitle") || "¿Confirmar Eliminación?"}</h3>
+            <p className="text-gray-500 mb-12 text-xl leading-relaxed">
+              {t("profile.deleteAccountModalMessage") || "Esta acción es definitiva. Se borrarán tus viajes, mensajes y toda tu actividad en Jombo."}
             </p>
             <div className="flex flex-col sm:flex-row gap-4">
               <button
                 onClick={() => setShowDeleteModal(false)}
-                disabled={deleting}
-                className="flex-1 px-8 py-4 rounded-2xl bg-white/5 text-white border border-white/10 hover:bg-white/10 transition-all font-bold uppercase tracking-widest text-xs"
+                className="flex-1 px-8 py-5 rounded-2xl bg-gray-100 text-gray-700 font-bold hover:bg-gray-200 transition-all text-lg"
               >
-                {t("profile.deleteAccountCancel") || "CANCELAR"}
+                {t("profile.deleteAccountCancel") || "Cancelar"}
               </button>
               <button
                 onClick={handleDeleteAccount}
                 disabled={deleting}
-                className="flex-1 px-8 py-4 rounded-2xl bg-brand-pink text-white hover:bg-brand-pink/80 transition-all font-black uppercase tracking-widest text-xs shadow-xl shadow-brand-pink/20"
+                className="flex-1 px-8 py-5 rounded-2xl bg-red-600 text-white font-bold hover:bg-red-700 transition-all shadow-lg text-lg active:scale-95"
               >
-                {deleting ? (t("profile.deletingAccount") || "ELIMINANDO...") : (t("profile.deleteAccountConfirm") || "CONFIRMAR")}
+                {deleting ? t("profile.deletingAccount") || "Procesando..." : t("profile.deleteAccountConfirm") || "Eliminar"}
               </button>
             </div>
           </div>

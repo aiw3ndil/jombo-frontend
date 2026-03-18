@@ -35,8 +35,6 @@ export default function MyTrips() {
     try {
       setLoading(true);
       const data = await getMyTrips();
-      // Sort trips by date, newest first or by departure date?
-      // Usually upcoming trips first.
       const sortedTrips = data.sort((a, b) => new Date(a.departure_time).getTime() - new Date(b.departure_time).getTime());
       setTrips(sortedTrips);
     } catch (error) {
@@ -65,174 +63,198 @@ export default function MyTrips() {
 
   if (translationsLoading || authLoading || loading) {
     return (
-      <div className="max-w-4xl mx-auto py-24 px-6 flex flex-col items-center justify-center min-h-[60vh]">
-        <div className="relative w-20 h-20 mb-8">
-          <div className="absolute inset-0 rounded-full border-4 border-white/5 border-t-brand-cyan animate-spin"></div>
-          <div className="absolute inset-2 rounded-full border-4 border-white/5 border-t-brand-purple animate-spin" style={{ animationDuration: '1.5s' }}></div>
-        </div>
-        <p className="text-brand-gray uppercase tracking-widest text-xs font-black animate-pulse">{t("page.myTrips.loading") || "Cargando..."}</p>
+      <div className="min-h-screen flex items-center justify-center bg-white">
+        <div className="spinner"></div>
       </div>
     );
   }
 
-  if (!user) {
-    return null;
-  }
+  if (!user) return null;
 
   return (
-    <div className="max-w-5xl mx-auto py-12 px-4 sm:px-6 relative">
-      <div className="absolute top-0 right-0 -translate-y-1/2 translate-x-1/4 w-[400px] h-[400px] bg-brand-cyan/5 rounded-full blur-[100px] pointer-events-none"></div>
-
-      <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-6 mb-12">
-        <div>
-          <h1 className="text-4xl md:text-5xl font-black text-white tracking-tightest uppercase italic mb-2">
-            {t("page.myTrips.title")}
-          </h1>
-          <p className="text-brand-gray/80 font-bold uppercase tracking-[0.2em] text-xs">
-            Tus viajes compartidos en la red
-          </p>
-        </div>
-        <Link href={`/${lang}/create-trip`} className="bg-brand-gradient text-white px-8 py-4 rounded-2xl font-black uppercase tracking-widest text-xs transition-all hover:scale-[1.05] active:scale-95 shadow-xl shadow-brand-cyan/20">
-          {t("page.myTrips.createTrip") || "Publicar viaje"}
-        </Link>
-      </div>
-
-      {trips.length === 0 ? (
-        <div className="text-center py-24 bg-white/5 backdrop-blur-3xl rounded-[3rem] border border-white/10 relative overflow-hidden">
-          <div className="absolute inset-0 bg-hacker-dots opacity-5 pointer-events-none"></div>
-          <div className="w-20 h-20 bg-white/5 rounded-full flex items-center justify-center mx-auto mb-8 border border-white/10">
-            <svg className="w-8 h-8 text-brand-gray" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 19l9 2-9-18-9 18 9-2zm0 0v-8" />
-            </svg>
+    <div className="min-h-screen bg-white">
+      {/* ── HERO ── */}
+      <section className="bg-green-50 border-b-2 border-green-100 py-20 px-4">
+        <div className="max-w-5xl mx-auto flex flex-col md:flex-row justify-between items-center gap-8 text-center md:text-left">
+          <div className="flex-1">
+            <div className="inline-flex items-center gap-2 bg-green-100 border border-green-300 text-green-800 px-5 py-2 rounded-full text-sm font-bold mb-6 uppercase tracking-wide">
+              <span className="w-2 h-2 rounded-full bg-green-600"></span>
+              {t("page.myTrips.badge") || "Panel de Conductor"}
+            </div>
+            <h1 className="text-5xl md:text-6xl font-bold text-green-900 leading-tight mb-6">
+              {t("page.myTrips.title") || "Mis Viajes"}
+            </h1>
+            <p className="text-xl md:text-2xl text-green-700 max-w-2xl leading-relaxed font-normal">
+              {t("page.myTrips.subtitle") || "Gestiona los trayectos que has publicado y activa nuevas rutas."}
+            </p>
           </div>
-          <p className="text-xl text-brand-gray font-medium uppercase tracking-widest mb-8">
-            {t("page.myTrips.noTrips") || "No has publicado ningún viaje"}
-          </p>
-          <Link href={`/${lang}/create-trip`} className="inline-block bg-white/5 text-white px-10 py-4 rounded-2xl font-black uppercase tracking-widest text-xs border border-white/10 hover:bg-white/10 transition-all">
-            {t("page.myTrips.createTrip") || "Publicar viaje"}
+          <Link 
+            href={`/${lang}/create-trip`} 
+            className="btn-primary px-12 py-5 shadow-xl hover:scale-105 transform transition-all active:scale-95"
+          >
+            <svg className="w-6 h-6 mr-3" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 4v16m8-8H4" />
+            </svg>
+            {t("page.myTrips.createTrip") || "Publicar nuevo viaje"}
           </Link>
         </div>
-      ) : (
-        <div className="grid grid-cols-1 gap-6">
-          {trips.map((trip) => (
-            <div
-              key={trip.id}
-              className="group relative bg-white/5 backdrop-blur-3xl border border-white/5 rounded-[2.5rem] p-8 hover:border-brand-cyan/20 transition-all duration-500 hover:shadow-2xl hover:shadow-brand-cyan/5 overflow-hidden"
-            >
-              <div className="absolute inset-0 bg-hacker-dots opacity-5 pointer-events-none"></div>
+      </section>
 
-              <div className="relative flex flex-col lg:flex-row justify-between lg:items-center gap-8">
-                <div className="flex-1 space-y-4">
-                  <div className="flex items-center gap-3 text-brand-cyan font-black text-xs uppercase tracking-[0.2em]">
-                    <span>{new Date(trip.departure_time).toLocaleDateString(lang, { day: 'numeric', month: 'short' })}</span>
-                    <span className="w-1.5 h-1.5 rounded-full bg-white/20"></span>
-                    <span className="text-brand-purple">{new Date(trip.departure_time).toLocaleTimeString(lang, { hour: '2-digit', minute: '2-digit' })} HS</span>
-                  </div>
-
-                  <h3 className="text-2xl md:text-3xl font-black text-white leading-tight tracking-tightest flex items-center gap-4 group-hover:text-brand-cyan transition-colors">
-                    {trip.departure_location}
-                    <svg className="w-6 h-6 text-brand-gray/30 group-hover:text-brand-cyan/50 transition-colors" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={3} d="M17 8l4 4m0 0l-4 4m4-4H3" />
-                    </svg>
-                    {trip.arrival_location}
-                  </h3>
-
-                  <div className="flex flex-wrap gap-6">
-                    <div className="bg-black/20 rounded-2xl px-5 py-3 border border-white/5">
-                      <p className="text-xs font-black text-brand-gray/80 uppercase tracking-widest mb-1">{t("page.myTrips.availableSeats")}</p>
-                      <p className={`text-sm font-bold flex items-center gap-2 ${trip.available_seats === 0 ? "text-brand-pink" : "text-white"}`}>
-                        {trip.available_seats} <span className="text-xs text-brand-gray/70 uppercase font-black italic">Lugares</span>
-                      </p>
-                    </div>
-
-                    <div className="bg-black/20 rounded-2xl px-5 py-3 border border-white/5">
-                      <p className="text-xs font-black text-brand-gray/80 uppercase tracking-widest mb-1">{t("page.myTrips.price")}</p>
-                      <p className="text-sm font-bold text-white italic">€{Number(trip.price).toFixed(2)}</p>
-                    </div>
-                  </div>
-                </div>
-
-                <div className="flex flex-col sm:flex-row lg:flex-col gap-4 min-w-[220px]">
-                  <Link
-                    href={`/${lang}/my-trips/${trip.id}`}
-                    className="flex-1 bg-white/5 text-white border border-white/10 px-8 py-4 rounded-2xl hover:bg-white/10 transition-all font-black uppercase tracking-widest text-xs text-center shadow-xl group/btn"
-                  >
-                    {t("page.myTrips.manageTrip") || "Gestionar viaje"}
-                  </Link>
-                  <button
-                    onClick={() => setDeleteModal({ isOpen: true, trip })}
-                    className="flex-1 bg-brand-pink/10 text-brand-pink border border-brand-pink/20 px-8 py-4 rounded-2xl hover:bg-brand-pink/20 transition-all font-black uppercase tracking-widest text-xs text-center group/delete"
-                  >
-                    {t("page.myTrips.deleteTrip") || "Eliminar"}
-                  </button>
-                </div>
+      {/* ── CONTENIDO ── */}
+      <section className="py-20 px-4 min-h-[50vh]">
+        <div className="max-w-5xl mx-auto">
+          {trips.length === 0 ? (
+            <div className="text-center py-24 bg-green-50/50 rounded-[3rem] border-2 border-dashed border-green-200">
+              <div className="w-24 h-24 bg-white rounded-full flex items-center justify-center mx-auto mb-8 shadow-sm border-2 border-green-100 text-green-600">
+                <svg className="w-12 h-12" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 19l9 2-9-18-9 18 9-2zm0 0v-8" />
+                </svg>
               </div>
+              <h2 className="text-3xl font-bold text-green-900 mb-4">
+                {t("page.myTrips.noTrips") || "Aún no has publicado nada"}
+              </h2>
+              <p className="text-green-700 text-lg mb-12 max-w-md mx-auto font-medium">
+                {t("page.myTrips.createTripInfo") || "Comparte tu coche, ahorra gastos y ayuda al planeta publicando tu primer viaje."}
+              </p>
+              <Link href={`/${lang}/create-trip`} className="btn-primary px-12 py-5 shadow-lg">
+                {t("page.myTrips.createTrip") || "Publicar mi primer viaje"}
+              </Link>
             </div>
-          ))}
-        </div>
-      )}
+          ) : (
+            <div className="space-y-10">
+              {trips.map((trip) => (
+                <div key={trip.id} className="result-card group">
+                  {/* Decoración lateral */}
+                  <div className="absolute top-0 left-0 w-2 h-full bg-green-500 group-hover:bg-green-600 transition-colors"></div>
 
-      {/* Delete Confirmation Modal */}
+                  <div className="flex flex-col xl:flex-row justify-between gap-10">
+                    <div className="flex-1 space-y-8">
+                      <div className="flex flex-wrap items-center gap-4">
+                        <div className="flex items-center gap-2 text-green-600 font-bold bg-green-50 px-5 py-2 rounded-full border border-green-100 shadow-sm">
+                          <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z" />
+                          </svg>
+                          <span className="uppercase tracking-wider">{new Date(trip.departure_time).toLocaleDateString(lang, { day: 'numeric', month: 'long', year: 'numeric' })}</span>
+                          <span className="text-green-300 mx-1">|</span>
+                          <span className="text-green-800">{new Date(trip.departure_time).toLocaleTimeString(lang, { hour: '2-digit', minute: '2-digit' })}h</span>
+                        </div>
+                        {trip.is_recurring && (
+                          <span className="bg-green-600 text-white px-5 py-2 rounded-full text-xs font-black uppercase tracking-widest shadow-md">RECURRENTE</span>
+                        )}
+                      </div>
+
+                      <div className="space-y-2">
+                         <h3 className="text-4xl font-bold text-green-900 leading-tight tracking-tight">
+                            {trip.departure_location} <span className="text-green-300 mx-2">→</span> {trip.arrival_location}
+                        </h3>
+                      </div>
+
+                      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
+                        <div className="bg-green-50/30 border-2 border-green-100 rounded-[1.5rem] p-5 hover:bg-white hover:border-green-300 transition-all shadow-sm">
+                          <p className="text-xs font-bold text-green-400 uppercase tracking-widest mb-2 flex items-center gap-2">
+                             <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z" /></svg>
+                             {t("page.myTrips.availableSeats") || "PLAZAS DISPONIBLES"}
+                          </p>
+                          <p className={`text-2xl font-black ${trip.available_seats === 0 ? "text-red-500" : "text-green-900"}`}>
+                            {trip.available_seats} <span className="text-base font-bold text-green-700/60 lowercase">libres</span>
+                          </p>
+                        </div>
+
+                        <div className="bg-green-50/30 border-2 border-green-100 rounded-[1.5rem] p-5 hover:bg-white hover:border-green-300 transition-all shadow-sm">
+                          <p className="text-xs font-bold text-green-400 uppercase tracking-widest mb-2 flex items-center gap-2">
+                             <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 8c-1.657 0-3 .895-3 2s1.343 2 3 2 3 .895 3 2-1.343 2-3 2m0-8c1.11 0 2.08.402 2.599 1M12 8V7m0 1v8m0 0v1m0-1c-1.11 0-2.08-.402-2.599-1M21 12a9 9 0 11-18 0 9 9 0 0118 0z" /></svg>
+                             {t("page.myTrips.price") || "PRECIO POR PERSONA"}
+                          </p>
+                          <p className="text-2xl font-black text-green-700 italic">€{Number(trip.price).toFixed(2)}</p>
+                        </div>
+                      </div>
+                    </div>
+
+                    <div className="flex flex-col sm:flex-row xl:flex-col gap-4 min-w-[240px] justify-center items-stretch">
+                      <Link
+                        href={`/${lang}/my-trips/${trip.id}`}
+                        className="btn-primary w-full shadow-lg"
+                      >
+                        <svg className="w-5 h-5 mr-3" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M11 5H6a2 2 0 00-2 2v11a2 2 0 002 2h11a2 2 0 002-2v-5m-1.414-9.414a2 2 0 112.828 2.828L11.828 15H9v-2.828l8.586-8.586z" />
+                        </svg>
+                        {t("page.myTrips.manageTrip") || "Gestionar viaje"}
+                      </Link>
+                      <button
+                        onClick={() => setDeleteModal({ isOpen: true, trip })}
+                        className="bg-white border-2 border-red-100 text-red-600 px-8 py-5 rounded-2xl font-bold hover:bg-red-50 hover:border-red-200 transition-all shadow-sm text-lg active:scale-95 flex items-center justify-center"
+                      >
+                        <svg className="w-5 h-5 mr-3" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16" />
+                        </svg>
+                        {t("page.myTrips.deleteTrip") || "Eliminar"}
+                      </button>
+                    </div>
+                  </div>
+                </div>
+              ))}
+            </div>
+          )}
+        </div>
+      </section>
+
+      {/* Modal de eliminación */}
       {deleteModal.isOpen && deleteModal.trip && (
-        <div className="fixed inset-0 z-[1000] flex items-center justify-center p-4">
-          <div className="absolute inset-0 bg-brand-dark/80 backdrop-blur-md" onClick={() => !deleting && setDeleteModal({ isOpen: false, trip: null })}></div>
-          
-          <div className="relative w-full max-w-lg bg-brand-dark border border-white/10 rounded-[3rem] p-8 md:p-12 shadow-2xl animate-in fade-in zoom-in duration-300">
-            <div className="absolute inset-0 bg-hacker-dots opacity-10 pointer-events-none"></div>
-            
-            <div className="relative text-center space-y-8">
-              <div className="w-20 h-20 bg-brand-pink/10 rounded-full flex items-center justify-center mx-auto border border-brand-pink/20">
-                <svg className="w-10 h-10 text-brand-pink" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+        <div className="fixed inset-0 z-[1000] flex items-center justify-center p-4 bg-green-900/40 backdrop-blur-sm">
+          <div className="relative w-full max-w-lg bg-white rounded-[2.5rem] p-8 md:p-12 shadow-2xl border-2 border-red-50">
+            <div className="text-center space-y-6">
+              <div className="w-20 h-20 bg-red-50 rounded-full flex items-center justify-center mx-auto border-2 border-red-50">
+                <svg className="w-10 h-10 text-red-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                   <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16" />
                 </svg>
               </div>
 
-              <div className="space-y-4">
-                <h2 className="text-3xl font-black text-white uppercase italic tracking-tightest">
-                  {deleteModal.trip.is_recurring ? t("page.myTrips.deleteRecurringTripTitle") : t("page.myTrips.deleteTrip")}
+              <div className="space-y-2">
+                <h2 className="text-3xl font-bold text-red-700">
+                  {deleteModal.trip?.is_recurring ? "¿Eliminar recurrencia?" : "¿Eliminar viaje?"}
                 </h2>
-                <p className="text-brand-gray font-medium uppercase tracking-widest text-xs">
-                  {t("page.myTrips.deleteTripConfirm")}
+                <p className="text-gray-600 text-lg">
+                  {t("page.myTrips.deleteConfirm") || "Esta acción borrará el viaje y todas sus reservas."}
                 </p>
-                <div className="bg-white/5 p-4 rounded-2xl border border-white/5 inline-block text-brand-cyan font-black text-xs tracking-widest uppercase">
-                  {deleteModal.trip.departure_location} → {deleteModal.trip.arrival_location}
+                <div className="text-green-800 font-bold bg-green-50 p-3 rounded-xl inline-block mt-4 border border-green-100">
+                  {deleteModal.trip?.departure_location} → {deleteModal.trip?.arrival_location}
                 </div>
               </div>
 
-              <div className="flex flex-col gap-4 pt-4">
-                {deleteModal.trip.is_recurring ? (
+              <div className="flex flex-col gap-4 pt-6">
+                {deleteModal.trip?.is_recurring ? (
                   <>
                     <button
                       onClick={() => handleDelete(false)}
                       disabled={deleting}
-                      className="w-full bg-white/5 text-white border border-white/10 py-5 rounded-[2rem] font-black uppercase tracking-[0.2em] text-xs transition-all hover:bg-white/10 active:scale-95 disabled:opacity-50"
+                      className="w-full bg-white border-2 border-red-600 text-red-700 py-4 rounded-xl font-bold hover:bg-red-50 transition-all"
                     >
-                      {deleting ? "..." : t("page.myTrips.deleteOnlyThis")}
+                      {deleting ? "..." : t("page.myTrips.deleteOnlyThis") || "Solo este viaje"}
                     </button>
                     <button
                       onClick={() => handleDelete(true)}
                       disabled={deleting}
-                      className="w-full bg-brand-gradient text-white py-5 rounded-[2rem] font-black uppercase tracking-[0.2em] text-xs transition-all hover:scale-[1.03] active:scale-95 shadow-xl shadow-brand-cyan/20 disabled:opacity-50"
+                      className="w-full bg-red-600 text-white py-4 rounded-xl font-bold hover:bg-red-700 transition-all shadow-lg"
                     >
-                      {deleting ? "..." : t("page.myTrips.deleteAllRecurring")}
+                      {deleting ? "..." : t("page.myTrips.deleteAllRecurring") || "Todos los recurrentes"}
                     </button>
                   </>
                 ) : (
                   <button
                     onClick={() => handleDelete(false)}
                     disabled={deleting}
-                    className="w-full bg-brand-gradient text-white py-5 rounded-[2rem] font-black uppercase tracking-[0.2em] text-xs transition-all hover:scale-[1.03] active:scale-95 shadow-xl shadow-brand-cyan/20 disabled:opacity-50"
+                    className="w-full bg-red-600 text-white py-4 rounded-xl font-bold hover:bg-red-700 transition-all shadow-lg"
                   >
-                    {deleting ? "..." : t("page.myTrips.deleteTrip")}
+                    {deleting ? "..." : t("page.myTrips.deleteTrip") || "Confirmar eliminación"}
                   </button>
                 )}
                 
                 <button
                   onClick={() => setDeleteModal({ isOpen: false, trip: null })}
                   disabled={deleting}
-                  className="w-full text-brand-gray/60 hover:text-white transition-colors font-black uppercase tracking-[0.2em] text-[10px] py-2"
+                  className="text-gray-500 font-bold hover:text-gray-700 transition-colors uppercase tracking-widest text-sm pt-2"
                 >
-                  {t("page.createTrip.cancel") || "Cancelar"}
+                  {t("common.cancel") || "Cancelar"}
                 </button>
               </div>
             </div>

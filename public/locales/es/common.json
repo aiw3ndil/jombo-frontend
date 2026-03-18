@@ -81,11 +81,7 @@
         "anonymous": "Anónimo",
         "close": "Cerrar"
       }
-    },
-    "trips": {
-      "title": "Viajes disponibles",
-      "seat": "Plaza"
-    },
+  },
     "createTrip": {
       "title": "Publicar un viaje",
       "from": "Origen",
@@ -149,8 +145,10 @@
       "title": "Mis Viajes",
       "back": "Volver",
       "loading": "Cargando...",
+      "subtitle": "Gestiona tus anuncios de viaje publicados",
       "noTrips": "No has publicado ningún viaje",
       "createTrip": "Publicar viaje",
+      "createTripInfo": "¡Publica tu primer viaje ahora!",
       "manageTrip": "Gestionar viaje",
       "tripDetails": "Detalles del Viaje",
       "yourTrips": "Tus viajes",
@@ -278,20 +276,62 @@
     "changingPassword": "Actualizando...",
     "passwordUpdateSuccess": "Contraseña actualizada exitosamente",
     "passwordUpdateError": "Error al actualizar la contraseña",
-    "passwordsDoNotMatch": "Las contraseñas no coinciden"
+    "passwordsDoNotMatch": "Las contraseñas no coinciden",
+    "badge": "Mi Configuración",
+    "subtitle": "Gestiona tu identidad, preferencias y la seguridad de tu cuenta en Jombo.",
+    "personalInfoTitle": "Información Personal",
+    "personalInfoDescription": "Esta es la información que verán otros usuarios al viajar contigo.",
+    "namePlaceholder": "Escribe tu nombre...",
+    "avatarInfo": "Sube una foto clara para generar confianza",
+    "securityTitle": "Seguridad de la Cuenta",
+    "securityDescription": "Mantén tu cuenta protegida con una contraseña robusta.",
+    "processing": "Procesando..."
+  },
+  "trips": {
+    "title": "Viajes disponibles",
+    "seat": "Plaza",
+    "routeSnapshot": "Resumen de la Ruta",
+    "distance": "Distancia Media",
+    "duration": "Duración Aprox.",
+    "co2Saved": "CO2 Ahorrado",
+    "trustTitle": "Viaja con Total Tranquilidad",
+    "popularRoute": "RUTA DESTACADA",
+    "optionsFound": "Opciones encontradas",
+    "communityTitle": "Comunidad Jombo",
+    "communitySubtitle": "Hay viajes directos publicados por otros conductores en esta ruta.",
+    "everythingAbout": "Todo sobre el trayecto",
+    "smartSavingTitle": "Ahorro inteligente",
+    "smartSavingDesc": "Compartir coche es la opción más económica de transporte. Al dividir gastos de gasolina y peajes, puedes reducir el coste de tu viaje hasta en un 75% comparado con el coche individual o el tren.",
+    "ecoCommitmentTitle": "Compromiso real",
+    "ecoCommitmentDesc": "Jumbo nació para reducir la huella de carbono en nuestras carreteras. Al llenar asientos vacíos, disminuimos emisiones y tráfico, haciendo que el viaje sea mejor para todos.",
+    "description": "Encuentra o publica tu viaje compartido entre {from} y {to}. Jombo es la primera plataforma 100% gratuita para compartir gastos sin comisiones ni sorpresas.",
+    "noTripsFound": "Sin viajes compartidos hoy. Mostramos transporte público entre {from} y {to}",
+    "joinThousands": "Únete a miles que ya ahorran en sus trayectos.",
+    "registerFree": "Regístrate gratis",
+    "routeReadyTitle": "Ruta lista para estrenar",
+    "routeReadyDesc": "¡Sé el primero en publicar un viaje entre {from} y {to} para empezar a compartir gastos y aventuras!",
+    "publishFirst": "Publicar primer viaje"
   },
   "footer": {
     "about": "Sobre Jombo",
+    "aboutDescription": "Jombo es una iniciativa para conectar personas y reducir la huella de carbono a través del viaje compartido.",
     "description": "Plataforma gratuita para compartir viajes. Conecta con personas que van a tu mismo destino y ahorra dinero.",
     "links": "Enlaces",
     "terms": "Términos y Condiciones",
     "home": "Inicio",
     "contact": "Contacto",
+    "supportEmail": "Email de soporte",
+    "status": "Estado",
+    "supportStatus": "Soporte Activo 24/7",
+    "madeWith": "Hecho con ❤️ para el planeta",
+    "trustedBy": "Con la confianza de más de 10.000 usuarios",
     "dataDeletion": "Eliminación de Datos",
     "rights": "Todos los derechos reservados."
   },
   "terms": {
     "title": "Términos y Condiciones de Uso",
+    "badge": "Información Legal",
+    "subtitle": "Nuestra guía para una convivencia segura y justa en la comunidad Jombo.",
     "section1": {
       "title": "1. Aceptación de los Términos",
       "content": "Al acceder y utilizar Jombo, aceptas estos términos y condiciones en su totalidad. Si no estás de acuerdo con alguno de estos términos, no debes utilizar nuestro servicio."
@@ -322,11 +362,13 @@
       "content": "Jombo se reserva el derecho de modificar estos términos en cualquier momento. Las modificaciones entrarán en vigor inmediatamente después de su publicación en la plataforma."
     },
     "lastUpdate": "Última actualización",
-    "updateDate": "3 de diciembre de 2025"
+    "updateDate": "3 de diciembre de 2025",
+    "documentVigente": "Documento Vigente"
   },
-  "dataDeletion": {
+    "dataDeletion": {
     "title": "Instrucciones de Eliminación de Datos",
-    "description": "En Jombo, valoramos tu privacidad. Puedes solicitar la eliminación de tus datos en cualquier momento.",
+    "badge": "Privacidad Personal",
+    "description": "En Jombo creemos en la transparencia. Aquí tienes todo lo necesario para gestionar o eliminar tu información de forma definitiva.",
     "section1": {
       "title": "Eliminación de Datos de Usuario",
       "content": "De acuerdo con los Términos de la Plataforma de Facebook y el RGPD, proporcionamos un mecanismo para que los usuarios soliciten la eliminación de sus datos."
@@ -346,17 +388,18 @@
     },
     "section4": {
       "title": "Cómo Eliminar Tus Datos",
-      "subtitle": "Método 1: Eliminación Automática vía App (Recomendado)",
+      "subtitle": "Pasos a seguir",
+      "method1": "Método 1: Eliminación Automática vía App (Recomendado)",
       "step1": "Inicia sesión en tu cuenta de Jombo",
       "step2": "Ve a 'Mi Perfil'",
       "step3": "Desplázate hacia abajo hasta la 'Zona de Peligro'",
       "step4": "Haz clic en 'Eliminar Cuenta' y confirma la acción"
     },
     "section5": {
-      "subtitle": "Método 2: Solicitud Manual",
-      "content": "Si no puedes acceder a tu cuenta, puedes solicitar la eliminación de datos enviando un correo electrónico a:",
+      "subtitle": "Soporte Directo",
+      "content": "Si prefieres que lo hagamos nosotros, escríbenos:",
       "email": "soporte@jombo.es",
-      "note": "Por favor incluye tu dirección de correo electrónico registrada."
+      "note": "Nota: Procesaremos tu solicitud en un máximo de 48 horas laborales."
     }
   },
   "cookies": {
