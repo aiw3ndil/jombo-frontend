@@ -1,6 +1,6 @@
 "use client";
 
-import React, { createContext, useContext, ReactNode } from "react";
+import React, { createContext, useContext, ReactNode, useState } from "react";
 import dynamic from "next/dynamic";
 
 export interface GoogleMapsContextType {
@@ -14,7 +14,9 @@ export const GoogleMapsContext = createContext<GoogleMapsContextType | undefined
 // (Loader.instance). Durante el renderizado en servidor (SSR) cada petición con
 // distinto idioma/región crea el Loader con opciones distintas y la segunda lanza
 // "Loader must not be called again with different options", provocando un error
-// 500. Por eso cargamos Google Maps solo en el cliente (ssr: false).
+// 500. Por eso cargamos Google Maps solo en el cliente (ssr: false). El loader
+// NO envuelve a {children}, de modo que el resto de la app se sigue renderizando
+// en el servidor.
 const MapsScriptLoader = dynamic(
     () => import("./MapsScriptLoader"),
     { ssr: false }
@@ -29,11 +31,12 @@ export function GoogleMapsProvider({
     language?: string;
     region?: string;
 }) {
+    const [maps, setMaps] = useState<GoogleMapsContextType>({ isLoaded: false, loadError: undefined });
+
     return (
-        <GoogleMapsContext.Provider value={{ isLoaded: false, loadError: undefined }}>
-            <MapsScriptLoader language={language} region={region}>
-                {children}
-            </MapsScriptLoader>
+        <GoogleMapsContext.Provider value={maps}>
+            <MapsScriptLoader language={language} region={region} onStateChange={setMaps} />
+            {children}
         </GoogleMapsContext.Provider>
     );
 }

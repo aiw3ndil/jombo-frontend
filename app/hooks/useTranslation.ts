@@ -1,47 +1,50 @@
 "use client";
 
 import { usePathname } from "next/navigation";
-import { useEffect, useState } from "react";
+import { useMemo } from "react";
+
+import esCommon from "@/public/locales/es/common.json";
+import esLogin from "@/public/locales/es/login.json";
+import esRegister from "@/public/locales/es/register.json";
+import esMyTrips from "@/public/locales/es/myTrips.json";
+import enCommon from "@/public/locales/en/common.json";
+import enLogin from "@/public/locales/en/login.json";
+import enRegister from "@/public/locales/en/register.json";
+import enMyTrips from "@/public/locales/en/myTrips.json";
+import fiCommon from "@/public/locales/fi/common.json";
+import fiLogin from "@/public/locales/fi/login.json";
+import fiRegister from "@/public/locales/fi/register.json";
 
 type Translations = Record<string, any>;
 
-export function useTranslation(namespaces: string | string[] = "common") { // Changed to accept string or string[]
+const SUPPORTED_LANGS = ["es", "en", "fi"];
+
+// Traducciones empaquetadas en el build: disponibles de forma síncrona en
+// servidor y cliente, sin depender de fetch en tiempo de ejecución.
+const FILES: Record<string, Record<string, Translations>> = {
+  es: { common: esCommon, login: esLogin, register: esRegister, myTrips: esMyTrips },
+  en: { common: enCommon, login: enLogin, register: enRegister, myTrips: enMyTrips },
+  fi: { common: fiCommon, login: fiLogin, register: fiRegister },
+};
+
+export function useTranslation(namespaces?: string | string[]) {
   const pathname = usePathname();
-  const [translations, setTranslations] = useState<Translations>({});
-  const [loading, setLoading] = useState(true);
+  const pathLang = pathname?.split("/")[1] || "es";
+  const lang = SUPPORTED_LANGS.includes(pathLang) ? pathLang : "es";
 
-  useEffect(() => {
-    const loadTranslations = async () => {
-      setLoading(true); // Set loading to true when starting to load new translations
-      const langsToLoad = Array.isArray(namespaces) ? namespaces : [namespaces]; // Ensure it's an array
+  const translations = useMemo(() => {
+    const requested = namespaces
+      ? Array.isArray(namespaces)
+        ? namespaces
+        : [namespaces]
+      : ["common"];
+    const files = FILES[lang] ?? FILES.es;
 
-      const loadedTranslations: Translations = {};
-      const lang = pathname.split('/')[1] || "es";
-
-      for (const ns of langsToLoad) {
-        try {
-          console.log(`🌐 Loading translations: /locales/${lang}/${ns}.json`);
-          const res = await fetch(`/locales/${lang}/${ns}.json`);
-          if (res.ok) {
-            const data = await res.json();
-            console.log(`✅ Translations loaded for ${lang}/${ns}:`, Object.keys(data));
-            // Merge new translations into the loadedTranslations object
-            Object.assign(loadedTranslations, data);
-          } else {
-            console.error(`❌ Failed to load translations for ${lang}/${ns}: ${res.status}`);
-          }
-        } catch (err) {
-          console.error(`❌ Error loading ${ns}.json:`, err);
-        }
-      }
-      setTranslations(loadedTranslations);
-      setLoading(false);
-    };
-
-    if (pathname) {
-      loadTranslations();
-    }
-  }, [pathname, namespaces]); // 'namespaces' is now a dependency
+    return requested.reduce<Translations>(
+      (acc, ns) => ({ ...acc, ...(files[ns] ?? {}) }),
+      {}
+    );
+  }, [lang, namespaces]);
 
   const t = (key: string, defaultValue?: string): string => {
     const keys = key.split(".");
@@ -51,15 +54,20 @@ export function useTranslation(namespaces: string | string[] = "common") { // Ch
       value = value?.[k];
     }
 
-    const result = typeof value === "string" ? value : defaultValue || key;
-    
-    // Log cuando no se encuentra una traducción
-    if (result === key && !loading && Object.keys(translations).length > 0) {
+    if (typeof value === "string") {
+      return value;
+    }
+
+    if (defaultValue !== undefined) {
+      return defaultValue;
+    }
+
+    if (process.env.NODE_ENV !== "production") {
       console.warn(`⚠️ Translation not found: ${key}`);
     }
-    
-    return result;
+
+    return "";
   };
 
-  return { t, loading };
+  return { t, loading: false };
 }

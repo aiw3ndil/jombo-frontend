@@ -1,9 +1,9 @@
 "use client";
 
-import React, { useMemo } from "react";
+import { useEffect, useMemo } from "react";
 import { useJsApiLoader } from "@react-google-maps/api";
 import type { Library } from "@googlemaps/js-api-loader";
-import { GoogleMapsContext, GoogleMapsContextType } from "./GoogleMapsContext";
+import type { GoogleMapsContextType } from "./GoogleMapsContext";
 
 // Static libraries
 const LIBRARIES: Library[] = ["places"];
@@ -14,13 +14,13 @@ const LIBRARIES: Library[] = ["places"];
 // crea el Loader con opciones distintas y la segunda lanza "Loader must not be
 // called again with different options", provocando un error 500.
 export default function MapsScriptLoader({
-    children,
     language,
     region,
+    onStateChange,
 }: {
-    children: React.ReactNode;
     language: string;
     region: string;
+    onStateChange: (state: GoogleMapsContextType) => void;
 }) {
     const apiKey = process.env.NEXT_PUBLIC_GOOGLE_MAPS_API_KEY || "";
 
@@ -33,11 +33,9 @@ export default function MapsScriptLoader({
 
     const { isLoaded, loadError } = useJsApiLoader(loaderOptions);
 
-    const value: GoogleMapsContextType = { isLoaded, loadError };
+    useEffect(() => {
+        onStateChange({ isLoaded, loadError });
+    }, [isLoaded, loadError, onStateChange]);
 
-    return (
-        <GoogleMapsContext.Provider value={value}>
-            {children}
-        </GoogleMapsContext.Provider>
-    );
+    return null;
 }
