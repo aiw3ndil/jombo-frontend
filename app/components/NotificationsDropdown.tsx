@@ -40,16 +40,16 @@ export default function NotificationsDropdown({
               key={notification.id}
               onClick={() => onNotificationClick(notification)}
               className={`p-5 cursor-pointer border-b border-green-50 transition-colors ${
-                !notification.read_at
+                !notification.read
                   ? "bg-green-50 border-l-4 border-l-green-500"
                   : "hover:bg-gray-50"
               }`}
             >
               <div className="flex justify-between items-start mb-1">
-                <p className={`text-base font-bold ${!notification.read_at ? "text-green-800" : "text-gray-800"}`}>
+                <p className={`text-base font-bold ${!notification.read ? "text-green-800" : "text-gray-800"}`}>
                   {notification.title}
                 </p>
-                {!notification.read_at && (
+                {!notification.read && (
                   <span className="w-2.5 h-2.5 rounded-full bg-green-500 flex-shrink-0 mt-1"></span>
                 )}
               </div>

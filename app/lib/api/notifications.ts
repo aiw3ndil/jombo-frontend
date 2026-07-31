@@ -5,7 +5,7 @@ export interface Notification {
   title: string;
   content: string;
   url: string | null;
-  read_at: string | null;
+  read: boolean;
   created_at: string;
   user_id: number;
 }
