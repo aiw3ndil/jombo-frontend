@@ -108,13 +108,13 @@ export default async function RoutePage({ params }: Props) {
       />
       
       {/* ── HERO ── */}
-      <section className="bg-green-50 border-b-2 border-green-100 py-20 px-4 relative overflow-hidden">
+      <section className="bg-green-50 border-b-2 border-green-100 py-10 px-4 relative overflow-hidden">
         {/* Decoración de fondo */}
         <div className="absolute top-0 right-0 w-96 h-96 bg-green-100/50 rounded-full blur-3xl -mr-48 -mt-48 pointer-events-none"></div>
         <div className="absolute bottom-0 left-0 w-64 h-64 bg-green-100/30 rounded-full blur-2xl -ml-32 -mb-32 pointer-events-none"></div>
 
         <div className="max-w-5xl mx-auto relative z-10">
-          <nav className="flex items-center gap-2 text-sm font-bold text-green-600 mb-8 uppercase tracking-widest">
+          <nav className="flex items-center gap-2 text-sm font-bold text-green-600 mb-4 uppercase tracking-widest">
             <Link href={`/${lang}`} className="hover:text-green-800 transition-colors">Jombo</Link>
             <svg className="w-4 h-4 text-green-300" fill="none" stroke="currentColor" viewBox="0 0 24 24">
               <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={3} d="M9 5l7 7-7 7" />
@@ -124,18 +124,18 @@ export default async function RoutePage({ params }: Props) {
             </span>
           </nav>
           
-          <div className="inline-flex items-center gap-2 bg-green-100 border border-green-300 text-green-800 px-5 py-2 rounded-full text-sm font-black mb-6 uppercase tracking-wide shadow-sm">
+          <div className="inline-flex items-center gap-2 bg-green-100 border border-green-300 text-green-800 px-4 py-1.5 rounded-full text-xs font-black mb-3 uppercase tracking-wide shadow-sm">
             <span className="w-2 h-2 bg-green-600 rounded-full animate-pulse"></span>
             {t.trips.popularRoute || 'SUOSITTU REITTI'}
           </div>
 
-          <h1 className="text-5xl md:text-7xl font-black text-green-900 leading-tight mb-8 tracking-tight">
+          <h1 className="text-3xl md:text-4xl font-black text-green-900 leading-tight mb-2 tracking-tight">
             {route.from} 
-            <span className="text-green-300 mx-4 inline-block transform hover:scale-110 transition-transform cursor-default">→</span> 
+            <span className="text-green-300 mx-3 inline-block transform hover:scale-110 transition-transform cursor-default">→</span> 
             {route.to}
           </h1>
           
-          <p className="text-xl text-green-700 max-w-3xl font-medium opacity-90 leading-relaxed mb-12">
+          <p className="text-sm md:text-base text-green-700 max-w-3xl font-medium opacity-90 leading-relaxed mb-6">
             {t.trips.description?.replace('{from}', route.from).replace('{to}', route.to) || 
              `Löydä tai tarjoa kimppakyyti välille ${route.from} ja ${route.to}. Jombo on Suomen ensimmäinen 100% ilmainen alusta, jossa jaat vain matkakulut ilman piilokuluja.`}
           </p>

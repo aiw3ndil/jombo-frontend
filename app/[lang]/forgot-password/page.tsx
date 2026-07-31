@@ -40,22 +40,22 @@ export default function ForgotPassword() {
   return (
     <div className="min-h-screen bg-white">
       {/* ── HERO ── */}
-      <section className="bg-green-50 border-b-2 border-green-100 py-20 px-4">
+      <section className="bg-green-50 border-b-2 border-green-100 py-8 px-4">
         <div className="max-w-5xl mx-auto text-center">
-          <div className="inline-flex items-center gap-2 bg-green-100 border border-green-300 text-green-800 px-5 py-2 rounded-full text-sm font-bold mb-6 uppercase tracking-wide">
+          <div className="inline-flex items-center gap-2 bg-green-100 border border-green-300 text-green-800 px-4 py-1.5 rounded-full text-xs font-bold mb-3 uppercase tracking-wide">
             {t("securityBadge") || "Seguridad de tu cuenta"}
           </div>
-          <h1 className="text-5xl md:text-6xl font-black text-green-900 leading-tight mb-4">
+          <h1 className="text-2xl md:text-3xl font-black text-green-900 leading-tight mb-2">
             {t("forgotPasswordTitle") || "¿Necesitas una nueva clave?"}
           </h1>
-          <p className="text-xl text-green-700 max-w-2xl mx-auto font-medium opacity-80">
+          <p className="text-sm md:text-base text-green-700 max-w-2xl mx-auto font-medium opacity-80">
             {t("forgotPasswordDescription") || "No te preocupes, nos pasa a todos. Introduce tu email y te ayudaremos a recuperarla."}
           </p>
         </div>
       </section>
 
       {/* ── FORMULARIO ── */}
-      <section className="py-20 px-4 bg-white relative -mt-10">
+      <section className="py-20 px-4 bg-white relative -mt-5">
         <div className="max-w-md mx-auto">
           <div className="form-card relative z-10">
             {error && (

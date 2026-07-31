@@ -172,13 +172,13 @@ export default function SearchPage() {
   return (
     <div className="min-h-screen bg-white">
       {/* ── HERO / SEARCH BAR ── */}
-      <section className="bg-green-50 border-b-2 border-green-100 py-20 px-4">
+      <section className="bg-green-50 border-b-2 border-green-100 py-8 px-4">
         <div className="max-w-5xl mx-auto">
-          <div className="text-center mb-12">
-            <h1 className="text-4xl md:text-5xl font-bold text-green-900 mb-4">
+          <div className="text-center mb-6">
+            <h1 className="text-2xl md:text-3xl font-bold text-green-900 mb-2">
               {from} <span className="text-green-300 mx-2">→</span> {to}
             </h1>
-            <p className="text-lg text-green-700 font-medium">
+            <p className="text-sm md:text-base text-green-700 font-medium">
               {t("page.search.results") || "Explora las mejores opciones para tu trayecto"}
             </p>
           </div>

@@ -143,10 +143,10 @@ export default function TripDetails({ params }: { params: Promise<{ lang: string
     if (!trip) return null;
 
     return (
-        <div className="min-h-screen bg-white py-12 px-4">
+        <div className="min-h-screen bg-white py-8 px-4">
             <div className="max-w-5xl mx-auto">
                 {/* Header HUD */}
-                <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-6 mb-12">
+                <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-6 mb-6">
                     <button
                         onClick={() => router.push(`/${lang}/my-trips`)}
                         className="flex items-center gap-2 text-green-600 font-bold uppercase tracking-widest text-sm hover:text-green-800 transition-all group"
@@ -155,10 +155,10 @@ export default function TripDetails({ params }: { params: Promise<{ lang: string
                         {t("page.myTrips.back") || "Lista de viajes"}
                     </button>
                     <div className="text-right">
-                        <h1 className="text-4xl md:text-5xl font-bold text-green-900 mb-2">
+                        <h1 className="text-2xl md:text-3xl font-bold text-green-900 mb-1">
                             {t("page.myTrips.tripDetails") || "Detalle del Viaje"}
                         </h1>
-                        <p className="text-green-700 text-lg uppercase tracking-wider font-medium">Gestión de pasajeros</p>
+                        <p className="text-green-700 text-sm md:text-base uppercase tracking-wider font-medium">Gestión de pasajeros</p>
                     </div>
                 </div>
 

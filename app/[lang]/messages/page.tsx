@@ -73,15 +73,15 @@ export default function MessagesPage() {
   };
 
   return (
-    <div className="min-h-screen bg-white py-12 px-4">
+    <div className="min-h-screen bg-white py-8 px-4">
       <div className="max-w-5xl mx-auto">
         {/* Cabecera */}
-        <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-6 mb-12">
+        <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-6 mb-6">
           <div>
-            <h1 className="text-4xl md:text-5xl font-bold text-green-900 mb-2">
+            <h1 className="text-2xl md:text-3xl font-bold text-green-900 mb-1">
               {t("page.messages.title") || "Mis Mensajes"}
             </h1>
-            <p className="text-green-700 text-lg">
+            <p className="text-green-700 text-sm md:text-base">
               {t("page.messages.subtitle") || "Conversaciones con otros viajeros"}
             </p>
           </div>

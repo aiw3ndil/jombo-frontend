@@ -202,16 +202,16 @@ export default function ProfilePage({ params }: { params: Promise<{ lang: string
   return (
     <div className="min-h-screen bg-white">
       {/* ── HERO ── */}
-      <section className="bg-green-50 border-b-2 border-green-100 py-20 px-4">
+      <section className="bg-green-50 border-b-2 border-green-100 py-8 px-4">
         <div className="max-w-5xl mx-auto text-center md:text-left">
-          <div className="inline-flex items-center gap-2 bg-green-100 border border-green-300 text-green-800 px-5 py-2 rounded-full text-sm font-bold mb-6 uppercase tracking-wide">
+          <div className="inline-flex items-center gap-2 bg-green-100 border border-green-300 text-green-800 px-4 py-1.5 rounded-full text-xs font-bold mb-3 uppercase tracking-wide">
             <span className="w-2 h-2 rounded-full bg-green-600"></span>
             {t("profile.badge")}
           </div>
-          <h1 className="text-5xl md:text-6xl font-bold text-green-900 leading-tight mb-6">
+          <h1 className="text-2xl md:text-3xl font-bold text-green-900 leading-tight mb-2">
             {t("profile.title")}
           </h1>
-          <p className="text-xl md:text-2xl text-green-700 max-w-2xl leading-relaxed font-normal">
+          <p className="text-sm md:text-base text-green-700 max-w-2xl leading-relaxed font-normal">
             {t("profile.subtitle")}
           </p>
         </div>
