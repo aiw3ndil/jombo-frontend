@@ -181,7 +181,12 @@
       "deleteOnlyThis": "Poista vain tämä matka",
       "deleteAllRecurring": "Poista koko sarja (tulevat matkat)",
       "deleteSuccess": "Matka poistettu onnistuneesti",
-      "deleteError": "Virhe matkan poistamisessa"
+      "deleteError": "Virhe matkan poistamisessa",
+      "badge": "Kuljettajan Paneeli",
+      "subtitle": "Hallitse julkaisemiasi matkoja ja aktivoi uusia reittejä.",
+      "noTrips": "Et ole vielä julkaissut mitään",
+      "createTripInfo": "Jaa autosi, säästä kuluja ja auta planeettaa julkaisemalla ensimmäinen matkasi.",
+      "deleteConfirm": "Tämä toiminto poistaa matkan ja kaikki sen varaukset."
     },
     "myBookings": {
       "title": "Varaukseni",

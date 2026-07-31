@@ -1,17 +1,24 @@
 "use client";
 
-import React, { createContext, useContext, ReactNode, useMemo } from "react";
-import { useJsApiLoader } from "@react-google-maps/api";
+import React, { createContext, useContext, ReactNode } from "react";
+import dynamic from "next/dynamic";
 
-interface GoogleMapsContextType {
+export interface GoogleMapsContextType {
     isLoaded: boolean;
     loadError: Error | undefined;
 }
 
-const GoogleMapsContext = createContext<GoogleMapsContextType | undefined>(undefined);
+export const GoogleMapsContext = createContext<GoogleMapsContextType | undefined>(undefined);
 
-// Static libraries
-const LIBRARIES: any = ["places"];
+// El Loader de @react-google-maps/api usa un singleton a nivel de módulo
+// (Loader.instance). Durante el renderizado en servidor (SSR) cada petición con
+// distinto idioma/región crea el Loader con opciones distintas y la segunda lanza
+// "Loader must not be called again with different options", provocando un error
+// 500. Por eso cargamos Google Maps solo en el cliente (ssr: false).
+const MapsScriptLoader = dynamic(
+    () => import("./MapsScriptLoader"),
+    { ssr: false }
+);
 
 export function GoogleMapsProvider({ 
     children, 
@@ -22,20 +29,11 @@ export function GoogleMapsProvider({
     language?: string;
     region?: string;
 }) {
-    const apiKey = process.env.NEXT_PUBLIC_GOOGLE_MAPS_API_KEY || "";
-    
-    const loaderOptions = useMemo(() => ({
-        googleMapsApiKey: apiKey,
-        libraries: LIBRARIES,
-        language,
-        region,
-    }), [apiKey, language, region]);
-
-    const { isLoaded, loadError } = useJsApiLoader(loaderOptions);
-
     return (
-        <GoogleMapsContext.Provider value={{ isLoaded, loadError }}>
-            {children}
+        <GoogleMapsContext.Provider value={{ isLoaded: false, loadError: undefined }}>
+            <MapsScriptLoader language={language} region={region}>
+                {children}
+            </MapsScriptLoader>
         </GoogleMapsContext.Provider>
     );
 }

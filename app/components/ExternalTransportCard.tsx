@@ -56,18 +56,18 @@ export default function ExternalTransportCard({ option, lang }: Props) {
   };
 
   return (
-    <div className="group relative bg-white/5 backdrop-blur-3xl border border-white/5 rounded-[2.5rem] p-8 hover:border-brand-purple/20 transition-all duration-500 hover:shadow-2xl hover:shadow-brand-purple/5 overflow-hidden">
-      <div className="absolute inset-0 bg-hacker-dots opacity-5 pointer-events-none"></div>
-      
+    <div className="group relative bg-white border-2 border-green-100 rounded-[2.5rem] p-8 hover:border-green-300 hover:shadow-xl transition-all overflow-hidden">
+      <div className="absolute top-0 right-0 w-64 h-64 bg-green-50/60 rounded-full -mr-24 -mt-24 blur-3xl pointer-events-none group-hover:bg-green-100/60 transition-colors duration-500"></div>
+
       <div className="relative flex flex-col md:flex-row gap-8 items-center md:items-start">
         <div className="flex-shrink-0 text-center space-y-4">
           <div className="relative">
-            <div className="absolute inset-0 bg-brand-purple/20 blur-xl rounded-full scale-110"></div>
-            <div className="relative w-20 h-20 rounded-full bg-brand-dark border-2 border-white/10 flex items-center justify-center text-brand-purple">
+            <div className="absolute inset-0 bg-green-200/40 blur-xl rounded-full scale-110"></div>
+            <div className="relative w-20 h-20 rounded-full bg-green-50 border-2 border-green-100 flex items-center justify-center text-green-600">
               {getIcon(mainLeg.mode)}
             </div>
           </div>
-          <div className="text-[10px] font-black uppercase tracking-widest text-brand-gray/60">
+          <div className="text-[10px] font-black uppercase tracking-widest text-green-400">
             Digitransit FI
           </div>
         </div>
@@ -75,48 +75,48 @@ export default function ExternalTransportCard({ option, lang }: Props) {
         <div className="flex-1 space-y-6 w-full">
           <div className="flex flex-col sm:flex-row justify-between items-start gap-4">
             <div className="space-y-1">
-              <div className="flex items-center gap-3 text-brand-purple font-black text-xs uppercase tracking-[0.2em] mb-2">
+              <div className="flex items-center gap-3 text-green-600 font-black text-xs uppercase tracking-[0.2em] mb-2">
                 <span>{getModeLabel(mainLeg.mode)}</span>
-                <span className="w-1.5 h-1.5 rounded-full bg-white/10"></span>
+                <span className="w-1.5 h-1.5 rounded-full bg-green-200"></span>
                 <span>{new Date(option.start_time).toLocaleDateString(lang, { day: 'numeric', month: 'short' })}</span>
               </div>
-              <h2 className="text-2xl md:text-3xl font-black text-white leading-tight tracking-tightest flex items-center gap-4">
+              <h2 className="text-2xl md:text-3xl font-black text-green-950 leading-tight tracking-tightest flex items-center gap-4">
                 {mainLeg.from}
-                <svg className="w-6 h-6 text-brand-gray/30" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <svg className="w-6 h-6 text-green-300" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                   <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={3} d="M17 8l4 4m0 0l-4 4m4-4H3" />
                 </svg>
                 {mainLeg.to}
               </h2>
             </div>
-            
+
             <div className="text-right flex flex-row sm:flex-col items-center sm:items-end gap-3 sm:gap-0">
-              <p className="text-3xl font-black text-white tracking-tightest">
-                {option.price && option.price > 0 
-                  ? `${option.currency === 'EUR' ? '€' : option.currency}${Number(option.price).toFixed(2)}` 
+              <p className="text-3xl font-black text-green-950 tracking-tightest">
+                {option.price && option.price > 0
+                  ? `${option.currency === 'EUR' ? '€' : option.currency}${Number(option.price).toFixed(2)}`
                   : (lang === 'fi' ? 'Säästä' : (lang === 'es' ? 'Ahorra' : 'Save'))}
               </p>
-              <p className="text-xs font-black text-brand-gray uppercase tracking-widest leading-none">
-                {option.price && option.price > 0 
+              <p className="text-xs font-black text-green-500 uppercase tracking-widest leading-none">
+                {option.price && option.price > 0
                   ? (lang === 'fi' ? 'Hinta alkaen' : (lang === 'es' ? 'Desde' : 'From'))
                   : (lang === 'fi' ? 'Katso hinta' : (lang === 'es' ? 'Ver precio' : 'Check price'))}
               </p>
             </div>
           </div>
 
-          <div className="grid grid-cols-2 bg-black/20 rounded-3xl p-5 border border-white/5 gap-4">
+          <div className="grid grid-cols-2 bg-green-50/60 rounded-3xl p-5 border border-green-100 gap-4">
             <div className="space-y-1">
-              <p className="text-xs font-black text-brand-gray/70 uppercase tracking-widest">
+              <p className="text-xs font-black text-green-500 uppercase tracking-widest">
                 {lang === 'fi' ? 'Lähtö' : (lang === 'es' ? 'Salida' : 'Departure')}
               </p>
-              <p className="text-sm font-bold text-white italic">
+              <p className="text-sm font-bold text-green-900 italic">
                 {formatTime(option.start_time)} HS
               </p>
             </div>
             <div className="space-y-1">
-              <p className="text-xs font-black text-brand-gray/70 uppercase tracking-widest">
+              <p className="text-xs font-black text-green-500 uppercase tracking-widest">
                 {lang === 'fi' ? 'Saapuminen' : (lang === 'es' ? 'Llegada' : 'Arrival')}
               </p>
-              <p className="text-sm font-bold text-white">
+              <p className="text-sm font-bold text-green-900">
                 {formatTime(option.end_time)} HS
               </p>
             </div>
@@ -128,22 +128,22 @@ export default function ExternalTransportCard({ option, lang }: Props) {
               {option.legs.map((leg, idx) => (
                 <React.Fragment key={idx}>
                   <span className={`text-[10px] font-bold px-2 py-1 rounded-md ${
-                    leg.mode === 'WALK' ? 'bg-white/5 text-brand-gray' : 'bg-brand-purple/20 text-brand-purple'
+                    leg.mode === 'WALK' ? 'bg-green-50 text-green-400' : 'bg-green-100 text-green-700'
                   }`}>
                     {getModeLabel(leg.mode)}
                   </span>
-                  {idx < option.legs.length - 1 && <span className="text-white/20">›</span>}
+                  {idx < option.legs.length - 1 && <span className="text-green-200">›</span>}
                 </React.Fragment>
               ))}
             </div>
           )}
 
           <div className="flex pt-2">
-            <a 
-              href={option.url || "https://www.reittiopas.fi/"} 
+            <a
+              href={option.url || "https://www.reittiopas.fi/"}
               target="_blank"
               rel="noopener noreferrer"
-              className="w-full bg-white/5 text-white border border-white/10 px-8 py-4 rounded-2xl hover:bg-brand-purple hover:border-transparent transition-all shadow-xl font-black uppercase tracking-[0.2em] text-xs text-center"
+              className="btn-primary w-full"
             >
               {lang === 'fi' ? 'Katso reitti ja aikataulut' : (lang === 'es' ? 'Ver ruta y horarios' : 'View route and schedules')}
             </a>
