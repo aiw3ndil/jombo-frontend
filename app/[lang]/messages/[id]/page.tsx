@@ -12,7 +12,7 @@ export default function ConversationPage() {
   const params = useParams();
   const lang = (params?.lang as string) || "es";
   const conversationId = parseInt(params?.id as string);
-  const { user, loading: authLoading } = useAuth();
+  const { user, loading: authLoading, refreshUser } = useAuth();
 
   const [conversation, setConversation] = useState<ConversationDetail | null>(null);
   const [messages, setMessages] = useState<Message[]>([]);
@@ -49,6 +49,10 @@ export default function ConversationPage() {
       setMessages(data.messages);
     } catch (error: any) {
       console.error("Error loading conversation:", error);
+      if (error?.status === 401) {
+        refreshUser();
+        return;
+      }
       toast.error(error?.message || t("page.conversation.loadError") || "Error al cargar la conversación");
       router.push(`/${lang}/messages`);
     } finally {

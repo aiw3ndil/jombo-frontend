@@ -60,7 +60,9 @@ export async function getConversations(): Promise<Conversation[]> {
   });
 
   if (!res.ok) {
-    throw new Error("Error al obtener las conversaciones");
+    const error = new Error("Error al obtener las conversaciones");
+    (error as any).status = res.status;
+    throw error;
   }
 
   return await res.json();
@@ -76,7 +78,9 @@ export async function getConversation(conversationId: number): Promise<Conversat
   });
 
   if (!res.ok) {
-    throw new Error("Error al obtener la conversación");
+    const error = new Error("Error al obtener la conversación");
+    (error as any).status = res.status;
+    throw error;
   }
 
   const data = await res.json();
