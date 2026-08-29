@@ -69,11 +69,12 @@ export default async function RootLayout({
       <head>
         <OrganizationSchema />
         <WebSiteSchema />
-        <link rel="icon" type="image/png" sizes="32x32" href="/icons/favicon.png?v=2" />
-        <link rel="icon" type="image/png" sizes="16x16" href="/icons/favicon-16.png?v=2" />
-        <link rel="manifest" href="/manifest.json?v=2" />
-        <link rel="apple-touch-icon" href="/apple-touch-icon.png?v=2" />
-        <meta name="theme-color" content="#15803d" />
+        <link rel="icon" type="image/png" sizes="32x32" href="/icons/favicon.png?v=3" />
+        <link rel="icon" type="image/png" sizes="16x16" href="/icons/favicon-16.png?v=3" />
+        <link rel="icon" href="/favicon.ico?v=3" />
+        <link rel="manifest" href="/manifest.json?v=3" />
+        <link rel="apple-touch-icon" href="/apple-touch-icon.png?v=3" />
+        <meta name="theme-color" content="#6441B8" />
       </head>
       <body
         className={`font-sans antialiased min-h-screen bg-white text-[var(--brand-dark)]`}
