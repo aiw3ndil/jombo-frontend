@@ -1,5 +1,5 @@
 import type { Metadata } from "next";
-import { Geist, Geist_Mono } from "next/font/google";
+import localFont from "next/font/local";
 import { headers } from "next/headers";
 import { GoogleAnalytics } from "./components/GoogleAnalytics";
 import { OrganizationSchema, WebSiteSchema } from "./components/StructuredData";
@@ -8,18 +8,18 @@ import CookieConsent from "./components/CookieConsent";
 import { Toaster } from "sonner";
 import "./globals.css";
 
-const geistSans = Geist({
-  variable: "--font-geist-sans",
-  subsets: ["latin"],
-  display: 'swap',
-  preload: true,
-});
-
-const geistMono = Geist_Mono({
-  variable: "--font-geist-mono",
-  subsets: ["latin"],
-  display: 'swap',
-  preload: true,
+const ubuntu = localFont({
+  src: [
+    { path: "../public/fonts/Ubuntu-Light.ttf", weight: "300", style: "normal" },
+    { path: "../public/fonts/Ubuntu-LightItalic.ttf", weight: "300", style: "italic" },
+    { path: "../public/fonts/Ubuntu-Regular.ttf", weight: "400", style: "normal" },
+    { path: "../public/fonts/Ubuntu-Italic.ttf", weight: "400", style: "italic" },
+    { path: "../public/fonts/Ubuntu-Medium.ttf", weight: "500", style: "normal" },
+    { path: "../public/fonts/Ubuntu-MediumItalic.ttf", weight: "500", style: "italic" },
+    { path: "../public/fonts/Ubuntu-Bold.ttf", weight: "700", style: "normal" },
+    { path: "../public/fonts/Ubuntu-BoldItalic.ttf", weight: "700", style: "italic" },
+  ],
+  variable: "--font-ubuntu",
 });
 
 export const metadata: Metadata = {
@@ -65,13 +65,17 @@ export default async function RootLayout({
   const currentLang = ["en", "es", "fi"].includes(lang) ? lang : "es";
 
   return (
-    <html lang={currentLang}>
+    <html lang={currentLang} className={ubuntu.variable}>
       <head>
         <OrganizationSchema />
         <WebSiteSchema />
+        <link rel="icon" href="/favicon.ico" />
+        <link rel="manifest" href="/manifest.json" />
+        <link rel="apple-touch-icon" href="/apple-touch-icon.png" />
+        <meta name="theme-color" content="#15803d" />
       </head>
       <body
-        className={`${geistSans.variable} ${geistMono.variable} antialiased min-h-screen bg-white text-gray-900`}
+        className={`font-sans antialiased min-h-screen bg-white text-[var(--brand-dark)]`}
       >
         <GoogleAnalytics />
         <Providers lang={currentLang}>

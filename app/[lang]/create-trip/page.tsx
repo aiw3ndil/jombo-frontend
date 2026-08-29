@@ -94,16 +94,16 @@ export default function CreateTrip() {
   return (
     <div className="min-h-screen bg-white">
       {/* ── HERO ── */}
-      <section className="bg-green-50 border-b-2 border-green-100 py-8 px-4">
+      <section className="bg-[#f0f4f8] border-b-2 border-[#e2e8f0] py-8 px-4">
         <div className="max-w-5xl mx-auto text-center">
-          <div className="inline-flex items-center gap-2 bg-green-100 border border-green-300 text-green-800 px-4 py-1.5 rounded-full text-xs font-bold mb-3 uppercase tracking-wide">
-            <span className="w-2 h-2 rounded-full bg-green-600 animate-pulse"></span>
+          <div className="inline-flex items-center gap-2 bg-[#e2e8f0] border border-[#e2e8f0] text-[var(--brand-dark)] px-4 py-1.5 rounded-full text-xs font-bold mb-3 uppercase tracking-wide">
+            <span className="w-2 h-2 rounded-full bg-[var(--brand-blue)] animate-pulse"></span>
             {t("page.createTrip.badge") || "Nuevo Trayecto"}
           </div>
-          <h1 className="text-2xl md:text-3xl font-bold text-green-900 leading-tight mb-2">
+          <h1 className="text-2xl md:text-3xl font-bold text-[var(--brand-dark)] leading-tight mb-2">
             {t("page.createTrip.title") || "Publicar un viaje"}
           </h1>
-          <p className="text-sm md:text-base text-green-700 max-w-3xl mx-auto leading-relaxed font-normal">
+          <p className="text-sm md:text-base text-[var(--brand-neutral)] max-w-3xl mx-auto leading-relaxed font-normal">
             {t("page.createTrip.subtitle") || "Comparte tu ruta, ahorra gastos y ayuda a construir una comunidad más sostenible."}
           </p>
         </div>
@@ -118,15 +118,15 @@ export default function CreateTrip() {
                 {/* Paso 1: Ruta */}
                 <div className="space-y-6">
                   <div className="flex items-center gap-4 mb-2">
-                    <div className="w-10 h-10 rounded-full bg-green-700 flex items-center justify-center text-white font-bold shadow-md">1</div>
-                    <h2 className="text-2xl font-bold text-green-900">{t("page.createTrip.routeStep") || "Detalles de la ruta"}</h2>
+                    <div className="w-10 h-10 rounded-full bg-[var(--brand-blue)] flex items-center justify-center text-white font-bold shadow-md">1</div>
+                    <h2 className="text-2xl font-bold text-[var(--brand-dark)]">{t("page.createTrip.routeStep") || "Detalles de la ruta"}</h2>
                   </div>
                   
                   <div className="grid md:grid-cols-2 gap-8">
                     <div>
                       <label className="form-label">{t("page.createTrip.from") || "Punto de Origen"} *</label>
                       <div className="relative group">
-                        <div className="absolute left-4 top-1/2 -translate-y-1/2 text-green-400 group-focus-within:text-green-600 transition-colors z-10">
+                        <div className="absolute left-4 top-1/2 -translate-y-1/2 text-[var(--brand-neutral)] group-focus-within:text-[var(--brand-blue)] transition-colors z-10">
                           <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                             <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z" />
                           </svg>
@@ -145,7 +145,7 @@ export default function CreateTrip() {
                     <div>
                       <label className="form-label">{t("page.createTrip.to") || "Punto de Destino"} *</label>
                       <div className="relative group">
-                        <div className="absolute left-4 top-1/2 -translate-y-1/2 text-green-400 group-focus-within:text-green-600 transition-colors z-10">
+                        <div className="absolute left-4 top-1/2 -translate-y-1/2 text-[var(--brand-neutral)] group-focus-within:text-[var(--brand-blue)] transition-colors z-10">
                           <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                             <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z" />
                           </svg>
@@ -163,13 +163,13 @@ export default function CreateTrip() {
                   </div>
                 </div>
 
-                <div className="h-px bg-green-50 w-full"></div>
+                <div className="h-px bg-[#f0f4f8] w-full"></div>
 
                 {/* Paso 2: Horario y Plazas */}
                 <div className="space-y-6">
                   <div className="flex items-center gap-4 mb-2">
-                    <div className="w-10 h-10 rounded-full bg-green-700 flex items-center justify-center text-white font-bold shadow-md">2</div>
-                    <h2 className="text-2xl font-bold text-green-900">{t("page.createTrip.timeStep") || "Fecha, hora y precio"}</h2>
+                    <div className="w-10 h-10 rounded-full bg-[var(--brand-blue)] flex items-center justify-center text-white font-bold shadow-md">2</div>
+                    <h2 className="text-2xl font-bold text-[var(--brand-dark)]">{t("page.createTrip.timeStep") || "Fecha, hora y precio"}</h2>
                   </div>
 
                   <div className="grid md:grid-cols-4 gap-6">
@@ -213,7 +213,7 @@ export default function CreateTrip() {
                     <div className="md:col-span-1">
                       <label className="form-label">{t("page.createTrip.pricePerSeat") || "Precio"} *</label>
                       <div className="relative group">
-                        <span className="absolute left-5 top-1/2 -translate-y-1/2 text-green-600 font-black text-xl z-10 group-focus-within:text-green-800 transition-colors">€</span>
+                        <span className="absolute left-5 top-1/2 -translate-y-1/2 text-[var(--brand-blue)] font-black text-xl z-10 group-focus-within:text-[var(--brand-dark)] transition-colors">€</span>
                         <input 
                           type="number" 
                           name="pricePerSeat" 
@@ -221,7 +221,7 @@ export default function CreateTrip() {
                           onChange={handleChange} 
                           min="0" 
                           step="0.01" 
-                          className="form-input pl-12 font-black text-xl text-green-700" 
+                          className="form-input pl-12 font-black text-xl text-[var(--brand-neutral)]" 
                           required 
                         />
                       </div>
@@ -229,13 +229,13 @@ export default function CreateTrip() {
                   </div>
                 </div>
 
-                <div className="h-px bg-green-50 w-full"></div>
+                <div className="h-px bg-[#f0f4f8] w-full"></div>
 
                 {/* Paso 3: Información adicional */}
                 <div className="space-y-6">
                   <div className="flex items-center gap-4 mb-2">
-                    <div className="w-10 h-10 rounded-full bg-green-700 flex items-center justify-center text-white font-bold shadow-md">3</div>
-                    <h2 className="text-2xl font-bold text-green-900">{t("page.createTrip.additionalStep") || "Configuración avanzada"}</h2>
+                    <div className="w-10 h-10 rounded-full bg-[var(--brand-blue)] flex items-center justify-center text-white font-bold shadow-md">3</div>
+                    <h2 className="text-2xl font-bold text-[var(--brand-dark)]">{t("page.createTrip.additionalStep") || "Configuración avanzada"}</h2>
                   </div>
 
                   <div className="grid md:grid-cols-2 gap-8">
@@ -252,7 +252,7 @@ export default function CreateTrip() {
                           <option value="es">🇪🇸 {t("page.createTrip.regionSpain") || "España"}</option>
                           <option value="fi">🇫🇮 {t("page.createTrip.regionFinland") || "Finlandia"}</option>
                         </select>
-                        <div className="absolute right-4 top-1/2 -translate-y-1/2 text-green-500 pointer-events-none">
+                        <div className="absolute right-4 top-1/2 -translate-y-1/2 text-[var(--brand-blue)] pointer-events-none">
                           <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                             <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 9l-7 7-7-7" />
                           </svg>
@@ -274,16 +274,16 @@ export default function CreateTrip() {
                   </div>
 
                   {/* Recurrencia */}
-                  <div className="bg-green-50/50 border-2 border-green-100 rounded-[2rem] p-8 md:p-10 transition-all hover:bg-green-50">
+                  <div className="bg-[#f0f4f8]/50 border-2 border-[#e2e8f0] rounded-[2rem] p-8 md:p-10 transition-all hover:bg-[#f0f4f8]">
                     <div className="flex items-center justify-between gap-6">
                       <div className="flex-1">
-                        <h3 className="text-xl font-bold text-green-900 mb-1 flex items-center gap-2">
-                          <svg className="w-6 h-6 text-green-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <h3 className="text-xl font-bold text-[var(--brand-dark)] mb-1 flex items-center gap-2">
+                          <svg className="w-6 h-6 text-[var(--brand-blue)]" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                             <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4 4v5h.582m15.356 2A8.001 8.001 0 004.582 9m0 0H9m11 11v-5h-.581m0 0a8.003 8.003 0 01-15.357-2m15.357 2H15" />
                           </svg>
                           {t("page.createTrip.recurring") || "Viaje recurrente"}
                         </h3>
-                        <p className="text-green-700 font-medium">{t("page.createTrip.recurrenceInfo") || "Automatiza la publicación de este viaje según una frecuencia."}</p>
+                        <p className="text-[var(--brand-neutral)] font-medium">{t("page.createTrip.recurrenceInfo") || "Automatiza la publicación de este viaje según una frecuencia."}</p>
                       </div>
                       <label className="relative inline-flex items-center cursor-pointer scale-125">
                         <input
@@ -293,12 +293,12 @@ export default function CreateTrip() {
                           onChange={handleChange}
                           className="sr-only peer"
                         />
-                        <div className="w-12 h-6 bg-green-200 rounded-full peer peer-checked:bg-green-700 after:content-[''] after:absolute after:top-[2px] after:start-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-5 after:w-5 after:transition-all peer-checked:after:translate-x-full peer-checked:after:border-white"></div>
+                        <div className="w-12 h-6 bg-green-200 rounded-full peer peer-checked:bg-[var(--brand-blue)] after:content-[''] after:absolute after:top-[2px] after:start-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-5 after:w-5 after:transition-all peer-checked:after:translate-x-full peer-checked:after:border-white"></div>
                       </label>
                     </div>
 
                     {formData.is_recurring && (
-                      <div className="grid md:grid-cols-2 gap-8 mt-10 pt-8 border-t border-green-200 animate-in fade-in slide-in-from-top-4 duration-300">
+                      <div className="grid md:grid-cols-2 gap-8 mt-10 pt-8 border-t border-[#e2e8f0] animate-in fade-in slide-in-from-top-4 duration-300">
                         <div>
                           <label className="form-label">{t("page.createTrip.recurrencePattern") || "Frecuencia"}</label>
                           <div className="relative">
@@ -311,7 +311,7 @@ export default function CreateTrip() {
                               <option value="daily">{t("page.createTrip.daily") || "Todos los días"}</option>
                               <option value="weekly">{t("page.createTrip.weekly") || "Una vez a la semana"}</option>
                             </select>
-                            <div className="absolute right-4 top-1/2 -translate-y-1/2 text-green-500 pointer-events-none">
+                            <div className="absolute right-4 top-1/2 -translate-y-1/2 text-[var(--brand-blue)] pointer-events-none">
                               <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                 <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 9l-7 7-7-7" />
                               </svg>

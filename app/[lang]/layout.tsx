@@ -1,5 +1,6 @@
 import { Providers } from "@/app/components/Providers";
 import { ClientLayout } from "@/app/components/ClientLayout";
+import { GoogleOAuthProvider } from '@react-oauth/google';
 import type { Metadata } from 'next';
 import { promises as fs } from 'fs'; // Import fs
 import path from 'path'; // Import path
@@ -51,6 +52,8 @@ export async function generateMetadata({ params: paramsPromise }: { params: Prom
   };
 }
 
+// ... (keep existing imports)
+
 export default async function LangLayout({ 
   children, 
   params 
@@ -60,10 +63,13 @@ export default async function LangLayout({
 }) {
   const { lang } = await params;
   const currentLang = lang || "es";
+  const clientId = process.env.NEXT_PUBLIC_GOOGLE_CLIENT_ID || "";
 
   return (
-    <ClientLayout lang={currentLang}>
-      {children}
-    </ClientLayout>
+    <GoogleOAuthProvider clientId={clientId}>
+      <ClientLayout lang={currentLang}>
+        {children}
+      </ClientLayout>
+    </GoogleOAuthProvider>
   );
 }

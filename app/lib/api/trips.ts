@@ -1,4 +1,4 @@
-const API_BASE = process.env.NEXT_PUBLIC_API_BASE_URL || "";
+const API_BASE = process.env.NEXT_PUBLIC_API_URL || "";
 
 function getAuthHeaders(): HeadersInit {
   const token = localStorage.getItem('authToken'); // Assuming token is stored in localStorage
@@ -69,7 +69,9 @@ export async function searchTrips(
   let url = `${API_BASE}/api/v1/trips/search?${params.toString()}`;
   if (departureLocation && arrivalLocation) {
     // Si tenemos ambos, usamos la ruta SEO que es más específica
-    const seoPath = `${departureLocation.toLowerCase()}-${arrivalLocation.toLowerCase()}`;
+    const from = encodeURIComponent(departureLocation.toLowerCase());
+    const to = encodeURIComponent(arrivalLocation.toLowerCase());
+    const seoPath = `${from}-${to}`;
     url = `${API_BASE}/api/v1/trips/${seoPath}`;
   }
 

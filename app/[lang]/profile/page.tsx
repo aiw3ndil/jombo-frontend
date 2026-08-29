@@ -202,16 +202,16 @@ export default function ProfilePage({ params }: { params: Promise<{ lang: string
   return (
     <div className="min-h-screen bg-white">
       {/* ── HERO ── */}
-      <section className="bg-green-50 border-b-2 border-green-100 py-8 px-4">
+      <section className="bg-[#f0f4f8] border-b-2 border-[#e2e8f0] py-8 px-4">
         <div className="max-w-5xl mx-auto text-center md:text-left">
-          <div className="inline-flex items-center gap-2 bg-green-100 border border-green-300 text-green-800 px-4 py-1.5 rounded-full text-xs font-bold mb-3 uppercase tracking-wide">
-            <span className="w-2 h-2 rounded-full bg-green-600"></span>
+          <div className="inline-flex items-center gap-2 bg-[#e2e8f0] border border-[#e2e8f0] text-[var(--brand-dark)] px-4 py-1.5 rounded-full text-xs font-bold mb-3 uppercase tracking-wide">
+            <span className="w-2 h-2 rounded-full bg-[var(--brand-blue)]"></span>
             {t("profile.badge")}
           </div>
-          <h1 className="text-2xl md:text-3xl font-bold text-green-900 leading-tight mb-2">
+          <h1 className="text-2xl md:text-3xl font-bold text-[var(--brand-dark)] leading-tight mb-2">
             {t("profile.title")}
           </h1>
-          <p className="text-sm md:text-base text-green-700 max-w-2xl leading-relaxed font-normal">
+          <p className="text-sm md:text-base text-[var(--brand-neutral)] max-w-2xl leading-relaxed font-normal">
             {t("profile.subtitle")}
           </p>
         </div>
@@ -223,7 +223,7 @@ export default function ProfilePage({ params }: { params: Promise<{ lang: string
           
           {message && (
             <div className={`p-6 rounded-2xl border-2 flex items-center gap-4 animate-shake ${
-              message.type === "success" ? "bg-green-100 border-green-200 text-green-800" : "form-error"
+              message.type === "success" ? "bg-[#e2e8f0] border-[#e2e8f0] text-[var(--brand-dark)]" : "form-error"
             }`}>
               <div className={`w-10 h-10 rounded-full flex items-center justify-center ${message.type === 'success' ? 'bg-green-200' : 'bg-red-100'}`}>
                 {message.type === 'success' ? '✓' : '!'}
@@ -236,14 +236,14 @@ export default function ProfilePage({ params }: { params: Promise<{ lang: string
           <div className="form-card">
             <div className="flex flex-col md:flex-row justify-between items-start md:items-center gap-6 mb-12 border-b-2 border-green-50 pb-8">
               <div>
-                <h2 className="text-3xl font-bold text-green-900 mb-2">{t("profile.personalInfoTitle")}</h2>
-                <p className="text-green-600 font-medium">{t("profile.personalInfoDescription")}</p>
+                <h2 className="text-3xl font-bold text-[var(--brand-dark)] mb-2">{t("profile.personalInfoTitle")}</h2>
+                <p className="text-[var(--brand-blue)] font-medium">{t("profile.personalInfoDescription")}</p>
               </div>
             </div>
 
             <form onSubmit={handleSubmit} className="space-y-10">
               {/* Avatar Upload */}
-              <div className="flex flex-col sm:flex-row items-center gap-10 bg-green-50/50 p-8 rounded-[2rem] border-2 border-green-100 shadow-inner">
+              <div className="flex flex-col sm:flex-row items-center gap-10 bg-[#f0f4f8]/50 p-8 rounded-[2rem] border-2 border-[#e2e8f0] shadow-inner">
                 <div className="relative group">
                   <div className="relative w-40 h-40 rounded-full overflow-hidden border-4 border-white shadow-xl bg-white">
                     {picturePreview ? (
@@ -253,7 +253,7 @@ export default function ProfilePage({ params }: { params: Promise<{ lang: string
                         className="w-full h-full object-cover transition-transform group-hover:scale-110"
                       />
                     ) : (
-                      <div className="w-full h-full bg-green-700 flex items-center justify-center text-white text-5xl font-bold">
+                      <div className="w-full h-full bg-[var(--brand-blue)] flex items-center justify-center text-white text-5xl font-bold">
                         {formData.name.charAt(0).toUpperCase()}
                       </div>
                     )}
@@ -263,7 +263,7 @@ export default function ProfilePage({ params }: { params: Promise<{ lang: string
                        </svg>
                     </div>
                   </div>
-                  <label className="absolute bottom-2 right-2 w-12 h-12 bg-green-600 rounded-full flex items-center justify-center cursor-pointer hover:bg-green-700 transition-all shadow-xl border-4 border-white active:scale-90">
+                  <label className="absolute bottom-2 right-2 w-12 h-12 bg-[var(--brand-blue)] rounded-full flex items-center justify-center cursor-pointer hover:bg-[var(--brand-blue)] transition-all shadow-xl border-4 border-white active:scale-90">
                     <svg className="w-6 h-6 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                       <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 4v16m8-8H4" />
                     </svg>
@@ -271,11 +271,11 @@ export default function ProfilePage({ params }: { params: Promise<{ lang: string
                   </label>
                 </div>
                 <div className="flex-1 text-center sm:text-left space-y-2">
-                  <h4 className="text-2xl font-black text-green-900">{formData.name || t("profile.name")}</h4>
-                  <p className="bg-green-100 text-green-700 px-4 py-1.5 rounded-lg text-sm font-bold inline-block border border-green-200">
+                  <h4 className="text-2xl font-black text-[var(--brand-dark)]">{formData.name || t("profile.name")}</h4>
+                  <p className="bg-[#e2e8f0] text-[var(--brand-neutral)] px-4 py-1.5 rounded-lg text-sm font-bold inline-block border border-[#e2e8f0]">
                     {formData.email}
                   </p>
-                  <p className="text-green-500 text-sm font-bold uppercase tracking-widest block pt-2">{t("profile.avatarInfo")}</p>
+                  <p className="text-[var(--brand-blue)] text-sm font-bold uppercase tracking-widest block pt-2">{t("profile.avatarInfo")}</p>
                 </div>
               </div>
 
@@ -300,7 +300,7 @@ export default function ProfilePage({ params }: { params: Promise<{ lang: string
                       <option value="en">English</option>
                       <option value="fi">Suomi</option>
                     </select>
-                    <div className="absolute right-6 top-1/2 -translate-y-1/2 pointer-events-none text-green-600">
+                    <div className="absolute right-6 top-1/2 -translate-y-1/2 pointer-events-none text-[var(--brand-blue)]">
                       <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                         <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 9l-7 7-7-7" />
                       </svg>
@@ -314,7 +314,7 @@ export default function ProfilePage({ params }: { params: Promise<{ lang: string
                       <option value="es">{t("profile.regionSpain") || "España"}</option>
                       <option value="fi">{t("profile.regionFinland") || "Finlandia"}</option>
                     </select>
-                    <div className="absolute right-6 top-1/2 -translate-y-1/2 pointer-events-none text-green-600">
+                    <div className="absolute right-6 top-1/2 -translate-y-1/2 pointer-events-none text-[var(--brand-blue)]">
                       <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                         <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 9l-7 7-7-7" />
                       </svg>
@@ -339,13 +339,13 @@ export default function ProfilePage({ params }: { params: Promise<{ lang: string
           {/* Sección: Seguridad */}
           <div className="form-card">
             <div className="mb-12 border-b-2 border-green-50 pb-8">
-              <h2 className="text-3xl font-bold text-green-900 mb-2">{t("profile.securityTitle")}</h2>
-              <p className="text-green-600 font-medium">{t("profile.securityDescription")}</p>
+              <h2 className="text-3xl font-bold text-[var(--brand-dark)] mb-2">{t("profile.securityTitle")}</h2>
+              <p className="text-[var(--brand-blue)] font-medium">{t("profile.securityDescription")}</p>
             </div>
 
             {passwordMessage && (
               <div className={`mb-8 p-6 rounded-2xl border-2 animate-shake ${
-                passwordMessage.type === "success" ? "bg-green-100 border-green-200 text-green-800" : "form-error"
+                passwordMessage.type === "success" ? "bg-[#e2e8f0] border-[#e2e8f0] text-[var(--brand-dark)]" : "form-error"
               }`}>
                 <span className="font-bold">{passwordMessage.text}</span>
               </div>

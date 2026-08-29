@@ -189,10 +189,13 @@
       "deleteConfirm": "Tämä toiminto poistaa matkan ja kaikki sen varaukset."
     },
     "myBookings": {
+      "badge": "Matkat",
       "title": "Varaukseni",
+      "subtitle": "Hallitse matkapyyntöjäsi ja katso vahvistetut reittisi.",
       "back": "Takaisin",
       "loading": "Ladataan...",
       "noBookings": "Sinulla ei ole varauksia",
+      "noBookingsInfo": "Etsi matka, josta kiinnostut ja varaa paikkasi ilmaistaksi",
       "searchTrips": "Hae matkoja",
       "driver": "Kuljettaja",
       "departure": "Lähtö",
@@ -205,6 +208,7 @@
       "statusPending": "Odottaa",
       "statusRejected": "Hylätty",
       "statusCancelled": "Peruttu",
+      "inactive": "Varaus Valmis",
       "confirmCancel": "Haluatko varmasti peruuttaa tämän varauksen?",
       "cancelSuccess": "Varaus peruttu onnistuneesti",
       "cancelError": "Virhe varauksen peruutuksessa",

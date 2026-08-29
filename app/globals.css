@@ -1,48 +1,58 @@
 @import "tailwindcss";
 
+@theme {
+  --font-sans: var(--font-ubuntu), sans-serif;
+}
+
 @layer base {
   :root {
+    --brand-dark: #212240;
+    --brand-neutral: #717285;
+    --brand-accent-1: #5471E9;
+    --brand-accent-2: #FF419C;
+    --brand-blue: #0051B3;
+    --brand-gradient: linear-gradient(89.8deg, #0BB1D3, #9F2FFF);
+
     --background: #ffffff;
-    --foreground: #064e3b; /* green-900 */
-    --primary: #15803d;    /* green-700 (darker primary as requested) */
-    --primary-hover: #166534; /* green-800 */
-    --secondary: #f0fdf4;  /* green-50 */
-    --accent: #22c55e;     /* green-500 */
-    --border: #dcfce7;     /* green-100 */
+    --foreground: var(--brand-dark);
+    --primary: var(--brand-blue);
+    --primary-hover: #003d85; /* Slightly darker */
+    --secondary: #f0f4f8; 
+    --accent: var(--brand-accent-1);
+    --border: #e2e8f0;
   }
 
   body {
-    @apply bg-white text-green-900 antialiased font-sans;
-    font-feature-settings: "cv02", "cv03", "cv04", "cv11";
+    @apply bg-white text-[var(--brand-dark)] antialiased font-sans;
   }
 
   h1, h2, h3, h4, h5, h6 {
-    @apply font-bold tracking-tight text-green-900;
+    @apply font-bold tracking-tight text-[var(--brand-dark)];
   }
 }
 
 @utility btn-primary {
-  @apply bg-green-700 hover:bg-green-800 text-white px-8 py-4 rounded-2xl font-bold text-lg transition-all shadow-md inline-flex items-center justify-center gap-2 active:scale-95 disabled:opacity-50 disabled:pointer-events-none;
+  @apply bg-[var(--brand-blue)] hover:bg-[#003d85] text-white px-8 py-4 rounded-2xl font-bold text-lg transition-all shadow-md inline-flex items-center justify-center gap-2 active:scale-95 disabled:opacity-50 disabled:pointer-events-none;
 }
 
 @utility btn-secondary {
-  @apply bg-white border-2 border-green-200 text-green-700 hover:bg-green-50 px-8 py-4 rounded-2xl font-bold text-lg transition-all shadow-sm inline-flex items-center justify-center gap-2 active:scale-95 disabled:opacity-50;
+  @apply bg-white border-2 border-[var(--brand-neutral)] text-[var(--brand-dark)] hover:bg-[#f0f4f8] px-8 py-4 rounded-2xl font-bold text-lg transition-all shadow-sm inline-flex items-center justify-center gap-2 active:scale-95 disabled:opacity-50;
 }
 
 @utility form-card {
-  @apply bg-white border-2 border-green-100 rounded-[2.5rem] p-8 md:p-12 shadow-sm focus-within:border-green-300 transition-colors;
+  @apply bg-white border-2 border-[var(--border)] rounded-[2.5rem] p-8 md:p-12 shadow-sm focus-within:border-[var(--brand-accent-1)] transition-colors;
 }
 
 @utility form-label {
-  @apply block text-sm font-bold text-green-700 uppercase tracking-widest mb-3 ml-1;
+  @apply block text-sm font-bold text-[var(--brand-dark)] uppercase tracking-widest mb-3 ml-1;
 }
 
 @utility form-input {
-  @apply w-full bg-green-50/50 border-2 border-green-100 rounded-2xl px-6 py-4 text-green-900 placeholder:text-green-300 focus:outline-none focus:border-green-500 focus:bg-white transition-all text-lg font-medium shadow-sm;
+  @apply w-full bg-[#f8fafc] border-2 border-[var(--border)] rounded-2xl px-6 py-4 text-[var(--brand-dark)] placeholder:text-[var(--brand-neutral)] focus:outline-none focus:border-[var(--brand-accent-1)] focus:bg-white transition-all text-lg font-medium shadow-sm;
 }
 
 @utility form-select {
-  @apply w-full bg-green-50/50 border-2 border-green-100 rounded-2xl px-6 py-4 text-green-900 focus:outline-none focus:border-green-500 focus:bg-white transition-all text-lg font-medium appearance-none cursor-pointer shadow-sm;
+  @apply w-full bg-[#f8fafc] border-2 border-[var(--border)] rounded-2xl px-6 py-4 text-[var(--brand-dark)] focus:outline-none focus:border-[var(--brand-accent-1)] focus:bg-white transition-all text-lg font-medium appearance-none cursor-pointer shadow-sm;
 }
 
 @utility animate-shake {
@@ -54,11 +64,11 @@
 }
 
 @utility result-card {
-  @apply bg-white border-2 border-green-100 rounded-[2.5rem] p-8 hover:border-green-300 hover:shadow-xl transition-all relative overflow-hidden;
+  @apply bg-white border-2 border-[var(--border)] rounded-[2.5rem] p-8 hover:border-[var(--brand-accent-1)] hover:shadow-xl transition-all relative overflow-hidden;
 }
 
 @utility spinner {
-  @apply w-12 h-12 border-4 border-green-200 border-t-green-700 rounded-full animate-spin;
+  @apply w-12 h-12 border-4 border-[var(--border)] border-t-[var(--brand-blue)] rounded-full animate-spin;
 }
 
 /* Retro compatibility mappings */

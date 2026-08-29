@@ -105,74 +105,74 @@ export default async function SpanishRoutePage({ params }: Props) {
       />
       
       {/* ── HERO ── */}
-      <section className="bg-green-50 border-b-2 border-green-100 py-10 px-4 relative overflow-hidden">
+      <section className="bg-[#f0f4f8] border-b-2 border-[#e2e8f0] py-10 px-4 relative overflow-hidden">
         {/* Decoración de fondo */}
-        <div className="absolute top-0 right-0 w-96 h-96 bg-green-100/50 rounded-full blur-3xl -mr-48 -mt-48 pointer-events-none"></div>
-        <div className="absolute bottom-0 left-0 w-64 h-64 bg-green-100/30 rounded-full blur-2xl -ml-32 -mb-32 pointer-events-none"></div>
+        <div className="absolute top-0 right-0 w-96 h-96 bg-[#e2e8f0]/50 rounded-full blur-3xl -mr-48 -mt-48 pointer-events-none"></div>
+        <div className="absolute bottom-0 left-0 w-64 h-64 bg-[#e2e8f0]/30 rounded-full blur-2xl -ml-32 -mb-32 pointer-events-none"></div>
 
         <div className="max-w-5xl mx-auto relative z-10">
-          <nav className="flex items-center gap-2 text-sm font-bold text-green-600 mb-4 uppercase tracking-widest">
-            <Link href={`/${lang}`} className="hover:text-green-800 transition-colors">Jombo</Link>
-            <svg className="w-4 h-4 text-green-300" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+          <nav className="flex items-center gap-2 text-sm font-bold text-white mb-4 uppercase tracking-widest">
+            <Link href={`/${lang}`} className="hover:opacity-80 transition-opacity">Jombo</Link>
+            <svg className="w-4 h-4 text-white/50" fill="none" stroke="currentColor" viewBox="0 0 24 24">
               <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={3} d="M9 5l7 7-7 7" />
             </svg>
-            <span className="text-green-400">
-              {lang === 'es' ? 'Viajes Compartidos' : 'Carpools'}
+            <span className="text-white">
+              {lang === 'es' ? 'Viajes compartidos Jombo' : 'Carpools'}
             </span>
           </nav>
           
-          <div className="inline-flex items-center gap-2 bg-green-100 border border-green-300 text-green-800 px-4 py-1.5 rounded-full text-xs font-black mb-3 uppercase tracking-wide shadow-sm">
-            <span className="w-2 h-2 bg-green-600 rounded-full animate-pulse"></span>
+          <div className="inline-flex items-center gap-2 bg-[#e2e8f0] text-[var(--brand-dark)] px-4 py-1.5 rounded-full text-xs font-black mb-3 uppercase tracking-wide shadow-sm">
+            <span className="w-2 h-2 bg-[var(--brand-accent-2)] rounded-full animate-pulse"></span>
             {t.trips.popularRoute || 'RUTA DESTACADA'}
           </div>
 
-          <h1 className="text-3xl md:text-4xl font-black text-green-900 leading-tight mb-2 tracking-tight">
+          <h1 className="text-3xl md:text-4xl font-black text-white leading-tight mb-2 tracking-tight">
             {route.from} 
-            <span className="text-green-300 mx-3 inline-block transform hover:scale-110 transition-transform cursor-default">→</span> 
+            <span className="text-white/60 mx-3 inline-block transform hover:scale-110 transition-transform cursor-default">→</span> 
             {route.to}
           </h1>
           
-          <p className="text-sm md:text-base text-green-700 max-w-3xl font-medium opacity-90 leading-relaxed mb-6">
+          <p className="text-sm md:text-base text-[var(--brand-neutral)] max-w-3xl font-medium opacity-90 leading-relaxed mb-6">
             {t.trips.description?.replace('{from}', route.from).replace('{to}', route.to) || 
              `Encuentra o publica tu viaje compartido entre ${route.from} y ${route.to}. Jombo es la primera plataforma 100% gratuita para compartir gastos sin comisiones ni sorpresas.`}
           </p>
 
           {/* ── ROUTE SNAPSHOT CARD ── */}
           <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
-            <div className="bg-white border-2 border-green-100 p-8 rounded-[2rem] shadow-sm hover:border-green-300 transition-colors group">
-              <p className="text-[10px] font-black text-green-500 uppercase tracking-widest mb-2">{t.trips.distance}</p>
+            <div className="bg-white border-2 border-[#e2e8f0] p-8 rounded-[2rem] shadow-sm hover:border-[#e2e8f0] transition-colors group">
+              <p className="text-[10px] font-black text-[var(--brand-blue)] uppercase tracking-widest mb-2">{t.trips.distance}</p>
               <div className="flex items-center gap-4">
-                <div className="w-12 h-12 bg-green-50 rounded-xl flex items-center justify-center text-green-600 group-hover:scale-110 transition-transform">
+                <div className="w-12 h-12 bg-[#f0f4f8] rounded-xl flex items-center justify-center text-[var(--brand-blue)] group-hover:scale-110 transition-transform">
                   <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                     <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2.5} d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z" />
                     <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2.5} d="M15 11a3 3 0 11-6 0 3 3 0 016 0z" />
                   </svg>
                 </div>
-                <p className="text-3xl font-black text-green-950">{route.distance || "---"}</p>
+                <p className="text-3xl font-black text-[var(--brand-dark)]">{route.distance || "---"}</p>
               </div>
             </div>
 
-            <div className="bg-white border-2 border-green-100 p-8 rounded-[2rem] shadow-sm hover:border-green-300 transition-colors group">
-              <p className="text-[10px] font-black text-green-500 uppercase tracking-widest mb-2">{t.trips.duration}</p>
+            <div className="bg-white border-2 border-[#e2e8f0] p-8 rounded-[2rem] shadow-sm hover:border-[#e2e8f0] transition-colors group">
+              <p className="text-[10px] font-black text-[var(--brand-blue)] uppercase tracking-widest mb-2">{t.trips.duration}</p>
               <div className="flex items-center gap-4">
-                <div className="w-12 h-12 bg-green-50 rounded-xl flex items-center justify-center text-green-600 group-hover:scale-110 transition-transform">
+                <div className="w-12 h-12 bg-[#f0f4f8] rounded-xl flex items-center justify-center text-[var(--brand-blue)] group-hover:scale-110 transition-transform">
                   <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                     <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2.5} d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z" />
                   </svg>
                 </div>
-                <p className="text-3xl font-black text-green-950">{route.duration || "---"}</p>
+                <p className="text-3xl font-black text-[var(--brand-dark)]">{route.duration || "---"}</p>
               </div>
             </div>
 
-            <div className="bg-white border-2 border-green-200/50 p-8 rounded-[2rem] shadow-sm hover:border-green-300 transition-colors group bg-gradient-to-br from-white to-green-50/50">
-              <p className="text-[10px] font-black text-green-500 uppercase tracking-widest mb-2">{t.trips.co2Saved}</p>
+            <div className="bg-white border-2 border-[#e2e8f0]/50 p-8 rounded-[2rem] shadow-sm hover:border-[#e2e8f0] transition-colors group bg-gradient-to-br from-white to-green-50/50">
+              <p className="text-[10px] font-black text-[var(--brand-blue)] uppercase tracking-widest mb-2">{t.trips.co2Saved}</p>
               <div className="flex items-center gap-4">
-                <div className="w-12 h-12 bg-green-600 rounded-xl flex items-center justify-center text-white group-hover:rotate-12 transition-transform shadow-lg shadow-green-200">
+                <div className="w-12 h-12 bg-[var(--brand-blue)] rounded-xl flex items-center justify-center text-white group-hover:rotate-12 transition-transform shadow-lg shadow-green-200">
                   <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                     <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2.5} d="M5 3v4M3 5h4M6 17v4m-2-2h4m5-16l2.286 6.857L21 12l-5.714 2.143L13 21l-2.286-6.857L5 12l5.714-2.143L13 3z" />
                   </svg>
                 </div>
-                <p className="text-3xl font-black text-green-950">~{co2Value} kg</p>
+                <p className="text-3xl font-black text-[var(--brand-dark)]">~{co2Value} kg</p>
               </div>
             </div>
           </div>
@@ -184,18 +184,18 @@ export default async function SpanishRoutePage({ params }: Props) {
         <div className="max-w-5xl mx-auto">
           
           {source === 'digitransit' && (
-            <div className="mb-16 p-10 bg-green-50 border-2 border-green-100 rounded-[3rem] flex items-center gap-8 shadow-xl shadow-green-900/5 border-l-8 border-l-green-600 relative overflow-hidden group">
-              <div className="absolute top-0 right-0 w-32 h-32 bg-green-100/50 rounded-full -mr-16 -mt-16 blur-2xl"></div>
-              <div className="w-20 h-20 bg-white rounded-2xl flex items-center justify-center text-green-600 shadow-sm shrink-0 relative z-10">
+            <div className="mb-16 p-10 bg-[#f0f4f8] border-2 border-[#e2e8f0] rounded-[3rem] flex items-center gap-8 shadow-xl shadow-green-900/5 border-l-8 border-l-green-600 relative overflow-hidden group">
+              <div className="absolute top-0 right-0 w-32 h-32 bg-[#e2e8f0]/50 rounded-full -mr-16 -mt-16 blur-2xl"></div>
+              <div className="w-20 h-20 bg-white rounded-2xl flex items-center justify-center text-[var(--brand-blue)] shadow-sm shrink-0 relative z-10">
                 <svg className="w-10 h-10" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                   <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2.5} d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
                 </svg>
               </div>
               <div className="relative z-10">
-                <p className="text-green-900 font-black uppercase tracking-[0.3em] text-[10px] mb-2 opacity-50">
+                <p className="text-[var(--brand-dark)] font-black uppercase tracking-[0.3em] text-[10px] mb-2 opacity-50">
                   {lang === 'es' ? 'Alternativas de transporte' : 'Transport alternatives'}
                 </p>
-                <p className="text-green-800 text-xl font-bold leading-relaxed">
+                <p className="text-[var(--brand-dark)] text-xl font-bold leading-relaxed">
                   {t.trips.noTripsFound?.replace('{from}', route.from).replace('{to}', route.to) || 
                    `Sin viajes compartidos hoy. Mostramos transporte público entre ${route.from} y ${route.to}`}
                 </p>
@@ -204,18 +204,18 @@ export default async function SpanishRoutePage({ params }: Props) {
           )}
 
           {trips.length === 0 && externalOptions.length === 0 ? (
-            <div className="bg-white border-2 border-green-100 rounded-[4rem] p-20 text-center shadow-2xl shadow-green-900/5 relative overflow-hidden group">
+            <div className="bg-white border-2 border-[#e2e8f0] rounded-[4rem] p-20 text-center shadow-2xl shadow-green-900/5 relative overflow-hidden group">
               <div className="absolute inset-0 bg-gradient-to-b from-green-50/30 to-white opacity-0 group-hover:opacity-100 transition-opacity duration-1000"></div>
               <div className="relative z-10">
-                <div className="w-28 h-28 bg-green-50 rounded-[2rem] flex items-center justify-center mx-auto mb-10 border-2 border-green-100 transform group-hover:scale-110 transition-transform duration-700 shadow-inner">
-                  <svg className="w-14 h-14 text-green-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <div className="w-28 h-28 bg-[#f0f4f8] rounded-[2rem] flex items-center justify-center mx-auto mb-10 border-2 border-[#e2e8f0] transform group-hover:scale-110 transition-transform duration-700 shadow-inner">
+                  <svg className="w-14 h-14 text-[var(--brand-blue)]" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                     <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z" />
                   </svg>
                 </div>
-                <h2 className="text-4xl font-black text-green-950 mb-6 tracking-tight">
+                <h2 className="text-4xl font-black text-[var(--brand-dark)] mb-6 tracking-tight">
                   {t.trips.routeReadyTitle || 'Ruta lista para estrenar'}
                 </h2>
-                <p className="text-green-700 text-xl mb-14 max-w-xl mx-auto font-medium opacity-80 leading-relaxed">
+                <p className="text-[var(--brand-neutral)] text-xl mb-14 max-w-xl mx-auto font-medium opacity-80 leading-relaxed">
                   {t.trips.routeReadyDesc?.replace('{from}', route.from).replace('{to}', route.to) || 
                    `¡Sé el primero en publicar un viaje entre ${route.from} y ${route.to} para empezar a compartir gastos y aventuras!`}
                 </p>
@@ -230,8 +230,8 @@ export default async function SpanishRoutePage({ params }: Props) {
           ) : (
             <div className="space-y-16">
               <div className="flex items-center justify-between border-b-2 border-green-50 pb-8">
-                <h2 className="text-3xl font-black text-green-950 uppercase tracking-widest flex items-center gap-6">
-                  <span className="w-10 h-10 bg-green-600 rounded-xl flex items-center justify-center text-white text-lg shadow-lg shadow-green-200">
+                <h2 className="text-3xl font-black text-[var(--brand-dark)] uppercase tracking-widest flex items-center gap-6">
+                  <span className="w-10 h-10 bg-[var(--brand-blue)] rounded-xl flex items-center justify-center text-white text-lg shadow-lg shadow-green-200">
                     {trips.length + externalOptions.length}
                   </span>
                   {t.trips.optionsFound || 'Opciones encontradas'}
@@ -248,26 +248,26 @@ export default async function SpanishRoutePage({ params }: Props) {
               {trips.length > 0 && (
                 <div className="mt-24 space-y-12 animate-in fade-in duration-1000">
                   <div className="flex items-center gap-6">
-                    <div className="h-px flex-1 bg-green-100"></div>
-                    <span className="text-[10px] font-black uppercase tracking-[0.4em] text-green-400">{t.trips.communityTitle}</span>
-                    <div className="h-px flex-1 bg-green-100"></div>
+                    <div className="h-px flex-1 bg-[#e2e8f0]"></div>
+                    <span className="text-[10px] font-black uppercase tracking-[0.4em] text-[var(--brand-neutral)]">{t.trips.communityTitle}</span>
+                    <div className="h-px flex-1 bg-[#e2e8f0]"></div>
                   </div>
                   
-                  <div className="bg-green-700 rounded-[4rem] p-12 md:p-20 text-white shadow-3xl shadow-green-900/30 flex flex-col lg:row items-center justify-between gap-12 relative overflow-hidden group">
+                  <div className="bg-[var(--brand-blue)] rounded-[4rem] p-12 md:p-20 text-white shadow-3xl shadow-green-900/30 flex flex-col lg:row items-center justify-between gap-12 relative overflow-hidden group">
                     <div className="absolute top-0 right-0 w-[40rem] h-[40rem] bg-white opacity-[0.03] rounded-full -mr-80 -mt-80 blur-3xl pointer-events-none group-hover:opacity-[0.06] transition-opacity duration-1000"></div>
-                    <div className="absolute bottom-0 left-0 w-80 h-80 bg-green-400 opacity-[0.05] rounded-full -ml-40 -mb-40 blur-3xl pointer-events-none"></div>
+                    <div className="absolute bottom-0 left-0 w-80 h-80 bg-white/10 opacity-[0.05] rounded-full -ml-40 -mb-40 blur-3xl pointer-events-none"></div>
                     
                     <div className="relative z-10 max-w-2xl text-center lg:text-left">
-                      <h3 className="text-4xl md:text-5xl font-black leading-tight mb-6">
+                      <h3 className="text-4xl md:text-5xl font-black leading-tight mb-6 text-white">
                         {lang === 'es' ? 'Viajes Compartidos Jombo' : 'Carpools Jombo'}
                       </h3>
-                      <p className="text-green-50 text-xl font-medium opacity-80 leading-relaxed italic">
+                      <p className="text-[var(--brand-blue)] bg-white/90 px-4 py-2 rounded-xl text-xl font-medium leading-relaxed italic">
                         {t.trips.communitySubtitle}
                       </p>
                     </div>
                     <Link 
                       href={`/${lang}/search?from=${route.from}&to=${route.to}`}
-                      className="relative z-10 bg-white text-green-900 px-16 py-7 rounded-[2rem] font-black uppercase tracking-widest text-sm hover:bg-green-50 hover:scale-105 transition-all shadow-2xl whitespace-nowrap active:scale-95"
+                      className="relative z-10 bg-white text-[var(--brand-dark)] px-16 py-7 rounded-[2rem] font-black uppercase tracking-widest text-sm hover:bg-[#f0f4f8] hover:scale-105 transition-all shadow-2xl whitespace-nowrap active:scale-95"
                     >
                       {t.page.home.search || 'Ver todos los viajes'}
                     </Link>
@@ -278,51 +278,51 @@ export default async function SpanishRoutePage({ params }: Props) {
           )}
 
           {/* ── TRUST & BENEFITS ── */}
-          <div className="mt-40 bg-green-50/50 rounded-[4rem] p-12 md:p-20 border-2 border-green-50">
+          <div className="mt-40 bg-[#f0f4f8]/50 rounded-[4rem] p-12 md:p-20 border-2 border-green-50">
             <div className="max-w-3xl mb-20">
-              <h2 className="text-4xl md:text-5xl font-black text-green-950 mb-6 tracking-tight leading-tight">
-                  {t.trips.everythingAbout} {route.from} <span className="text-green-300">→</span> {route.to}
+              <h2 className="text-4xl md:text-5xl font-black text-[var(--brand-dark)] mb-6 tracking-tight leading-tight">
+                  {t.trips.everythingAbout} {route.from} <span className="text-[var(--brand-neutral)]">→</span> {route.to}
               </h2>
-              <div className="w-20 h-2 bg-green-600 rounded-full"></div>
+              <div className="w-20 h-2 bg-[var(--brand-blue)] rounded-full"></div>
             </div>
 
-            <div className="grid md:grid-cols-2 gap-20 text-green-800">
+            <div className="grid md:grid-cols-2 gap-20 text-[var(--brand-dark)]">
                 <div className="space-y-8 group">
-                    <div className="w-16 h-16 bg-white rounded-2xl flex items-center justify-center text-green-600 shadow-xl border border-green-100 group-hover:rotate-6 transition-transform">
+                    <div className="w-16 h-16 bg-white rounded-2xl flex items-center justify-center text-[var(--brand-blue)] shadow-xl border border-[#e2e8f0] group-hover:rotate-6 transition-transform">
                       <svg className="w-8 h-8" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                         <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2.5} d="M12 8c-1.657 0-3 .895-3 2s1.343 2 3 2 3 .895 3 2-1.343 2-3 2m0-8c1.11 0 2.08.402 2.599 1M12 8V7m0 1v8m0 0v1m0-1c-1.11 0-2.08-.402-2.599-1M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
                       </svg>
                     </div>
-                    <h3 className="text-2xl font-black text-green-900 uppercase tracking-wider">{t.trips.smartSavingTitle}</h3>
+                    <h3 className="text-2xl font-black text-[var(--brand-dark)] uppercase tracking-wider">{t.trips.smartSavingTitle}</h3>
                     <p className="text-lg leading-relaxed opacity-90 font-medium">
                         {t.trips.smartSavingDesc}
                     </p>
                 </div>
                 <div className="space-y-8 group">
-                    <div className="w-16 h-16 bg-white rounded-2xl flex items-center justify-center text-green-600 shadow-xl border border-green-100 group-hover:-rotate-6 transition-transform">
+                    <div className="w-16 h-16 bg-white rounded-2xl flex items-center justify-center text-[var(--brand-blue)] shadow-xl border border-[#e2e8f0] group-hover:-rotate-6 transition-transform">
                       <svg className="w-8 h-8" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                         <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2.5} d="M3.055 11H5a2 2 0 012 2v1a2 2 0 002 2 2 2 0 012 2v2.945M8 3.935V5.5A2.5 2.5 0 0010.5 8h.5a2 2 0 012 2 2 2 0 002 2 2 2 0 012 2v.1c0 .667.333 1.1 1 1.3M9 21h6m-3-12h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
                       </svg>
                     </div>
-                    <h3 className="text-2xl font-black text-green-900 uppercase tracking-wider">{t.trips.ecoCommitmentTitle}</h3>
+                    <h3 className="text-2xl font-black text-[var(--brand-dark)] uppercase tracking-wider">{t.trips.ecoCommitmentTitle}</h3>
                     <p className="text-lg leading-relaxed opacity-90 font-medium">
                         {t.trips.ecoCommitmentDesc}
                     </p>
                 </div>
             </div>
             
-            <div className="mt-20 pt-16 border-t border-green-100 flex flex-col md:flex-row items-center gap-12 justify-between">
+            <div className="mt-20 pt-16 border-t border-[#e2e8f0] flex flex-col md:flex-row items-center gap-12 justify-between">
               <div className="flex -space-x-4">
                 {[1, 2, 3, 4, 5].map((i) => (
-                  <div key={i} className="w-14 h-14 rounded-full border-4 border-white bg-green-100 flex items-center justify-center shadow-lg shadow-green-900/5 overflow-hidden">
+                  <div key={i} className="w-14 h-14 rounded-full border-4 border-white bg-[#e2e8f0] flex items-center justify-center shadow-lg shadow-green-900/5 overflow-hidden">
                     <img src={`https://i.pravatar.cc/150?u=${i + 15}`} alt="User" />
                   </div>
                 ))}
-                <div className="w-14 h-14 rounded-full border-4 border-white bg-green-700 flex items-center justify-center shadow-lg text-white font-black text-xs">
+                <div className="w-14 h-14 rounded-full border-4 border-white bg-[var(--brand-blue)] flex items-center justify-center shadow-lg text-white font-black text-xs">
                   +10k
                 </div>
               </div>
-              <p className="text-green-800 font-bold text-xl text-center md:text-left">
+              <p className="text-[var(--brand-dark)] font-bold text-xl text-center md:text-left">
                 {t.trips.joinThousands || 'Únete a miles que ya ahorran en sus trayectos.'}
               </p>
               <Link href={`/${lang}/register`} className="btn-secondary px-10 py-5 whitespace-nowrap">

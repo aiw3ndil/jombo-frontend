@@ -82,10 +82,6 @@
         "close": "Close"
       }
     },
-    "trips": {
-      "title": "Available Trips",
-      "seat": "Seat"
-    },
     "createTrip": {
       "title": "Publish a trip",
       "from": "Origin",
@@ -146,6 +142,7 @@
       "sending": "Sending..."
     },
     "myTrips": {
+      "badge": "Driver Panel",
       "title": "My Trips",
       "back": "Back",
       "loading": "Loading...",
@@ -181,6 +178,7 @@
       "confirmReject": "Are you sure you want to reject this booking?",
       "deleteTrip": "Delete trip",
       "deleteTripConfirm": "Are you sure you want to delete this trip?",
+      "deleteConfirm": "This action will delete the trip and all its bookings.",
       "deleteRecurringTripTitle": "Recurring trip",
       "deleteOnlyThis": "Delete only this trip",
       "deleteAllRecurring": "Delete entire series (future trips)",
@@ -188,10 +186,13 @@
       "deleteError": "Error deleting trip"
     },
     "myBookings": {
+      "badge": "My Trips",
       "title": "My Bookings",
+      "subtitle": "Manage your trip requests and view your confirmed routes.",
       "back": "Back",
       "loading": "Loading...",
       "noBookings": "You have no bookings",
+      "noBookingsInfo": "Search for a trip you're interested in and book your seat for free.",
       "searchTrips": "Search trips",
       "driver": "Driver",
       "departure": "Departure",
@@ -204,6 +205,7 @@
       "statusPending": "Pending",
       "statusRejected": "Rejected",
       "statusCancelled": "Cancelled",
+      "inactive": "Booking Finished",
       "confirmCancel": "Are you sure you want to cancel this booking?",
       "cancelSuccess": "Booking cancelled successfully",
       "cancelError": "Error cancelling booking",
@@ -245,11 +247,32 @@
     "empty": "No notifications"
   },
   "profile": {
+    "badge": "My Settings",
     "title": "My Profile",
     "name": "Name",
     "email": "Email",
     "phone": "Phone",
     "bio": "Bio",
+    "language": "Notification language",
+    "region": "Default search region",
+    "regionSpain": "Spain (ES)",
+    "regionFinland": "Finland (FI)",
+    "picture": "Profile picture",
+    "bioPlaceholder": "Tell us about yourself...",
+    "emailNotEditable": "Email cannot be modified",
+    "save": "Save changes",
+    "saving": "Saving...",
+    "cancel": "Cancel",
+    "updateSuccess": "Profile updated successfully",
+    "updateError": "Error updating profile",
+    "subtitle": "Manage your identity, preferences, and account security on Jombo.",
+    "personalInfoTitle": "Personal Information",
+    "personalInfoDescription": "This is the information other users will see when traveling with you.",
+    "namePlaceholder": "Write your name...",
+    "avatarInfo": "Upload a clear photo to generate trust",
+    "securityTitle": "Account Security",
+    "securityDescription": "Keep your account protected with a robust password.",
+    "processing": "Processing...",
     "language": "Notification language",
     "region": "Default search region",
     "regionSpain": "Spain (ES)",
@@ -285,15 +308,24 @@
   "footer": {
     "about": "About Jombo",
     "description": "Free platform for sharing rides. Connect with people going to the same destination and save money.",
+    "aboutDescription": "Jombo is an initiative to connect people and reduce the carbon footprint through shared trips.",
     "links": "Links",
     "terms": "Terms and Conditions",
     "home": "Home",
     "contact": "Contact",
     "dataDeletion": "Data Deletion",
-    "rights": "All rights reserved."
+    "rights": "All rights reserved.",
+    "status": "Status",
+    "supportStatus": "Active Support 24/7",
+    "supportEmail": "Support email",
+    "madeWith": "Made with ❤️ for the planet",
+    "trustedBy": "Trusted by more than 10,000 users"
   },
   "terms": {
+    "badge": "Legal Information",
     "title": "Terms and Conditions of Use",
+    "subtitle": "Our guide for a safe and just coexistence in the Jombo community.",
+    "documentVigente": "Current Document",
     "section1": {
       "title": "1. Acceptance of Terms",
       "content": "By accessing and using Jombo, you accept these terms and conditions in full. If you do not agree with any of these terms, you should not use our service."
@@ -327,6 +359,7 @@
     "updateDate": "December 3, 2025"
   },
   "dataDeletion": {
+    "badge": "Personal Privacy",
     "title": "Data Deletion Instructions",
     "description": "At Jombo, we value your privacy. You can request the deletion of your data at any time.",
     "section1": {
@@ -349,6 +382,7 @@
     "section4": {
       "title": "How to Delete Your Data",
       "subtitle": "Method 1: Automatic Deletion via App (Recommended)",
+      "method1": "Method 1: Automatic Deletion via App (Recommended)",
       "step1": "Log in to your Jombo account",
       "step2": "Go to 'My Profile'",
       "step3": "Scroll down to the 'Danger Zone'",
@@ -360,6 +394,31 @@
       "email": "soporte@jombo.es",
       "note": "Please include your registered email address."
     }
+  },
+  "trips": {
+    "title": "Available Trips",
+    "seat": "Seat",
+    "routeSnapshot": "Route Snapshot",
+    "distance": "Distance",
+    "duration": "Duration",
+    "co2Saved": "CO2 Saved",
+    "trustTitle": "Travel with Total Confidence",
+    "popularRoute": "FEATURED ROUTE",
+    "optionsFound": "Options found",
+    "communityTitle": "COMMUNITY",
+    "communitySubtitle": "There are direct trips published by other drivers on this route.",
+    "everythingAbout": "Everything about",
+    "smartSavingTitle": "Smart Saving",
+    "smartSavingDesc": "Sharing a car is the most economical transport option. By splitting fuel and toll costs, you can reduce your trip cost by up to 75% compared to driving alone or taking the train.",
+    "ecoCommitmentTitle": "Eco Commitment",
+    "ecoCommitmentDesc": "Jombo was born to reduce the carbon footprint on our roads. By filling empty seats, we reduce emissions and traffic, making the trip better for everyone.",
+    "description": "Find or publish your shared trip between {from} and {to}. Jombo is the first 100% free platform to share costs without commissions or surprises.",
+    "noTripsFound": "No shared trips today. We show public transport alternatives between {from} and {to}",
+    "joinThousands": "Join thousands who already save on their trips.",
+    "registerFree": "Sign up for free",
+    "routeReadyTitle": "Route ready to debut",
+    "routeReadyDesc": "Be the first to publish a trip between {from} and {to} to start sharing costs and adventures!",
+    "publishFirst": "Publish the first trip"
   },
   "cookies": {
     "title": "Cookie Notice",

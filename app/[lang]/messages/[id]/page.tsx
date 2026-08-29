@@ -108,23 +108,23 @@ export default function ConversationPage() {
   if (!user || !conversation) return null;
 
   return (
-    <div className="min-h-[calc(100vh-80px)] bg-green-50 flex flex-col pt-8 pb-12 px-4 sm:px-6">
+    <div className="min-h-[calc(100vh-80px)] bg-[#f0f4f8] flex flex-col pt-8 pb-12 px-4 sm:px-6">
       <div className="max-w-4xl mx-auto w-full flex flex-col flex-1">
         
         {/* Header del Chat */}
-        <div className="bg-white border-2 border-green-100 p-6 rounded-[2.5rem] shadow-xl mb-6 flex-shrink-0">
+        <div className="bg-white border-2 border-[#e2e8f0] p-6 rounded-[2.5rem] shadow-xl mb-6 flex-shrink-0">
           <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-6">
             <div className="space-y-2">
               <div className="flex items-center gap-2">
                 <span className="w-2.5 h-2.5 rounded-full bg-green-500 animate-pulse"></span>
-                <p className="text-xs font-bold text-green-600 uppercase tracking-widest">CHAT EN VIVO</p>
+                <p className="text-xs font-bold text-[var(--brand-blue)] uppercase tracking-widest">CHAT EN VIVO</p>
               </div>
-              <h1 className="text-2xl md:text-3xl font-bold text-green-900 leading-tight">
+              <h1 className="text-2xl md:text-3xl font-bold text-[var(--brand-dark)] leading-tight">
                 {conversation.trip.departure_location} → {conversation.trip.arrival_location}
               </h1>
-              <div className="flex flex-wrap gap-4 text-xs font-bold text-green-700 uppercase tracking-wider">
+              <div className="flex flex-wrap gap-4 text-xs font-bold text-[var(--brand-neutral)] uppercase tracking-wider">
                 <span>{new Date(conversation.trip.departure_time).toLocaleString(lang, { day: 'numeric', month: 'short', hour: '2-digit', minute: '2-digit' })}h</span>
-                <span className="text-green-200">|</span>
+                <span className="text-[var(--brand-neutral)]">|</span>
                 <span className="italic">{conversation.participants.map(p => p.name).join(" • ")}</span>
               </div>
             </div>
@@ -140,7 +140,7 @@ export default function ConversationPage() {
               )}
               <button
                 onClick={() => router.push(`/${lang}/messages`)}
-                className="bg-green-100 text-green-800 border-2 border-green-200 px-6 py-3 rounded-xl font-bold hover:bg-green-200 transition-all text-sm"
+                className="bg-[#e2e8f0] text-[var(--brand-dark)] border-2 border-[#e2e8f0] px-6 py-3 rounded-xl font-bold hover:bg-green-200 transition-all text-sm"
               >
                 {t("page.conversation.back") || "VOLVER"}
               </button>
@@ -152,8 +152,8 @@ export default function ConversationPage() {
         <div className="flex-1 overflow-y-auto bg-white rounded-[2.5rem] border-2 border-green-50 p-6 sm:p-10 space-y-8 mb-6 shadow-inner min-h-[50vh] max-h-[60vh]">
           {messages.length === 0 ? (
             <div className="flex flex-col items-center justify-center h-full gap-4 py-20 opacity-30 italic">
-              <svg className="w-16 h-16 text-green-900" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1} d="M8 12h.01M12 12h.01M16 12h.01M21 12c0 4.418-4.03 8-9 8a9.863 9.863 0 01-4.255-.949L3 20l1.395-3.72C3.512 15.042 3 13.574 3 12c0-4.418 4.03-8 9-8s9 3.582 9 8z" /></svg>
-              <p className="uppercase tracking-widest text-sm font-bold text-green-900">
+              <svg className="w-16 h-16 text-[var(--brand-dark)]" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1} d="M8 12h.01M12 12h.01M16 12h.01M21 12c0 4.418-4.03 8-9 8a9.863 9.863 0 01-4.255-.949L3 20l1.395-3.72C3.512 15.042 3 13.574 3 12c0-4.418 4.03-8 9-8s9 3.582 9 8z" /></svg>
+              <p className="uppercase tracking-widest text-sm font-bold text-[var(--brand-dark)]">
                 {t("page.conversation.noMessages") || "Di hola para empezar..."}
               </p>
             </div>
@@ -166,24 +166,24 @@ export default function ConversationPage() {
                   className={`flex gap-4 ${isOwn ? "justify-end" : "justify-start"}`}
                 >
                   {!isOwn && (
-                    <div className="w-10 h-10 rounded-full bg-green-600 flex-shrink-0 mt-auto shadow-md flex items-center justify-center text-white font-bold text-sm overflow-hidden border-2 border-white">
+                    <div className="w-10 h-10 rounded-full bg-[var(--brand-blue)] flex-shrink-0 mt-auto shadow-md flex items-center justify-center text-white font-bold text-sm overflow-hidden border-2 border-white">
                       {message.user.name.charAt(0)}
                     </div>
                   )}
                   <div className={`max-w-[80%] space-y-2 ${isOwn ? "items-end text-right" : "items-start"}`}>
                     <div className={`rounded-[2rem] px-6 py-4 relative shadow-md border-2 ${
                       isOwn 
-                        ? "bg-green-600 text-white border-green-500 rounded-br-none" 
-                        : "bg-green-50 text-green-900 border-green-100 rounded-bl-none"
+                        ? "bg-[var(--brand-blue)] text-white border-green-500 rounded-br-none" 
+                        : "bg-[#f0f4f8] text-[var(--brand-dark)] border-[#e2e8f0] rounded-bl-none"
                     }`}>
                       {!isOwn && (
-                        <p className="text-[10px] font-bold text-green-600 uppercase tracking-widest mb-1">
+                        <p className="text-[10px] font-bold text-[var(--brand-blue)] uppercase tracking-widest mb-1">
                           {message.user.name}
                         </p>
                       )}
                       <p className="text-base font-medium leading-relaxed break-words">{message.content}</p>
                     </div>
-                    <p className={`text-[10px] font-bold uppercase tracking-widest text-green-400 opacity-60 ${isOwn ? "mr-4" : "ml-4"}`}>
+                    <p className={`text-[10px] font-bold uppercase tracking-widest text-[var(--brand-neutral)] opacity-60 ${isOwn ? "mr-4" : "ml-4"}`}>
                       {new Date(message.created_at).toLocaleTimeString(lang, { hour: "2-digit", minute: "2-digit" })}h
                     </p>
                   </div>
@@ -195,20 +195,20 @@ export default function ConversationPage() {
         </div>
 
         {/* Formulario de envío */}
-        <form onSubmit={handleSendMessage} className="bg-white border-2 border-green-100 p-3 rounded-[3rem] shadow-xl flex-shrink-0">
+        <form onSubmit={handleSendMessage} className="bg-white border-2 border-[#e2e8f0] p-3 rounded-[3rem] shadow-xl flex-shrink-0">
           <div className="flex items-center gap-3">
             <input
               type="text"
               value={newMessage}
               onChange={(e) => setNewMessage(e.target.value)}
               placeholder={t("page.conversation.messagePlaceholder") || "Escribe un mensaje..."}
-              className="flex-1 bg-green-50 border-2 border-green-100 rounded-full px-8 py-4 text-green-900 placeholder:text-green-300 focus:outline-none focus:border-green-400 transition-all font-bold text-base"
+              className="flex-1 bg-[#f0f4f8] border-2 border-[#e2e8f0] rounded-full px-8 py-4 text-[var(--brand-dark)] placeholder:text-[var(--brand-neutral)] focus:outline-none focus:border-green-400 transition-all font-bold text-base"
               disabled={sending}
             />
             <button
               type="submit"
               disabled={sending || !newMessage.trim()}
-              className="bg-green-600 text-white w-14 h-14 rounded-full font-bold flex items-center justify-center transition-all hover:bg-green-700 hover:scale-105 active:scale-95 shadow-lg disabled:opacity-50 disabled:grayscale"
+              className="bg-[var(--brand-blue)] text-white w-14 h-14 rounded-full font-bold flex items-center justify-center transition-all hover:bg-[var(--brand-blue)] hover:scale-105 active:scale-95 shadow-lg disabled:opacity-50 disabled:grayscale"
             >
               <svg className="w-6 h-6 transform rotate-90" fill="currentColor" viewBox="0 0 20 20">
                 <path d="M10.894 2.553a1 1 0 00-1.788 0l-7 14a1 1 0 001.169 1.409l5-1.429A1 1 0 009 15.571V11a1 1 0 112 0v4.571a1 1 0 00.725.962l5 1.428a1 1 0 001.17-1.408l-7-14z" />

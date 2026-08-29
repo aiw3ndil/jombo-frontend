@@ -45,15 +45,15 @@ export default function Register() {
   return (
     <div className="min-h-screen bg-white">
       {/* ── HERO ── */}
-      <section className="bg-green-50 border-b-2 border-green-100 py-8 px-4">
+      <section className="bg-[#f0f4f8] border-b-2 border-[#e2e8f0] py-8 px-4">
         <div className="max-w-5xl mx-auto text-center">
-          <div className="inline-flex items-center gap-2 bg-green-100 border border-green-300 text-green-800 px-4 py-1.5 rounded-full text-xs font-bold mb-3 uppercase tracking-wide">
+          <div className="inline-flex items-center gap-2 bg-[#e2e8f0] border border-[#e2e8f0] text-[var(--brand-dark)] px-4 py-1.5 rounded-full text-xs font-bold mb-3 uppercase tracking-wide">
             {t("joinBadge") || "Únete a la revolución"}
           </div>
-          <h1 className="text-2xl md:text-3xl font-black text-green-900 leading-tight mb-2">
+          <h1 className="text-2xl md:text-3xl font-black text-[var(--brand-dark)] leading-tight mb-2">
             {t("title") || "Tu viaje empieza aquí"}
           </h1>
-          <p className="text-sm md:text-base text-green-700 max-w-2xl mx-auto font-medium opacity-80">
+          <p className="text-sm md:text-base text-[var(--brand-neutral)] max-w-2xl mx-auto font-medium opacity-80">
             {t("subtitle") || "Regístrate en Jombo y empieza a ahorrar compartiendo trayectos con personas de confianza."}
           </p>
         </div>
@@ -61,16 +61,16 @@ export default function Register() {
 
       {/* ── FORMULARIO ── */}
       <section className="py-20 px-4 bg-white relative -mt-5">
-        <div className="max-w-md mx-auto">
+        <div className="max-w-xl mx-auto">
           <div className="form-card relative z-10">
             <div className="space-y-10">
               {/* Google Register */}
               <div className="space-y-4">
                 <GoogleLoginButton redirect={redirect} onError={handleOAuthError} />
-                <p className="text-center text-xs font-bold text-green-400 uppercase tracking-widest flex items-center gap-4">
-                  <span className="flex-1 h-px bg-green-100"></span>
+                <p className="text-center text-xs font-bold text-[var(--brand-neutral)] uppercase tracking-widest flex items-center gap-4">
+                  <span className="flex-1 h-px bg-[#e2e8f0]"></span>
                   {t("or") || "O crea tu cuenta con email"}
-                  <span className="flex-1 h-px bg-green-100"></span>
+                  <span className="flex-1 h-px bg-[#e2e8f0]"></span>
                 </p>
               </div>
 
@@ -90,7 +90,7 @@ export default function Register() {
                   <div>
                     <label className="form-label">{t("name") || "Nombre completo"}</label>
                     <div className="relative group">
-                      <div className="absolute left-4 top-1/2 -translate-y-1/2 text-green-400 group-focus-within:text-green-600 transition-colors z-10">
+                      <div className="absolute left-4 top-1/2 -translate-y-1/2 text-[var(--brand-neutral)] group-focus-within:text-[var(--brand-blue)] transition-colors z-10">
                         <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                           <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z" />
                         </svg>
@@ -109,7 +109,7 @@ export default function Register() {
                   <div>
                     <label className="form-label">{t("email") || "Correo electrónico"}</label>
                     <div className="relative group">
-                      <div className="absolute left-4 top-1/2 -translate-y-1/2 text-green-400 group-focus-within:text-green-600 transition-colors z-10">
+                      <div className="absolute left-4 top-1/2 -translate-y-1/2 text-[var(--brand-neutral)] group-focus-within:text-[var(--brand-blue)] transition-colors z-10">
                         <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                           <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M16 12a4 4 0 10-8 0 4 4 0 008 0zm0 0v1.5a2.5 2.5 0 005 0V12a9 9 0 10-9 9m4.5-1.206a8.959 8.959 0 01-4.5 1.206" />
                         </svg>
@@ -137,7 +137,7 @@ export default function Register() {
                         <option value="es">🇪🇸 {t("regionSpain") || "España"}</option>
                         <option value="fi">🇫🇮 {t("regionFinland") || "Finlandia"}</option>
                       </select>
-                      <div className="absolute right-4 top-1/2 -translate-y-1/2 text-green-500 pointer-events-none">
+                      <div className="absolute right-4 top-1/2 -translate-y-1/2 text-[var(--brand-blue)] pointer-events-none">
                         <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                           <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 9l-7 7-7-7" />
                         </svg>
@@ -149,7 +149,7 @@ export default function Register() {
                     <div>
                       <label className="form-label">{t("password") || "Contraseña"}</label>
                       <div className="relative group">
-                        <div className="absolute left-4 top-1/2 -translate-y-1/2 text-green-400 group-focus-within:text-green-600 transition-colors z-10">
+                        <div className="absolute left-4 top-1/2 -translate-y-1/2 text-[var(--brand-neutral)] group-focus-within:text-[var(--brand-blue)] transition-colors z-10">
                           <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                             <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 15v2m-6 4h12a2 2 0 002-2v-6a2 2 0 00-2-2H6a2 2 0 00-2 2v6a2 2 0 002 2zm10-10V7a4 4 0 00-8 0v4h8z" />
                           </svg>
@@ -168,7 +168,7 @@ export default function Register() {
                     <div>
                       <label className="form-label">{t("passwordConfirmation") || "Confirma tu contraseña"}</label>
                       <div className="relative group">
-                        <div className="absolute left-4 top-1/2 -translate-y-1/2 text-green-400 group-focus-within:text-green-600 transition-colors z-10">
+                        <div className="absolute left-4 top-1/2 -translate-y-1/2 text-[var(--brand-neutral)] group-focus-within:text-[var(--brand-blue)] transition-colors z-10">
                           <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                             <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z" />
                           </svg>
@@ -208,9 +208,9 @@ export default function Register() {
               </form>
 
               <div className="pt-6 border-t border-green-50 text-center">
-                <p className="text-green-700 font-medium">
+                <p className="text-[var(--brand-neutral)] font-medium">
                   {t("haveAccount") || "¿Ya usas Jombo?"}{" "}
-                  <Link href={`/${lang}/login`} className="text-green-600 hover:text-green-800 font-black underline decoration-2 underline-offset-4 transition-all">
+                  <Link href={`/${lang}/login`} className="text-[var(--brand-blue)] hover:text-[var(--brand-dark)] font-black underline decoration-2 underline-offset-4 transition-all">
                     {t("loginLink") || "Inicia sesión aquí"}
                   </Link>
                 </p>

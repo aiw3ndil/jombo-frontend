@@ -40,15 +40,15 @@ export default function ForgotPassword() {
   return (
     <div className="min-h-screen bg-white">
       {/* ── HERO ── */}
-      <section className="bg-green-50 border-b-2 border-green-100 py-8 px-4">
+      <section className="bg-[#f0f4f8] border-b-2 border-[#e2e8f0] py-8 px-4">
         <div className="max-w-5xl mx-auto text-center">
-          <div className="inline-flex items-center gap-2 bg-green-100 border border-green-300 text-green-800 px-4 py-1.5 rounded-full text-xs font-bold mb-3 uppercase tracking-wide">
+          <div className="inline-flex items-center gap-2 bg-[#e2e8f0] border border-[#e2e8f0] text-[var(--brand-dark)] px-4 py-1.5 rounded-full text-xs font-bold mb-3 uppercase tracking-wide">
             {t("securityBadge") || "Seguridad de tu cuenta"}
           </div>
-          <h1 className="text-2xl md:text-3xl font-black text-green-900 leading-tight mb-2">
+          <h1 className="text-2xl md:text-3xl font-black text-[var(--brand-dark)] leading-tight mb-2">
             {t("forgotPasswordTitle") || "¿Necesitas una nueva clave?"}
           </h1>
-          <p className="text-sm md:text-base text-green-700 max-w-2xl mx-auto font-medium opacity-80">
+          <p className="text-sm md:text-base text-[var(--brand-neutral)] max-w-2xl mx-auto font-medium opacity-80">
             {t("forgotPasswordDescription") || "No te preocupes, nos pasa a todos. Introduce tu email y te ayudaremos a recuperarla."}
           </p>
         </div>
@@ -69,15 +69,15 @@ export default function ForgotPassword() {
 
             {success ? (
               <div className="space-y-10 text-center animate-in fade-in zoom-in duration-500">
-                <div className="bg-green-50 border-2 border-green-100 rounded-[2.5rem] p-10 flex flex-col items-center gap-6 shadow-inner">
+                <div className="bg-[#f0f4f8] border-2 border-[#e2e8f0] rounded-[2.5rem] p-10 flex flex-col items-center gap-6 shadow-inner">
                   <div className="w-20 h-20 bg-white rounded-full flex items-center justify-center shadow-lg transform rotate-6 hover:rotate-0 transition-transform">
-                    <svg className="w-10 h-10 text-green-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <svg className="w-10 h-10 text-[var(--brand-blue)]" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                       <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={3} d="M5 13l4 4L19 7" />
                     </svg>
                   </div>
                   <div className="space-y-2">
-                    <p className="text-green-900 font-black text-2xl">{t("instructionsSent") || "¡Correo enviado!"}</p>
-                    <p className="text-green-700 font-medium">Revisa tu bandeja de entrada para seguir los pasos.</p>
+                    <p className="text-[var(--brand-dark)] font-black text-2xl">{t("instructionsSent") || "¡Correo enviado!"}</p>
+                    <p className="text-[var(--brand-neutral)] font-medium">Revisa tu bandeja de entrada para seguir los pasos.</p>
                   </div>
                 </div>
                 <Link
@@ -93,7 +93,7 @@ export default function ForgotPassword() {
                   <div>
                     <label className="form-label">{t("email") || "Tu correo electrónico"}</label>
                     <div className="relative group">
-                      <div className="absolute left-4 top-1/2 -translate-y-1/2 text-green-400 group-focus-within:text-green-600 transition-colors z-10">
+                      <div className="absolute left-4 top-1/2 -translate-y-1/2 text-[var(--brand-neutral)] group-focus-within:text-[var(--brand-blue)] transition-colors z-10">
                         <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                           <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M16 12a4 4 0 10-8 0 4 4 0 008 0zm0 0v1.5a2.5 2.5 0 005 0V12a9 9 0 10-9 9m4.5-1.206a8.959 8.959 0 01-4.5 1.206" />
                         </svg>
@@ -131,7 +131,7 @@ export default function ForgotPassword() {
 
                   <Link
                     href={`/${lang}/login`}
-                    className="inline-block text-green-600 hover:text-green-800 font-black text-sm uppercase tracking-widest underline decoration-2 underline-offset-8 decoration-green-200 hover:decoration-green-600 transition-all"
+                    className="inline-block text-[var(--brand-blue)] hover:text-[var(--brand-dark)] font-black text-sm uppercase tracking-widest underline decoration-2 underline-offset-8 decoration-green-200 hover:decoration-green-600 transition-all"
                   >
                     {t("backToLogin") || "O inicia sesión"}
                   </Link>

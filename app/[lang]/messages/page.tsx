@@ -84,16 +84,16 @@ export default function MessagesPage() {
         {/* Cabecera */}
         <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-6 mb-6">
           <div>
-            <h1 className="text-2xl md:text-3xl font-bold text-green-900 mb-1">
+            <h1 className="text-2xl md:text-3xl font-bold text-[var(--brand-dark)] mb-1">
               {t("page.messages.title") || "Mis Mensajes"}
             </h1>
-            <p className="text-green-700 text-sm md:text-base">
+            <p className="text-[var(--brand-neutral)] text-sm md:text-base">
               {t("page.messages.subtitle") || "Conversaciones con otros viajeros"}
             </p>
           </div>
           <button
             onClick={() => router.push(`/${lang}`)}
-            className="bg-green-50 text-green-700 border-2 border-green-200 px-8 py-3 rounded-xl font-bold hover:bg-green-100 transition-all shadow-sm"
+            className="bg-[#f0f4f8] text-[var(--brand-neutral)] border-2 border-[#e2e8f0] px-8 py-3 rounded-xl font-bold hover:bg-[#e2e8f0] transition-all shadow-sm"
           >
             {t("page.messages.back") || "Volver"}
           </button>
@@ -114,22 +114,22 @@ export default function MessagesPage() {
             </p>
             <button
               onClick={() => router.push(`/${lang}/login?redirect=/${lang}/messages`)}
-              className="bg-green-600 hover:bg-green-700 text-white px-8 py-3 rounded-xl font-bold transition-colors"
+              className="bg-[var(--brand-blue)] hover:bg-[var(--brand-blue)] text-white px-8 py-3 rounded-xl font-bold transition-colors"
             >
               {t("page.messages.goToLogin") || "Iniciar sesión"}
             </button>
           </div>
         ) : conversations.length === 0 ? (
-          <div className="text-center py-24 bg-green-50 rounded-[3rem] border-2 border-green-100">
-            <div className="w-20 h-20 bg-green-100 rounded-full flex items-center justify-center mx-auto mb-8 border-2 border-green-200 text-green-600">
+          <div className="text-center py-24 bg-[#f0f4f8] rounded-[3rem] border-2 border-[#e2e8f0]">
+            <div className="w-20 h-20 bg-[#e2e8f0] rounded-full flex items-center justify-center mx-auto mb-8 border-2 border-[#e2e8f0] text-[var(--brand-blue)]">
               <svg className="w-10 h-10" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                 <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M8 10h.01M12 10h.01M16 10h.01M9 16H5a2 2 0 01-2-2V6a2 2 0 012-2h14a2 2 0 012 2v8a2 2 0 01-2 2h-5l-5 5v-5z" />
               </svg>
             </div>
-            <p className="text-2xl text-green-900 font-bold mb-4">
+            <p className="text-2xl text-[var(--brand-dark)] font-bold mb-4">
               {t("page.messages.noConversations") || "No hay mensajes activos"}
             </p>
-            <p className="text-green-600 font-medium">
+            <p className="text-[var(--brand-blue)] font-medium">
               Chatea con el conductor después de solicitar una reserva.
             </p>
           </div>
@@ -140,36 +140,36 @@ export default function MessagesPage() {
                 <div className="flex flex-col xl:flex-row justify-between gap-8">
                   <Link href={`/${lang}/messages/${conversation.id}`} className="flex-1 space-y-4">
                     <div className="flex flex-wrap items-center gap-4">
-                      <span className="bg-green-100 text-green-700 px-4 py-1.5 rounded-full text-xs font-bold uppercase tracking-widest border border-green-200">
+                      <span className="bg-[#e2e8f0] text-[var(--brand-neutral)] px-4 py-1.5 rounded-full text-xs font-bold uppercase tracking-widest border border-[#e2e8f0]">
                         CANAL ACTIVO
                       </span>
-                      <span className="text-green-500 font-bold text-sm uppercase tracking-wider">
+                      <span className="text-[var(--brand-blue)] font-bold text-sm uppercase tracking-wider">
                         {new Date(conversation.trip.departure_time).toLocaleDateString(lang, { day: 'numeric', month: 'short' })}
                       </span>
                     </div>
 
-                    <h2 className="text-3xl font-bold text-green-900 leading-tight group-hover:text-green-700 transition-colors">
+                    <h2 className="text-3xl font-bold text-[var(--brand-dark)] leading-tight group-hover:text-[var(--brand-neutral)] transition-colors">
                       {conversation.trip.departure_location} → {conversation.trip.arrival_location}
                     </h2>
 
-                    <div className="flex items-center gap-2 text-sm font-bold text-green-600 uppercase tracking-widest">
+                    <div className="flex items-center gap-2 text-sm font-bold text-[var(--brand-blue)] uppercase tracking-widest">
                       <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 4.354a4 4 0 110 5.292M15 21H3v-1a6 6 0 0112 0v1zm0 0h6v-1a6 6 0 00-9-5.197M13 7a4 4 0 11-8 0 4 4 0 018 0z" /></svg>
                       {conversation.participants.map(p => p.name).join(" • ")}
                     </div>
 
                     {conversation.last_message && (
-                      <div className="mt-4 p-5 bg-green-50 rounded-2xl border border-green-100 group-hover:bg-green-100 transition-colors">
+                      <div className="mt-4 p-5 bg-[#f0f4f8] rounded-2xl border border-[#e2e8f0] group-hover:bg-[#e2e8f0] transition-colors">
                         <div className="flex items-center gap-2 mb-2">
                           <div className="w-2 h-2 rounded-full bg-green-500"></div>
-                          <p className="text-xs font-bold text-green-700 uppercase tracking-widest">
-                            ÚLTIMO MENSAJE DE <span className="text-green-900">{conversation.last_message.user.name}</span>
+                          <p className="text-xs font-bold text-[var(--brand-neutral)] uppercase tracking-widest">
+                            ÚLTIMO MENSAJE DE <span className="text-[var(--brand-dark)]">{conversation.last_message.user.name}</span>
                           </p>
                         </div>
                         <p className="text-white font-medium italic opacity-70 leading-relaxed">
                           "{conversation.last_message.content.substring(0, 100)}
                           {conversation.last_message.content.length > 100 ? "..." : ""}"
                         </p>
-                        <p className="text-[10px] font-bold text-green-400 mt-2 uppercase">
+                        <p className="text-[10px] font-bold text-[var(--brand-neutral)] mt-2 uppercase">
                           {new Date(conversation.last_message.created_at).toLocaleTimeString(lang, { hour: '2-digit', minute: '2-digit' })}h
                         </p>
                       </div>
@@ -179,7 +179,7 @@ export default function MessagesPage() {
                   <div className="flex flex-col sm:flex-row xl:flex-col gap-3 min-w-[200px] justify-center">
                     <Link
                       href={`/${lang}/messages/${conversation.id}`}
-                      className="bg-green-600 hover:bg-green-700 text-white px-8 py-4 rounded-xl font-bold text-center shadow-md transition-all"
+                      className="bg-[var(--brand-blue)] hover:bg-[var(--brand-blue)] text-white px-8 py-4 rounded-xl font-bold text-center shadow-md transition-all"
                     >
                       {t("page.messages.openChat") || "Abril Chat"}
                     </Link>

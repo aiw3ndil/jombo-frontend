@@ -56,18 +56,18 @@ export default function ExternalTransportCard({ option, lang }: Props) {
   };
 
   return (
-    <div className="group relative bg-white border-2 border-green-100 rounded-[2.5rem] p-8 hover:border-green-300 hover:shadow-xl transition-all overflow-hidden">
-      <div className="absolute top-0 right-0 w-64 h-64 bg-green-50/60 rounded-full -mr-24 -mt-24 blur-3xl pointer-events-none group-hover:bg-green-100/60 transition-colors duration-500"></div>
+    <div className="group relative bg-white border-2 border-[#e2e8f0] rounded-[2.5rem] p-8 hover:border-[#e2e8f0] hover:shadow-xl transition-all overflow-hidden">
+      <div className="absolute top-0 right-0 w-64 h-64 bg-[#f0f4f8]/60 rounded-full -mr-24 -mt-24 blur-3xl pointer-events-none group-hover:bg-[#e2e8f0]/60 transition-colors duration-500"></div>
 
       <div className="relative flex flex-col md:flex-row gap-8 items-center md:items-start">
         <div className="flex-shrink-0 text-center space-y-4">
           <div className="relative">
             <div className="absolute inset-0 bg-green-200/40 blur-xl rounded-full scale-110"></div>
-            <div className="relative w-20 h-20 rounded-full bg-green-50 border-2 border-green-100 flex items-center justify-center text-green-600">
+            <div className="relative w-20 h-20 rounded-full bg-[#f0f4f8] border-2 border-[#e2e8f0] flex items-center justify-center text-[var(--brand-blue)]">
               {getIcon(mainLeg.mode)}
             </div>
           </div>
-          <div className="text-[10px] font-black uppercase tracking-widest text-green-400">
+          <div className="text-[10px] font-black uppercase tracking-widest text-[var(--brand-neutral)]">
             Digitransit FI
           </div>
         </div>
@@ -75,14 +75,14 @@ export default function ExternalTransportCard({ option, lang }: Props) {
         <div className="flex-1 space-y-6 w-full">
           <div className="flex flex-col sm:flex-row justify-between items-start gap-4">
             <div className="space-y-1">
-              <div className="flex items-center gap-3 text-green-600 font-black text-xs uppercase tracking-[0.2em] mb-2">
+              <div className="flex items-center gap-3 text-[var(--brand-blue)] font-black text-xs uppercase tracking-[0.2em] mb-2">
                 <span>{getModeLabel(mainLeg.mode)}</span>
                 <span className="w-1.5 h-1.5 rounded-full bg-green-200"></span>
                 <span>{new Date(option.start_time).toLocaleDateString(lang, { day: 'numeric', month: 'short' })}</span>
               </div>
-              <h2 className="text-2xl md:text-3xl font-black text-green-950 leading-tight tracking-tightest flex items-center gap-4">
+              <h2 className="text-2xl md:text-3xl font-black text-[var(--brand-dark)] leading-tight tracking-tightest flex items-center gap-4">
                 {mainLeg.from}
-                <svg className="w-6 h-6 text-green-300" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <svg className="w-6 h-6 text-[var(--brand-neutral)]" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                   <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={3} d="M17 8l4 4m0 0l-4 4m4-4H3" />
                 </svg>
                 {mainLeg.to}
@@ -90,12 +90,12 @@ export default function ExternalTransportCard({ option, lang }: Props) {
             </div>
 
             <div className="text-right flex flex-row sm:flex-col items-center sm:items-end gap-3 sm:gap-0">
-              <p className="text-3xl font-black text-green-950 tracking-tightest">
+              <p className="text-3xl font-black text-[var(--brand-dark)] tracking-tightest">
                 {option.price && option.price > 0
                   ? `${option.currency === 'EUR' ? '€' : option.currency}${Number(option.price).toFixed(2)}`
                   : (lang === 'fi' ? 'Säästä' : (lang === 'es' ? 'Ahorra' : 'Save'))}
               </p>
-              <p className="text-xs font-black text-green-500 uppercase tracking-widest leading-none">
+              <p className="text-xs font-black text-[var(--brand-blue)] uppercase tracking-widest leading-none">
                 {option.price && option.price > 0
                   ? (lang === 'fi' ? 'Hinta alkaen' : (lang === 'es' ? 'Desde' : 'From'))
                   : (lang === 'fi' ? 'Katso hinta' : (lang === 'es' ? 'Ver precio' : 'Check price'))}
@@ -103,20 +103,20 @@ export default function ExternalTransportCard({ option, lang }: Props) {
             </div>
           </div>
 
-          <div className="grid grid-cols-2 bg-green-50/60 rounded-3xl p-5 border border-green-100 gap-4">
+          <div className="grid grid-cols-2 bg-[#f0f4f8]/60 rounded-3xl p-5 border border-[#e2e8f0] gap-4">
             <div className="space-y-1">
-              <p className="text-xs font-black text-green-500 uppercase tracking-widest">
+              <p className="text-xs font-black text-[var(--brand-blue)] uppercase tracking-widest">
                 {lang === 'fi' ? 'Lähtö' : (lang === 'es' ? 'Salida' : 'Departure')}
               </p>
-              <p className="text-sm font-bold text-green-900 italic">
+              <p className="text-sm font-bold text-[var(--brand-dark)] italic">
                 {formatTime(option.start_time)} HS
               </p>
             </div>
             <div className="space-y-1">
-              <p className="text-xs font-black text-green-500 uppercase tracking-widest">
+              <p className="text-xs font-black text-[var(--brand-blue)] uppercase tracking-widest">
                 {lang === 'fi' ? 'Saapuminen' : (lang === 'es' ? 'Llegada' : 'Arrival')}
               </p>
-              <p className="text-sm font-bold text-green-900">
+              <p className="text-sm font-bold text-[var(--brand-dark)]">
                 {formatTime(option.end_time)} HS
               </p>
             </div>
@@ -128,11 +128,11 @@ export default function ExternalTransportCard({ option, lang }: Props) {
               {option.legs.map((leg, idx) => (
                 <React.Fragment key={idx}>
                   <span className={`text-[10px] font-bold px-2 py-1 rounded-md ${
-                    leg.mode === 'WALK' ? 'bg-green-50 text-green-400' : 'bg-green-100 text-green-700'
+                    leg.mode === 'WALK' ? 'bg-[#f0f4f8] text-[var(--brand-neutral)]' : 'bg-[#e2e8f0] text-[var(--brand-neutral)]'
                   }`}>
                     {getModeLabel(leg.mode)}
                   </span>
-                  {idx < option.legs.length - 1 && <span className="text-green-200">›</span>}
+                  {idx < option.legs.length - 1 && <span className="text-[var(--brand-neutral)]">›</span>}
                 </React.Fragment>
               ))}
             </div>

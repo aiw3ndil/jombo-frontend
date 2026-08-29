@@ -117,7 +117,7 @@ export default function MyBookings() {
   const getStatusClasses = (status: string) => {
     switch (status) {
       case "confirmed":
-        return "bg-green-100 text-green-700 border-green-200";
+        return "bg-[#e2e8f0] text-[var(--brand-neutral)] border-[#e2e8f0]";
       case "pending":
         return "bg-yellow-100 text-yellow-700 border-yellow-200";
       case "rejected":
@@ -146,23 +146,23 @@ export default function MyBookings() {
   return (
     <div className="min-h-screen bg-white">
       {/* ── HERO ── */}
-      <section className="bg-green-50 border-b-2 border-green-100 py-8 px-4">
+      <section className="bg-[#f0f4f8] border-b-2 border-[#e2e8f0] py-8 px-4">
         <div className="max-w-5xl mx-auto flex flex-col md:flex-row justify-between items-center gap-8 text-center md:text-left">
           <div className="flex-1">
-            <div className="inline-flex items-center gap-2 bg-green-100 border border-green-300 text-green-800 px-4 py-1.5 rounded-full text-xs font-bold mb-3 uppercase tracking-wide">
-              <span className="w-2 h-2 rounded-full bg-green-600"></span>
+            <div className="inline-flex items-center gap-2 bg-[#e2e8f0] border border-[#e2e8f0] text-[var(--brand-dark)] px-4 py-1.5 rounded-full text-xs font-bold mb-3 uppercase tracking-wide">
+              <span className="w-2 h-2 rounded-full bg-[var(--brand-blue)]"></span>
               {t("page.myBookings.badge") || "Mis Viajes"}
             </div>
-            <h1 className="text-2xl md:text-3xl font-bold text-green-900 leading-tight mb-2">
+            <h1 className="text-2xl md:text-3xl font-bold text-[var(--brand-dark)] leading-tight mb-2">
               {t("page.myBookings.title") || "Mis Reservas"}
             </h1>
-            <p className="text-sm md:text-base text-green-700 max-w-2xl leading-relaxed font-normal">
+            <p className="text-sm md:text-base text-[var(--brand-neutral)] max-w-2xl leading-relaxed font-normal">
               {t("page.myBookings.subtitle") || "Gestiona tus solicitudes de viaje y consulta tus trayectos confirmados."}
             </p>
           </div>
           <button
             onClick={() => router.push(`/${lang}`)}
-            className="btn-secondary px-10 py-4 shadow-md bg-white hover:bg-green-50"
+            className="btn-secondary px-10 py-4 shadow-md bg-white hover:bg-[#f0f4f8]"
           >
             <svg className="w-5 h-5 mr-3" fill="none" stroke="currentColor" viewBox="0 0 24 24">
               <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M10 19l-7-7m0 0l7-7m-7 7h18" />
@@ -176,16 +176,16 @@ export default function MyBookings() {
       <section className="py-20 px-4 min-h-[50vh]">
         <div className="max-w-5xl mx-auto">
           {bookings.length === 0 ? (
-            <div className="text-center py-24 bg-green-50/50 rounded-[3rem] border-2 border-dashed border-green-200">
-              <div className="w-24 h-24 bg-white rounded-full flex items-center justify-center mx-auto mb-8 shadow-sm border-2 border-green-100 text-green-600">
+            <div className="text-center py-24 bg-[#f0f4f8]/50 rounded-[3rem] border-2 border-dashed border-[#e2e8f0]">
+              <div className="w-24 h-24 bg-white rounded-full flex items-center justify-center mx-auto mb-8 shadow-sm border-2 border-[#e2e8f0] text-[var(--brand-blue)]">
                 <svg className="w-12 h-12" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                   <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2-2v12a2 2 0 002 2z" />
                 </svg>
               </div>
-              <h2 className="text-3xl font-bold text-green-900 mb-4">
+              <h2 className="text-3xl font-bold text-[var(--brand-dark)] mb-4">
                 {t("page.myBookings.noBookings") || "Aún no tienes reservas"}
               </h2>
-              <p className="text-green-700 text-lg mb-12 max-w-md mx-auto">
+              <p className="text-[var(--brand-neutral)] text-lg mb-12 max-w-md mx-auto">
                 {t("page.myBookings.noBookingsInfo") || "Busca un viaje que te interese y reserva tu plaza de forma gratuita."}
               </p>
               <button
@@ -211,7 +211,7 @@ export default function MyBookings() {
                         <span className={`px-5 py-2 rounded-full text-xs font-bold uppercase tracking-widest border-2 shadow-sm ${getStatusClasses(booking.status)}`}>
                           {getStatusText(booking.status)}
                         </span>
-                        <div className="flex items-center gap-2 text-green-600 font-bold text-sm bg-green-50 px-4 py-1.5 rounded-lg border border-green-100">
+                        <div className="flex items-center gap-2 text-[var(--brand-blue)] font-bold text-sm bg-[#f0f4f8] px-4 py-1.5 rounded-lg border border-[#e2e8f0]">
                           <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                             <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2-2v12a2 2 0 002 2z" />
                           </svg>
@@ -221,18 +221,18 @@ export default function MyBookings() {
 
                       <div className="space-y-6">
                         <div className="flex items-start gap-4">
-                           <div className="w-12 h-12 bg-green-100 rounded-2xl flex items-center justify-center text-green-700 flex-shrink-0">
+                           <div className="w-12 h-12 bg-[#e2e8f0] rounded-2xl flex items-center justify-center text-[var(--brand-neutral)] flex-shrink-0">
                               <svg className="w-7 h-7" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                 <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z" />
                               </svg>
                            </div>
-                           <h2 className="text-4xl font-bold text-green-900 leading-tight tracking-tight">
-                            {booking.trip?.departure_location} <span className="text-green-300 mx-2">→</span> {booking.trip?.arrival_location}
+                           <h2 className="text-4xl font-bold text-[var(--brand-dark)] leading-tight tracking-tight">
+                            {booking.trip?.departure_location} <span className="text-[var(--brand-neutral)] mx-2">→</span> {booking.trip?.arrival_location}
                           </h2>
                         </div>
                         
-                        <div className="flex items-center gap-4 bg-green-50/50 p-4 rounded-2xl border border-green-100 w-fit group-hover:bg-green-50 transition-colors">
-                          <div className="w-12 h-12 rounded-full bg-green-600 flex items-center justify-center text-white font-bold overflow-hidden shadow-md border-2 border-white">
+                        <div className="flex items-center gap-4 bg-[#f0f4f8]/50 p-4 rounded-2xl border border-[#e2e8f0] w-fit group-hover:bg-[#f0f4f8] transition-colors">
+                          <div className="w-12 h-12 rounded-full bg-[var(--brand-blue)] flex items-center justify-center text-white font-bold overflow-hidden shadow-md border-2 border-white">
                             {booking.trip?.driver?.picture_url ? (
                               <img src={booking.trip.driver.picture_url} className="w-full h-full object-cover" alt="" />
                             ) : (
@@ -240,8 +240,8 @@ export default function MyBookings() {
                             )}
                           </div>
                           <div>
-                            <p className="text-xs font-bold text-green-400 uppercase tracking-widest">{t("page.myBookings.driver") || "Conductor"}</p>
-                            <p className="font-bold text-green-900 text-lg">
+                            <p className="text-xs font-bold text-[var(--brand-neutral)] uppercase tracking-widest">{t("page.myBookings.driver") || "Conductor"}</p>
+                            <p className="font-bold text-[var(--brand-dark)] text-lg">
                               {booking.trip?.driver?.name}
                             </p>
                           </div>
@@ -249,12 +249,12 @@ export default function MyBookings() {
                       </div>
 
                       <div className="grid grid-cols-1 sm:grid-cols-3 gap-6">
-                        <div className="bg-green-50/30 border-2 border-green-100 rounded-[1.5rem] p-5 hover:bg-white hover:border-green-300 transition-all shadow-sm">
-                          <p className="text-xs font-bold text-green-400 uppercase tracking-widest mb-2 flex items-center gap-2">
+                        <div className="bg-[#f0f4f8]/30 border-2 border-[#e2e8f0] rounded-[1.5rem] p-5 hover:bg-white hover:border-[#e2e8f0] transition-all shadow-sm">
+                          <p className="text-xs font-bold text-[var(--brand-neutral)] uppercase tracking-widest mb-2 flex items-center gap-2">
                              <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z" /></svg>
                              {t("page.myBookings.departure") || "HORARIO"}
                           </p>
-                          <p className="font-bold text-green-900 text-base">
+                          <p className="font-bold text-[var(--brand-dark)] text-base">
                             {booking.trip?.departure_time ? (
                               <>
                                 {new Date(booking.trip.departure_time).toLocaleDateString(lang)} · {new Date(booking.trip.departure_time).toLocaleTimeString(lang, { hour: '2-digit', minute: '2-digit' })}h
@@ -262,16 +262,16 @@ export default function MyBookings() {
                             ) : "-"}
                           </p>
                         </div>
-                        <div className="bg-green-50/30 border-2 border-green-100 rounded-[1.5rem] p-5 hover:bg-white hover:border-green-300 transition-all shadow-sm">
-                          <p className="text-xs font-bold text-green-400 uppercase tracking-widest mb-2 flex items-center gap-2">
+                        <div className="bg-[#f0f4f8]/30 border-2 border-[#e2e8f0] rounded-[1.5rem] p-5 hover:bg-white hover:border-[#e2e8f0] transition-all shadow-sm">
+                          <p className="text-xs font-bold text-[var(--brand-neutral)] uppercase tracking-widest mb-2 flex items-center gap-2">
                              <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z" /></svg>
                              {t("page.myBookings.seats") || "ASIENTOS"}
                           </p>
-                          <p className="font-bold text-green-900 text-base underline decoration-green-300 underline-offset-4 decoration-2">{booking.seats} {t("common.seats") || "plazas"}</p>
+                          <p className="font-bold text-[var(--brand-dark)] text-base underline decoration-green-300 underline-offset-4 decoration-2">{booking.seats} {t("common.seats") || "plazas"}</p>
                         </div>
-                        <div className="bg-green-50 border-2 border-green-200 rounded-[1.5rem] p-5 shadow-inner">
-                          <p className="text-xs font-bold text-green-400 uppercase tracking-widest mb-2">{t("page.myBookings.totalPrice") || "PAGO TOTAL"}</p>
-                          <p className="font-black text-green-700 text-2xl">
+                        <div className="bg-[#f0f4f8] border-2 border-[#e2e8f0] rounded-[1.5rem] p-5 shadow-inner">
+                          <p className="text-xs font-bold text-[var(--brand-neutral)] uppercase tracking-widest mb-2">{t("page.myBookings.totalPrice") || "PAGO TOTAL"}</p>
+                          <p className="font-black text-[var(--brand-neutral)] text-2xl">
                             €{booking.trip?.price ? (Number(booking.trip.price) * booking.seats).toFixed(2) : "0.00"}
                           </p>
                         </div>
@@ -290,8 +290,8 @@ export default function MyBookings() {
                             </button>
                           )}
                           {bookingReviews[booking.id] && (
-                            <div className="flex items-center justify-center gap-3 text-green-700 bg-green-50 border-2 border-green-200 px-8 py-5 rounded-2xl text-base font-bold shadow-sm">
-                              <svg className="w-6 h-6 text-green-500" fill="currentColor" viewBox="0 0 20 20">
+                            <div className="flex items-center justify-center gap-3 text-[var(--brand-neutral)] bg-[#f0f4f8] border-2 border-[#e2e8f0] px-8 py-5 rounded-2xl text-base font-bold shadow-sm">
+                              <svg className="w-6 h-6 text-[var(--brand-blue)]" fill="currentColor" viewBox="0 0 20 20">
                                 <path fillRule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clipRule="evenodd" />
                               </svg>
                               {t("page.myBookings.reviewed") || "CALIFICADO"}
