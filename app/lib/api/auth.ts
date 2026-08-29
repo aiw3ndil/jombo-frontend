@@ -1,4 +1,4 @@
-const API_BASE = process.env.NEXT_PUBLIC_API_URL || "";
+const API_BASE = process.env.NEXT_PUBLIC_API_BASE_URL || "";
 
 function headerToObj(headers: Headers): Record<string, string> {
   const obj: Record<string, string> = {};

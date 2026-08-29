@@ -1,4 +1,4 @@
-const API_BASE = process.env.NEXT_PUBLIC_API_URL || "";
+const API_BASE = process.env.NEXT_PUBLIC_API_BASE_URL || "";
 
 function getAuthHeaders(): HeadersInit {
   const token = localStorage.getItem('authToken'); // Assuming token is stored in localStorage
