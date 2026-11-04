@@ -60,9 +60,9 @@ export default function ResetPassword() {
   return (
     <div className="min-h-screen bg-white">
       {/* ── HERO ── */}
-      <section className="bg-[#f0f4f8] border-b-2 border-[#e2e8f0] py-8 px-4">
+      <section className="bg-[#f2f7ec] border-b-2 border-[#dde9d3] py-8 px-4">
         <div className="max-w-5xl mx-auto text-center">
-          <div className="inline-flex items-center gap-2 bg-[#e2e8f0] border border-[#e2e8f0] text-[var(--brand-dark)] px-4 py-1.5 rounded-full text-xs font-bold mb-3 uppercase tracking-wide">
+          <div className="inline-flex items-center gap-2 bg-[#dde9d3] border border-[#dde9d3] text-[var(--brand-dark)] px-4 py-1.5 rounded-full text-xs font-bold mb-3 uppercase tracking-wide">
             {t("securityBadge") || "Account security"}
           </div>
           <h1 className="text-2xl md:text-3xl font-black text-[var(--brand-dark)] leading-tight mb-2">
@@ -89,7 +89,7 @@ export default function ResetPassword() {
 
             {success ? (
               <div className="space-y-10 text-center animate-in fade-in zoom-in duration-500">
-                <div className="bg-[#f0f4f8] border-2 border-[#e2e8f0] rounded-[2.5rem] p-10 flex flex-col items-center gap-6 shadow-inner">
+                <div className="bg-[#f2f7ec] border-2 border-[#dde9d3] rounded-[2.5rem] p-10 flex flex-col items-center gap-6 shadow-inner">
                   <div className="w-20 h-20 bg-white rounded-full flex items-center justify-center shadow-lg animate-bounce">
                     <svg className="w-10 h-10 text-[var(--brand-blue)]" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                       <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={3} d="M5 13l4 4L19 7" />

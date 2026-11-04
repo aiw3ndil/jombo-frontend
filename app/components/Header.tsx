@@ -65,20 +65,20 @@ export default function Header({ lang }: { lang: string }) {
   };
 
   return (
-    <header className="px-6 py-4 bg-white flex justify-between items-center transition-all duration-300 relative z-[100] border-b-2 border-[#e2e8f0] shadow-sm">
+    <header className="px-4 sm:px-6 py-4 bg-white flex justify-between items-center transition-all duration-300 relative z-[100] border-b-2 border-[#dde9d3] shadow-sm">
       <Link href={localePath(lang)} className="flex items-center gap-2 hover:opacity-85 transition-opacity">
         <img
           src="/JOMBO_LOGO_Secundario_RGB.png"
           alt="Jombo Secondary"
-          className="h-14 w-auto"
+          className="h-11 sm:h-14 w-auto"
         />
         <img
           src="/JOMBO_LOGO_Princpal_RGB.png"
           alt="Jombo Primary"
-          className="h-14 w-auto"
+          className="hidden sm:block h-14 w-auto"
         />
       </Link>
-      <div className="flex items-center gap-4">
+      <div className="flex items-center gap-2 sm:gap-4">
         <LanguageSwitcher />
         {user ? (
           <>
@@ -86,7 +86,7 @@ export default function Header({ lang }: { lang: string }) {
             <div className="relative notifications-dropdown">
               <button
                 onClick={() => setIsNotificationsOpen(!isNotificationsOpen)}
-                className="relative p-2 rounded-lg hover:bg-[#f0f4f8] transition-colors"
+                className="relative p-2 rounded-lg hover:bg-[#f2f7ec] transition-colors"
                 aria-label="Notificaciones"
               >
                 <svg
@@ -124,13 +124,13 @@ export default function Header({ lang }: { lang: string }) {
                   e.stopPropagation();
                   setIsDropdownOpen(!isDropdownOpen);
                 }}
-                className="flex items-center gap-2 bg-[#f0f4f8] border-2 border-[#e2e8f0] text-[var(--brand-dark)] px-4 py-2 rounded-xl hover:bg-[#e2e8f0] transition-all font-semibold"
+                className="flex items-center gap-2 bg-[#f2f7ec] border-2 border-[#dde9d3] text-[var(--brand-dark)] px-4 py-2 rounded-xl hover:bg-[#dde9d3] transition-all font-semibold"
               >
                 {(user.picture_url || user.picture) ? (
                   <img
                     src={user.picture_url || user.picture}
                     alt={user.name || user.email}
-                    className="w-8 h-8 rounded-full object-cover border-2 border-[#e2e8f0]"
+                    className="w-8 h-8 rounded-full object-cover border-2 border-[#dde9d3]"
                   />
                 ) : (
                   <div className="w-8 h-8 rounded-full bg-[var(--brand-blue)] flex items-center justify-center text-white font-bold text-sm">
@@ -149,36 +149,36 @@ export default function Header({ lang }: { lang: string }) {
               </button>
 
               {isDropdownOpen && (
-                <div className="absolute right-0 mt-2 w-60 bg-white rounded-xl shadow-xl py-2 z-50 border-2 border-[#e2e8f0]">
+                <div className="absolute right-0 mt-2 w-60 bg-white rounded-xl shadow-xl py-2 z-50 border-2 border-[#dde9d3]">
                   <Link
                     href={`${langPrefix(lang)}/profile`}
                     onClick={() => setIsDropdownOpen(false)}
-                    className="flex items-center gap-3 px-5 py-3 text-[var(--brand-dark)] hover:bg-[#f0f4f8] transition-colors font-medium text-base"
+                    className="flex items-center gap-3 px-5 py-3 text-[var(--brand-dark)] hover:bg-[#f2f7ec] transition-colors font-medium text-base"
                   >
                     {t("menu.profile")}
                   </Link>
                   <Link
                     href={`${langPrefix(lang)}/messages`}
                     onClick={() => setIsDropdownOpen(false)}
-                    className="flex items-center gap-3 px-5 py-3 text-[var(--brand-dark)] hover:bg-[#f0f4f8] transition-colors font-medium text-base"
+                    className="flex items-center gap-3 px-5 py-3 text-[var(--brand-dark)] hover:bg-[#f2f7ec] transition-colors font-medium text-base"
                   >
                     {t("menu.messages")}
                   </Link>
                   <Link
                     href={`${langPrefix(lang)}/my-bookings`}
                     onClick={() => setIsDropdownOpen(false)}
-                    className="flex items-center gap-3 px-5 py-3 text-[var(--brand-dark)] hover:bg-[#f0f4f8] transition-colors font-medium text-base"
+                    className="flex items-center gap-3 px-5 py-3 text-[var(--brand-dark)] hover:bg-[#f2f7ec] transition-colors font-medium text-base"
                   >
                     {t("menu.myBookings")}
                   </Link>
                   <Link
                     href={`${langPrefix(lang)}/my-trips`}
                     onClick={() => setIsDropdownOpen(false)}
-                    className="flex items-center gap-3 px-5 py-3 text-[var(--brand-dark)] hover:bg-[#f0f4f8] transition-colors font-medium text-base"
+                    className="flex items-center gap-3 px-5 py-3 text-[var(--brand-dark)] hover:bg-[#f2f7ec] transition-colors font-medium text-base"
                   >
                     {t("menu.myTrips")}
                   </Link>
-                  <div className="h-px bg-[#e2e8f0] my-1 mx-3"></div>
+                  <div className="h-px bg-[#dde9d3] my-1 mx-3"></div>
                   <button
                     onClick={() => {
                       logout();
@@ -195,7 +195,7 @@ export default function Header({ lang }: { lang: string }) {
         ) : (
           <Link
             href={`${langPrefix(lang)}/login`}
-            className="bg-[var(--brand-blue)] text-white px-7 py-3 rounded-xl hover:bg-[#003d85] transition-colors font-bold text-base shadow-sm active:scale-95"
+            className="bg-[var(--brand-blue)] text-white px-7 py-3 rounded-xl hover:bg-[#255a31] transition-colors font-bold text-base shadow-sm active:scale-95"
           >
             Login
           </Link>

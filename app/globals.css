@@ -6,22 +6,24 @@
 
 @layer base {
   :root {
-    --brand-dark: #212240;
-    --brand-neutral: #717285;
-    --brand-accent-1: #5471E9;
-    --brand-accent-2: #FF419C;
-    --brand-blue: #0051B3;
-    --brand-gradient: linear-gradient(89.8deg, #0BB1D3, #9F2FFF);
+    /* Paleta "pradera": verdes de campo, cielo y caminos de arena */
+    --brand-dark: #1f3a2a;        /* verde bosque profundo (texto) */
+    --brand-neutral: #5f7363;     /* verde grisáceo (texto secundario) */
+    --brand-accent-1: #6fae4f;    /* verde hoja (foco, detalles) */
+    --brand-accent-2: #e9a23b;    /* sol / arena cálida (avisos) */
+    --brand-blue: #2f6f3e;        /* verde principal (botones) */
+    --brand-sky: #8ec9ea;
+    --brand-sand: #e3cfa4;
+    --brand-gradient: linear-gradient(135deg, #2f6f3e 0%, #4f9447 55%, #7cb45a 100%);
 
     --background: #ffffff;
     --foreground: var(--brand-dark);
     --primary: var(--brand-blue);
-    --primary-hover: #003d85; /* Slightly darker */
-    --secondary: #f0f4f8; 
+    --primary-hover: #255a31;
+    --secondary: #f2f7ec;
     --accent: var(--brand-accent-1);
-    --border: #e2e8f0;
+    --border: #dde9d3;
   }
-
   body {
     @apply bg-white text-[var(--brand-dark)] antialiased font-sans;
   }
@@ -32,11 +34,11 @@
 }
 
 @utility btn-primary {
-  @apply bg-[var(--brand-blue)] hover:bg-[#003d85] text-white px-8 py-4 rounded-2xl font-bold text-lg transition-all shadow-md inline-flex items-center justify-center gap-2 active:scale-95 disabled:opacity-50 disabled:pointer-events-none;
+  @apply bg-[var(--brand-blue)] hover:bg-[var(--primary-hover)] text-white px-8 py-4 rounded-full font-bold text-lg transition-all shadow-md shadow-green-900/10 inline-flex items-center justify-center gap-2 active:scale-95 disabled:opacity-50 disabled:pointer-events-none;
 }
 
 @utility btn-secondary {
-  @apply bg-white border-2 border-[var(--brand-neutral)] text-[var(--brand-dark)] hover:bg-[#f0f4f8] px-8 py-4 rounded-2xl font-bold text-lg transition-all shadow-sm inline-flex items-center justify-center gap-2 active:scale-95 disabled:opacity-50;
+  @apply bg-white border-2 border-[var(--brand-accent-1)] text-[var(--brand-dark)] hover:bg-[var(--secondary)] px-8 py-4 rounded-full font-bold text-lg transition-all shadow-sm inline-flex items-center justify-center gap-2 active:scale-95 disabled:opacity-50;
 }
 
 @utility form-card {
@@ -48,11 +50,11 @@
 }
 
 @utility form-input {
-  @apply w-full bg-[#f8fafc] border-2 border-[var(--border)] rounded-2xl px-6 py-4 text-[var(--brand-dark)] placeholder:text-[var(--brand-neutral)] focus:outline-none focus:border-[var(--brand-accent-1)] focus:bg-white transition-all text-lg font-medium shadow-sm;
+  @apply w-full bg-[#fafcf6] border-2 border-[var(--border)] rounded-2xl px-6 py-4 text-[var(--brand-dark)] placeholder:text-[var(--brand-neutral)] focus:outline-none focus:border-[var(--brand-accent-1)] focus:bg-white transition-all text-lg font-medium shadow-sm;
 }
 
 @utility form-select {
-  @apply w-full bg-[#f8fafc] border-2 border-[var(--border)] rounded-2xl px-6 py-4 text-[var(--brand-dark)] focus:outline-none focus:border-[var(--brand-accent-1)] focus:bg-white transition-all text-lg font-medium appearance-none cursor-pointer shadow-sm;
+  @apply w-full bg-[#fafcf6] border-2 border-[var(--border)] rounded-2xl px-6 py-4 text-[var(--brand-dark)] focus:outline-none focus:border-[var(--brand-accent-1)] focus:bg-white transition-all text-lg font-medium appearance-none cursor-pointer shadow-sm;
 }
 
 @utility animate-shake {
@@ -82,3 +84,23 @@
   75% { transform: translateX(4px); }
 }
 
+
+/* Paisaje: molinos girando y nubes a la deriva */
+.jombo-turbine {
+  transform-box: fill-box;
+  transform-origin: center;
+  animation: jombo-spin 6s linear infinite;
+}
+.jombo-clouds {
+  animation: jombo-drift 40s ease-in-out infinite alternate;
+}
+@keyframes jombo-spin {
+  to { transform: rotate(360deg); }
+}
+@keyframes jombo-drift {
+  from { transform: translateX(-20px); }
+  to { transform: translateX(30px); }
+}
+@media (prefers-reduced-motion: reduce) {
+  .jombo-turbine, .jombo-clouds { animation: none; }
+}

@@ -122,9 +122,9 @@ export default function TripForm({
   return (
     <div className="min-h-screen bg-white">
       {/* ── HERO ── */}
-      <section className="bg-[#f0f4f8] border-b-2 border-[#e2e8f0] py-8 px-4">
+      <section className="bg-[#f2f7ec] border-b-2 border-[#dde9d3] py-8 px-4">
         <div className="max-w-5xl mx-auto text-center">
-          <div className="inline-flex items-center gap-2 bg-[#e2e8f0] border border-[#e2e8f0] text-[var(--brand-dark)] px-4 py-1.5 rounded-full text-xs font-bold mb-3 uppercase tracking-wide">
+          <div className="inline-flex items-center gap-2 bg-[#dde9d3] border border-[#dde9d3] text-[var(--brand-dark)] px-4 py-1.5 rounded-full text-xs font-bold mb-3 uppercase tracking-wide">
             <span className="w-2 h-2 rounded-full bg-[var(--brand-blue)] animate-pulse"></span>
             {isEdit ? t("page.editTrip.badge", "Edit trip") : (t("page.createTrip.badge") || "New trip")}
           </div>
@@ -191,7 +191,7 @@ export default function TripForm({
                   </div>
                 </div>
 
-                <div className="h-px bg-[#f0f4f8] w-full"></div>
+                <div className="h-px bg-[#f2f7ec] w-full"></div>
 
                 {/* Paso 2: Horario y Plazas */}
                 <div className="space-y-6">
@@ -257,7 +257,7 @@ export default function TripForm({
                   </div>
                 </div>
 
-                <div className="h-px bg-[#f0f4f8] w-full"></div>
+                <div className="h-px bg-[#f2f7ec] w-full"></div>
 
                 {/* Paso 3: Vehículo */}
                 <div className="space-y-6">
@@ -268,7 +268,7 @@ export default function TripForm({
                   <VehicleSelector value={vehicleChoice} onChange={handleVehicleChange} initialVehicleId={trip?.vehicle?.id ?? null} />
                 </div>
 
-                <div className="h-px bg-[#f0f4f8] w-full"></div>
+                <div className="h-px bg-[#f2f7ec] w-full"></div>
 
                 {/* Paso 4: Información adicional */}
                 <div className="space-y-6">
@@ -293,7 +293,7 @@ export default function TripForm({
 
                   {!isEdit && (<>
                   {/* Recurrencia */}
-                  <div className="bg-[#f0f4f8]/50 border-2 border-[#e2e8f0] rounded-[2rem] p-8 md:p-10 transition-all hover:bg-[#f0f4f8]">
+                  <div className="bg-[#f2f7ec]/50 border-2 border-[#dde9d3] rounded-[2rem] p-8 md:p-10 transition-all hover:bg-[#f2f7ec]">
                     <div className="flex items-center justify-between gap-6">
                       <div className="flex-1">
                         <h3 className="text-xl font-bold text-[var(--brand-dark)] mb-1 flex items-center gap-2">
@@ -317,7 +317,7 @@ export default function TripForm({
                     </div>
 
                     {formData.is_recurring && (
-                      <div className="grid md:grid-cols-2 gap-8 mt-10 pt-8 border-t border-[#e2e8f0] animate-in fade-in slide-in-from-top-4 duration-300">
+                      <div className="grid md:grid-cols-2 gap-8 mt-10 pt-8 border-t border-[#dde9d3] animate-in fade-in slide-in-from-top-4 duration-300">
                         <div>
                           <label className="form-label">{t("page.createTrip.recurrencePattern") || "Frequency"}</label>
                           <div className="relative">

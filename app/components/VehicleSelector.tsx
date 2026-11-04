@@ -141,8 +141,8 @@ export default function VehicleSelector({
                   aria-pressed={selected}
                   className={`text-left rounded-2xl border-2 p-5 flex items-start gap-4 transition-all ${
                     selected
-                      ? "border-[var(--brand-blue)] bg-[#f0f4f8] shadow-md"
-                      : "border-[#e2e8f0] hover:border-[var(--brand-blue)]/50"
+                      ? "border-[var(--brand-blue)] bg-[#f2f7ec] shadow-md"
+                      : "border-[#dde9d3] hover:border-[var(--brand-blue)]/50"
                   }`}
                 >
                   <span className={selected ? "text-[var(--brand-blue)]" : "text-[var(--brand-neutral)]"}>
@@ -171,7 +171,7 @@ export default function VehicleSelector({
       )}
 
       {adding && (
-        <div className="bg-[#f0f4f8]/50 border-2 border-[#e2e8f0] rounded-[2rem] p-6 md:p-8 space-y-6">
+        <div className="bg-[#f2f7ec]/50 border-2 border-[#dde9d3] rounded-[2rem] p-6 md:p-8 space-y-6">
           <div className="flex items-center justify-between gap-4 flex-wrap">
             <h3 className="text-xl font-bold text-[var(--brand-dark)] flex items-center gap-2">
               <CarIcon className="w-6 h-6 text-[var(--brand-blue)]" />

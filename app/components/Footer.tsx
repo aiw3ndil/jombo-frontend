@@ -90,7 +90,7 @@ export default function Footer({ lang }: FooterProps) {
           </div>
 
           {/* Contact Column */}
-          <div className="bg-[#2a2b4d] rounded-[2rem] p-8 border border-white/5 backdrop-blur-sm self-start">
+          <div className="bg-[#2c4c37] rounded-[2rem] p-8 border border-white/5 backdrop-blur-sm self-start">
             <h3 className="text-white font-bold mb-6 text-sm uppercase tracking-[0.2em] opacity-60">
               {t("footer.contact")}
             </h3>

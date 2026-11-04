@@ -200,9 +200,9 @@ export default function ProfilePage({ params }: { params: Promise<{ lang: string
   return (
     <div className="min-h-screen bg-white">
       {/* ── HERO ── */}
-      <section className="bg-[#f0f4f8] border-b-2 border-[#e2e8f0] py-8 px-4">
+      <section className="bg-[#f2f7ec] border-b-2 border-[#dde9d3] py-8 px-4">
         <div className="max-w-5xl mx-auto text-center md:text-left">
-          <div className="inline-flex items-center gap-2 bg-[#e2e8f0] border border-[#e2e8f0] text-[var(--brand-dark)] px-4 py-1.5 rounded-full text-xs font-bold mb-3 uppercase tracking-wide">
+          <div className="inline-flex items-center gap-2 bg-[#dde9d3] border border-[#dde9d3] text-[var(--brand-dark)] px-4 py-1.5 rounded-full text-xs font-bold mb-3 uppercase tracking-wide">
             <span className="w-2 h-2 rounded-full bg-[var(--brand-blue)]"></span>
             {t("profile.badge")}
           </div>
@@ -221,7 +221,7 @@ export default function ProfilePage({ params }: { params: Promise<{ lang: string
           
           {message && (
             <div className={`p-6 rounded-2xl border-2 flex items-center gap-4 animate-shake ${
-              message.type === "success" ? "bg-[#e2e8f0] border-[#e2e8f0] text-[var(--brand-dark)]" : "form-error"
+              message.type === "success" ? "bg-[#dde9d3] border-[#dde9d3] text-[var(--brand-dark)]" : "form-error"
             }`}>
               <div className={`w-10 h-10 rounded-full flex items-center justify-center ${message.type === 'success' ? 'bg-green-200' : 'bg-red-100'}`}>
                 {message.type === 'success' ? '✓' : '!'}
@@ -241,7 +241,7 @@ export default function ProfilePage({ params }: { params: Promise<{ lang: string
 
             <form onSubmit={handleSubmit} className="space-y-10">
               {/* Avatar Upload */}
-              <div className="flex flex-col sm:flex-row items-center gap-10 bg-[#f0f4f8]/50 p-8 rounded-[2rem] border-2 border-[#e2e8f0] shadow-inner">
+              <div className="flex flex-col sm:flex-row items-center gap-10 bg-[#f2f7ec]/50 p-8 rounded-[2rem] border-2 border-[#dde9d3] shadow-inner">
                 <div className="relative group">
                   <div className="relative w-40 h-40 rounded-full overflow-hidden border-4 border-white shadow-xl bg-white">
                     {picturePreview ? (
@@ -270,7 +270,7 @@ export default function ProfilePage({ params }: { params: Promise<{ lang: string
                 </div>
                 <div className="flex-1 text-center sm:text-left space-y-2">
                   <h4 className="text-2xl font-black text-[var(--brand-dark)]">{formData.name || t("profile.name")}</h4>
-                  <p className="bg-[#e2e8f0] text-[var(--brand-neutral)] px-4 py-1.5 rounded-lg text-sm font-bold inline-block border border-[#e2e8f0]">
+                  <p className="bg-[#dde9d3] text-[var(--brand-neutral)] px-4 py-1.5 rounded-lg text-sm font-bold inline-block border border-[#dde9d3]">
                     {formData.email}
                   </p>
                   <p className="text-[var(--brand-blue)] text-sm font-bold uppercase tracking-widest block pt-2">{t("profile.avatarInfo")}</p>
@@ -328,7 +328,7 @@ export default function ProfilePage({ params }: { params: Promise<{ lang: string
 
             {passwordMessage && (
               <div className={`mb-8 p-6 rounded-2xl border-2 animate-shake ${
-                passwordMessage.type === "success" ? "bg-[#e2e8f0] border-[#e2e8f0] text-[var(--brand-dark)]" : "form-error"
+                passwordMessage.type === "success" ? "bg-[#dde9d3] border-[#dde9d3] text-[var(--brand-dark)]" : "form-error"
               }`}>
                 <span className="font-bold">{passwordMessage.text}</span>
               </div>

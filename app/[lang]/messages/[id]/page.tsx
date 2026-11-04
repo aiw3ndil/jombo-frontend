@@ -109,11 +109,11 @@ export default function ConversationPage() {
   if (!user || !conversation) return null;
 
   return (
-    <div className="min-h-[calc(100vh-80px)] bg-[#f0f4f8] flex flex-col pt-8 pb-12 px-4 sm:px-6">
+    <div className="min-h-[calc(100vh-80px)] bg-[#f2f7ec] flex flex-col pt-8 pb-12 px-4 sm:px-6">
       <div className="max-w-4xl mx-auto w-full flex flex-col flex-1">
         
         {/* Header del Chat */}
-        <div className="bg-white border-2 border-[#e2e8f0] p-6 rounded-[2.5rem] shadow-xl mb-6 flex-shrink-0">
+        <div className="bg-white border-2 border-[#dde9d3] p-6 rounded-[2.5rem] shadow-xl mb-6 flex-shrink-0">
           <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-6">
             <div className="space-y-2">
               <div className="flex items-center gap-2">
@@ -141,7 +141,7 @@ export default function ConversationPage() {
               )}
               <button
                 onClick={() => router.push(`${langPrefix(lang)}/messages`)}
-                className="bg-[#e2e8f0] text-[var(--brand-dark)] border-2 border-[#e2e8f0] px-6 py-3 rounded-xl font-bold hover:bg-green-200 transition-all text-sm"
+                className="bg-[#dde9d3] text-[var(--brand-dark)] border-2 border-[#dde9d3] px-6 py-3 rounded-xl font-bold hover:bg-green-200 transition-all text-sm"
               >
                 {t("page.conversation.back") || "Back"}
               </button>
@@ -175,7 +175,7 @@ export default function ConversationPage() {
                     <div className={`rounded-[2rem] px-6 py-4 relative shadow-md border-2 ${
                       isOwn 
                         ? "bg-[var(--brand-blue)] text-white border-green-500 rounded-br-none" 
-                        : "bg-[#f0f4f8] text-[var(--brand-dark)] border-[#e2e8f0] rounded-bl-none"
+                        : "bg-[#f2f7ec] text-[var(--brand-dark)] border-[#dde9d3] rounded-bl-none"
                     }`}>
                       {!isOwn && (
                         <p className="text-[10px] font-bold text-[var(--brand-blue)] uppercase tracking-widest mb-1">
@@ -196,14 +196,14 @@ export default function ConversationPage() {
         </div>
 
         {/* Formulario de envío */}
-        <form onSubmit={handleSendMessage} className="bg-white border-2 border-[#e2e8f0] p-3 rounded-[3rem] shadow-xl flex-shrink-0">
+        <form onSubmit={handleSendMessage} className="bg-white border-2 border-[#dde9d3] p-3 rounded-[3rem] shadow-xl flex-shrink-0">
           <div className="flex items-center gap-3">
             <input
               type="text"
               value={newMessage}
               onChange={(e) => setNewMessage(e.target.value)}
               placeholder={t("page.conversation.messagePlaceholder") || "Type a message..."}
-              className="flex-1 bg-[#f0f4f8] border-2 border-[#e2e8f0] rounded-full px-8 py-4 text-[var(--brand-dark)] placeholder:text-[var(--brand-neutral)] focus:outline-none focus:border-green-400 transition-all font-bold text-base"
+              className="flex-1 bg-[#f2f7ec] border-2 border-[#dde9d3] rounded-full px-8 py-4 text-[var(--brand-dark)] placeholder:text-[var(--brand-neutral)] focus:outline-none focus:border-green-400 transition-all font-bold text-base"
               disabled={sending}
             />
             <button

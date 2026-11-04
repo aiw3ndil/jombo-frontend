@@ -55,14 +55,14 @@ export default function ExternalTransportCard({ option, lang }: Props) {
   };
 
   return (
-    <div className="group relative bg-white border-2 border-[#e2e8f0] rounded-[2.5rem] p-8 hover:border-[#e2e8f0] hover:shadow-xl transition-all overflow-hidden">
-      <div className="absolute top-0 right-0 w-64 h-64 bg-[#f0f4f8]/60 rounded-full -mr-24 -mt-24 blur-3xl pointer-events-none group-hover:bg-[#e2e8f0]/60 transition-colors duration-500"></div>
+    <div className="group relative bg-white border-2 border-[#dde9d3] rounded-[2.5rem] p-8 hover:border-[#dde9d3] hover:shadow-xl transition-all overflow-hidden">
+      <div className="absolute top-0 right-0 w-64 h-64 bg-[#f2f7ec]/60 rounded-full -mr-24 -mt-24 blur-3xl pointer-events-none group-hover:bg-[#dde9d3]/60 transition-colors duration-500"></div>
 
       <div className="relative flex flex-col md:flex-row gap-8 items-center md:items-start">
         <div className="flex-shrink-0 text-center space-y-4">
           <div className="relative">
             <div className="absolute inset-0 bg-green-200/40 blur-xl rounded-full scale-110"></div>
-            <div className="relative w-20 h-20 rounded-full bg-[#f0f4f8] border-2 border-[#e2e8f0] flex items-center justify-center text-[var(--brand-blue)]">
+            <div className="relative w-20 h-20 rounded-full bg-[#f2f7ec] border-2 border-[#dde9d3] flex items-center justify-center text-[var(--brand-blue)]">
               {getIcon(mainLeg.mode)}
             </div>
           </div>
@@ -102,7 +102,7 @@ export default function ExternalTransportCard({ option, lang }: Props) {
             </div>
           </div>
 
-          <div className="grid grid-cols-2 bg-[#f0f4f8]/60 rounded-3xl p-5 border border-[#e2e8f0] gap-4">
+          <div className="grid grid-cols-2 bg-[#f2f7ec]/60 rounded-3xl p-5 border border-[#dde9d3] gap-4">
             <div className="space-y-1">
               <p className="text-xs font-black text-[var(--brand-blue)] uppercase tracking-widest">
                 {lang === 'fi' ? 'Lähtö' : 'Departure'}
@@ -127,7 +127,7 @@ export default function ExternalTransportCard({ option, lang }: Props) {
               {option.legs.map((leg, idx) => (
                 <React.Fragment key={idx}>
                   <span className={`text-[10px] font-bold px-2 py-1 rounded-md ${
-                    leg.mode === 'WALK' ? 'bg-[#f0f4f8] text-[var(--brand-neutral)]' : 'bg-[#e2e8f0] text-[var(--brand-neutral)]'
+                    leg.mode === 'WALK' ? 'bg-[#f2f7ec] text-[var(--brand-neutral)]' : 'bg-[#dde9d3] text-[var(--brand-neutral)]'
                   }`}>
                     {getModeLabel(leg.mode)}
                   </span>

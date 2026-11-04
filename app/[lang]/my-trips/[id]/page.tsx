@@ -116,7 +116,7 @@ export default function TripDetails({ params }: { params: Promise<{ lang: string
 
     const getStatusClasses = (status: string) => {
         switch (status) {
-            case "confirmed": return "bg-[#e2e8f0] text-[var(--brand-neutral)] border-[#e2e8f0]";
+            case "confirmed": return "bg-[#dde9d3] text-[var(--brand-neutral)] border-[#dde9d3]";
             case "pending": return "bg-yellow-100 text-yellow-700 border-yellow-200";
             case "rejected":
             case "cancelled": return "bg-red-100 text-red-700 border-red-200";
@@ -172,10 +172,10 @@ export default function TripDetails({ params }: { params: Promise<{ lang: string
                 </div>
 
                 {/* Trip Info Card */}
-                <div className="bg-[#f0f4f8] rounded-[3rem] p-8 md:p-12 border-2 border-[#e2e8f0] shadow-sm relative overflow-hidden mb-12">
+                <div className="bg-[#f2f7ec] rounded-[3rem] p-8 md:p-12 border-2 border-[#dde9d3] shadow-sm relative overflow-hidden mb-12">
                     <div className="relative grid grid-cols-1 md:grid-cols-2 gap-12">
                         <div className="space-y-6">
-                            <div className="inline-flex items-center gap-2 text-[var(--brand-neutral)] font-bold text-xs uppercase tracking-widest bg-white px-4 py-1.5 rounded-full border-2 border-[#e2e8f0]">
+                            <div className="inline-flex items-center gap-2 text-[var(--brand-neutral)] font-bold text-xs uppercase tracking-widest bg-white px-4 py-1.5 rounded-full border-2 border-[#dde9d3]">
                                 {t("selectedRoute", "Selected route")}
                             </div>
                             <h2 className="text-3xl md:text-4xl font-bold text-[var(--brand-dark)] leading-tight">
@@ -184,7 +184,7 @@ export default function TripDetails({ params }: { params: Promise<{ lang: string
                                 {trip.arrival_location}
                             </h2>
                             <VehicleSummary vehicle={trip.vehicle} />
-                            <div className="flex items-center gap-4 p-5 bg-white rounded-2xl border-2 border-[#e2e8f0] shadow-sm">
+                            <div className="flex items-center gap-4 p-5 bg-white rounded-2xl border-2 border-[#dde9d3] shadow-sm">
                                 <svg className="w-6 h-6 text-[var(--brand-blue)]" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z" /></svg>
                                 <p className="text-[var(--brand-dark)] font-bold text-lg">
                                     {new Date(trip.departure_time).toLocaleString(lang, {
@@ -201,11 +201,11 @@ export default function TripDetails({ params }: { params: Promise<{ lang: string
                                 </div>
                             </div>
                             <div className="flex gap-4">
-                                <div className="bg-white rounded-2xl px-8 py-5 border-2 border-[#e2e8f0] text-center shadow-sm">
+                                <div className="bg-white rounded-2xl px-8 py-5 border-2 border-[#dde9d3] text-center shadow-sm">
                                     <p className="text-xs font-bold text-[var(--brand-neutral)] uppercase tracking-widest mb-1">{t("page.myTrips.availableSeats")}</p>
                                     <p className="text-2xl font-bold text-[var(--brand-blue)]">{trip.available_seats}</p>
                                 </div>
-                                <div className="bg-white rounded-2xl px-8 py-5 border-2 border-[#e2e8f0] text-center shadow-sm">
+                                <div className="bg-white rounded-2xl px-8 py-5 border-2 border-[#dde9d3] text-center shadow-sm">
                                     <p className="text-xs font-bold text-[var(--brand-neutral)] uppercase tracking-widest mb-1">{t("confirmedPassengers", "Confirmed passengers")}</p>
                                     <p className="text-2xl font-bold text-[var(--brand-blue)]">{tripBookings.filter(b => b.status === "confirmed").length}</p>
                                 </div>
@@ -220,8 +220,8 @@ export default function TripDetails({ params }: { params: Promise<{ lang: string
                         <h2 className="text-3xl font-bold text-[var(--brand-dark)]">
                             {t("page.myTrips.bookingsForTrip") || "Trip bookings"}
                         </h2>
-                        <div className="h-0.5 flex-1 bg-[#e2e8f0]"></div>
-                        <span className="text-xs font-bold text-[var(--brand-blue)] uppercase tracking-widest bg-[#f0f4f8] px-4 py-1.5 rounded-full border-2 border-[#e2e8f0]">{tripBookings.length} TOTAL</span>
+                        <div className="h-0.5 flex-1 bg-[#dde9d3]"></div>
+                        <span className="text-xs font-bold text-[var(--brand-blue)] uppercase tracking-widest bg-[#f2f7ec] px-4 py-1.5 rounded-full border-2 border-[#dde9d3]">{tripBookings.length} TOTAL</span>
                     </div>
 
                     {loadingBookings ? (
@@ -230,7 +230,7 @@ export default function TripDetails({ params }: { params: Promise<{ lang: string
                             <p className="text-[var(--brand-blue)] font-bold uppercase tracking-widest text-xs">{t("page.myTrips.loadingBookings")}</p>
                         </div>
                     ) : tripBookings.length === 0 ? (
-                        <div className="bg-[#f0f4f8] rounded-[2.5rem] p-20 text-center border-2 border-[#e2e8f0] italic">
+                        <div className="bg-[#f2f7ec] rounded-[2.5rem] p-20 text-center border-2 border-[#dde9d3] italic">
                             <p className="text-[var(--brand-neutral)] text-xl font-bold uppercase tracking-widest">{t("page.myTrips.noBookings") || "No bookings for this trip"}</p>
                         </div>
                     ) : (
@@ -263,7 +263,7 @@ export default function TripDetails({ params }: { params: Promise<{ lang: string
                                                 <span className={`px-4 py-1.5 rounded-full text-xs font-bold uppercase tracking-widest border-2 ${getStatusClasses(booking.status)}`}>
                                                     {getStatusText(booking.status)}
                                                 </span>
-                                                <div className="text-xs font-bold text-[var(--brand-neutral)] uppercase tracking-widest bg-[#f0f4f8] px-4 py-1.5 rounded-full border border-[#e2e8f0]">
+                                                <div className="text-xs font-bold text-[var(--brand-neutral)] uppercase tracking-widest bg-[#f2f7ec] px-4 py-1.5 rounded-full border border-[#dde9d3]">
                                                     {booking.seats} {booking.seats === 1 ? t("page.myTrips.seat") : t("page.myTrips.seats")}
                                                 </div>
                                             </div>
@@ -288,7 +288,7 @@ export default function TripDetails({ params }: { params: Promise<{ lang: string
                                             </div>
                                         )}
                                         {booking.status === "confirmed" && (
-                                            <div className="flex items-center gap-2 text-[var(--brand-blue)] font-bold bg-[#f0f4f8] px-6 py-3 rounded-xl border border-[#e2e8f0]">
+                                            <div className="flex items-center gap-2 text-[var(--brand-blue)] font-bold bg-[#f2f7ec] px-6 py-3 rounded-xl border border-[#dde9d3]">
                                                 <svg className="w-5 h-5" fill="currentColor" viewBox="0 0 20 20"><path fillRule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clipRule="evenodd" /></svg>
                                                 {t("passengerOnBoard", "Passenger on board")}
                                             </div>

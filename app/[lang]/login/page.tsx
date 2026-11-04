@@ -46,9 +46,9 @@ export default function Login() {
   return (
     <div className="min-h-screen bg-white">
       {/* ── HERO ── */}
-      <section className="bg-[#f0f4f8] border-b-2 border-[#e2e8f0] py-8 px-4">
+      <section className="bg-[#f2f7ec] border-b-2 border-[#dde9d3] py-8 px-4">
         <div className="max-w-5xl mx-auto text-center">
-          <div className="inline-flex items-center gap-2 bg-[#e2e8f0] border border-[#e2e8f0] text-[var(--brand-dark)] px-4 py-1.5 rounded-full text-xs font-bold mb-3 uppercase tracking-wide">
+          <div className="inline-flex items-center gap-2 bg-[#dde9d3] border border-[#dde9d3] text-[var(--brand-dark)] px-4 py-1.5 rounded-full text-xs font-bold mb-3 uppercase tracking-wide">
             {t("loginBadge") || "Welcome back"}
           </div>
           <h1 className="text-2xl md:text-3xl font-black text-[var(--brand-dark)] leading-tight mb-2">
@@ -69,9 +69,9 @@ export default function Login() {
               <div className="space-y-4">
                 <GoogleLoginButton redirect={redirect} onError={handleOAuthError} />
                 <p className="text-center text-xs font-bold text-[var(--brand-neutral)] uppercase tracking-widest flex items-center gap-4">
-                  <span className="flex-1 h-px bg-[#e2e8f0]"></span>
+                  <span className="flex-1 h-px bg-[#dde9d3]"></span>
                   {t("or") || "or"}
-                  <span className="flex-1 h-px bg-[#e2e8f0]"></span>
+                  <span className="flex-1 h-px bg-[#dde9d3]"></span>
                 </p>
               </div>
 

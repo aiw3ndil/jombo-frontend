@@ -96,7 +96,7 @@ export default function ReviewModal({
         </button>
 
         <div className="text-center mb-8">
-          <div className="w-16 h-16 bg-[#f0f4f8] rounded-full flex items-center justify-center mx-auto mb-4 border-2 border-[#e2e8f0]">
+          <div className="w-16 h-16 bg-[#f2f7ec] rounded-full flex items-center justify-center mx-auto mb-4 border-2 border-[#dde9d3]">
             <svg className="w-8 h-8 text-[var(--brand-blue)]" fill="none" stroke="currentColor" viewBox="0 0 24 24">
               <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M11.049 2.927c.3-.921 1.603-.921 1.902 0l1.519 4.674a1 1 0 00.95.69h4.915c.969 0 1.371 1.24.588 1.81l-3.976 2.888a1 1 0 00-.363 1.118l1.518 4.674c.3.922-.755 1.688-1.538 1.118l-3.976-2.888a1 1 0 00-1.176 0l-3.976 2.888c-.783.57-1.838-.197-1.538-1.118l1.518-4.674a1 1 0 00-.363-1.118l-3.976-2.888c-.784-.57-.382-1.81.588-1.81h4.914a1 1 0 00.951-.69l1.519-4.674z" />
             </svg>
@@ -107,14 +107,14 @@ export default function ReviewModal({
         </div>
 
         <div className="space-y-4 mb-8">
-          <div className="bg-[#f0f4f8] p-4 rounded-2xl border border-[#e2e8f0] text-center">
+          <div className="bg-[#f2f7ec] p-4 rounded-2xl border border-[#dde9d3] text-center">
             <p className="text-xs font-bold text-[var(--brand-neutral)] uppercase tracking-widest mb-1">
               {t("page.review.person", "Driver")}
             </p>
             <p className="font-bold text-[var(--brand-dark)] text-xl">{driverName}</p>
           </div>
 
-          <div className="bg-[#f0f4f8] p-4 rounded-2xl border border-[#e2e8f0] text-center">
+          <div className="bg-[#f2f7ec] p-4 rounded-2xl border border-[#dde9d3] text-center">
             <p className="text-xs font-bold text-[var(--brand-neutral)] uppercase tracking-widest mb-1">
               {t("page.review.trip", "Trip")}
             </p>
@@ -147,7 +147,7 @@ export default function ReviewModal({
               value={comment}
               onChange={(e) => setComment(e.target.value)}
               rows={4}
-              className="w-full border-2 border-[#e2e8f0] rounded-2xl px-5 py-4 text-[var(--brand-dark)] focus:outline-none focus:border-[#e2e8f0] font-medium placeholder:text-[var(--brand-neutral)] transition-all resize-none"
+              className="w-full border-2 border-[#dde9d3] rounded-2xl px-5 py-4 text-[var(--brand-dark)] focus:outline-none focus:border-[#dde9d3] font-medium placeholder:text-[var(--brand-neutral)] transition-all resize-none"
               placeholder={t("page.myBookings.reviewModal.commentPlaceholder") || "Tell us more about your experience..."}
               maxLength={500}
             />
