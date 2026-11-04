@@ -80,12 +80,12 @@ export default function MessagesPage() {
   };
 
   return (
-    <div className="min-h-screen bg-white py-8 px-4">
+    <div className="min-h-screen bg-[var(--page-bg)] py-8 px-4">
       <div className="max-w-5xl mx-auto">
         {/* Cabecera */}
         <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-6 mb-6">
           <div>
-            <h1 className="text-2xl md:text-3xl font-bold text-[var(--brand-dark)] mb-1">
+            <h1 className="text-2xl md:text-2xl font-bold text-[var(--brand-dark)] mb-1">
               {t("page.messages.title") || "My Messages"}
             </h1>
             <p className="text-[var(--brand-neutral)] text-sm md:text-base">
@@ -94,14 +94,14 @@ export default function MessagesPage() {
           </div>
           <button
             onClick={() => router.push(localePath(lang))}
-            className="bg-[#f2f7ec] text-[var(--brand-neutral)] border-2 border-[#dde9d3] px-8 py-3 rounded-xl font-bold hover:bg-[#dde9d3] transition-all shadow-sm"
+            className="bg-[#ebf3e2] text-[var(--brand-neutral)] border-2 border-[#c4d8b4] px-8 py-3 rounded-xl font-bold hover:bg-[#c4d8b4] transition-all shadow-sm"
           >
             {t("page.messages.back") || "Back"}
           </button>
         </div>
 
         {conversations.length === 0 && loadError ? (
-          <div className="text-center py-24 bg-red-50 rounded-[3rem] border-2 border-red-100">
+          <div className="text-center py-12 bg-red-50 rounded-[1.75rem] border-2 border-red-100">
             <div className="w-20 h-20 bg-red-100 rounded-full flex items-center justify-center mx-auto mb-8 border-2 border-red-200 text-red-500">
               <svg className="w-10 h-10" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                 <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z" />
@@ -121,8 +121,8 @@ export default function MessagesPage() {
             </button>
           </div>
         ) : conversations.length === 0 ? (
-          <div className="text-center py-24 bg-[#f2f7ec] rounded-[3rem] border-2 border-[#dde9d3]">
-            <div className="w-20 h-20 bg-[#dde9d3] rounded-full flex items-center justify-center mx-auto mb-8 border-2 border-[#dde9d3] text-[var(--brand-blue)]">
+          <div className="text-center py-12 bg-[#ebf3e2] rounded-[1.75rem] border-2 border-[#c4d8b4]">
+            <div className="w-20 h-20 bg-[#c4d8b4] rounded-full flex items-center justify-center mx-auto mb-8 border-2 border-[#c4d8b4] text-[var(--brand-blue)]">
               <svg className="w-10 h-10" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                 <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M8 10h.01M12 10h.01M16 10h.01M9 16H5a2 2 0 01-2-2V6a2 2 0 012-2h14a2 2 0 012 2v8a2 2 0 01-2 2h-5l-5 5v-5z" />
               </svg>
@@ -141,7 +141,7 @@ export default function MessagesPage() {
                 <div className="flex flex-col xl:flex-row justify-between gap-8">
                   <Link href={`${langPrefix(lang)}/messages/${conversation.id}`} className="flex-1 space-y-4">
                     <div className="flex flex-wrap items-center gap-4">
-                      <span className="bg-[#dde9d3] text-[var(--brand-neutral)] px-4 py-1.5 rounded-full text-xs font-bold uppercase tracking-widest border border-[#dde9d3]">
+                      <span className="bg-[#c4d8b4] text-[var(--brand-neutral)] px-4 py-1.5 rounded-full text-xs font-bold uppercase tracking-widest border border-[#c4d8b4]">
                         {t("page.messages.activeChannel", "Active chat")}
                       </span>
                       <span className="text-[var(--brand-blue)] font-bold text-sm uppercase tracking-wider">
@@ -149,7 +149,7 @@ export default function MessagesPage() {
                       </span>
                     </div>
 
-                    <h2 className="text-3xl font-bold text-[var(--brand-dark)] leading-tight group-hover:text-[var(--brand-neutral)] transition-colors">
+                    <h2 className="text-2xl font-bold text-[var(--brand-dark)] leading-tight group-hover:text-[var(--brand-neutral)] transition-colors">
                       {conversation.trip.departure_location} → {conversation.trip.arrival_location}
                     </h2>
 
@@ -159,7 +159,7 @@ export default function MessagesPage() {
                     </div>
 
                     {conversation.last_message && (
-                      <div className="mt-4 p-5 bg-[#f2f7ec] rounded-2xl border border-[#dde9d3] group-hover:bg-[#dde9d3] transition-colors">
+                      <div className="mt-4 p-5 bg-[#ebf3e2] rounded-2xl border border-[#c4d8b4] group-hover:bg-[#c4d8b4] transition-colors">
                         <div className="flex items-center gap-2 mb-2">
                           <div className="w-2 h-2 rounded-full bg-green-500"></div>
                           <p className="text-xs font-bold text-[var(--brand-neutral)] uppercase tracking-widest">

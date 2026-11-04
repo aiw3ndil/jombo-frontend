@@ -109,18 +109,18 @@ export default function ConversationPage() {
   if (!user || !conversation) return null;
 
   return (
-    <div className="min-h-[calc(100vh-80px)] bg-[#f2f7ec] flex flex-col pt-8 pb-12 px-4 sm:px-6">
+    <div className="min-h-[calc(100vh-80px)] bg-[#ebf3e2] flex flex-col pt-8 pb-12 px-4 sm:px-6">
       <div className="max-w-4xl mx-auto w-full flex flex-col flex-1">
         
         {/* Header del Chat */}
-        <div className="bg-white border-2 border-[#dde9d3] p-6 rounded-[2.5rem] shadow-xl mb-6 flex-shrink-0">
+        <div className="bg-white border-2 border-[#c4d8b4] p-6 rounded-[1.5rem] shadow-xl mb-6 flex-shrink-0">
           <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-6">
             <div className="space-y-2">
               <div className="flex items-center gap-2">
                 <span className="w-2.5 h-2.5 rounded-full bg-green-500 animate-pulse"></span>
                 <p className="text-xs font-bold text-[var(--brand-blue)] uppercase tracking-widest">{t("page.conversation.live", "Live chat")}</p>
               </div>
-              <h1 className="text-2xl md:text-3xl font-bold text-[var(--brand-dark)] leading-tight">
+              <h1 className="text-2xl md:text-2xl font-bold text-[var(--brand-dark)] leading-tight">
                 {conversation.trip.departure_location} → {conversation.trip.arrival_location}
               </h1>
               <div className="flex flex-wrap gap-4 text-xs font-bold text-[var(--brand-neutral)] uppercase tracking-wider">
@@ -141,7 +141,7 @@ export default function ConversationPage() {
               )}
               <button
                 onClick={() => router.push(`${langPrefix(lang)}/messages`)}
-                className="bg-[#dde9d3] text-[var(--brand-dark)] border-2 border-[#dde9d3] px-6 py-3 rounded-xl font-bold hover:bg-green-200 transition-all text-sm"
+                className="bg-[#c4d8b4] text-[var(--brand-dark)] border-2 border-[#c4d8b4] px-6 py-3 rounded-xl font-bold hover:bg-green-200 transition-all text-sm"
               >
                 {t("page.conversation.back") || "Back"}
               </button>
@@ -150,9 +150,9 @@ export default function ConversationPage() {
         </div>
 
         {/* Área de Mensajes */}
-        <div className="flex-1 overflow-y-auto bg-white rounded-[2.5rem] border-2 border-green-50 p-6 sm:p-10 space-y-8 mb-6 shadow-inner min-h-[50vh] max-h-[60vh]">
+        <div className="flex-1 overflow-y-auto bg-white rounded-[1.5rem] border-2 border-green-50 p-6 sm:p-6 space-y-8 mb-6 shadow-inner min-h-[50vh] max-h-[60vh]">
           {messages.length === 0 ? (
-            <div className="flex flex-col items-center justify-center h-full gap-4 py-20 opacity-30 italic">
+            <div className="flex flex-col items-center justify-center h-full gap-4 py-12 opacity-30 italic">
               <svg className="w-16 h-16 text-[var(--brand-dark)]" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1} d="M8 12h.01M12 12h.01M16 12h.01M21 12c0 4.418-4.03 8-9 8a9.863 9.863 0 01-4.255-.949L3 20l1.395-3.72C3.512 15.042 3 13.574 3 12c0-4.418 4.03-8 9-8s9 3.582 9 8z" /></svg>
               <p className="uppercase tracking-widest text-sm font-bold text-[var(--brand-dark)]">
                 {t("page.conversation.noMessages") || "No messages yet. Send the first one!"}
@@ -175,7 +175,7 @@ export default function ConversationPage() {
                     <div className={`rounded-[2rem] px-6 py-4 relative shadow-md border-2 ${
                       isOwn 
                         ? "bg-[var(--brand-blue)] text-white border-green-500 rounded-br-none" 
-                        : "bg-[#f2f7ec] text-[var(--brand-dark)] border-[#dde9d3] rounded-bl-none"
+                        : "bg-[#ebf3e2] text-[var(--brand-dark)] border-[#c4d8b4] rounded-bl-none"
                     }`}>
                       {!isOwn && (
                         <p className="text-[10px] font-bold text-[var(--brand-blue)] uppercase tracking-widest mb-1">
@@ -196,14 +196,14 @@ export default function ConversationPage() {
         </div>
 
         {/* Formulario de envío */}
-        <form onSubmit={handleSendMessage} className="bg-white border-2 border-[#dde9d3] p-3 rounded-[3rem] shadow-xl flex-shrink-0">
+        <form onSubmit={handleSendMessage} className="bg-white border-2 border-[#c4d8b4] p-3 rounded-[1.75rem] shadow-xl flex-shrink-0">
           <div className="flex items-center gap-3">
             <input
               type="text"
               value={newMessage}
               onChange={(e) => setNewMessage(e.target.value)}
               placeholder={t("page.conversation.messagePlaceholder") || "Type a message..."}
-              className="flex-1 bg-[#f2f7ec] border-2 border-[#dde9d3] rounded-full px-8 py-4 text-[var(--brand-dark)] placeholder:text-[var(--brand-neutral)] focus:outline-none focus:border-green-400 transition-all font-bold text-base"
+              className="flex-1 bg-[#ebf3e2] border-2 border-[#c4d8b4] rounded-full px-8 py-4 text-[var(--brand-dark)] placeholder:text-[var(--brand-neutral)] focus:outline-none focus:border-green-400 transition-all font-bold text-base"
               disabled={sending}
             />
             <button

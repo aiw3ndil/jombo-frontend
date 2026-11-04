@@ -17,8 +17,8 @@ export default function Home() {
 
   if (loading) {
     return (
-      <div className="min-h-screen bg-white flex flex-col items-center justify-center">
-        <div className="w-12 h-12 border-4 border-[#dde9d3] border-t-[var(--brand-blue)] rounded-full animate-spin mb-6"></div>
+      <div className="min-h-screen bg-[var(--page-bg)] flex flex-col items-center justify-center">
+        <div className="w-12 h-12 border-4 border-[#c4d8b4] border-t-[var(--brand-blue)] rounded-full animate-spin mb-6"></div>
         <p className="text-[var(--brand-neutral)] text-base font-semibold">Loading...</p>
       </div>
     );
@@ -37,7 +37,7 @@ export default function Home() {
   }
 
   return (
-    <div className="min-h-screen bg-white">
+    <div className="min-h-screen bg-[var(--page-bg)]">
 
       {/* ── HERO: paisaje ── */}
       <section className="relative overflow-hidden px-6 pt-16 pb-56 md:pb-72 text-center min-h-[640px] md:min-h-[720px]">
@@ -50,12 +50,12 @@ export default function Home() {
           </div>
 
           {/* Título */}
-          <h1 className="text-4xl md:text-6xl font-bold leading-tight mb-4 tracking-tight text-[var(--brand-dark)] [text-shadow:0_1px_12px_rgba(255,255,255,0.7)]">
+          <h1 className="text-3xl md:text-5xl font-bold leading-tight mb-4 tracking-tight text-[var(--brand-dark)] [text-shadow:0_1px_12px_rgba(255,255,255,0.7)]">
             {t("page.home.hero.title") || "Share your ride, save money"}
           </h1>
 
           {/* Subtítulo */}
-          <p className="text-lg md:text-xl text-[var(--brand-dark)]/80 max-w-2xl mx-auto mb-10 leading-relaxed font-medium [text-shadow:0_1px_10px_rgba(255,255,255,0.8)]">
+          <p className="text-lg md:text-lg text-[var(--brand-dark)]/80 max-w-2xl mx-auto mb-10 leading-relaxed font-medium [text-shadow:0_1px_10px_rgba(255,255,255,0.8)]">
             {t("page.home.hero.subtitle") || "Connect with people going to the same destination"}
           </p>
 
@@ -65,7 +65,7 @@ export default function Home() {
             className="bg-white/95 backdrop-blur rounded-[2rem] shadow-xl shadow-green-900/15 p-3 flex flex-col lg:flex-row gap-3 max-w-4xl mx-auto border border-white"
           >
             {/* Campo DESDE */}
-            <div className="flex-1 flex items-center gap-3 border-2 border-[#dde9d3] rounded-full px-6 py-3 bg-[#fafcf6] focus-within:border-[var(--brand-accent-1)] transition-colors">
+            <div className="flex-1 flex items-center gap-3 border-2 border-[#c4d8b4] rounded-full px-6 py-3 bg-[#fafcf6] focus-within:border-[var(--brand-accent-1)] transition-colors">
               <span className="w-3 h-3 rounded-full border-[3px] border-[var(--brand-blue)] flex-shrink-0" aria-hidden="true"></span>
               <LocationInput
                 value={from}
@@ -77,7 +77,7 @@ export default function Home() {
             </div>
 
             {/* Campo HASTA */}
-            <div className="flex-1 flex items-center gap-3 border-2 border-[#dde9d3] rounded-full px-6 py-3 bg-[#fafcf6] focus-within:border-[var(--brand-accent-1)] transition-colors">
+            <div className="flex-1 flex items-center gap-3 border-2 border-[#c4d8b4] rounded-full px-6 py-3 bg-[#fafcf6] focus-within:border-[var(--brand-accent-1)] transition-colors">
               <span className="w-3 h-3 rounded-full bg-[var(--brand-accent-1)] flex-shrink-0" aria-hidden="true"></span>
               <LocationInput
                 value={to}
@@ -90,7 +90,7 @@ export default function Home() {
             {/* Botón buscar */}
             <button
               type="submit"
-              className="btn-primary px-10 py-4 cursor-pointer"
+              className="btn-primary px-7 py-4 cursor-pointer"
             >
               {t("page.home.search") || "Search trip"}
             </button>
@@ -99,9 +99,9 @@ export default function Home() {
       </section>
 
       {/* ── CÓMO FUNCIONA ── */}
-      <section className="py-24 px-6 bg-gradient-to-b from-[#eef6e4] to-white">
+      <section className="py-12 px-6 bg-gradient-to-b from-[#eef6e4] to-white">
         <div className="max-w-6xl mx-auto">
-          <h2 className="text-4xl font-bold text-[var(--brand-dark)] text-center mb-16 tracking-tight">
+          <h2 className="text-3xl font-bold text-[var(--brand-dark)] text-center mb-10 tracking-tight">
             {t("page.home.howItWorks.title") || "How does it work?"}
           </h2>
 
@@ -111,8 +111,8 @@ export default function Home() {
               { title: t("page.home.howItWorks.step2.title") || "2. Connect", desc: t("page.home.howItWorks.step2.description") || "Contact other users directly. No intermediaries or commissions.", icon: "💬" },
               { title: t("page.home.howItWorks.step3.title") || "3. Share and Save", desc: t("page.home.howItWorks.step3.description") || "Split travel costs among passengers. Save money and help the environment.", icon: "🌱" },
             ].map((step, i) => (
-              <div key={i} className="bg-white p-10 rounded-[2.5rem] text-center hover:border-[var(--brand-accent-1)] hover:-translate-y-1 border-2 border-[#dde9d3] shadow-sm shadow-green-900/5 transition-all">
-                <div className="w-20 h-20 mx-auto mb-6 rounded-full bg-[#eef6e4] border-2 border-[#dde9d3] flex items-center justify-center text-4xl">{step.icon}</div>
+              <div key={i} className="bg-white p-6 rounded-[1.5rem] text-center hover:border-[var(--brand-accent-1)] hover:-translate-y-1 border-2 border-[#c4d8b4] shadow-sm shadow-green-900/5 transition-all">
+                <div className="w-20 h-20 mx-auto mb-6 rounded-full bg-[#eef6e4] border-2 border-[#c4d8b4] flex items-center justify-center text-3xl">{step.icon}</div>
                 <h3 className="text-2xl font-medium text-[var(--brand-dark)] mb-4">{step.title}</h3>
                 <p className="text-[var(--brand-neutral)] leading-relaxed font-light">{step.desc}</p>
               </div>

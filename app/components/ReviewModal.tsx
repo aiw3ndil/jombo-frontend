@@ -87,34 +87,34 @@ export default function ReviewModal({
 
   return (
     <div className="fixed inset-0 bg-green-900/40 backdrop-blur-sm flex items-center justify-center z-[1000] p-4">
-      <div className="bg-white rounded-[2.5rem] shadow-2xl max-w-lg w-full p-8 md:p-12 border-2 border-green-50 relative overflow-hidden">
+      <div className="bg-white rounded-[1.5rem] shadow-2xl max-w-lg w-full p-8 md:p-8 border-2 border-green-50 relative overflow-hidden">
         <button
           onClick={onClose}
-          className="absolute top-6 right-6 text-[var(--brand-neutral)] hover:text-[var(--brand-blue)] transition-colors text-3xl font-light"
+          className="absolute top-6 right-6 text-[var(--brand-neutral)] hover:text-[var(--brand-blue)] transition-colors text-2xl font-light"
         >
           ×
         </button>
 
         <div className="text-center mb-8">
-          <div className="w-16 h-16 bg-[#f2f7ec] rounded-full flex items-center justify-center mx-auto mb-4 border-2 border-[#dde9d3]">
+          <div className="w-16 h-16 bg-[#ebf3e2] rounded-full flex items-center justify-center mx-auto mb-4 border-2 border-[#c4d8b4]">
             <svg className="w-8 h-8 text-[var(--brand-blue)]" fill="none" stroke="currentColor" viewBox="0 0 24 24">
               <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M11.049 2.927c.3-.921 1.603-.921 1.902 0l1.519 4.674a1 1 0 00.95.69h4.915c.969 0 1.371 1.24.588 1.81l-3.976 2.888a1 1 0 00-.363 1.118l1.518 4.674c.3.922-.755 1.688-1.538 1.118l-3.976-2.888a1 1 0 00-1.176 0l-3.976 2.888c-.783.57-1.838-.197-1.538-1.118l1.518-4.674a1 1 0 00-.363-1.118l-3.976-2.888c-.784-.57-.382-1.81.588-1.81h4.914a1 1 0 00.951-.69l1.519-4.674z" />
             </svg>
           </div>
-          <h2 className="text-3xl font-bold text-[var(--brand-dark)]">
+          <h2 className="text-2xl font-bold text-[var(--brand-dark)]">
             {t("page.myBookings.reviewModal.title") || "Rate trip"}
           </h2>
         </div>
 
         <div className="space-y-4 mb-8">
-          <div className="bg-[#f2f7ec] p-4 rounded-2xl border border-[#dde9d3] text-center">
+          <div className="bg-[#ebf3e2] p-4 rounded-2xl border border-[#c4d8b4] text-center">
             <p className="text-xs font-bold text-[var(--brand-neutral)] uppercase tracking-widest mb-1">
               {t("page.review.person", "Driver")}
             </p>
-            <p className="font-bold text-[var(--brand-dark)] text-xl">{driverName}</p>
+            <p className="font-bold text-[var(--brand-dark)] text-lg">{driverName}</p>
           </div>
 
-          <div className="bg-[#f2f7ec] p-4 rounded-2xl border border-[#dde9d3] text-center">
+          <div className="bg-[#ebf3e2] p-4 rounded-2xl border border-[#c4d8b4] text-center">
             <p className="text-xs font-bold text-[var(--brand-neutral)] uppercase tracking-widest mb-1">
               {t("page.review.trip", "Trip")}
             </p>
@@ -147,7 +147,7 @@ export default function ReviewModal({
               value={comment}
               onChange={(e) => setComment(e.target.value)}
               rows={4}
-              className="w-full border-2 border-[#dde9d3] rounded-2xl px-5 py-4 text-[var(--brand-dark)] focus:outline-none focus:border-[#dde9d3] font-medium placeholder:text-[var(--brand-neutral)] transition-all resize-none"
+              className="w-full border-2 border-[#c4d8b4] rounded-2xl px-5 py-4 text-[var(--brand-dark)] focus:outline-none focus:border-[#c4d8b4] font-medium placeholder:text-[var(--brand-neutral)] transition-all resize-none"
               placeholder={t("page.myBookings.reviewModal.commentPlaceholder") || "Tell us more about your experience..."}
               maxLength={500}
             />

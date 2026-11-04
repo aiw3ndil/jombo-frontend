@@ -23,14 +23,14 @@ export default function TermsPage() {
   }, [t, lang]);
 
   return (
-    <div className="min-h-screen bg-white text-[var(--brand-dark)]">
+    <div className="min-h-screen bg-[var(--page-bg)] text-[var(--brand-dark)]">
       {/* ── HERO ── */}
-      <section className="bg-[#f2f7ec] border-b-2 border-[#dde9d3] py-8 px-4">
+      <section className="bg-[#ebf3e2] border-b-2 border-[#c4d8b4] py-8 px-4">
         <div className="max-w-5xl mx-auto text-center">
-          <div className="inline-flex items-center gap-2 bg-[#dde9d3] border border-[#dde9d3] text-[var(--brand-dark)] px-4 py-1.5 rounded-full text-xs font-bold mb-3 uppercase tracking-wide">
+          <div className="inline-flex items-center gap-2 bg-[#c4d8b4] border border-[#c4d8b4] text-[var(--brand-dark)] px-4 py-1.5 rounded-full text-xs font-bold mb-3 uppercase tracking-wide">
             {t("terms.badge")}
           </div>
-          <h1 className="text-2xl md:text-3xl font-black text-[var(--brand-dark)] leading-tight mb-2 tracking-tight">
+          <h1 className="text-2xl md:text-2xl font-black text-[var(--brand-dark)] leading-tight mb-2 tracking-tight">
             {t("terms.title")}
           </h1>
           <p className="text-sm md:text-base text-[var(--brand-neutral)] max-w-2xl mx-auto font-medium opacity-80 leading-relaxed">
@@ -40,10 +40,10 @@ export default function TermsPage() {
       </section>
 
       {/* ── CONTENIDO ── */}
-      <section className="py-20 px-4 bg-white relative -mt-5">
+      <section className="py-12 px-4 bg-white relative -mt-5">
         <div className="max-w-4xl mx-auto">
-          <div className="bg-white border-2 border-[#dde9d3] rounded-[3rem] p-8 md:p-16 shadow-[0_32px_64px_-16px_rgba(22,101,52,0.1)] relative overflow-hidden">
-            <div className="space-y-12 text-[var(--brand-dark)] leading-relaxed">
+          <div className="bg-white border-2 border-[#c4d8b4] rounded-[1.75rem] p-8 md:p-16 shadow-[0_32px_64px_-16px_rgba(22,101,52,0.1)] relative overflow-hidden">
+            <div className="space-y-8 text-[var(--brand-dark)] leading-relaxed">
               
               <section className="space-y-4">
                 <h2 className="text-2xl font-black text-[var(--brand-dark)] flex items-center gap-4">
@@ -75,7 +75,7 @@ export default function TermsPage() {
                 </div>
               </section>
 
-              <section className="bg-[#f2f7ec] border-2 border-[#dde9d3] rounded-[2.5rem] p-8 md:p-10 shadow-inner">
+              <section className="bg-[#ebf3e2] border-2 border-[#c4d8b4] rounded-[1.5rem] p-8 md:p-6 shadow-inner">
                 <h2 className="text-2xl font-black text-[var(--brand-dark)] flex items-center gap-4 mb-6">
                   <div className="w-10 h-10 bg-[var(--brand-blue)] rounded-full flex items-center justify-center text-white">
                     <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -84,7 +84,7 @@ export default function TermsPage() {
                   </div>
                   {t("terms.section4.title")}
                 </h2>
-                <p className="font-black text-[var(--brand-neutral)] text-xl mb-4 italic leading-snug">
+                <p className="font-black text-[var(--brand-neutral)] text-lg mb-4 italic leading-snug">
                   {t("terms.section4.content")}
                 </p>
                 <p className="text-lg text-[var(--brand-dark)]/80 italic">
@@ -114,7 +114,7 @@ export default function TermsPage() {
 
               <section className="space-y-4">
                 <h2 className="text-2xl font-black text-[var(--brand-dark)] flex items-center gap-4">
-                  <span className="w-2 h-8 bg-[#dde9d3] rounded-full"></span>
+                  <span className="w-2 h-8 bg-[#c4d8b4] rounded-full"></span>
                   {t("terms.section7.title")}
                 </h2>
                 <div className="pl-6 border-l-2 border-green-50 text-lg opacity-90">
@@ -126,7 +126,7 @@ export default function TermsPage() {
                 <p className="text-xs font-bold uppercase tracking-widest text-[var(--brand-neutral)]">
                   {t("terms.lastUpdate")}: <span className="text-[var(--brand-blue)]">{t("terms.updateDate")}</span>
                 </p>
-                <div className="flex items-center gap-3 bg-[#f2f7ec] px-4 py-2 rounded-full border border-[#dde9d3]">
+                <div className="flex items-center gap-3 bg-[#ebf3e2] px-4 py-2 rounded-full border border-[#c4d8b4]">
                   <span className="w-2.5 h-2.5 rounded-full bg-green-500 animate-pulse"></span>
                   <span className="text-[10px] font-black text-[var(--brand-neutral)] uppercase tracking-[0.2em]">{t("terms.documentVigente")}</span>
                 </div>

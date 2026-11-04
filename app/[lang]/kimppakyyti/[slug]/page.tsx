@@ -99,7 +99,7 @@ export default async function RoutePage({ params }: Props) {
   };
 
   return (
-    <div className="min-h-screen bg-white">
+    <div className="min-h-screen bg-[var(--page-bg)]">
       <script
         type="application/ld+json"
         dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
@@ -122,12 +122,12 @@ export default async function RoutePage({ params }: Props) {
             </span>
           </nav>
           
-          <div className="inline-flex items-center gap-2 bg-[#dde9d3] border border-[#dde9d3] text-[var(--brand-dark)] px-4 py-1.5 rounded-full text-xs font-black mb-3 uppercase tracking-wide shadow-sm">
+          <div className="inline-flex items-center gap-2 bg-[#c4d8b4] border border-[#c4d8b4] text-[var(--brand-dark)] px-4 py-1.5 rounded-full text-xs font-black mb-3 uppercase tracking-wide shadow-sm">
             <span className="w-2 h-2 bg-[var(--brand-blue)] rounded-full animate-pulse"></span>
             {t.trips.popularRoute || 'SUOSITTU REITTI'}
           </div>
 
-          <h1 className="text-3xl md:text-4xl font-black text-white leading-tight mb-2 tracking-tight">
+          <h1 className="text-2xl md:text-3xl font-black text-white leading-tight mb-2 tracking-tight">
             {route.from} 
             <span className="text-[var(--brand-neutral)] mx-3 inline-block transform hover:scale-110 transition-transform cursor-default">→</span> 
             {route.to}
@@ -140,32 +140,32 @@ export default async function RoutePage({ params }: Props) {
 
           {/* ── ROUTE SNAPSHOT CARD ── */}
           <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
-            <div className="bg-white border-2 border-[#dde9d3] p-8 rounded-[2rem] shadow-sm hover:border-[#dde9d3] transition-colors group">
+            <div className="bg-white border-2 border-[#c4d8b4] p-8 rounded-[2rem] shadow-sm hover:border-[#c4d8b4] transition-colors group">
               <p className="text-[10px] font-black text-[var(--brand-blue)] uppercase tracking-widest mb-2">{t.trips.distance}</p>
               <div className="flex items-center gap-4">
-                <div className="w-12 h-12 bg-[#f2f7ec] rounded-xl flex items-center justify-center text-[var(--brand-blue)] group-hover:scale-110 transition-transform">
+                <div className="w-12 h-12 bg-[#ebf3e2] rounded-xl flex items-center justify-center text-[var(--brand-blue)] group-hover:scale-110 transition-transform">
                   <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                     <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2.5} d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z" />
                     <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2.5} d="M15 11a3 3 0 11-6 0 3 3 0 016 0z" />
                   </svg>
                 </div>
-                <p className="text-3xl font-black text-[var(--brand-dark)]">{route.distance || "---"}</p>
+                <p className="text-2xl font-black text-[var(--brand-dark)]">{route.distance || "---"}</p>
               </div>
             </div>
 
-            <div className="bg-white border-2 border-[#dde9d3] p-8 rounded-[2rem] shadow-sm hover:border-[#dde9d3] transition-colors group">
+            <div className="bg-white border-2 border-[#c4d8b4] p-8 rounded-[2rem] shadow-sm hover:border-[#c4d8b4] transition-colors group">
               <p className="text-[10px] font-black text-[var(--brand-blue)] uppercase tracking-widest mb-2">{t.trips.duration}</p>
               <div className="flex items-center gap-4">
-                <div className="w-12 h-12 bg-[#f2f7ec] rounded-xl flex items-center justify-center text-[var(--brand-blue)] group-hover:scale-110 transition-transform">
+                <div className="w-12 h-12 bg-[#ebf3e2] rounded-xl flex items-center justify-center text-[var(--brand-blue)] group-hover:scale-110 transition-transform">
                   <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                     <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2.5} d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z" />
                   </svg>
                 </div>
-                <p className="text-3xl font-black text-[var(--brand-dark)]">{route.duration || "---"}</p>
+                <p className="text-2xl font-black text-[var(--brand-dark)]">{route.duration || "---"}</p>
               </div>
             </div>
 
-            <div className="bg-white border-2 border-[#dde9d3]/50 p-8 rounded-[2rem] shadow-sm hover:border-[#dde9d3] transition-colors group bg-gradient-to-br from-white to-green-50/50">
+            <div className="bg-white border-2 border-[#c4d8b4]/50 p-8 rounded-[2rem] shadow-sm hover:border-[#c4d8b4] transition-colors group bg-gradient-to-br from-white to-green-50/50">
               <p className="text-[10px] font-black text-[var(--brand-blue)] uppercase tracking-widest mb-2">{t.trips.co2Saved}</p>
               <div className="flex items-center gap-4">
                 <div className="w-12 h-12 bg-[var(--brand-blue)] rounded-xl flex items-center justify-center text-white group-hover:rotate-12 transition-transform shadow-lg shadow-green-200">
@@ -173,7 +173,7 @@ export default async function RoutePage({ params }: Props) {
                     <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2.5} d="M5 3v4M3 5h4M6 17v4m-2-2h4m5-16l2.286 6.857L21 12l-5.714 2.143L13 21l-2.286-6.857L5 12l5.714-2.143L13 3z" />
                   </svg>
                 </div>
-                <p className="text-3xl font-black text-[var(--brand-dark)]">~{co2Value} kg</p>
+                <p className="text-2xl font-black text-[var(--brand-dark)]">~{co2Value} kg</p>
               </div>
             </div>
           </div>
@@ -181,12 +181,12 @@ export default async function RoutePage({ params }: Props) {
       </section>
 
       {/* ── CONTENIDO ── */}
-      <section className="py-24 px-4 bg-white relative -mt-8">
+      <section className="py-12 px-4 bg-white relative -mt-8">
         <div className="max-w-5xl mx-auto">
           
           {source === 'digitransit' && (
-            <div className="mb-16 p-10 bg-[#f2f7ec] border-2 border-[#dde9d3] rounded-[3rem] flex items-center gap-8 shadow-xl shadow-green-900/5 border-l-8 border-l-green-600 relative overflow-hidden group">
-              <div className="absolute top-0 right-0 w-32 h-32 bg-[#dde9d3]/50 rounded-full -mr-16 -mt-16 blur-2xl"></div>
+            <div className="mb-10 p-6 bg-[#ebf3e2] border-2 border-[#c4d8b4] rounded-[1.75rem] flex items-center gap-8 shadow-xl shadow-green-900/5 border-l-8 border-l-green-600 relative overflow-hidden group">
+              <div className="absolute top-0 right-0 w-32 h-32 bg-[#c4d8b4]/50 rounded-full -mr-16 -mt-16 blur-2xl"></div>
               <div className="w-20 h-20 bg-white rounded-2xl flex items-center justify-center text-[var(--brand-blue)] shadow-sm shrink-0 relative z-10">
                 <svg className="w-10 h-10" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                   <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2.5} d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
@@ -196,7 +196,7 @@ export default async function RoutePage({ params }: Props) {
                 <p className="text-[var(--brand-dark)] font-black uppercase tracking-[0.3em] text-[10px] mb-2 opacity-50">
                   {lang === 'fi' ? 'Kuljetusvaihtoehdot' : 'Transport alternatives'}
                 </p>
-                <p className="text-[var(--brand-dark)] text-xl font-bold leading-relaxed">
+                <p className="text-[var(--brand-dark)] text-lg font-bold leading-relaxed">
                   {t.trips.noTripsFound?.replace('{from}', route.from).replace('{to}', route.to) || 
                    `Ei kimppakyytejä tänään. Näytetään julkinen liikenne välille ${route.from} ja ${route.to}`}
                 </p>
@@ -205,24 +205,24 @@ export default async function RoutePage({ params }: Props) {
           )}
 
           {trips.length === 0 && externalOptions.length === 0 ? (
-            <div className="bg-white border-2 border-[#dde9d3] rounded-[4rem] p-20 text-center shadow-2xl shadow-green-900/5 relative overflow-hidden group">
+            <div className="bg-white border-2 border-[#c4d8b4] rounded-[4rem] p-20 text-center shadow-2xl shadow-green-900/5 relative overflow-hidden group">
               <div className="absolute inset-0 bg-gradient-to-b from-green-50/30 to-white opacity-0 group-hover:opacity-100 transition-opacity duration-1000"></div>
               <div className="relative z-10">
-                <div className="w-28 h-28 bg-[#f2f7ec] rounded-[2rem] flex items-center justify-center mx-auto mb-10 border-2 border-[#dde9d3] transform group-hover:scale-110 transition-transform duration-700 shadow-inner">
+                <div className="w-28 h-28 bg-[#ebf3e2] rounded-[2rem] flex items-center justify-center mx-auto mb-10 border-2 border-[#c4d8b4] transform group-hover:scale-110 transition-transform duration-700 shadow-inner">
                   <svg className="w-14 h-14 text-[var(--brand-blue)]" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                     <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z" />
                   </svg>
                 </div>
-                <h2 className="text-4xl font-black text-[var(--brand-dark)] mb-6 tracking-tight">
+                <h2 className="text-3xl font-black text-[var(--brand-dark)] mb-6 tracking-tight">
                   {t.trips.routeReadyTitle || 'Reitti valmiina ensimmäiselle matkalle'}
                 </h2>
-                <p className="text-[var(--brand-neutral)] text-xl mb-14 max-w-xl mx-auto font-medium opacity-80 leading-relaxed">
+                <p className="text-[var(--brand-neutral)] text-lg mb-14 max-w-xl mx-auto font-medium opacity-80 leading-relaxed">
                   {t.trips.routeReadyDesc?.replace('{from}', route.from).replace('{to}', route.to) || 
                    `Ole ensimmäinen, joka ilmoittaa matkan välille ${route.from} ja ${route.to} ja aloita kulujen jakaminen muiden kanssa.`}
                 </p>
                 <Link 
                   href={`${langPrefix(lang)}/create-trip?from=${route.from}&to=${route.to}`}
-                  className="btn-primary px-16 py-7 text-xl shadow-2xl shadow-green-700/20 hover:shadow-green-700/40"
+                  className="btn-primary px-16 py-7 text-lg shadow-2xl shadow-green-700/20 hover:shadow-green-700/40"
                 >
                   {t.trips.publishFirst || t.page.home.publish || 'Ilmoita ensimmäinen matka'}
                 </Link>
@@ -231,7 +231,7 @@ export default async function RoutePage({ params }: Props) {
           ) : (
             <div className="space-y-16">
               <div className="flex items-center justify-between border-b-2 border-green-50 pb-8">
-                <h2 className="text-3xl font-black text-[var(--brand-dark)] uppercase tracking-widest flex items-center gap-6">
+                <h2 className="text-2xl font-black text-[var(--brand-dark)] uppercase tracking-widest flex items-center gap-6">
                   <span className="w-10 h-10 bg-[var(--brand-blue)] rounded-xl flex items-center justify-center text-white text-lg shadow-lg shadow-green-200">
                     {trips.length + externalOptions.length}
                   </span>
@@ -247,28 +247,28 @@ export default async function RoutePage({ params }: Props) {
               </div>
 
               {trips.length > 0 && (
-                <div className="mt-24 space-y-12 animate-in fade-in duration-1000">
+                <div className="mt-24 space-y-8 animate-in fade-in duration-1000">
                   <div className="flex items-center gap-6">
-                    <div className="h-px flex-1 bg-[#dde9d3]"></div>
+                    <div className="h-px flex-1 bg-[#c4d8b4]"></div>
                     <span className="text-[10px] font-black uppercase tracking-[0.4em] text-[var(--brand-neutral)]">{t.trips.communityTitle}</span>
-                    <div className="h-px flex-1 bg-[#dde9d3]"></div>
+                    <div className="h-px flex-1 bg-[#c4d8b4]"></div>
                   </div>
                   
-                  <div className="bg-[var(--brand-blue)] rounded-[4rem] p-12 md:p-20 text-white shadow-3xl shadow-green-900/30 flex flex-col lg:row items-center justify-between gap-12 relative overflow-hidden group">
+                  <div className="bg-[var(--brand-blue)] rounded-[4rem] p-8 md:p-20 text-white shadow-3xl shadow-green-900/30 flex flex-col lg:row items-center justify-between gap-8 relative overflow-hidden group">
                     <div className="absolute top-0 right-0 w-[40rem] h-[40rem] bg-white opacity-[0.03] rounded-full -mr-80 -mt-80 blur-3xl pointer-events-none group-hover:opacity-[0.06] transition-opacity duration-1000"></div>
                     <div className="absolute bottom-0 left-0 w-80 h-80 bg-green-400 opacity-[0.05] rounded-full -ml-40 -mb-40 blur-3xl pointer-events-none"></div>
                     
                     <div className="relative z-10 max-w-2xl text-center lg:text-left">
-                      <h3 className="text-4xl md:text-5xl font-black leading-tight mb-6">
+                      <h3 className="text-3xl md:text-4xl font-black leading-tight mb-6">
                         {lang === 'fi' ? 'Kimppakyydit Jombossa' : 'Carpools in Jombo'}
                       </h3>
-                      <p className="text-[var(--brand-neutral)] text-xl font-medium opacity-80 leading-relaxed italic">
+                      <p className="text-[var(--brand-neutral)] text-lg font-medium opacity-80 leading-relaxed italic">
                         {t.trips.communitySubtitle}
                       </p>
                     </div>
                     <Link 
                       href={`${langPrefix(lang)}/search?from=${route.from}&to=${route.to}`}
-                      className="relative z-10 bg-white text-[var(--brand-dark)] px-16 py-7 rounded-[2rem] font-black uppercase tracking-widest text-sm hover:bg-[#f2f7ec] hover:scale-105 transition-all shadow-2xl whitespace-nowrap active:scale-95"
+                      className="relative z-10 bg-white text-[var(--brand-dark)] px-16 py-7 rounded-[2rem] font-black uppercase tracking-widest text-sm hover:bg-[#ebf3e2] hover:scale-105 transition-all shadow-2xl whitespace-nowrap active:scale-95"
                     >
                       {t.page.home.search || 'Katso kaikki matkat'}
                     </Link>
@@ -279,9 +279,9 @@ export default async function RoutePage({ params }: Props) {
           )}
 
           {/* ── TRUST & BENEFITS ── */}
-          <div className="mt-40 bg-[#f2f7ec]/50 rounded-[4rem] p-12 md:p-20 border-2 border-green-50">
+          <div className="mt-40 bg-[#ebf3e2]/50 rounded-[4rem] p-8 md:p-20 border-2 border-green-50">
             <div className="max-w-3xl mb-20">
-              <h2 className="text-4xl md:text-5xl font-black text-[var(--brand-dark)] mb-6 tracking-tight leading-tight">
+              <h2 className="text-3xl md:text-4xl font-black text-[var(--brand-dark)] mb-6 tracking-tight leading-tight">
                   {t.trips.everythingAbout} {route.from} <span className="text-[var(--brand-neutral)]">→</span> {route.to}
               </h2>
               <div className="w-20 h-2 bg-[var(--brand-blue)] rounded-full"></div>
@@ -289,7 +289,7 @@ export default async function RoutePage({ params }: Props) {
 
             <div className="grid md:grid-cols-2 gap-20 text-[var(--brand-dark)]">
                 <div className="space-y-8 group">
-                    <div className="w-16 h-16 bg-white rounded-2xl flex items-center justify-center text-[var(--brand-blue)] shadow-xl border border-[#dde9d3] group-hover:rotate-6 transition-transform">
+                    <div className="w-16 h-16 bg-white rounded-2xl flex items-center justify-center text-[var(--brand-blue)] shadow-xl border border-[#c4d8b4] group-hover:rotate-6 transition-transform">
                       <svg className="w-8 h-8" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                         <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2.5} d="M12 8c-1.657 0-3 .895-3 2s1.343 2 3 2 3 .895 3 2-1.343 2-3 2m0-8c1.11 0 2.08.402 2.599 1M12 8V7m0 1v8m0 0v1m0-1c-1.11 0-2.08-.402-2.599-1M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
                       </svg>
@@ -300,7 +300,7 @@ export default async function RoutePage({ params }: Props) {
                     </p>
                 </div>
                 <div className="space-y-8 group">
-                    <div className="w-16 h-16 bg-white rounded-2xl flex items-center justify-center text-[var(--brand-blue)] shadow-xl border border-[#dde9d3] group-hover:-rotate-6 transition-transform">
+                    <div className="w-16 h-16 bg-white rounded-2xl flex items-center justify-center text-[var(--brand-blue)] shadow-xl border border-[#c4d8b4] group-hover:-rotate-6 transition-transform">
                       <svg className="w-8 h-8" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                         <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2.5} d="M3.055 11H5a2 2 0 012 2v1a2 2 0 002 2 2 2 0 012 2v2.945M8 3.935V5.5A2.5 2.5 0 0010.5 8h.5a2 2 0 012 2 2 2 0 002 2 2 2 0 012 2v.1c0 .667.333 1.1 1 1.3M9 21h6m-3-12h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
                       </svg>
@@ -312,10 +312,10 @@ export default async function RoutePage({ params }: Props) {
                 </div>
             </div>
             
-            <div className="mt-20 pt-16 border-t border-[#dde9d3] flex flex-col md:flex-row items-center gap-12 justify-between">
+            <div className="mt-20 pt-16 border-t border-[#c4d8b4] flex flex-col md:flex-row items-center gap-8 justify-between">
               <div className="flex -space-x-4">
                 {[1, 2, 3, 4, 5].map((i) => (
-                  <div key={i} className="w-14 h-14 rounded-full border-4 border-white bg-[#dde9d3] flex items-center justify-center shadow-lg shadow-green-900/5 overflow-hidden">
+                  <div key={i} className="w-14 h-14 rounded-full border-4 border-white bg-[#c4d8b4] flex items-center justify-center shadow-lg shadow-green-900/5 overflow-hidden">
                     <img src={`https://i.pravatar.cc/150?u=${i + 10}`} alt="User" />
                   </div>
                 ))}
@@ -323,10 +323,10 @@ export default async function RoutePage({ params }: Props) {
                   +10k
                 </div>
               </div>
-              <p className="text-[var(--brand-dark)] font-bold text-xl text-center md:text-left">
+              <p className="text-[var(--brand-dark)] font-bold text-lg text-center md:text-left">
                 {t.trips.joinThousands || 'Liity tuhansiin jotka jo säästävät kyydeistä.'}
               </p>
-              <Link href={`${langPrefix(lang)}/register`} className="btn-secondary px-10 py-5 whitespace-nowrap">
+              <Link href={`${langPrefix(lang)}/register`} className="btn-secondary px-7 py-3.5 whitespace-nowrap">
                 {t.trips.registerFree || 'Rekisteröidy ilmaiseksi'}
               </Link>
             </div>

@@ -18,12 +18,12 @@ export default function Footer({ lang }: FooterProps) {
   const routePrefix = "kimppakyyti";
 
   return (
-    <footer className="bg-[var(--brand-dark)] text-white mt-auto py-24 relative overflow-hidden">
+    <footer className="bg-[var(--brand-dark)] text-white mt-auto py-12 relative overflow-hidden">
       {/* Sutil gradiente de fondo */}
       <div className="absolute top-0 left-0 w-full h-px bg-gradient-to-r from-transparent via-[var(--brand-accent-1)] to-transparent"></div>
       
       <div className="max-w-7xl mx-auto px-6 relative z-10">
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-5 gap-16 lg:gap-12">
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-5 gap-10 lg:gap-8">
           {/* Brand Column */}
           <div className="lg:col-span-1 space-y-8">
             <Link href={localePath(lang)} className="inline-block hover:opacity-80 transition-all hover:scale-105 transform">

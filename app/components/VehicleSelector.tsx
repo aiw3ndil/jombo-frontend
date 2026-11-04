@@ -141,8 +141,8 @@ export default function VehicleSelector({
                   aria-pressed={selected}
                   className={`text-left rounded-2xl border-2 p-5 flex items-start gap-4 transition-all ${
                     selected
-                      ? "border-[var(--brand-blue)] bg-[#f2f7ec] shadow-md"
-                      : "border-[#dde9d3] hover:border-[var(--brand-blue)]/50"
+                      ? "border-[var(--brand-blue)] bg-[#ebf3e2] shadow-md"
+                      : "border-[#c4d8b4] hover:border-[var(--brand-blue)]/50"
                   }`}
                 >
                   <span className={selected ? "text-[var(--brand-blue)]" : "text-[var(--brand-neutral)]"}>
@@ -165,15 +165,15 @@ export default function VehicleSelector({
             })}
           </div>
           <button type="button" onClick={startAdding} className="btn-secondary px-6 py-3 inline-flex items-center gap-2">
-            <span className="text-xl leading-none">+</span> {t("vehicle.add", "Add vehicle")}
+            <span className="text-lg leading-none">+</span> {t("vehicle.add", "Add vehicle")}
           </button>
         </>
       )}
 
       {adding && (
-        <div className="bg-[#f2f7ec]/50 border-2 border-[#dde9d3] rounded-[2rem] p-6 md:p-8 space-y-6">
+        <div className="bg-[#ebf3e2]/50 border-2 border-[#c4d8b4] rounded-[2rem] p-6 md:p-8 space-y-6">
           <div className="flex items-center justify-between gap-4 flex-wrap">
-            <h3 className="text-xl font-bold text-[var(--brand-dark)] flex items-center gap-2">
+            <h3 className="text-lg font-bold text-[var(--brand-dark)] flex items-center gap-2">
               <CarIcon className="w-6 h-6 text-[var(--brand-blue)]" />
               {t("vehicle.newTitle", "New vehicle")}
             </h3>

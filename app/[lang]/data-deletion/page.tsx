@@ -23,14 +23,14 @@ export default function DataDeletionPage() {
     }, [t, lang]);
 
     return (
-        <div className="min-h-screen bg-white text-[var(--brand-dark)]">
+        <div className="min-h-screen bg-[var(--page-bg)] text-[var(--brand-dark)]">
             {/* ── HERO ── */}
-            <section className="bg-[#f2f7ec] border-b-2 border-[#dde9d3] py-8 px-4">
+            <section className="bg-[#ebf3e2] border-b-2 border-[#c4d8b4] py-8 px-4">
                 <div className="max-w-5xl mx-auto text-center">
-                    <div className="inline-flex items-center gap-2 bg-[#dde9d3] border border-[#dde9d3] text-[var(--brand-dark)] px-4 py-1.5 rounded-full text-xs font-bold mb-3 uppercase tracking-wide">
+                    <div className="inline-flex items-center gap-2 bg-[#c4d8b4] border border-[#c4d8b4] text-[var(--brand-dark)] px-4 py-1.5 rounded-full text-xs font-bold mb-3 uppercase tracking-wide">
                         {t("dataDeletion.badge")}
                     </div>
-                    <h1 className="text-2xl md:text-3xl font-black text-[var(--brand-dark)] leading-tight mb-2 tracking-tight">
+                    <h1 className="text-2xl md:text-2xl font-black text-[var(--brand-dark)] leading-tight mb-2 tracking-tight">
                         {t("dataDeletion.title")}
                     </h1>
                     <p className="text-sm md:text-base text-[var(--brand-neutral)] max-w-2xl mx-auto font-medium opacity-80 leading-relaxed">
@@ -40,12 +40,12 @@ export default function DataDeletionPage() {
             </section>
 
             {/* ── CONTENIDO ── */}
-            <section className="py-20 px-4 bg-white relative -mt-5">
+            <section className="py-12 px-4 bg-white relative -mt-5">
                 <div className="max-w-4xl mx-auto">
-                    <div className="bg-white border-2 border-[#dde9d3] rounded-[3rem] p-8 md:p-16 shadow-[0_32px_64px_-16px_rgba(22,101,52,0.1)] relative overflow-hidden">
+                    <div className="bg-white border-2 border-[#c4d8b4] rounded-[1.75rem] p-8 md:p-16 shadow-[0_32px_64px_-16px_rgba(22,101,52,0.1)] relative overflow-hidden">
                         <div className="space-y-16 text-[var(--brand-dark)] leading-relaxed">
                             
-                            <div className="grid grid-cols-1 md:grid-cols-2 gap-12">
+                            <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
                                 <section className="space-y-6">
                                     <h2 className="text-2xl font-black text-[var(--brand-dark)] flex items-center gap-4">
                                         <span className="w-2 h-8 bg-[var(--brand-blue)] rounded-full"></span>
@@ -70,7 +70,7 @@ export default function DataDeletionPage() {
                                                 t("dataDeletion.section2.list.item3")
                                             ].map((item, i) => (
                                                 <li key={i} className="flex items-center gap-3 text-base font-medium text-[var(--brand-neutral)]">
-                                                    <div className="w-5 h-5 bg-[#dde9d3] rounded-full flex items-center justify-center flex-shrink-0">
+                                                    <div className="w-5 h-5 bg-[#c4d8b4] rounded-full flex items-center justify-center flex-shrink-0">
                                                         <svg className="w-3 h-3 text-[var(--brand-blue)]" fill="currentColor" viewBox="0 0 20 20">
                                                             <path fillRule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clipRule="evenodd" />
                                                         </svg>
@@ -94,10 +94,10 @@ export default function DataDeletionPage() {
                             </section>
 
                             {/* Proceso de eliminación */}
-                            <section className="bg-[#f2f7ec] border-2 border-[#dde9d3] rounded-[3rem] p-8 md:p-12 shadow-inner relative overflow-hidden group">
-                                <div className="absolute top-0 right-0 w-32 h-32 bg-[#dde9d3]/50 rounded-full -mr-16 -mt-16 group-hover:scale-110 transition-transform duration-500"></div>
+                            <section className="bg-[#ebf3e2] border-2 border-[#c4d8b4] rounded-[1.75rem] p-8 md:p-8 shadow-inner relative overflow-hidden group">
+                                <div className="absolute top-0 right-0 w-32 h-32 bg-[#c4d8b4]/50 rounded-full -mr-16 -mt-16 group-hover:scale-110 transition-transform duration-500"></div>
                                 
-                                <h2 className="text-3xl font-black text-[var(--brand-dark)] mb-10 flex items-center gap-4 relative z-10">
+                                <h2 className="text-2xl font-black text-[var(--brand-dark)] mb-10 flex items-center gap-4 relative z-10">
                                     <div className="w-12 h-12 bg-[var(--brand-blue)] rounded-2xl flex items-center justify-center text-white shadow-lg shadow-green-200">
                                         <svg className="w-7 h-7" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                             <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2.5} d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16" />
@@ -106,9 +106,9 @@ export default function DataDeletionPage() {
                                     {t("dataDeletion.section4.title")}
                                 </h2>
 
-                                <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 relative z-10">
+                                <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 relative z-10">
                                     <div className="space-y-8">
-                                        <div className="inline-block bg-white px-4 py-1.5 rounded-full border border-[#dde9d3] shadow-sm text-xs font-black text-[var(--brand-blue)] uppercase tracking-widest">
+                                        <div className="inline-block bg-white px-4 py-1.5 rounded-full border border-[#c4d8b4] shadow-sm text-xs font-black text-[var(--brand-blue)] uppercase tracking-widest">
                                             {t("dataDeletion.section4.subtitle")}
                                         </div>
                                         <div className="space-y-6">
@@ -119,7 +119,7 @@ export default function DataDeletionPage() {
                                                 t("dataDeletion.section4.step4")
                                             ].map((step, i) => (
                                                 <div key={i} className="flex gap-6 items-start group/step">
-                                                    <span className="flex-shrink-0 w-8 h-8 rounded-xl bg-white border-2 border-[#dde9d3] flex items-center justify-center text-sm font-black text-[var(--brand-blue)] shadow-sm group-hover/step:border-green-600 group-hover/step:bg-[var(--brand-blue)] group-hover/step:text-white transition-all">
+                                                    <span className="flex-shrink-0 w-8 h-8 rounded-xl bg-white border-2 border-[#c4d8b4] flex items-center justify-center text-sm font-black text-[var(--brand-blue)] shadow-sm group-hover/step:border-green-600 group-hover/step:bg-[var(--brand-blue)] group-hover/step:text-white transition-all">
                                                         {i + 1}
                                                     </span>
                                                     <p className="text-lg font-medium text-[var(--brand-dark)] leading-snug group-hover/step:text-[var(--brand-dark)] transition-colors pt-0.5">
@@ -130,18 +130,18 @@ export default function DataDeletionPage() {
                                         </div>
                                     </div>
 
-                                    <div className="bg-white p-8 md:p-10 rounded-[2.5rem] border-2 border-[#dde9d3] shadow-xl space-y-8">
+                                    <div className="bg-white p-8 md:p-6 rounded-[1.5rem] border-2 border-[#c4d8b4] shadow-xl space-y-8">
                                         <div className="inline-block bg-[var(--brand-blue)] px-4 py-1.5 rounded-full text-[10px] font-black text-white uppercase tracking-widest">
                                             {t("dataDeletion.section5.subtitle")}
                                         </div>
                                         <p className="text-lg font-medium text-[var(--brand-neutral)]">
                                             {t("dataDeletion.section5.content")}
                                         </p>
-                                        <div className="p-6 bg-[#f2f7ec] rounded-2xl border-2 border-[#dde9d3] text-center hover:border-[#dde9d3] transition-colors group/email">
+                                        <div className="p-6 bg-[#ebf3e2] rounded-2xl border-2 border-[#c4d8b4] text-center hover:border-[#c4d8b4] transition-colors group/email">
                                             <p className="text-[var(--brand-blue)] font-bold uppercase tracking-widest text-[10px] mb-2 group-hover/email:text-[var(--brand-neutral)] transition-colors">
                                                 {t("footer.supportEmail")}
                                             </p>
-                                            <p className="text-[var(--brand-dark)] font-black text-xl hover:text-[var(--brand-blue)] transition-colors">
+                                            <p className="text-[var(--brand-dark)] font-black text-lg hover:text-[var(--brand-blue)] transition-colors">
                                                 {t("dataDeletion.section5.email")}
                                             </p>
                                         </div>

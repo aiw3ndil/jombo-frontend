@@ -120,15 +120,15 @@ export default function TripForm({
   };
 
   return (
-    <div className="min-h-screen bg-white">
+    <div className="min-h-screen bg-[var(--page-bg)]">
       {/* ── HERO ── */}
-      <section className="bg-[#f2f7ec] border-b-2 border-[#dde9d3] py-8 px-4">
+      <section className="bg-[#ebf3e2] border-b-2 border-[#c4d8b4] py-8 px-4">
         <div className="max-w-5xl mx-auto text-center">
-          <div className="inline-flex items-center gap-2 bg-[#dde9d3] border border-[#dde9d3] text-[var(--brand-dark)] px-4 py-1.5 rounded-full text-xs font-bold mb-3 uppercase tracking-wide">
+          <div className="inline-flex items-center gap-2 bg-[#c4d8b4] border border-[#c4d8b4] text-[var(--brand-dark)] px-4 py-1.5 rounded-full text-xs font-bold mb-3 uppercase tracking-wide">
             <span className="w-2 h-2 rounded-full bg-[var(--brand-blue)] animate-pulse"></span>
             {isEdit ? t("page.editTrip.badge", "Edit trip") : (t("page.createTrip.badge") || "New trip")}
           </div>
-          <h1 className="text-2xl md:text-3xl font-bold text-[var(--brand-dark)] leading-tight mb-2">
+          <h1 className="text-2xl md:text-2xl font-bold text-[var(--brand-dark)] leading-tight mb-2">
             {isEdit ? t("page.editTrip.title", "Edit your trip") : (t("page.createTrip.title") || "Publish a trip")}
           </h1>
           <p className="text-sm md:text-base text-[var(--brand-neutral)] max-w-3xl mx-auto leading-relaxed font-normal">
@@ -138,11 +138,11 @@ export default function TripForm({
       </section>
 
       {/* ── FORMULARIO ── */}
-      <section className="py-24 px-4 bg-white relative -mt-5">
+      <section className="py-12 px-4 bg-white relative -mt-5">
         <div className="max-w-4xl mx-auto">
           <div className="form-card relative z-10">
-            <form onSubmit={handleSubmit} className="space-y-12">
-              <div className="space-y-10">
+            <form onSubmit={handleSubmit} className="space-y-8">
+              <div className="space-y-6">
                 {/* Paso 1: Ruta */}
                 <div className="space-y-6">
                   <div className="flex items-center gap-4 mb-2">
@@ -191,7 +191,7 @@ export default function TripForm({
                   </div>
                 </div>
 
-                <div className="h-px bg-[#f2f7ec] w-full"></div>
+                <div className="h-px bg-[#ebf3e2] w-full"></div>
 
                 {/* Paso 2: Horario y Plazas */}
                 <div className="space-y-6">
@@ -241,7 +241,7 @@ export default function TripForm({
                     <div className="md:col-span-1">
                       <label className="form-label">{t("page.createTrip.pricePerSeat") || "Price per seat (€)"} *</label>
                       <div className="relative group">
-                        <span className="absolute left-5 top-1/2 -translate-y-1/2 text-[var(--brand-blue)] font-black text-xl z-10 group-focus-within:text-[var(--brand-dark)] transition-colors">€</span>
+                        <span className="absolute left-5 top-1/2 -translate-y-1/2 text-[var(--brand-blue)] font-black text-lg z-10 group-focus-within:text-[var(--brand-dark)] transition-colors">€</span>
                         <input 
                           type="number" 
                           name="pricePerSeat" 
@@ -249,7 +249,7 @@ export default function TripForm({
                           onChange={handleChange} 
                           min="0" 
                           step="0.01" 
-                          className="form-input pl-12 font-black text-xl text-[var(--brand-neutral)]" 
+                          className="form-input pl-12 font-black text-lg text-[var(--brand-neutral)]" 
                           required 
                         />
                       </div>
@@ -257,7 +257,7 @@ export default function TripForm({
                   </div>
                 </div>
 
-                <div className="h-px bg-[#f2f7ec] w-full"></div>
+                <div className="h-px bg-[#ebf3e2] w-full"></div>
 
                 {/* Paso 3: Vehículo */}
                 <div className="space-y-6">
@@ -268,7 +268,7 @@ export default function TripForm({
                   <VehicleSelector value={vehicleChoice} onChange={handleVehicleChange} initialVehicleId={trip?.vehicle?.id ?? null} />
                 </div>
 
-                <div className="h-px bg-[#f2f7ec] w-full"></div>
+                <div className="h-px bg-[#ebf3e2] w-full"></div>
 
                 {/* Paso 4: Información adicional */}
                 <div className="space-y-6">
@@ -293,10 +293,10 @@ export default function TripForm({
 
                   {!isEdit && (<>
                   {/* Recurrencia */}
-                  <div className="bg-[#f2f7ec]/50 border-2 border-[#dde9d3] rounded-[2rem] p-8 md:p-10 transition-all hover:bg-[#f2f7ec]">
+                  <div className="bg-[#ebf3e2]/50 border-2 border-[#c4d8b4] rounded-[2rem] p-8 md:p-6 transition-all hover:bg-[#ebf3e2]">
                     <div className="flex items-center justify-between gap-6">
                       <div className="flex-1">
-                        <h3 className="text-xl font-bold text-[var(--brand-dark)] mb-1 flex items-center gap-2">
+                        <h3 className="text-lg font-bold text-[var(--brand-dark)] mb-1 flex items-center gap-2">
                           <svg className="w-6 h-6 text-[var(--brand-blue)]" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                             <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4 4v5h.582m15.356 2A8.001 8.001 0 004.582 9m0 0H9m11 11v-5h-.581m0 0a8.003 8.003 0 01-15.357-2m15.357 2H15" />
                           </svg>
@@ -317,7 +317,7 @@ export default function TripForm({
                     </div>
 
                     {formData.is_recurring && (
-                      <div className="grid md:grid-cols-2 gap-8 mt-10 pt-8 border-t border-[#dde9d3] animate-in fade-in slide-in-from-top-4 duration-300">
+                      <div className="grid md:grid-cols-2 gap-8 mt-10 pt-8 border-t border-[#c4d8b4] animate-in fade-in slide-in-from-top-4 duration-300">
                         <div>
                           <label className="form-label">{t("page.createTrip.recurrencePattern") || "Frequency"}</label>
                           <div className="relative">
@@ -362,7 +362,7 @@ export default function TripForm({
                   type="button"
                   onClick={onCancel}
                   disabled={loading}
-                  className="btn-secondary flex-1 py-6 shadow-sm border-2"
+                  className="btn-secondary flex-1 py-4 shadow-sm border-2"
                 >
                   <svg className="w-5 h-5 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                     <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M10 19l-7-7m0 0l7-7m-7 7h18" />
@@ -372,7 +372,7 @@ export default function TripForm({
                 <button
                   type="submit"
                   disabled={loading}
-                  className="btn-primary flex-[2] py-6 shadow-2xl relative overflow-hidden group"
+                  className="btn-primary flex-[2] py-4 shadow-2xl relative overflow-hidden group"
                 >
                   <span className={`flex items-center justify-center gap-3 transition-all duration-300 ${loading ? 'opacity-0 scale-90' : 'opacity-100 scale-100'}`}>
                     <svg className="w-6 h-6 group-hover:rotate-12 transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24">

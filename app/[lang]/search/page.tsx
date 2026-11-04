@@ -143,7 +143,7 @@ export default function SearchPage() {
 
   if (loading) {
     return (
-      <div className="min-h-screen bg-white flex flex-col items-center justify-center gap-4">
+      <div className="min-h-screen bg-[var(--page-bg)] flex flex-col items-center justify-center gap-4">
         <div className="spinner"></div>
         <p className="text-[var(--brand-neutral)] font-semibold text-lg">{t("page.search.searching") || "Searching trips"}...</p>
       </div>
@@ -152,13 +152,13 @@ export default function SearchPage() {
 
   if (error) {
     return (
-      <div className="min-h-screen bg-white flex flex-col items-center justify-center gap-6 px-4">
+      <div className="min-h-screen bg-[var(--page-bg)] flex flex-col items-center justify-center gap-6 px-4">
         <div className="w-16 h-16 bg-red-50 rounded-full flex items-center justify-center">
           <svg className="w-8 h-8 text-red-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
             <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z" />
           </svg>
         </div>
-        <p className="text-red-700 text-xl font-semibold text-center">{error}</p>
+        <p className="text-red-700 text-lg font-semibold text-center">{error}</p>
         <button
           onClick={() => router.push(localePath(lang))}
           className="bg-[var(--brand-blue)] hover:bg-[var(--brand-blue)] text-white px-8 py-3 rounded-xl font-bold text-base transition-colors"
@@ -172,12 +172,12 @@ export default function SearchPage() {
   const API_BASE = process.env.NEXT_PUBLIC_API_BASE_URL || "";
 
   return (
-    <div className="min-h-screen bg-white">
+    <div className="min-h-screen bg-[var(--page-bg)]">
       {/* ── HERO / SEARCH BAR ── */}
-      <section className="bg-[#f2f7ec] border-b-2 border-[#dde9d3] py-8 px-4">
+      <section className="bg-[#ebf3e2] border-b-2 border-[#c4d8b4] py-8 px-4">
         <div className="max-w-5xl mx-auto">
           <div className="text-center mb-6">
-            <h1 className="text-2xl md:text-3xl font-bold text-[var(--brand-dark)] mb-2">
+            <h1 className="text-2xl md:text-2xl font-bold text-[var(--brand-dark)] mb-2">
               {from} <span className="text-[var(--brand-neutral)] mx-2">→</span> {to}
             </h1>
             <p className="text-sm md:text-base text-[var(--brand-neutral)] font-medium">
@@ -185,7 +185,7 @@ export default function SearchPage() {
             </p>
           </div>
 
-          <form onSubmit={handleSearch} className="bg-white p-4 rounded-[2.5rem] shadow-xl border-2 border-[#dde9d3] flex flex-col lg:flex-row gap-4">
+          <form onSubmit={handleSearch} className="bg-white p-4 rounded-[1.5rem] shadow-xl border-2 border-[#c4d8b4] flex flex-col lg:flex-row gap-4">
             <div className="flex-1 relative group">
               <div className="absolute left-4 top-1/2 -translate-y-1/2 text-[var(--brand-neutral)] group-focus-within:text-[var(--brand-blue)] transition-colors z-10">
                 <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -196,7 +196,7 @@ export default function SearchPage() {
                 value={searchFrom}
                 onChange={(val: string) => setSearchFrom(val)}
                 placeholder={t("page.home.from") || "From"}
-                className="form-input pl-12 border-transparent bg-[#f2f7ec]/30 focus:bg-white"
+                className="form-input pl-12 border-transparent bg-[#ebf3e2]/30 focus:bg-white"
               />
             </div>
             <div className="flex-1 relative group">
@@ -209,12 +209,12 @@ export default function SearchPage() {
                 value={searchTo}
                 onChange={(val: string) => setSearchTo(val)}
                 placeholder={t("page.home.to") || "To"}
-                className="form-input pl-12 border-transparent bg-[#f2f7ec]/30 focus:bg-white"
+                className="form-input pl-12 border-transparent bg-[#ebf3e2]/30 focus:bg-white"
               />
             </div>
             <button
               type="submit"
-              className="btn-primary px-10 py-4 shadow-lg lg:w-auto w-full"
+              className="btn-primary px-7 py-4 shadow-lg lg:w-auto w-full"
             >
               <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                 <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" />
@@ -226,12 +226,12 @@ export default function SearchPage() {
       </section>
 
       {/* ── CONTENIDO ── */}
-      <section className="py-20 px-4 min-h-[60vh]">
+      <section className="py-12 px-4 min-h-[60vh]">
         <div className="max-w-5xl mx-auto">
           {/* Aviso de transporte público */}
           {source === "digitransit" && (
-            <div className="mb-12 p-8 bg-[#f2f7ec] border-2 border-[#dde9d3] rounded-[2.5rem] flex items-center gap-6 animate-in fade-in slide-in-from-top-4">
-              <div className="w-14 h-14 bg-white rounded-full flex items-center justify-center flex-shrink-0 shadow-sm border border-[#dde9d3]">
+            <div className="mb-8 p-8 bg-[#ebf3e2] border-2 border-[#c4d8b4] rounded-[1.5rem] flex items-center gap-6 animate-in fade-in slide-in-from-top-4">
+              <div className="w-14 h-14 bg-white rounded-full flex items-center justify-center flex-shrink-0 shadow-sm border border-[#c4d8b4]">
                 <svg className="w-7 h-7 text-[var(--brand-blue)]" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                   <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
                 </svg>
@@ -249,20 +249,20 @@ export default function SearchPage() {
 
           {/* Sin resultados */}
           {trips.length === 0 && externalOptions.length === 0 ? (
-            <div className="text-center py-24 bg-[#f2f7ec]/30 rounded-[3rem] border-2 border-dashed border-[#dde9d3]">
-              <div className="w-24 h-24 bg-white rounded-full flex items-center justify-center mx-auto mb-8 shadow-sm border-2 border-[#dde9d3] text-[var(--brand-neutral)]">
+            <div className="text-center py-12 bg-[#ebf3e2]/30 rounded-[1.75rem] border-2 border-dashed border-[#c4d8b4]">
+              <div className="w-24 h-24 bg-white rounded-full flex items-center justify-center mx-auto mb-8 shadow-sm border-2 border-[#c4d8b4] text-[var(--brand-neutral)]">
                 <svg className="w-12 h-12" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                   <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9.172 9.172a4 4 0 015.656 0M9 10h.01M15 10h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
                 </svg>
               </div>
-              <h2 className="text-3xl font-bold text-[var(--brand-dark)] mb-4">{t("page.search.noResults") || "No trips found"}</h2>
+              <h2 className="text-2xl font-bold text-[var(--brand-dark)] mb-4">{t("page.search.noResults") || "No trips found"}</h2>
               <p className="text-[var(--brand-neutral)] text-lg mb-8 max-w-md mx-auto font-medium">{t("page.search.noResultsHint", "Try changing the cities or search again later.")}</p>
               <button onClick={() => router.push(localePath(lang))} className="btn-secondary px-8 py-4">
                 {t("page.search.back") || "Back"}
               </button>
             </div>
           ) : (
-            <div className="space-y-10">
+            <div className="space-y-6">
               {/* Viajes locales */}
               {trips.map((trip) => {
                 const driverPictureUrl = trip.driver?.picture_url
@@ -280,8 +280,8 @@ export default function SearchPage() {
                     <div className="flex flex-col xl:flex-row gap-10">
                       {/* Lado Izquierdo: Conductor */}
                       <div className="flex-shrink-0 flex flex-col items-center">
-                        <div className="relative p-1 bg-[#f2f7ec] rounded-full border-2 border-[#dde9d3] group-hover:border-[#dde9d3] transition-colors">
-                          <div className="w-24 h-24 rounded-full overflow-hidden shadow-inner bg-[#dde9d3] flex items-center justify-center">
+                        <div className="relative p-1 bg-[#ebf3e2] rounded-full border-2 border-[#c4d8b4] group-hover:border-[#c4d8b4] transition-colors">
+                          <div className="w-24 h-24 rounded-full overflow-hidden shadow-inner bg-[#c4d8b4] flex items-center justify-center">
                             {driverPictureUrl ? (
                               <img
                                 src={driverPictureUrl}
@@ -292,12 +292,12 @@ export default function SearchPage() {
                                 }}
                               />
                             ) : (
-                              <span className="text-3xl font-black text-[var(--brand-neutral)]">
+                              <span className="text-2xl font-black text-[var(--brand-neutral)]">
                                 {trip.driver.name.charAt(0).toUpperCase()}
                               </span>
                             )}
                           </div>
-                          <div className="absolute -bottom-1 -right-1 w-9 h-9 bg-white rounded-full border-2 border-[#dde9d3] flex items-center justify-center shadow-lg">
+                          <div className="absolute -bottom-1 -right-1 w-9 h-9 bg-white rounded-full border-2 border-[#c4d8b4] flex items-center justify-center shadow-lg">
                             <svg className="w-5 h-5 text-yellow-500 fill-current" viewBox="0 0 20 20">
                               <path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z" />
                             </svg>
@@ -315,7 +315,7 @@ export default function SearchPage() {
                       {/* Lado Central: Info Viaje */}
                       <div className="flex-1 space-y-8">
                         <div className="flex flex-wrap items-center gap-4">
-                          <div className="flex items-center gap-2 text-[var(--brand-blue)] font-bold bg-[#f2f7ec] px-5 py-2 rounded-full border border-[#dde9d3] shadow-sm">
+                          <div className="flex items-center gap-2 text-[var(--brand-blue)] font-bold bg-[#ebf3e2] px-5 py-2 rounded-full border border-[#c4d8b4] shadow-sm">
                             <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                               <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z" />
                             </svg>
@@ -335,20 +335,20 @@ export default function SearchPage() {
                         </div>
 
                         <div>
-                          <h3 className="text-4xl font-black text-[var(--brand-dark)] leading-tight tracking-tight">
+                          <h3 className="text-3xl font-black text-[var(--brand-dark)] leading-tight tracking-tight">
                             {trip.departure_location} <span className="text-[var(--brand-neutral)] mx-2">→</span> {trip.arrival_location}
                           </h3>
                           <VehicleSummary vehicle={trip.vehicle} className="mt-3" />
                         </div>
 
                         <div className="grid grid-cols-2 gap-6">
-                           <div className="bg-[#f2f7ec]/50 border border-[#dde9d3] rounded-2xl p-4">
+                           <div className="bg-[#ebf3e2]/50 border border-[#c4d8b4] rounded-2xl p-4">
                             <p className="text-xs font-bold text-[var(--brand-neutral)] uppercase tracking-widest mb-1">{t("page.search.availableSeats") || "Available seats"}</p>
-                            <p className={`text-xl font-black ${trip.available_seats === 0 ? "text-red-500" : "text-[var(--brand-dark)]"}`}>
+                            <p className={`text-lg font-black ${trip.available_seats === 0 ? "text-red-500" : "text-[var(--brand-dark)]"}`}>
                               {trip.available_seats} <span className="text-sm font-bold text-[var(--brand-neutral)]/60 lowercase">{t("page.search.available", "available")}</span>
                             </p>
                           </div>
-                          <div className="bg-[#f2f7ec]/50 border border-[#dde9d3] rounded-2xl p-4">
+                          <div className="bg-[#ebf3e2]/50 border border-[#c4d8b4] rounded-2xl p-4">
                             <p className="text-xs font-bold text-[var(--brand-neutral)] uppercase tracking-widest mb-1">{t("page.search.price") || "Price"}</p>
                             <p className="text-2xl font-black text-[var(--brand-neutral)] italic">€{Number(trip.price).toFixed(2)}</p>
                           </div>
@@ -360,9 +360,9 @@ export default function SearchPage() {
                         <button
                           onClick={() => handleBookTrip(trip)}
                           disabled={bookingLoading === trip.id || trip.available_seats === 0 || !!bookingStatus}
-                          className={`w-full py-6 rounded-[1.5rem] font-bold text-lg shadow-xl transform transition-all active:scale-95 ${
+                          className={`w-full py-4 rounded-[1.5rem] font-bold text-lg shadow-xl transform transition-all active:scale-95 ${
                             bookingStatus === "confirmed"
-                              ? "bg-[#dde9d3] text-[var(--brand-neutral)] border-2 border-green-400 cursor-default"
+                              ? "bg-[#c4d8b4] text-[var(--brand-neutral)] border-2 border-green-400 cursor-default"
                               : bookingStatus === "pending"
                               ? "bg-yellow-50 text-yellow-700 border-2 border-yellow-400 cursor-default"
                               : trip.available_seats === 0

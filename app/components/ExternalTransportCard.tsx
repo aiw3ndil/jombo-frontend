@@ -55,14 +55,14 @@ export default function ExternalTransportCard({ option, lang }: Props) {
   };
 
   return (
-    <div className="group relative bg-white border-2 border-[#dde9d3] rounded-[2.5rem] p-8 hover:border-[#dde9d3] hover:shadow-xl transition-all overflow-hidden">
-      <div className="absolute top-0 right-0 w-64 h-64 bg-[#f2f7ec]/60 rounded-full -mr-24 -mt-24 blur-3xl pointer-events-none group-hover:bg-[#dde9d3]/60 transition-colors duration-500"></div>
+    <div className="group relative bg-white border-2 border-[#c4d8b4] rounded-[1.5rem] p-8 hover:border-[#c4d8b4] hover:shadow-xl transition-all overflow-hidden">
+      <div className="absolute top-0 right-0 w-64 h-64 bg-[#ebf3e2]/60 rounded-full -mr-24 -mt-24 blur-3xl pointer-events-none group-hover:bg-[#c4d8b4]/60 transition-colors duration-500"></div>
 
       <div className="relative flex flex-col md:flex-row gap-8 items-center md:items-start">
         <div className="flex-shrink-0 text-center space-y-4">
           <div className="relative">
             <div className="absolute inset-0 bg-green-200/40 blur-xl rounded-full scale-110"></div>
-            <div className="relative w-20 h-20 rounded-full bg-[#f2f7ec] border-2 border-[#dde9d3] flex items-center justify-center text-[var(--brand-blue)]">
+            <div className="relative w-20 h-20 rounded-full bg-[#ebf3e2] border-2 border-[#c4d8b4] flex items-center justify-center text-[var(--brand-blue)]">
               {getIcon(mainLeg.mode)}
             </div>
           </div>
@@ -79,7 +79,7 @@ export default function ExternalTransportCard({ option, lang }: Props) {
                 <span className="w-1.5 h-1.5 rounded-full bg-green-200"></span>
                 <span>{new Date(option.start_time).toLocaleDateString(lang, { day: 'numeric', month: 'short' })}</span>
               </div>
-              <h2 className="text-2xl md:text-3xl font-black text-[var(--brand-dark)] leading-tight tracking-tightest flex items-center gap-4">
+              <h2 className="text-2xl md:text-2xl font-black text-[var(--brand-dark)] leading-tight tracking-tightest flex items-center gap-4">
                 {mainLeg.from}
                 <svg className="w-6 h-6 text-[var(--brand-neutral)]" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                   <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={3} d="M17 8l4 4m0 0l-4 4m4-4H3" />
@@ -89,7 +89,7 @@ export default function ExternalTransportCard({ option, lang }: Props) {
             </div>
 
             <div className="text-right flex flex-row sm:flex-col items-center sm:items-end gap-3 sm:gap-0">
-              <p className="text-3xl font-black text-[var(--brand-dark)] tracking-tightest">
+              <p className="text-2xl font-black text-[var(--brand-dark)] tracking-tightest">
                 {option.price && option.price > 0
                   ? `${option.currency === 'EUR' ? '€' : option.currency}${Number(option.price).toFixed(2)}`
                   : (lang === 'fi' ? 'Säästä' : 'Save')}
@@ -102,7 +102,7 @@ export default function ExternalTransportCard({ option, lang }: Props) {
             </div>
           </div>
 
-          <div className="grid grid-cols-2 bg-[#f2f7ec]/60 rounded-3xl p-5 border border-[#dde9d3] gap-4">
+          <div className="grid grid-cols-2 bg-[#ebf3e2]/60 rounded-3xl p-5 border border-[#c4d8b4] gap-4">
             <div className="space-y-1">
               <p className="text-xs font-black text-[var(--brand-blue)] uppercase tracking-widest">
                 {lang === 'fi' ? 'Lähtö' : 'Departure'}
@@ -127,7 +127,7 @@ export default function ExternalTransportCard({ option, lang }: Props) {
               {option.legs.map((leg, idx) => (
                 <React.Fragment key={idx}>
                   <span className={`text-[10px] font-bold px-2 py-1 rounded-md ${
-                    leg.mode === 'WALK' ? 'bg-[#f2f7ec] text-[var(--brand-neutral)]' : 'bg-[#dde9d3] text-[var(--brand-neutral)]'
+                    leg.mode === 'WALK' ? 'bg-[#ebf3e2] text-[var(--brand-neutral)]' : 'bg-[#c4d8b4] text-[var(--brand-neutral)]'
                   }`}>
                     {getModeLabel(leg.mode)}
                   </span>

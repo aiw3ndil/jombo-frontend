@@ -77,7 +77,7 @@ export default async function RootLayout({
         <meta name="theme-color" content="#6441B8" />
       </head>
       <body
-        className={`font-sans antialiased min-h-screen bg-white text-[var(--brand-dark)]`}
+        className={`font-sans antialiased min-h-screen bg-[var(--page-bg)] text-[var(--brand-dark)]`}
       >
         <GoogleAnalytics />
         <Providers lang={currentLang}>

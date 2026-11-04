@@ -25,14 +25,14 @@ const RejectBookingModal: React.FC<RejectBookingModalProps> = ({
 
   return (
     <div className="fixed inset-0 bg-green-900/40 backdrop-blur-sm flex justify-center items-center p-4 z-[1000]">
-      <div className="bg-white rounded-[2.5rem] shadow-2xl p-8 md:p-12 w-full max-w-lg border-2 border-red-50 text-center relative overflow-hidden">
+      <div className="bg-white rounded-[1.5rem] shadow-2xl p-8 md:p-8 w-full max-w-lg border-2 border-red-50 text-center relative overflow-hidden">
         <div className="w-20 h-20 bg-red-50 rounded-full flex items-center justify-center mx-auto mb-8 border-2 border-red-100">
           <svg className="w-10 h-10 text-red-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
             <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
           </svg>
         </div>
 
-        <h3 className="text-3xl font-bold text-red-700 mb-6 font-serif italic">
+        <h3 className="text-2xl font-bold text-red-700 mb-6 font-serif italic">
           {t("rejectBookingModalTitle") || "Reject booking?"}
         </h3>
         

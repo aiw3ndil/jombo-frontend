@@ -44,14 +44,14 @@ export default function Login() {
   };
 
   return (
-    <div className="min-h-screen bg-white">
+    <div className="min-h-screen bg-[var(--page-bg)]">
       {/* ── HERO ── */}
-      <section className="bg-[#f2f7ec] border-b-2 border-[#dde9d3] py-8 px-4">
+      <section className="bg-[#ebf3e2] border-b-2 border-[#c4d8b4] py-8 px-4">
         <div className="max-w-5xl mx-auto text-center">
-          <div className="inline-flex items-center gap-2 bg-[#dde9d3] border border-[#dde9d3] text-[var(--brand-dark)] px-4 py-1.5 rounded-full text-xs font-bold mb-3 uppercase tracking-wide">
+          <div className="inline-flex items-center gap-2 bg-[#c4d8b4] border border-[#c4d8b4] text-[var(--brand-dark)] px-4 py-1.5 rounded-full text-xs font-bold mb-3 uppercase tracking-wide">
             {t("loginBadge") || "Welcome back"}
           </div>
-          <h1 className="text-2xl md:text-3xl font-black text-[var(--brand-dark)] leading-tight mb-2">
+          <h1 className="text-2xl md:text-2xl font-black text-[var(--brand-dark)] leading-tight mb-2">
             {t("loginTitle") || "Log in"}
           </h1>
           <p className="text-sm md:text-base text-[var(--brand-neutral)] max-w-2xl mx-auto font-medium opacity-80">
@@ -61,17 +61,17 @@ export default function Login() {
       </section>
 
       {/* ── FORMULARIO ── */}
-      <section className="py-20 px-4 bg-white relative -mt-5">
+      <section className="py-12 px-4 bg-white relative -mt-5">
         <div className="max-w-xl mx-auto">
           <div className="form-card relative z-10">
-            <div className="space-y-10">
+            <div className="space-y-6">
               {/* Google Login */}
               <div className="space-y-4">
                 <GoogleLoginButton redirect={redirect} onError={handleOAuthError} />
                 <p className="text-center text-xs font-bold text-[var(--brand-neutral)] uppercase tracking-widest flex items-center gap-4">
-                  <span className="flex-1 h-px bg-[#dde9d3]"></span>
+                  <span className="flex-1 h-px bg-[#c4d8b4]"></span>
                   {t("or") || "or"}
-                  <span className="flex-1 h-px bg-[#dde9d3]"></span>
+                  <span className="flex-1 h-px bg-[#c4d8b4]"></span>
                 </p>
               </div>
 
@@ -137,7 +137,7 @@ export default function Login() {
 
                 <button
                   type="submit"
-                  className="btn-primary w-full py-6 shadow-2xl relative overflow-hidden group"
+                  className="btn-primary w-full py-4 shadow-2xl relative overflow-hidden group"
                   disabled={isLoading}
                 >
                   <span className={`flex items-center justify-center gap-3 transition-all duration-300 ${isLoading ? 'opacity-0 scale-90' : 'opacity-100 scale-100'}`}>

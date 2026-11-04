@@ -74,16 +74,16 @@ export default function MyTrips() {
   if (!user) return null;
 
   return (
-    <div className="min-h-screen bg-white">
+    <div className="min-h-screen bg-[var(--page-bg)]">
       {/* ── HERO ── */}
-      <section className="bg-[#f2f7ec] border-b-2 border-[#dde9d3] py-8 px-4">
+      <section className="bg-[#ebf3e2] border-b-2 border-[#c4d8b4] py-8 px-4">
         <div className="max-w-5xl mx-auto flex flex-col md:flex-row justify-between items-center gap-8 text-center md:text-left">
           <div className="flex-1">
-            <div className="inline-flex items-center gap-2 bg-[#dde9d3] border border-[#dde9d3] text-[var(--brand-dark)] px-4 py-1.5 rounded-full text-xs font-bold mb-3 uppercase tracking-wide">
+            <div className="inline-flex items-center gap-2 bg-[#c4d8b4] border border-[#c4d8b4] text-[var(--brand-dark)] px-4 py-1.5 rounded-full text-xs font-bold mb-3 uppercase tracking-wide">
               <span className="w-2 h-2 rounded-full bg-[var(--brand-blue)]"></span>
               {t("page.myTrips.badge") || "Driver Panel"}
             </div>
-            <h1 className="text-2xl md:text-3xl font-bold text-[var(--brand-dark)] leading-tight mb-2">
+            <h1 className="text-2xl md:text-2xl font-bold text-[var(--brand-dark)] leading-tight mb-2">
               {t("page.myTrips.title") || "My Trips"}
             </h1>
             <p className="text-sm md:text-base text-[var(--brand-neutral)] max-w-2xl leading-relaxed font-normal">
@@ -92,7 +92,7 @@ export default function MyTrips() {
           </div>
           <Link 
             href={`${langPrefix(lang)}/create-trip`} 
-            className="btn-primary px-12 py-5 shadow-xl hover:scale-105 transform transition-all active:scale-95"
+            className="btn-primary px-12 py-3.5 shadow-xl hover:scale-105 transform transition-all active:scale-95"
           >
             <svg className="w-6 h-6 mr-3" fill="none" stroke="currentColor" viewBox="0 0 24 24">
               <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 4v16m8-8H4" />
@@ -103,27 +103,27 @@ export default function MyTrips() {
       </section>
 
       {/* ── CONTENIDO ── */}
-      <section className="py-20 px-4 min-h-[50vh]">
+      <section className="py-12 px-4 min-h-[50vh]">
         <div className="max-w-5xl mx-auto">
           {trips.length === 0 ? (
-            <div className="text-center py-24 bg-[#f2f7ec]/50 rounded-[3rem] border-2 border-dashed border-[#dde9d3]">
-              <div className="w-24 h-24 bg-white rounded-full flex items-center justify-center mx-auto mb-8 shadow-sm border-2 border-[#dde9d3] text-[var(--brand-blue)]">
+            <div className="text-center py-12 bg-[#ebf3e2]/50 rounded-[1.75rem] border-2 border-dashed border-[#c4d8b4]">
+              <div className="w-24 h-24 bg-white rounded-full flex items-center justify-center mx-auto mb-8 shadow-sm border-2 border-[#c4d8b4] text-[var(--brand-blue)]">
                 <svg className="w-12 h-12" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                   <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 19l9 2-9-18-9 18 9-2zm0 0v-8" />
                 </svg>
               </div>
-              <h2 className="text-3xl font-bold text-[var(--brand-dark)] mb-4">
+              <h2 className="text-2xl font-bold text-[var(--brand-dark)] mb-4">
                 {t("page.myTrips.noTrips") || "You haven't published any trips"}
               </h2>
-              <p className="text-[var(--brand-neutral)] text-lg mb-12 max-w-md mx-auto font-medium">
+              <p className="text-[var(--brand-neutral)] text-lg mb-8 max-w-md mx-auto font-medium">
                 {t("page.myTrips.createTripInfo") || "Publish your first trip now!"}
               </p>
-              <Link href={`${langPrefix(lang)}/create-trip`} className="btn-primary px-12 py-5 shadow-lg">
+              <Link href={`${langPrefix(lang)}/create-trip`} className="btn-primary px-12 py-3.5 shadow-lg">
                 {t("page.myTrips.createTrip") || "Publish trip"}
               </Link>
             </div>
           ) : (
-            <div className="space-y-10">
+            <div className="space-y-6">
               {trips.map((trip) => (
                 <div key={trip.id} className="result-card group">
                   {/* Decoración lateral */}
@@ -132,7 +132,7 @@ export default function MyTrips() {
                   <div className="flex flex-col xl:flex-row justify-between gap-10">
                     <div className="flex-1 space-y-8">
                       <div className="flex flex-wrap items-center gap-4">
-                        <div className="flex items-center gap-2 text-[var(--brand-blue)] font-bold bg-[#f2f7ec] px-5 py-2 rounded-full border border-[#dde9d3] shadow-sm">
+                        <div className="flex items-center gap-2 text-[var(--brand-blue)] font-bold bg-[#ebf3e2] px-5 py-2 rounded-full border border-[#c4d8b4] shadow-sm">
                           <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                             <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z" />
                           </svg>
@@ -146,14 +146,14 @@ export default function MyTrips() {
                       </div>
 
                       <div className="space-y-2">
-                         <h3 className="text-4xl font-bold text-[var(--brand-dark)] leading-tight tracking-tight">
+                         <h3 className="text-3xl font-bold text-[var(--brand-dark)] leading-tight tracking-tight">
                             {trip.departure_location} <span className="text-[var(--brand-neutral)] mx-2">→</span> {trip.arrival_location}
                         </h3>
                         <VehicleSummary vehicle={trip.vehicle} />
                       </div>
 
                       <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
-                        <div className="bg-[#f2f7ec]/30 border-2 border-[#dde9d3] rounded-[1.5rem] p-5 hover:bg-white hover:border-[#dde9d3] transition-all shadow-sm">
+                        <div className="bg-[#ebf3e2]/30 border-2 border-[#c4d8b4] rounded-[1.5rem] p-5 hover:bg-white hover:border-[#c4d8b4] transition-all shadow-sm">
                           <p className="text-xs font-bold text-[var(--brand-neutral)] uppercase tracking-widest mb-2 flex items-center gap-2">
                              <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z" /></svg>
                              {t("page.myTrips.availableSeats") || "Available seats"}
@@ -163,7 +163,7 @@ export default function MyTrips() {
                           </p>
                         </div>
 
-                        <div className="bg-[#f2f7ec]/30 border-2 border-[#dde9d3] rounded-[1.5rem] p-5 hover:bg-white hover:border-[#dde9d3] transition-all shadow-sm">
+                        <div className="bg-[#ebf3e2]/30 border-2 border-[#c4d8b4] rounded-[1.5rem] p-5 hover:bg-white hover:border-[#c4d8b4] transition-all shadow-sm">
                           <p className="text-xs font-bold text-[var(--brand-neutral)] uppercase tracking-widest mb-2 flex items-center gap-2">
                              <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 8c-1.657 0-3 .895-3 2s1.343 2 3 2 3 .895 3 2-1.343 2-3 2m0-8c1.11 0 2.08.402 2.599 1M12 8V7m0 1v8m0 0v1m0-1c-1.11 0-2.08-.402-2.599-1M21 12a9 9 0 11-18 0 9 9 0 0118 0z" /></svg>
                              {t("page.myTrips.price") || "Price"}
@@ -185,14 +185,14 @@ export default function MyTrips() {
                       </Link>
                       <Link
                         href={`${langPrefix(lang)}/my-trips/${trip.id}/edit`}
-                        className="btn-secondary w-full py-5 flex items-center justify-center"
+                        className="btn-secondary w-full py-3.5 flex items-center justify-center"
                       >
                         <svg className="w-5 h-5 mr-3" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15.232 5.232l3.536 3.536M9 13l6.232-6.232a2.5 2.5 0 113.536 3.536L12.536 16.5H9V13z" /></svg>
                         {t("page.editTrip.button", "Edit trip")}
                       </Link>
                       <button
                         onClick={() => setDeleteModal({ isOpen: true, trip })}
-                        className="bg-white border-2 border-red-100 text-red-600 px-8 py-5 rounded-2xl font-bold hover:bg-red-50 hover:border-red-200 transition-all shadow-sm text-lg active:scale-95 flex items-center justify-center"
+                        className="bg-white border-2 border-red-100 text-red-600 px-8 py-3.5 rounded-2xl font-bold hover:bg-red-50 hover:border-red-200 transition-all shadow-sm text-lg active:scale-95 flex items-center justify-center"
                       >
                         <svg className="w-5 h-5 mr-3" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                           <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16" />
@@ -211,7 +211,7 @@ export default function MyTrips() {
       {/* Modal de eliminación */}
       {deleteModal.isOpen && deleteModal.trip && (
         <div className="fixed inset-0 z-[1000] flex items-center justify-center p-4 bg-green-900/40 backdrop-blur-sm">
-          <div className="relative w-full max-w-lg bg-white rounded-[2.5rem] p-8 md:p-12 shadow-2xl border-2 border-red-50">
+          <div className="relative w-full max-w-lg bg-white rounded-[1.5rem] p-8 md:p-8 shadow-2xl border-2 border-red-50">
             <div className="text-center space-y-6">
               <div className="w-20 h-20 bg-red-50 rounded-full flex items-center justify-center mx-auto border-2 border-red-50">
                 <svg className="w-10 h-10 text-red-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -220,13 +220,13 @@ export default function MyTrips() {
               </div>
 
               <div className="space-y-2">
-                <h2 className="text-3xl font-bold text-red-700">
+                <h2 className="text-2xl font-bold text-red-700">
                   {deleteModal.trip?.is_recurring ? "Delete recurring trip?" : "Delete trip?"}
                 </h2>
                 <p className="text-gray-600 text-lg">
                   {t("page.myTrips.deleteConfirm") || "This action will delete the trip and all its bookings."}
                 </p>
-                <div className="text-[var(--brand-dark)] font-bold bg-[#f2f7ec] p-3 rounded-xl inline-block mt-4 border border-[#dde9d3]">
+                <div className="text-[var(--brand-dark)] font-bold bg-[#ebf3e2] p-3 rounded-xl inline-block mt-4 border border-[#c4d8b4]">
                   {deleteModal.trip?.departure_location} → {deleteModal.trip?.arrival_location}
                 </div>
               </div>

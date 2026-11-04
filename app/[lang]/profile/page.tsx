@@ -198,15 +198,15 @@ export default function ProfilePage({ params }: { params: Promise<{ lang: string
   }
 
   return (
-    <div className="min-h-screen bg-white">
+    <div className="min-h-screen bg-[var(--page-bg)]">
       {/* ── HERO ── */}
-      <section className="bg-[#f2f7ec] border-b-2 border-[#dde9d3] py-8 px-4">
+      <section className="bg-[#ebf3e2] border-b-2 border-[#c4d8b4] py-8 px-4">
         <div className="max-w-5xl mx-auto text-center md:text-left">
-          <div className="inline-flex items-center gap-2 bg-[#dde9d3] border border-[#dde9d3] text-[var(--brand-dark)] px-4 py-1.5 rounded-full text-xs font-bold mb-3 uppercase tracking-wide">
+          <div className="inline-flex items-center gap-2 bg-[#c4d8b4] border border-[#c4d8b4] text-[var(--brand-dark)] px-4 py-1.5 rounded-full text-xs font-bold mb-3 uppercase tracking-wide">
             <span className="w-2 h-2 rounded-full bg-[var(--brand-blue)]"></span>
             {t("profile.badge")}
           </div>
-          <h1 className="text-2xl md:text-3xl font-bold text-[var(--brand-dark)] leading-tight mb-2">
+          <h1 className="text-2xl md:text-2xl font-bold text-[var(--brand-dark)] leading-tight mb-2">
             {t("profile.title")}
           </h1>
           <p className="text-sm md:text-base text-[var(--brand-neutral)] max-w-2xl leading-relaxed font-normal">
@@ -216,12 +216,12 @@ export default function ProfilePage({ params }: { params: Promise<{ lang: string
       </section>
 
       {/* ── CONTENIDO ── */}
-      <section className="py-20 px-4">
-        <div className="max-w-5xl mx-auto space-y-12">
+      <section className="py-12 px-4">
+        <div className="max-w-5xl mx-auto space-y-8">
           
           {message && (
             <div className={`p-6 rounded-2xl border-2 flex items-center gap-4 animate-shake ${
-              message.type === "success" ? "bg-[#dde9d3] border-[#dde9d3] text-[var(--brand-dark)]" : "form-error"
+              message.type === "success" ? "bg-[#c4d8b4] border-[#c4d8b4] text-[var(--brand-dark)]" : "form-error"
             }`}>
               <div className={`w-10 h-10 rounded-full flex items-center justify-center ${message.type === 'success' ? 'bg-green-200' : 'bg-red-100'}`}>
                 {message.type === 'success' ? '✓' : '!'}
@@ -232,16 +232,16 @@ export default function ProfilePage({ params }: { params: Promise<{ lang: string
 
           {/* Sección: Datos Personales */}
           <div className="form-card">
-            <div className="flex flex-col md:flex-row justify-between items-start md:items-center gap-6 mb-12 border-b-2 border-green-50 pb-8">
+            <div className="flex flex-col md:flex-row justify-between items-start md:items-center gap-6 mb-8 border-b-2 border-green-50 pb-8">
               <div>
-                <h2 className="text-3xl font-bold text-[var(--brand-dark)] mb-2">{t("profile.personalInfoTitle")}</h2>
+                <h2 className="text-2xl font-bold text-[var(--brand-dark)] mb-2">{t("profile.personalInfoTitle")}</h2>
                 <p className="text-[var(--brand-blue)] font-medium">{t("profile.personalInfoDescription")}</p>
               </div>
             </div>
 
-            <form onSubmit={handleSubmit} className="space-y-10">
+            <form onSubmit={handleSubmit} className="space-y-6">
               {/* Avatar Upload */}
-              <div className="flex flex-col sm:flex-row items-center gap-10 bg-[#f2f7ec]/50 p-8 rounded-[2rem] border-2 border-[#dde9d3] shadow-inner">
+              <div className="flex flex-col sm:flex-row items-center gap-10 bg-[#ebf3e2]/50 p-8 rounded-[2rem] border-2 border-[#c4d8b4] shadow-inner">
                 <div className="relative group">
                   <div className="relative w-40 h-40 rounded-full overflow-hidden border-4 border-white shadow-xl bg-white">
                     {picturePreview ? (
@@ -251,7 +251,7 @@ export default function ProfilePage({ params }: { params: Promise<{ lang: string
                         className="w-full h-full object-cover transition-transform group-hover:scale-110"
                       />
                     ) : (
-                      <div className="w-full h-full bg-[var(--brand-blue)] flex items-center justify-center text-white text-5xl font-bold">
+                      <div className="w-full h-full bg-[var(--brand-blue)] flex items-center justify-center text-white text-4xl font-bold">
                         {formData.name.charAt(0).toUpperCase()}
                       </div>
                     )}
@@ -270,7 +270,7 @@ export default function ProfilePage({ params }: { params: Promise<{ lang: string
                 </div>
                 <div className="flex-1 text-center sm:text-left space-y-2">
                   <h4 className="text-2xl font-black text-[var(--brand-dark)]">{formData.name || t("profile.name")}</h4>
-                  <p className="bg-[#dde9d3] text-[var(--brand-neutral)] px-4 py-1.5 rounded-lg text-sm font-bold inline-block border border-[#dde9d3]">
+                  <p className="bg-[#c4d8b4] text-[var(--brand-neutral)] px-4 py-1.5 rounded-lg text-sm font-bold inline-block border border-[#c4d8b4]">
                     {formData.email}
                   </p>
                   <p className="text-[var(--brand-blue)] text-sm font-bold uppercase tracking-widest block pt-2">{t("profile.avatarInfo")}</p>
@@ -321,14 +321,14 @@ export default function ProfilePage({ params }: { params: Promise<{ lang: string
 
           {/* Sección: Seguridad */}
           <div className="form-card">
-            <div className="mb-12 border-b-2 border-green-50 pb-8">
-              <h2 className="text-3xl font-bold text-[var(--brand-dark)] mb-2">{t("profile.securityTitle")}</h2>
+            <div className="mb-8 border-b-2 border-green-50 pb-8">
+              <h2 className="text-2xl font-bold text-[var(--brand-dark)] mb-2">{t("profile.securityTitle")}</h2>
               <p className="text-[var(--brand-blue)] font-medium">{t("profile.securityDescription")}</p>
             </div>
 
             {passwordMessage && (
               <div className={`mb-8 p-6 rounded-2xl border-2 animate-shake ${
-                passwordMessage.type === "success" ? "bg-[#dde9d3] border-[#dde9d3] text-[var(--brand-dark)]" : "form-error"
+                passwordMessage.type === "success" ? "bg-[#c4d8b4] border-[#c4d8b4] text-[var(--brand-dark)]" : "form-error"
               }`}>
                 <span className="font-bold">{passwordMessage.text}</span>
               </div>
@@ -385,20 +385,20 @@ export default function ProfilePage({ params }: { params: Promise<{ lang: string
           </div>
 
           {/* Sección: Zona de Peligro */}
-          <div className="bg-red-50 border-2 border-red-100 rounded-[3rem] p-10 md:p-16 overflow-hidden relative shadow-sm">
+          <div className="bg-red-50 border-2 border-red-100 rounded-[1.75rem] p-6 md:p-16 overflow-hidden relative shadow-sm">
              {/* Decoración */}
             <div className="absolute top-0 right-0 w-32 h-32 bg-red-100/50 rounded-full -mr-16 -mt-16 blur-3xl"></div>
             
             <div className="relative z-10 flex flex-col md:flex-row items-center justify-between gap-10">
               <div className="text-center md:text-left">
-                <h2 className="text-3xl font-black text-red-700 mb-4">{t("profile.dangerZone") || "Danger Zone"}</h2>
+                <h2 className="text-2xl font-black text-red-700 mb-4">{t("profile.dangerZone") || "Danger Zone"}</h2>
                 <p className="text-red-600/80 text-lg max-w-xl font-medium leading-relaxed">
                   {t("profile.deleteAccountWarning") || "Deleting your account is a permanent action and cannot be undone."}
                 </p>
               </div>
               <button
                 onClick={() => setShowDeleteModal(true)}
-                className="bg-white border-2 border-red-200 text-red-600 px-10 py-5 rounded-2xl font-black hover:bg-red-600 hover:text-white hover:border-red-600 transition-all shadow-md active:scale-95 whitespace-nowrap"
+                className="bg-white border-2 border-red-200 text-red-600 px-7 py-3.5 rounded-2xl font-black hover:bg-red-600 hover:text-white hover:border-red-600 transition-all shadow-md active:scale-95 whitespace-nowrap"
               >
                 {t("profile.deleteAccountButton") || "Delete Account"}
               </button>
@@ -410,7 +410,7 @@ export default function ProfilePage({ params }: { params: Promise<{ lang: string
       {/* Delete Account Modal */}
       {showDeleteModal && (
         <div className="fixed inset-0 z-[200] flex items-center justify-center p-4 bg-green-900/60 backdrop-blur-md">
-          <div className="bg-white rounded-[3rem] p-10 md:p-16 w-full max-w-xl shadow-2xl text-center border-2 border-red-50 relative overflow-hidden">
+          <div className="bg-white rounded-[1.75rem] p-6 md:p-16 w-full max-w-xl shadow-2xl text-center border-2 border-red-50 relative overflow-hidden">
             <div className="absolute top-0 left-0 w-full h-2 bg-red-600"></div>
             
             <div className="w-24 h-24 bg-red-50 rounded-full flex items-center justify-center mx-auto mb-8 border-2 border-red-100">
@@ -418,21 +418,21 @@ export default function ProfilePage({ params }: { params: Promise<{ lang: string
                 <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16" />
               </svg>
             </div>
-            <h3 className="text-4xl font-bold text-red-700 mb-6">{t("profile.deleteAccountModalTitle") || "Are you sure?"}</h3>
-            <p className="text-gray-500 mb-12 text-xl leading-relaxed">
+            <h3 className="text-3xl font-bold text-red-700 mb-6">{t("profile.deleteAccountModalTitle") || "Are you sure?"}</h3>
+            <p className="text-gray-500 mb-8 text-lg leading-relaxed">
               {t("profile.deleteAccountModalMessage") || "This action is irreversible. All your data will be permanently deleted."}
             </p>
             <div className="flex flex-col sm:flex-row gap-4">
               <button
                 onClick={() => setShowDeleteModal(false)}
-                className="flex-1 px-8 py-5 rounded-2xl bg-gray-100 text-gray-700 font-bold hover:bg-gray-200 transition-all text-lg"
+                className="flex-1 px-8 py-3.5 rounded-2xl bg-gray-100 text-gray-700 font-bold hover:bg-gray-200 transition-all text-lg"
               >
                 {t("profile.deleteAccountCancel") || "Cancel"}
               </button>
               <button
                 onClick={handleDeleteAccount}
                 disabled={deleting}
-                className="flex-1 px-8 py-5 rounded-2xl bg-red-600 text-white font-bold hover:bg-red-700 transition-all shadow-lg text-lg active:scale-95"
+                className="flex-1 px-8 py-3.5 rounded-2xl bg-red-600 text-white font-bold hover:bg-red-700 transition-all shadow-lg text-lg active:scale-95"
               >
                 {deleting ? t("profile.deletingAccount") || "Deleting..." : t("profile.deleteAccountConfirm") || "Yes, delete"}
               </button>
