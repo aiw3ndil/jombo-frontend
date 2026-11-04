@@ -1,4 +1,5 @@
 "use client";
+import { VehicleSummary } from "@/app/components/VehicleSelector";
 import { useEffect, useState, useMemo } from "react";
 import { langPrefix } from "@/app/lib/i18n/config";
 import { useRouter, useParams } from "next/navigation";
@@ -140,7 +141,7 @@ export default function MyTrips() {
                           <span className="text-[var(--brand-dark)]">{new Date(trip.departure_time).toLocaleTimeString(lang, { hour: '2-digit', minute: '2-digit' })}h</span>
                         </div>
                         {trip.is_recurring && (
-                          <span className="bg-[var(--brand-blue)] text-white px-5 py-2 rounded-full text-xs font-black uppercase tracking-widest shadow-md">RECURRENTE</span>
+                          <span className="bg-[var(--brand-blue)] text-white px-5 py-2 rounded-full text-xs font-black uppercase tracking-widest shadow-md">{t("page.myTrips.recurringBadge", "Recurring")}</span>
                         )}
                       </div>
 
@@ -148,6 +149,7 @@ export default function MyTrips() {
                          <h3 className="text-4xl font-bold text-[var(--brand-dark)] leading-tight tracking-tight">
                             {trip.departure_location} <span className="text-[var(--brand-neutral)] mx-2">→</span> {trip.arrival_location}
                         </h3>
+                        <VehicleSummary vehicle={trip.vehicle} />
                       </div>
 
                       <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
@@ -157,7 +159,7 @@ export default function MyTrips() {
                              {t("page.myTrips.availableSeats") || "Available seats"}
                           </p>
                           <p className={`text-2xl font-black ${trip.available_seats === 0 ? "text-red-500" : "text-[var(--brand-dark)]"}`}>
-                            {trip.available_seats} <span className="text-base font-bold text-[var(--brand-neutral)]/60 lowercase">libres</span>
+                            {trip.available_seats} <span className="text-base font-bold text-[var(--brand-neutral)]/60 lowercase">{t("page.myTrips.free", "free")}</span>
                           </p>
                         </div>
 
@@ -180,6 +182,13 @@ export default function MyTrips() {
                           <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M11 5H6a2 2 0 00-2 2v11a2 2 0 002 2h11a2 2 0 002-2v-5m-1.414-9.414a2 2 0 112.828 2.828L11.828 15H9v-2.828l8.586-8.586z" />
                         </svg>
                         {t("page.myTrips.manageTrip") || "Manage trip"}
+                      </Link>
+                      <Link
+                        href={`${langPrefix(lang)}/my-trips/${trip.id}/edit`}
+                        className="btn-secondary w-full py-5 flex items-center justify-center"
+                      >
+                        <svg className="w-5 h-5 mr-3" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15.232 5.232l3.536 3.536M9 13l6.232-6.232a2.5 2.5 0 113.536 3.536L12.536 16.5H9V13z" /></svg>
+                        {t("page.editTrip.button", "Edit trip")}
                       </Link>
                       <button
                         onClick={() => setDeleteModal({ isOpen: true, trip })}

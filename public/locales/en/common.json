@@ -83,7 +83,11 @@
         "close": "Close"
       },
       "price": "Price",
-      "externalOptions": "Other transport options"
+      "externalOptions": "Other transport options",
+      "noResultsHint": "Try changing the cities or search again later.",
+      "lastSeats": "Last seats",
+      "available": "available",
+      "viewMyBookings": "View my bookings"
     },
     "createTrip": {
       "title": "Publish a trip",
@@ -112,7 +116,8 @@
       "subtitle": "Share your route, save on costs and help build a more sustainable community.",
       "routeStep": "Route details",
       "timeStep": "Date, time and price",
-      "additionalStep": "Advanced settings"
+      "additionalStep": "Advanced settings",
+      "recurrenceUntilRequired": "Please specify until when the trip repeats"
     },
     "messages": {
       "title": "My Messages",
@@ -131,7 +136,10 @@
       "subtitle": "Conversations with other travellers",
       "loadError": "Messages could not be loaded",
       "loadErrorHint": "Your session may have expired. Log in again and try again.",
-      "goToLogin": "Log in"
+      "goToLogin": "Log in",
+      "chatHint": "Chat with the driver after requesting a booking.",
+      "activeChannel": "Active chat",
+      "lastMessageFrom": "Last message from"
     },
     "conversation": {
       "loading": "Loading...",
@@ -148,7 +156,8 @@
       "noMessages": "No messages yet. Send the first one!",
       "messagePlaceholder": "Type a message...",
       "send": "Send",
-      "sending": "Sending..."
+      "sending": "Sending...",
+      "live": "Live chat"
     },
     "myTrips": {
       "badge": "Driver Panel",
@@ -192,7 +201,9 @@
       "deleteOnlyThis": "Delete only this trip",
       "deleteAllRecurring": "Delete entire series (future trips)",
       "deleteSuccess": "Trip deleted successfully",
-      "deleteError": "Error deleting trip"
+      "deleteError": "Error deleting trip",
+      "recurringBadge": "Recurring",
+      "free": "free"
     },
     "myBookings": {
       "badge": "My Trips",
@@ -239,7 +250,23 @@
         "submitting": "Submitting...",
         "success": "Review created successfully!",
         "error": "Error creating review"
-      }
+      },
+      "processing": "Processing..."
+    },
+    "review": {
+      "person": "Driver",
+      "trip": "Trip"
+    },
+    "editTrip": {
+      "button": "Edit trip",
+      "badge": "Edit trip",
+      "title": "Edit your trip",
+      "subtitle": "Update the route, time, price or car. Passengers will see the changes.",
+      "submit": "Save changes",
+      "success": "Trip updated successfully",
+      "error": "Error saving the trip",
+      "notFound": "Trip not found",
+      "loadError": "Error loading trip data"
     }
   },
   "menu": {
@@ -351,7 +378,8 @@
       "content": "Jombo reserves the right to modify these terms at any time. Modifications will take effect immediately after publication on the platform."
     },
     "lastUpdate": "Last updated",
-    "updateDate": "December 3, 2025"
+    "updateDate": "December 3, 2025",
+    "metaDescription": "Jombo terms and conditions of use. Read about our policies and limitations of liability."
   },
   "dataDeletion": {
     "badge": "Personal Privacy",
@@ -388,7 +416,8 @@
       "content": "If you cannot access your account, you can request data deletion by sending an email to:",
       "email": "tuki@jombo.fi",
       "note": "Please include your registered email address."
-    }
+    },
+    "metaDescription": "How to delete your data on Jombo: learn how to delete your account and which data is removed."
   },
   "trips": {
     "title": "Available Trips",
@@ -425,5 +454,65 @@
   "common": {
     "seats": "seats",
     "cancel": "Cancel"
+  },
+  "vehicle": {
+    "title": "Vehicle",
+    "step": "Vehicle",
+    "select": "Choose the car for this trip",
+    "add": "Add vehicle",
+    "cancelAdd": "Use an existing vehicle",
+    "newTitle": "New vehicle",
+    "none": "You don't have any vehicles yet. Add the car you will drive.",
+    "brand": "Brand",
+    "brandPlaceholder": "e.g. Toyota",
+    "model": "Model",
+    "modelPlaceholder": "e.g. Corolla",
+    "type": "Car type",
+    "color": "Colour",
+    "doors": "Doors",
+    "seats": "Seats (incl. driver)",
+    "year": "Year (optional)",
+    "fuel": "Fuel (optional)",
+    "fuelNone": "Not specified",
+    "required": "Please choose or add a vehicle",
+    "incomplete": "Please complete the vehicle details",
+    "seatsLimit": "This car has room for {{count}} passengers",
+    "loading": "Loading vehicles...",
+    "doorsShort": "doors",
+    "seatsShort": "seats",
+    "types": {
+      "sedan": "Sedan",
+      "hatchback": "Hatchback",
+      "estate": "Estate",
+      "suv": "SUV",
+      "minivan": "Minivan",
+      "van": "Van",
+      "coupe": "Coupé",
+      "convertible": "Convertible",
+      "pickup": "Pickup"
+    },
+    "fuels": {
+      "petrol": "Petrol",
+      "diesel": "Diesel",
+      "hybrid": "Hybrid",
+      "plugin_hybrid": "Plug-in hybrid",
+      "electric": "Electric",
+      "gas": "Gas",
+      "other": "Other"
+    },
+    "colors": {
+      "white": "White",
+      "black": "Black",
+      "grey": "Grey",
+      "silver": "Silver",
+      "blue": "Blue",
+      "red": "Red",
+      "green": "Green",
+      "yellow": "Yellow",
+      "orange": "Orange",
+      "brown": "Brown",
+      "beige": "Beige",
+      "other": "Other"
+    }
   }
 }

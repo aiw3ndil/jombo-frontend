@@ -78,7 +78,7 @@ export default function ForgotPassword() {
                   </div>
                   <div className="space-y-2">
                     <p className="text-[var(--brand-dark)] font-black text-2xl">{t("instructionsSent") || "Instructions have been sent to your email."}</p>
-                    <p className="text-[var(--brand-neutral)] font-medium">Revisa tu bandeja de entrada para seguir los pasos.</p>
+                    <p className="text-[var(--brand-neutral)] font-medium">{t("checkInbox", "Check your inbox to follow the steps.")}</p>
                   </div>
                 </div>
                 <Link

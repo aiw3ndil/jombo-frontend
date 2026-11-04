@@ -1,5 +1,6 @@
 "use client";
 
+import { VehicleSummary } from "@/app/components/VehicleSelector";
 import { useEffect, useState, useMemo, use } from "react";
 import { langPrefix } from "@/app/lib/i18n/config";
 import { useRouter } from "next/navigation";
@@ -155,11 +156,18 @@ export default function TripDetails({ params }: { params: Promise<{ lang: string
                         <svg className="w-5 h-5 transition-transform group-hover:-translate-x-1" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={3} d="M15 19l-7-7 7-7" /></svg>
                         {t("page.myTrips.back") || "Back"}
                     </button>
-                    <div className="text-right">
+                    <Link
+                        href={`${langPrefix(lang)}/my-trips/${tripId}/edit`}
+                        className="btn-primary px-6 py-3 shadow-md inline-flex items-center gap-2 sm:order-last"
+                    >
+                        <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15.232 5.232l3.536 3.536M9 13l6.232-6.232a2.5 2.5 0 113.536 3.536L12.536 16.5H9V13z" /></svg>
+                        {t("page.editTrip.button", "Edit trip")}
+                    </Link>
+                    <div className="text-right sm:ml-auto">
                         <h1 className="text-2xl md:text-3xl font-bold text-[var(--brand-dark)] mb-1">
                             {t("page.myTrips.tripDetails") || "Trip Details"}
                         </h1>
-                        <p className="text-[var(--brand-neutral)] text-sm md:text-base uppercase tracking-wider font-medium">Gestión de pasajeros</p>
+                        <p className="text-[var(--brand-neutral)] text-sm md:text-base uppercase tracking-wider font-medium">{t("passengerManagement", "Passenger management")}</p>
                     </div>
                 </div>
 
@@ -168,13 +176,14 @@ export default function TripDetails({ params }: { params: Promise<{ lang: string
                     <div className="relative grid grid-cols-1 md:grid-cols-2 gap-12">
                         <div className="space-y-6">
                             <div className="inline-flex items-center gap-2 text-[var(--brand-neutral)] font-bold text-xs uppercase tracking-widest bg-white px-4 py-1.5 rounded-full border-2 border-[#e2e8f0]">
-                                RUTA SELECCIONADA
+                                {t("selectedRoute", "Selected route")}
                             </div>
                             <h2 className="text-3xl md:text-4xl font-bold text-[var(--brand-dark)] leading-tight">
                                 {trip.departure_location}
                                 <span className="mx-4 text-[var(--brand-neutral)]">→</span>
                                 {trip.arrival_location}
                             </h2>
+                            <VehicleSummary vehicle={trip.vehicle} />
                             <div className="flex items-center gap-4 p-5 bg-white rounded-2xl border-2 border-[#e2e8f0] shadow-sm">
                                 <svg className="w-6 h-6 text-[var(--brand-blue)]" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z" /></svg>
                                 <p className="text-[var(--brand-dark)] font-bold text-lg">
@@ -186,9 +195,9 @@ export default function TripDetails({ params }: { params: Promise<{ lang: string
                         </div>
                         <div className="flex flex-col md:items-end justify-center gap-8">
                             <div className="text-center md:text-right">
-                                <p className="text-[var(--brand-blue)] font-bold uppercase tracking-[0.2em] text-xs mb-1">PROGRAMA DE COSTOS</p>
+                                <p className="text-[var(--brand-blue)] font-bold uppercase tracking-[0.2em] text-xs mb-1">{t("costPerSeat", "Price per seat")}</p>
                                 <div className="text-5xl font-bold text-[var(--brand-dark)] italic">
-                                    €{Number(trip.price).toFixed(2)} <span className="text-sm font-normal text-[var(--brand-blue)] not-italic lowercase">/ plaza</span>
+                                    €{Number(trip.price).toFixed(2)} <span className="text-sm font-normal text-[var(--brand-blue)] not-italic lowercase">/ {t("seat", "seat")}</span>
                                 </div>
                             </div>
                             <div className="flex gap-4">
@@ -197,7 +206,7 @@ export default function TripDetails({ params }: { params: Promise<{ lang: string
                                     <p className="text-2xl font-bold text-[var(--brand-blue)]">{trip.available_seats}</p>
                                 </div>
                                 <div className="bg-white rounded-2xl px-8 py-5 border-2 border-[#e2e8f0] text-center shadow-sm">
-                                    <p className="text-xs font-bold text-[var(--brand-neutral)] uppercase tracking-widest mb-1">PASAJEROS CONFIRMADOS</p>
+                                    <p className="text-xs font-bold text-[var(--brand-neutral)] uppercase tracking-widest mb-1">{t("confirmedPassengers", "Confirmed passengers")}</p>
                                     <p className="text-2xl font-bold text-[var(--brand-blue)]">{tripBookings.filter(b => b.status === "confirmed").length}</p>
                                 </div>
                             </div>
@@ -243,10 +252,10 @@ export default function TripDetails({ params }: { params: Promise<{ lang: string
                                                 </div>
                                                 <div>
                                                     <div className="font-bold text-[var(--brand-dark)] text-2xl leading-tight">
-                                                        {booking.user?.name || booking.user?.email || "Usuario Invitado"}
+                                                        {booking.user?.name || booking.user?.email || t("guestUser", "Guest user")}
                                                     </div>
                                                     <div className="text-xs font-bold text-[var(--brand-neutral)] uppercase tracking-widest mt-1">
-                                                        PASAJERO ID: <span className="text-[var(--brand-blue)] font-mono">#{String(booking.user?.id).padStart(4, '0')}</span>
+                                                        {t("passengerId", "Passenger ID")}: <span className="text-[var(--brand-blue)] font-mono">#{String(booking.user?.id).padStart(4, '0')}</span>
                                                     </div>
                                                 </div>
                                             </div>
@@ -281,7 +290,7 @@ export default function TripDetails({ params }: { params: Promise<{ lang: string
                                         {booking.status === "confirmed" && (
                                             <div className="flex items-center gap-2 text-[var(--brand-blue)] font-bold bg-[#f0f4f8] px-6 py-3 rounded-xl border border-[#e2e8f0]">
                                                 <svg className="w-5 h-5" fill="currentColor" viewBox="0 0 20 20"><path fillRule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clipRule="evenodd" /></svg>
-                                                PASAJERO A BORDO
+                                                {t("passengerOnBoard", "Passenger on board")}
                                             </div>
                                         )}
                                     </div>

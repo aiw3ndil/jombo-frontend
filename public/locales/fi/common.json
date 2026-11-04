@@ -83,7 +83,11 @@
         "close": "Sulje"
       },
       "price": "Hinta",
-      "externalOptions": "Muut kulkuvaihtoehdot"
+      "externalOptions": "Muut kulkuvaihtoehdot",
+      "noResultsHint": "Kokeile vaihtaa kaupunkeja tai hae myöhemmin uudelleen.",
+      "lastSeats": "Viimeiset paikat",
+      "available": "vapaana",
+      "viewMyBookings": "Näytä varaukseni"
     },
     "createTrip": {
       "title": "Julkaise matka",
@@ -112,7 +116,8 @@
       "subtitle": "Jaa reittisi, säästä kuluissa ja auta rakentamaan kestävämpää yhteisöä.",
       "routeStep": "Reitin tiedot",
       "timeStep": "Päivämäärä, aika ja hinta",
-      "additionalStep": "Lisäasetukset"
+      "additionalStep": "Lisäasetukset",
+      "recurrenceUntilRequired": "Kerro, mihin asti matka toistuu"
     },
     "messages": {
       "title": "Viestini",
@@ -131,7 +136,10 @@
       "subtitle": "Keskustelut muiden matkustajien kanssa",
       "loadError": "Viestejä ei voitu ladata",
       "loadErrorHint": "Istuntosi on ehkä vanhentunut. Kirjaudu uudelleen sisään ja yritä uudestaan.",
-      "goToLogin": "Kirjaudu sisään"
+      "goToLogin": "Kirjaudu sisään",
+      "chatHint": "Keskustele kuljettajan kanssa varauspyynnön jälkeen.",
+      "activeChannel": "Aktiivinen keskustelu",
+      "lastMessageFrom": "Viimeisin viesti käyttäjältä"
     },
     "conversation": {
       "loading": "Ladataan...",
@@ -148,7 +156,8 @@
       "noMessages": "Ei vielä viestejä. Lähetä ensimmäinen!",
       "messagePlaceholder": "Kirjoita viesti...",
       "send": "Lähetä",
-      "sending": "Lähetetään..."
+      "sending": "Lähetetään...",
+      "live": "Live-keskustelu"
     },
     "myTrips": {
       "title": "Matkani",
@@ -192,7 +201,9 @@
       "deleteSuccess": "Matka poistettu onnistuneesti",
       "deleteError": "Virhe matkan poistamisessa",
       "badge": "Kuljettajan Paneeli",
-      "deleteConfirm": "Tämä toiminto poistaa matkan ja kaikki sen varaukset."
+      "deleteConfirm": "Tämä toiminto poistaa matkan ja kaikki sen varaukset.",
+      "recurringBadge": "Toistuva",
+      "free": "vapaana"
     },
     "myBookings": {
       "badge": "Matkat",
@@ -239,7 +250,23 @@
         "submitting": "Lähetetään...",
         "success": "Arvostelu luotu onnistuneesti!",
         "error": "Virhe arvostelun luomisessa"
-      }
+      },
+      "processing": "Käsitellään..."
+    },
+    "review": {
+      "person": "Kuljettaja",
+      "trip": "Matka"
+    },
+    "editTrip": {
+      "button": "Muokkaa matkaa",
+      "badge": "Muokkaa matkaa",
+      "title": "Muokkaa matkaasi",
+      "subtitle": "Päivitä reitti, aika, hinta tai auto. Matkustajat näkevät muutokset.",
+      "submit": "Tallenna muutokset",
+      "success": "Matka päivitetty",
+      "error": "Virhe matkaa tallennettaessa",
+      "notFound": "Matkaa ei löytynyt",
+      "loadError": "Virhe matkan tietoja ladattaessa"
     }
   },
   "menu": {
@@ -376,7 +403,8 @@
     },
     "lastUpdate": "Viimeksi päivitetty",
     "updateDate": "3. joulukuuta 2025",
-    "documentVigente": "Voimassa oleva asiakirja"
+    "documentVigente": "Voimassa oleva asiakirja",
+    "metaDescription": "Jombon käyttöehdot. Lue käytännöistämme ja vastuunrajoituksista."
   },
   "dataDeletion": {
     "title": "Tietojen Poistamisohjeet",
@@ -413,7 +441,8 @@
       "content": "Jos haluat meidän tekevän sen puolestasi, ota yhteyttä:",
       "email": "tuki@jombo.fi",
       "note": "Huom: Käsittelemme pyyntösi viimeistään 48 arkityötunnin kuluessa."
-    }
+    },
+    "metaDescription": "Ohjeet tietojesi poistamiseen Jombosta: miten poistat tilisi ja mitkä tiedot poistetaan."
   },
   "cookies": {
     "title": "Evästeilmoitus",
@@ -425,5 +454,65 @@
   "common": {
     "seats": "paikkaa",
     "cancel": "Peruuta"
+  },
+  "vehicle": {
+    "title": "Ajoneuvo",
+    "step": "Ajoneuvo",
+    "select": "Valitse auto tälle matkalle",
+    "add": "Lisää ajoneuvo",
+    "cancelAdd": "Käytä olemassa olevaa ajoneuvoa",
+    "newTitle": "Uusi ajoneuvo",
+    "none": "Sinulla ei ole vielä ajoneuvoja. Lisää auto, jolla ajat.",
+    "brand": "Merkki",
+    "brandPlaceholder": "esim. Toyota",
+    "model": "Malli",
+    "modelPlaceholder": "esim. Corolla",
+    "type": "Autotyyppi",
+    "color": "Väri",
+    "doors": "Ovet",
+    "seats": "Istumapaikat (kuljettaja mukaan lukien)",
+    "year": "Vuosimalli (valinnainen)",
+    "fuel": "Käyttövoima (valinnainen)",
+    "fuelNone": "Ei määritelty",
+    "required": "Valitse tai lisää ajoneuvo",
+    "incomplete": "Täytä ajoneuvon tiedot",
+    "seatsLimit": "Tähän autoon mahtuu {{count}} matkustajaa",
+    "loading": "Ladataan ajoneuvoja...",
+    "doorsShort": "ovea",
+    "seatsShort": "paikkaa",
+    "types": {
+      "sedan": "Sedan",
+      "hatchback": "Viistoperä",
+      "estate": "Farmari",
+      "suv": "Maastoauto (SUV)",
+      "minivan": "Tila-auto",
+      "van": "Pakettiauto",
+      "coupe": "Coupé",
+      "convertible": "Avoauto",
+      "pickup": "Lava-auto"
+    },
+    "fuels": {
+      "petrol": "Bensiini",
+      "diesel": "Diesel",
+      "hybrid": "Hybridi",
+      "plugin_hybrid": "Lataushybridi",
+      "electric": "Sähkö",
+      "gas": "Kaasu",
+      "other": "Muu"
+    },
+    "colors": {
+      "white": "Valkoinen",
+      "black": "Musta",
+      "grey": "Harmaa",
+      "silver": "Hopea",
+      "blue": "Sininen",
+      "red": "Punainen",
+      "green": "Vihreä",
+      "yellow": "Keltainen",
+      "orange": "Oranssi",
+      "brown": "Ruskea",
+      "beige": "Beige",
+      "other": "Muu"
+    }
   }
 }

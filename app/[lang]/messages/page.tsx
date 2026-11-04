@@ -131,7 +131,7 @@ export default function MessagesPage() {
               {t("page.messages.noConversations") || "You have no conversations"}
             </p>
             <p className="text-[var(--brand-blue)] font-medium">
-              Chatea con el conductor después de solicitar una reserva.
+              {t("page.messages.chatHint", "Chat with the driver after requesting a booking.")}
             </p>
           </div>
         ) : (
@@ -142,7 +142,7 @@ export default function MessagesPage() {
                   <Link href={`${langPrefix(lang)}/messages/${conversation.id}`} className="flex-1 space-y-4">
                     <div className="flex flex-wrap items-center gap-4">
                       <span className="bg-[#e2e8f0] text-[var(--brand-neutral)] px-4 py-1.5 rounded-full text-xs font-bold uppercase tracking-widest border border-[#e2e8f0]">
-                        CANAL ACTIVO
+                        {t("page.messages.activeChannel", "Active chat")}
                       </span>
                       <span className="text-[var(--brand-blue)] font-bold text-sm uppercase tracking-wider">
                         {new Date(conversation.trip.departure_time).toLocaleDateString(lang, { day: 'numeric', month: 'short' })}
@@ -163,7 +163,7 @@ export default function MessagesPage() {
                         <div className="flex items-center gap-2 mb-2">
                           <div className="w-2 h-2 rounded-full bg-green-500"></div>
                           <p className="text-xs font-bold text-[var(--brand-neutral)] uppercase tracking-widest">
-                            ÚLTIMO MENSAJE DE <span className="text-[var(--brand-dark)]">{conversation.last_message.user.name}</span>
+                            {t("page.messages.lastMessageFrom", "Last message from")} <span className="text-[var(--brand-dark)]">{conversation.last_message.user.name}</span>
                           </p>
                         </div>
                         <p className="text-white font-medium italic opacity-70 leading-relaxed">

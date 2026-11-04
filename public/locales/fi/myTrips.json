@@ -30,5 +30,13 @@
   "statusCancelled": "Peruttu",
   "rejectBookingModalTitle": "Hylätäänkö varaus?",
   "cancel": "Takaisin",
-  "rejectBookingModalMessage": "Haluatko varmasti hylätä käyttäjän {{userName}} varauksen ({{seats}} paikkaa)?"
+  "rejectBookingModalMessage": "Haluatko varmasti hylätä käyttäjän {{userName}} varauksen ({{seats}} paikkaa)?",
+  "passengerManagement": "Matkustajien hallinta",
+  "selectedRoute": "Valittu reitti",
+  "costPerSeat": "Hinta per paikka",
+  "confirmedPassengers": "Vahvistetut matkustajat",
+  "guestUser": "Vieraskäyttäjä",
+  "passengerOnBoard": "Matkustaja kyydissä",
+  "rejectBookingModalHint": "Tämä vapauttaa paikat muille matkustajille.",
+  "passengerId": "Matkustajan tunnus"
 }

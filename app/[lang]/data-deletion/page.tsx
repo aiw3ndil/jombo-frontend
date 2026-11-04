@@ -17,7 +17,7 @@ export default function DataDeletionPage() {
         const metaDescription = document.querySelector('meta[name="description"]');
         if (metaDescription) {
             metaDescription.setAttribute('content',
-                'Instrucciones sobre cómo eliminar tus datos en Jombo. Aprende cómo borrar tu cuenta y qué datos se eliminan.'
+                t("dataDeletion.metaDescription", "How to delete your data on Jombo: learn how to delete your account and which data is removed.")
             );
         }
     }, [t, lang]);

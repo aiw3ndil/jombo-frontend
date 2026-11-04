@@ -17,7 +17,7 @@ export default function TermsPage() {
     const metaDescription = document.querySelector('meta[name="description"]');
     if (metaDescription) {
       metaDescription.setAttribute('content',
-        'Términos y condiciones de uso de Jombo. Lee sobre nuestras políticas y limitaciones de responsabilidad.'
+        t("terms.metaDescription", "Jombo terms and conditions of use. Read about our policies and limitations of liability.")
       );
     }
   }, [t, lang]);

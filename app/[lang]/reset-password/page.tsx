@@ -97,7 +97,7 @@ export default function ResetPassword() {
                   </div>
                   <div className="space-y-2">
                     <p className="text-[var(--brand-dark)] font-black text-2xl">{t("passwordResetSuccess") || "Your password has been reset successfully."}</p>
-                    <p className="text-[var(--brand-neutral)] font-medium">Te estamos redirigiendo para que entres a tu cuenta...</p>
+                    <p className="text-[var(--brand-neutral)] font-medium">{t("redirectingToLogin", "Redirecting you so you can log in to your account...")}</p>
                   </div>
                 </div>
               </div>

@@ -30,5 +30,13 @@
   "statusCancelled": "Cancelled",
   "rejectBookingModalTitle": "Reject booking?",
   "cancel": "Back",
-  "rejectBookingModalMessage": "Are you sure you want to reject {{userName}}'s booking for {{seats}} seat(s)?"
+  "rejectBookingModalMessage": "Are you sure you want to reject {{userName}}'s booking for {{seats}} seat(s)?",
+  "passengerManagement": "Passenger management",
+  "selectedRoute": "Selected route",
+  "costPerSeat": "Price per seat",
+  "confirmedPassengers": "Confirmed passengers",
+  "guestUser": "Guest user",
+  "passengerOnBoard": "Passenger on board",
+  "rejectBookingModalHint": "This will free up the seats for other travellers.",
+  "passengerId": "Passenger ID"
 }

@@ -24,5 +24,7 @@
   "securityBadge": "Account security",
   "loginBadge": "Welcome back",
   "loginTitle": "Log in",
-  "loginSubtitle": "Access your account and keep saving with Jombo."
+  "loginSubtitle": "Access your account and keep saving with Jombo.",
+  "checkInbox": "Check your inbox to follow the steps.",
+  "redirectingToLogin": "Redirecting you so you can log in to your account..."
 }

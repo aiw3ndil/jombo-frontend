@@ -44,7 +44,7 @@ const RejectBookingModal: React.FC<RejectBookingModalProps> = ({
               `Are you sure you want to reject ${bookingDetails.userName}'s booking for ${bookingDetails.seats} seat(s)?`}
           </p>
           <p className="text-red-600/70 text-sm mt-4 font-medium italic">
-            Esta acción liberará las plazas para otros viajeros.
+            {t("rejectBookingModalHint", "This will free up the seats for other travellers.")}
           </p>
         </div>
 

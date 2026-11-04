@@ -1,3 +1,5 @@
+import type { Vehicle, VehicleInput } from "./vehicles";
+
 const API_BASE = process.env.NEXT_PUBLIC_API_BASE_URL || "";
 
 function getAuthHeaders(): HeadersInit {
@@ -43,6 +45,8 @@ export interface Trip {
     email: string;
     picture_url?: string;
   };
+  description?: string | null;
+  vehicle?: Vehicle | null;
   is_recurring?: boolean;
   parent_id?: number | null;
   created_at: string;
@@ -168,6 +172,10 @@ export interface CreateTripData {
   available_seats: number;
   price: number;
   description?: string;
+  /** Vehículo existente del conductor */
+  vehicle_id?: number;
+  /** Vehículo nuevo que se crea junto con el viaje */
+  vehicle?: VehicleInput;
   is_recurring?: boolean;
   recurrence_pattern?: string;
   recurrence_until?: string;
@@ -219,6 +227,31 @@ export async function createTrip(tripData: CreateTripData): Promise<Trip> {
   return data;
 }
 
+export async function updateTrip(tripId: number, tripData: Partial<CreateTripData>): Promise<Trip> {
+  const res = await fetch(`${API_BASE}/api/v1/trips/${tripId}`, {
+    method: "PATCH",
+    headers: {
+      "Content-Type": "application/json",
+      ...getAuthHeaders(),
+    },
+    credentials: "include",
+    body: JSON.stringify({ trip: tripData }),
+  });
+
+  if (!res.ok) {
+    let errorMessage = "Error saving the trip";
+    try {
+      const errorData = await res.json();
+      errorMessage = errorData.errors?.join(", ") || errorData.error || errorMessage;
+    } catch {
+      // keep default message
+    }
+    throw new Error(errorMessage);
+  }
+
+  return res.json();
+}
+
 export async function deleteTrip(tripId: number, allRecurring: boolean = false): Promise<void> {
   const url = `${API_BASE}/api/v1/trips/${tripId}${allRecurring ? '?all_recurring=true' : ''}`;
 
@@ -244,4 +277,4 @@ export async function deleteTrip(tripId: number, allRecurring: boolean = false):
   }
 }
 
-export default { searchTrips, getMyTrips, getTripBookings, createTrip, deleteTrip };
+export default { searchTrips, getMyTrips, getTripBookings, createTrip, updateTrip, deleteTrip };

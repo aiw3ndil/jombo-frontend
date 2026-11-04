@@ -307,7 +307,7 @@ export default function MyBookings() {
                             {cancellingId === booking.id ? (
                               <span className="flex items-center justify-center gap-3">
                                 <div className="w-5 h-5 border-3 border-red-200 border-t-red-600 rounded-full animate-spin"></div>
-                                Procesando...
+                                {t("page.myBookings.processing", "Processing...")}
                               </span>
                             ) : (t("page.myBookings.cancel") || "Cancel booking")}
                           </button>

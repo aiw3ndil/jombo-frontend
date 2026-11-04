@@ -118,7 +118,7 @@ export default function ConversationPage() {
             <div className="space-y-2">
               <div className="flex items-center gap-2">
                 <span className="w-2.5 h-2.5 rounded-full bg-green-500 animate-pulse"></span>
-                <p className="text-xs font-bold text-[var(--brand-blue)] uppercase tracking-widest">CHAT EN VIVO</p>
+                <p className="text-xs font-bold text-[var(--brand-blue)] uppercase tracking-widest">{t("page.conversation.live", "Live chat")}</p>
               </div>
               <h1 className="text-2xl md:text-3xl font-bold text-[var(--brand-dark)] leading-tight">
                 {conversation.trip.departure_location} → {conversation.trip.arrival_location}

@@ -1,4 +1,5 @@
 "use client";
+import { VehicleSummary } from "@/app/components/VehicleSelector";
 import { useEffect, useState } from "react";
 import { localePath, langPrefix } from "@/app/lib/i18n/config";
 import { useSearchParams, useRouter, useParams } from "next/navigation";
@@ -255,7 +256,7 @@ export default function SearchPage() {
                 </svg>
               </div>
               <h2 className="text-3xl font-bold text-[var(--brand-dark)] mb-4">{t("page.search.noResults") || "No trips found"}</h2>
-              <p className="text-[var(--brand-neutral)] text-lg mb-8 max-w-md mx-auto font-medium">Intenta cambiar las ciudades o busca de nuevo más tarde.</p>
+              <p className="text-[var(--brand-neutral)] text-lg mb-8 max-w-md mx-auto font-medium">{t("page.search.noResultsHint", "Try changing the cities or search again later.")}</p>
               <button onClick={() => router.push(localePath(lang))} className="btn-secondary px-8 py-4">
                 {t("page.search.back") || "Back"}
               </button>
@@ -328,7 +329,7 @@ export default function SearchPage() {
                           </div>
                           {trip.available_seats <= 2 && trip.available_seats > 0 && (
                             <span className="bg-red-50 text-red-600 border border-red-100 px-4 py-2 rounded-full text-xs font-black uppercase tracking-widest animate-pulse">
-                              Últimas plazas
+                              {t("page.search.lastSeats", "Last seats")}
                             </span>
                           )}
                         </div>
@@ -337,13 +338,14 @@ export default function SearchPage() {
                           <h3 className="text-4xl font-black text-[var(--brand-dark)] leading-tight tracking-tight">
                             {trip.departure_location} <span className="text-[var(--brand-neutral)] mx-2">→</span> {trip.arrival_location}
                           </h3>
+                          <VehicleSummary vehicle={trip.vehicle} className="mt-3" />
                         </div>
 
                         <div className="grid grid-cols-2 gap-6">
                            <div className="bg-[#f0f4f8]/50 border border-[#e2e8f0] rounded-2xl p-4">
                             <p className="text-xs font-bold text-[var(--brand-neutral)] uppercase tracking-widest mb-1">{t("page.search.availableSeats") || "Available seats"}</p>
                             <p className={`text-xl font-black ${trip.available_seats === 0 ? "text-red-500" : "text-[var(--brand-dark)]"}`}>
-                              {trip.available_seats} <span className="text-sm font-bold text-[var(--brand-neutral)]/60 lowercase">disponibles</span>
+                              {trip.available_seats} <span className="text-sm font-bold text-[var(--brand-neutral)]/60 lowercase">{t("page.search.available", "available")}</span>
                             </p>
                           </div>
                           <div className="bg-[#f0f4f8]/50 border border-[#e2e8f0] rounded-2xl p-4">
@@ -384,7 +386,7 @@ export default function SearchPage() {
                             href={`${langPrefix(lang)}/my-bookings`} 
                             className="text-center text-sm font-bold text-[var(--brand-blue)] hover:text-[var(--brand-dark)] transition-colors uppercase tracking-widest underline decoration-2 underline-offset-4"
                           >
-                            Ver mis reservas
+                            {t("page.search.viewMyBookings", "View my bookings")}
                           </Link>
                         )}
                       </div>

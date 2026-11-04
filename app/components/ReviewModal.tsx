@@ -109,14 +109,14 @@ export default function ReviewModal({
         <div className="space-y-4 mb-8">
           <div className="bg-[#f0f4f8] p-4 rounded-2xl border border-[#e2e8f0] text-center">
             <p className="text-xs font-bold text-[var(--brand-neutral)] uppercase tracking-widest mb-1">
-              PROTAGONISTA
+              {t("page.review.person", "Driver")}
             </p>
             <p className="font-bold text-[var(--brand-dark)] text-xl">{driverName}</p>
           </div>
 
           <div className="bg-[#f0f4f8] p-4 rounded-2xl border border-[#e2e8f0] text-center">
             <p className="text-xs font-bold text-[var(--brand-neutral)] uppercase tracking-widest mb-1">
-              MISIÓN
+              {t("page.review.trip", "Trip")}
             </p>
             <p className="font-medium text-[var(--brand-dark)] italic">{tripRoute}</p>
           </div>
