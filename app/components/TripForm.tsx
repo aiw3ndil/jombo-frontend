@@ -1,10 +1,57 @@
 "use client";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { useTranslation } from "@/app/hooks/useTranslation";
 import { toast } from "sonner";
 import LocationInput from "@/app/components/LocationInput";
 import VehicleSelector, { VehicleChoice, isVehicleInputComplete } from "@/app/components/VehicleSelector";
-import type { CreateTripData, Trip } from "@/app/lib/api/trips";
+import TripPreferencesFields from "@/app/components/TripPreferencesFields";
+import { useGoogleMaps } from "@/app/contexts/GoogleMapsContext";
+import {
+  DEFAULT_PREFERENCES,
+  maxPriceFor,
+  suggestedPriceFor,
+  type CreateTripData,
+  type Trip,
+  type TripPreferencesData,
+} from "@/app/lib/api/trips";
+
+type StopRow = { location: string; date: string; time: string; price: string };
+
+/** Valores iniciales opcionales (p. ej. al responder a una petición de viaje) */
+export type TripFormInitial = { from?: string; to?: string; date?: string; seats?: number };
+
+/** Distancia (km) y duración (min) por tramo con Google Directions */
+function useRouteMetrics(points: string[]) {
+  const { isLoaded } = useGoogleMaps();
+  const [legs, setLegs] = useState<{ km: number; minutes: number }[] | null>(null);
+  const key = points.join("|");
+
+  useEffect(() => {
+    if (!isLoaded || points.length < 2 || points.some((p) => !p.trim()) || typeof google === "undefined") {
+      setLegs(null);
+      return;
+    }
+    const handle = setTimeout(() => {
+      new google.maps.DirectionsService()
+        .route({
+          origin: points[0],
+          destination: points[points.length - 1],
+          waypoints: points.slice(1, -1).map((location) => ({ location, stopover: true })),
+          travelMode: google.maps.TravelMode.DRIVING,
+          region: "fi",
+        })
+        .then((res) => {
+          const routeLegs = res.routes[0]?.legs || [];
+          setLegs(routeLegs.map((l) => ({ km: Math.round((l.distance?.value || 0) / 1000), minutes: Math.round((l.duration?.value || 0) / 60) })));
+        })
+        .catch(() => setLegs(null));
+    }, 700);
+    return () => clearTimeout(handle);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [isLoaded, key]);
+
+  return legs;
+}
 
 const pad = (n: number) => String(n).padStart(2, "0");
 
@@ -29,22 +76,24 @@ export default function TripForm({
   trip,
   onSubmit,
   onCancel,
+  initialValues,
 }: {
   mode: "create" | "edit";
   trip?: Trip | null;
   onSubmit: (data: CreateTripData) => Promise<void>;
   onCancel: () => void;
+  initialValues?: TripFormInitial;
 }) {
   const { t } = useTranslation();
   const isEdit = mode === "edit";
   const initial = toLocalParts(trip?.departure_time);
 
   const [formData, setFormData] = useState({
-    from: trip?.departure_location ?? "",
-    to: trip?.arrival_location ?? "",
-    date: initial.date,
+    from: trip?.departure_location ?? initialValues?.from ?? "",
+    to: trip?.arrival_location ?? initialValues?.to ?? "",
+    date: initial.date || initialValues?.date || "",
     time: initial.time,
-    availableSeats: trip?.available_seats ?? 1,
+    availableSeats: trip?.available_seats ?? initialValues?.seats ?? 1,
     pricePerSeat: trip ? Number(trip.price) : 0,
     description: trip?.description ?? "",
     is_recurring: false,
@@ -53,6 +102,46 @@ export default function TripForm({
   });
   const [loading, setLoading] = useState(false);
   const [vehicleChoice, setVehicleChoice] = useState<VehicleChoice>(null);
+  const [prefs, setPrefs] = useState<TripPreferencesData>(() => {
+    const base = { ...DEFAULT_PREFERENCES };
+    if (trip) (Object.keys(base) as (keyof TripPreferencesData)[]).forEach((k) => {
+      if (trip[k] !== undefined && trip[k] !== null) (base as any)[k] = trip[k];
+    });
+    return base;
+  });
+  const [stops, setStops] = useState<StopRow[]>(() =>
+    (trip?.stops || []).map((s) => {
+      const parts = toLocalParts(s.departure_time);
+      return { location: s.location, date: parts.date, time: parts.time, price: String(Number(s.price_from_origin)) };
+    })
+  );
+
+  const legs = useRouteMetrics([formData.from, ...stops.map((s) => s.location), formData.to]);
+  const distanceKm = legs ? legs.reduce((sum, l) => sum + l.km, 0) : trip?.distance_km ?? null;
+  const durationMinutes = legs ? legs.reduce((sum, l) => sum + l.minutes, 0) : trip?.duration_minutes ?? null;
+  const suggestedPrice = suggestedPriceFor(distanceKm);
+  const maxPrice = maxPriceFor(distanceKm);
+  const priceTooHigh = maxPrice !== null && Number(formData.pricePerSeat) > maxPrice;
+  // Precio sugerido hasta cada parada, según la distancia acumulada
+  const stopSuggestion = (index: number) => {
+    if (!legs || legs.length !== stops.length + 1) return null;
+    const km = legs.slice(0, index + 1).reduce((sum, l) => sum + l.km, 0);
+    return suggestedPriceFor(km);
+  };
+
+  const updateStop = (index: number, patch: Partial<StopRow>) =>
+    setStops((prev) => prev.map((s, i) => (i === index ? { ...s, ...patch } : s)));
+  const addStop = () =>
+    setStops((prev) => (prev.length >= 5 ? prev : [...prev, { location: "", date: formData.date, time: "", price: "" }]));
+  const removeStop = (index: number) => setStops((prev) => prev.filter((_, i) => i !== index));
+  const moveStop = (index: number, dir: -1 | 1) =>
+    setStops((prev) => {
+      const next = [...prev];
+      const target = index + dir;
+      if (target < 0 || target >= next.length) return prev;
+      [next[index], next[target]] = [next[target], next[index]];
+      return next;
+    });
   // El conductor ocupa una plaza
   const maxPassengerSeats = vehicleChoice ? Math.max(vehicleChoice.vehicle.seats - 1, 1) : 8;
 
@@ -88,9 +177,26 @@ export default function TripForm({
       toast.error(t("page.createTrip.recurrenceUntilRequired", "Please specify until when the trip repeats"));
       return;
     }
+    const filledStops = stops.filter((s) => s.location.trim());
+    if (filledStops.some((s) => !s.date || !s.time)) {
+      toast.error(t("stops.timeRequired", "Add a time for every stop"));
+      return;
+    }
+    if (priceTooHigh) {
+      toast.error(t("price.tooHigh", "The price is above the cost-sharing limit for this distance"));
+      return;
+    }
     setLoading(true);
     try {
       await onSubmit({
+        ...prefs,
+        distance_km: distanceKm || undefined,
+        duration_minutes: durationMinutes || undefined,
+        stops: filledStops.map((s) => ({
+          location: s.location,
+          departure_time: toIso(s.date, s.time),
+          price_from_origin: Number(s.price) || 0,
+        })),
         departure_location: formData.from,
         arrival_location: formData.to,
         departure_time: toIso(formData.date, formData.time),
@@ -189,6 +295,72 @@ export default function TripForm({
                       </div>
                     </div>
                   </div>
+
+                  {/* Paradas intermedias */}
+                  <div className="rounded-2xl border-2 border-[#c4d8b4] bg-[#f7fbf3] p-4 md:p-5">
+                    <div className="flex flex-wrap items-center justify-between gap-3">
+                      <div>
+                        <h3 className="font-bold text-[var(--brand-dark)]">{t("stops.title", "Stops along the way")}</h3>
+                        <p className="text-sm text-[var(--brand-neutral)]">{t("stops.help", "Passengers can get on or off at your stops and pay only for their part of the trip.")}</p>
+                      </div>
+                      <button type="button" onClick={addStop} disabled={stops.length >= 5} className="btn-secondary px-4 py-2 text-sm">
+                        + {t("stops.add", "Add stop")}
+                      </button>
+                    </div>
+                    {stops.length > 0 && (
+                      <ol className="mt-4 space-y-3">
+                        {stops.map((stop, i) => {
+                          const suggestion = stopSuggestion(i);
+                          return (
+                            <li key={i} className="grid gap-3 rounded-xl border border-[#c4d8b4] bg-white p-3 md:grid-cols-[1fr_9rem_7rem_7rem_auto] md:items-end">
+                              <div>
+                                <label className="form-label">{t("stops.place", "Stop")} {i + 1}</label>
+                                <LocationInput
+                                  name={`stop-${i}`}
+                                  value={stop.location}
+                                  onChange={(val: string) => updateStop(i, { location: val })}
+                                  className="form-input"
+                                  placeholder={t("stops.placePlaceholder", "City or town")}
+                                />
+                              </div>
+                              <div>
+                                <label className="form-label">{t("page.createTrip.date") || "Date"}</label>
+                                <input type="date" value={stop.date} onChange={(e) => updateStop(i, { date: e.target.value })} className="form-input" />
+                              </div>
+                              <div>
+                                <label className="form-label">{t("page.createTrip.time") || "Time"}</label>
+                                <input type="time" value={stop.time} onChange={(e) => updateStop(i, { time: e.target.value })} className="form-input" />
+                              </div>
+                              <div>
+                                <label className="form-label">{t("stops.priceFromOrigin", "Price from origin")}</label>
+                                <input
+                                  type="number"
+                                  min="0"
+                                  step="0.5"
+                                  value={stop.price}
+                                  placeholder={suggestion ? String(suggestion) : "€"}
+                                  onChange={(e) => updateStop(i, { price: e.target.value })}
+                                  className="form-input"
+                                />
+                              </div>
+                              <div className="flex gap-1">
+                                <button type="button" onClick={() => moveStop(i, -1)} disabled={i === 0} className="rounded-lg border border-[#c4d8b4] px-2 py-2 text-sm disabled:opacity-30" aria-label={t("stops.moveUp", "Move up")}>↑</button>
+                                <button type="button" onClick={() => moveStop(i, 1)} disabled={i === stops.length - 1} className="rounded-lg border border-[#c4d8b4] px-2 py-2 text-sm disabled:opacity-30" aria-label={t("stops.moveDown", "Move down")}>↓</button>
+                                <button type="button" onClick={() => removeStop(i)} className="rounded-lg border border-red-200 px-2 py-2 text-sm text-red-600" aria-label={t("stops.remove", "Remove stop")}>✕</button>
+                              </div>
+                            </li>
+                          );
+                        })}
+                      </ol>
+                    )}
+                  </div>
+
+                  {distanceKm ? (
+                    <p className="text-sm text-[var(--brand-neutral)]">
+                      🛣️ {distanceKm} km
+                      {durationMinutes ? ` · ⏱️ ${Math.floor(durationMinutes / 60)} h ${durationMinutes % 60} min` : ""}
+                    </p>
+                  ) : null}
                 </div>
 
                 <div className="h-px bg-[#ebf3e2] w-full"></div>
@@ -255,6 +427,20 @@ export default function TripForm({
                       </div>
                     </div>
                   </div>
+                  {suggestedPrice !== null && (
+                    <div className={`flex flex-wrap items-center gap-3 rounded-xl border-2 px-4 py-3 text-sm ${priceTooHigh ? "border-red-300 bg-red-50 text-red-700" : "border-[#c4d8b4] bg-[#f7fbf3] text-[var(--brand-dark)]"}`}>
+                      <span>
+                        💡 {t("price.suggested", "Suggested price")}: <strong>{suggestedPrice} €</strong>
+                        <span className="text-[var(--brand-neutral)]"> · {t("price.max", "max")} {maxPrice} €</span>
+                      </span>
+                      {Number(formData.pricePerSeat) !== suggestedPrice && (
+                        <button type="button" className="font-bold text-[var(--brand-blue)] underline" onClick={() => setFormData((prev) => ({ ...prev, pricePerSeat: suggestedPrice }))}>
+                          {t("price.apply", "Use it")}
+                        </button>
+                      )}
+                      {priceTooHigh && <span className="w-full">{t("price.tooHigh", "The price is above the cost-sharing limit for this distance")}</span>}
+                    </div>
+                  )}
                 </div>
 
                 <div className="h-px bg-[#ebf3e2] w-full"></div>
@@ -270,10 +456,21 @@ export default function TripForm({
 
                 <div className="h-px bg-[#ebf3e2] w-full"></div>
 
-                {/* Paso 4: Información adicional */}
+                {/* Paso 4: Preferencias */}
                 <div className="space-y-6">
                   <div className="flex items-center gap-4 mb-2">
                     <div className="w-10 h-10 rounded-full bg-[var(--brand-blue)] flex items-center justify-center text-white font-bold shadow-md">4</div>
+                    <h2 className="text-2xl font-bold text-[var(--brand-dark)]">{t("prefs.step", "Preferences and booking")}</h2>
+                  </div>
+                  <TripPreferencesFields value={prefs} onChange={setPrefs} />
+                </div>
+
+                <div className="h-px bg-[#ebf3e2] w-full"></div>
+
+                {/* Paso 5: Información adicional */}
+                <div className="space-y-6">
+                  <div className="flex items-center gap-4 mb-2">
+                    <div className="w-10 h-10 rounded-full bg-[var(--brand-blue)] flex items-center justify-center text-white font-bold shadow-md">5</div>
                     <h2 className="text-2xl font-bold text-[var(--brand-dark)]">{t("page.createTrip.additionalStep") || "Advanced settings"}</h2>
                   </div>
 

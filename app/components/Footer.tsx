@@ -77,6 +77,26 @@ export default function Footer({ lang }: FooterProps) {
             </h3>
             <ul className="space-y-4">
               <li>
+                <Link href={`${langPrefix(lang)}/how-it-works`} className="text-white hover:text-[var(--brand-accent-1)] text-base transition-all font-medium">
+                  {t("footer.howItWorks", "How it works")}
+                </Link>
+              </li>
+              <li>
+                <Link href={`${langPrefix(lang)}/safety`} className="text-white hover:text-[var(--brand-accent-1)] text-base transition-all font-medium">
+                  {t("footer.safety", "Safety")}
+                </Link>
+              </li>
+              <li>
+                <Link href={`${langPrefix(lang)}/ride-requests`} className="text-white hover:text-[var(--brand-accent-1)] text-base transition-all font-medium">
+                  {t("menu.rideRequests", "Looking for a ride")}
+                </Link>
+              </li>
+              <li>
+                <Link href={`${langPrefix(lang)}/kimppakyyti`} className="text-white hover:text-[var(--brand-accent-1)] text-base transition-all font-medium">
+                  {t("footer.allRoutes", "All routes")}
+                </Link>
+              </li>
+              <li>
                 <Link href={`${langPrefix(lang)}/terms`} className="text-white hover:text-[var(--brand-accent-1)] text-base transition-all font-medium">
                   {t("footer.terms")}
                 </Link>

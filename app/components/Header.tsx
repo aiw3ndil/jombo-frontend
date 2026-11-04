@@ -79,6 +79,17 @@ export default function Header({ lang }: { lang: string }) {
         />
       </Link>
       <div className="flex items-center gap-2 sm:gap-4">
+        <nav className="hidden lg:flex items-center gap-1 mr-2" aria-label={t("menu.main", "Main")}>
+          <Link href={`${langPrefix(lang)}/ride-requests`} className="px-3 py-2 rounded-lg font-semibold text-[var(--brand-dark)] hover:bg-[#ebf3e2]">
+            {t("menu.rideRequests", "Looking for a ride")}
+          </Link>
+          <Link href={`${langPrefix(lang)}/how-it-works`} className="px-3 py-2 rounded-lg font-semibold text-[var(--brand-dark)] hover:bg-[#ebf3e2]">
+            {t("menu.howItWorks", "How it works")}
+          </Link>
+          <Link href={`${langPrefix(lang)}/create-trip`} className="ml-1 px-4 py-2 rounded-lg font-bold text-white bg-[var(--brand-blue)] hover:bg-[var(--primary-hover)]">
+            + {t("menu.publish", "Offer a ride")}
+          </Link>
+        </nav>
         <LanguageSwitcher />
         {user ? (
           <>
@@ -87,7 +98,7 @@ export default function Header({ lang }: { lang: string }) {
               <button
                 onClick={() => setIsNotificationsOpen(!isNotificationsOpen)}
                 className="relative p-2 rounded-lg hover:bg-[#ebf3e2] transition-colors"
-                aria-label="Notificaciones"
+                aria-label={t("menu.notifications", "Notifications")}
               >
                 <svg
                   className="w-7 h-7 text-[var(--brand-blue)]"
@@ -177,6 +188,20 @@ export default function Header({ lang }: { lang: string }) {
                     className="flex items-center gap-3 px-5 py-3 text-[var(--brand-dark)] hover:bg-[#ebf3e2] transition-colors font-medium text-base"
                   >
                     {t("menu.myTrips")}
+                  </Link>
+                  <Link
+                    href={`${langPrefix(lang)}/alerts`}
+                    onClick={() => setIsDropdownOpen(false)}
+                    className="flex items-center gap-3 px-5 py-3 text-[var(--brand-dark)] hover:bg-[#ebf3e2] transition-colors font-medium text-base"
+                  >
+                    {t("menu.alerts", "Alerts and requests")}
+                  </Link>
+                  <Link
+                    href={`${langPrefix(lang)}/ride-requests`}
+                    onClick={() => setIsDropdownOpen(false)}
+                    className="lg:hidden flex items-center gap-3 px-5 py-3 text-[var(--brand-dark)] hover:bg-[#ebf3e2] transition-colors font-medium text-base"
+                  >
+                    {t("menu.rideRequests", "Looking for a ride")}
                   </Link>
                   <div className="h-px bg-[#c4d8b4] my-1 mx-3"></div>
                   <button

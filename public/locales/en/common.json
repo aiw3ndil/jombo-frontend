@@ -276,7 +276,13 @@
     "messages": "Messages",
     "myBookings": "My Bookings",
     "myTrips": "My Trips",
-    "logout": "Logout"
+    "logout": "Logout",
+    "alerts": "Alerts and requests",
+    "howItWorks": "How it works",
+    "main": "Main",
+    "notifications": "Notifications",
+    "publish": "Offer a ride",
+    "rideRequests": "Looking for a ride"
   },
   "notifications": {
     "title": "Notifications",
@@ -325,7 +331,38 @@
     "changingPassword": "Updating...",
     "passwordUpdateSuccess": "Password updated successfully",
     "passwordUpdateError": "Error updating password",
-    "passwordsDoNotMatch": "Passwords do not match"
+    "passwordsDoNotMatch": "Passwords do not match",
+    "about": "About",
+    "bioPublic": "Shown on your public profile",
+    "latestReviews": "Latest reviews",
+    "memberSince": "Member since",
+    "noReviews": "No reviews yet",
+    "noUpcoming": "No upcoming rides right now.",
+    "phonePrivate": "Private. Only used for verification.",
+    "reviews": "reviews",
+    "stats": {
+      "driven": "Rides driven",
+      "rating": "Rating",
+      "reviews": "Reviews",
+      "taken": "Rides taken"
+    },
+    "upcoming": "Upcoming rides",
+    "verified": {
+      "email": "Email verified",
+      "google": "Google account",
+      "phone": "Phone verified"
+    },
+    "viewPublic": "View my public profile",
+    "level": {
+      "new": "New member",
+      "regular": "Regular driver",
+      "experienced": "Experienced driver",
+      "expert": "Expert driver"
+    },
+    "unverified": {
+      "email": "Email not verified",
+      "phone": "Phone not verified"
+    }
   },
   "footer": {
     "about": "About Jombo",
@@ -341,7 +378,10 @@
     "supportStatus": "Active Support 24/7",
     "supportEmail": "Support email",
     "madeWith": "Made with ❤️ for the planet",
-    "trustedBy": "Trusted by more than 10,000 users"
+    "trustedBy": "Trusted by more than 10,000 users",
+    "allRoutes": "All routes",
+    "howItWorks": "How it works",
+    "safety": "Safety"
   },
   "terms": {
     "badge": "Legal Information",
@@ -514,5 +554,188 @@
       "beige": "Beige",
       "other": "Other"
     }
+  },
+  "alerts": {
+    "anyDate": "Any date",
+    "create": "Create alert",
+    "created": "Alert saved. We'll let you know when a ride is published.",
+    "ctaText": "We'll email you as soon as a driver publishes a ride for {{from}} → {{to}}.",
+    "ctaTitle": "No ride yet? Get notified.",
+    "ctaTitleResults": "Not the right time?",
+    "delete": "Delete",
+    "error": "Could not save the alert",
+    "loadError": "Could not load your alerts",
+    "myRequests": "My ride requests",
+    "noRequests": "You haven't posted any ride requests.",
+    "none": "No alerts yet. Search for a route and tap “Create alert”.",
+    "saved": "Alert on",
+    "searchAlerts": "Search alerts",
+    "subtitle": "We email you when a matching ride is published.",
+    "title": "My alerts and requests"
+  },
+  "booking": {
+    "bookNow": "Book now",
+    "booked": "Booked",
+    "confirmedNow": "Your seat is confirmed!",
+    "full": "Full",
+    "instantInfo": "Instant booking: your seat is confirmed right away.",
+    "requestInfo": "The driver will review your request and confirm it.",
+    "requested": "Requested",
+    "sendRequest": "Send request",
+    "total": "Total to share with the driver"
+  },
+  "filters": {
+    "afternoon": "12:00–18:00",
+    "anySeats": "Any seats",
+    "anyTime": "Any time",
+    "clear": "Clear",
+    "date": "Date",
+    "evening": "After 18:00",
+    "morning": "Before 12:00",
+    "noResultsFiltered": "No trips match these filters. Try removing some of them.",
+    "seats": "Seats",
+    "sort": "Sort by",
+    "sortDuration": "Shortest trip",
+    "sortPrice": "Lowest price",
+    "sortTime": "Earliest departure",
+    "timeOfDay": "Departure time",
+    "title": "Filters"
+  },
+  "home": {
+    "features": {
+      "alerts": {
+        "text": "Get an email when a ride for your route is published.",
+        "title": "Ride alerts"
+      },
+      "instant": {
+        "text": "Many drivers confirm seats automatically.",
+        "title": "Instant booking"
+      },
+      "stops": {
+        "text": "Hop on or off along the way and pay only for your part.",
+        "title": "Rides with stops"
+      },
+      "verified": {
+        "text": "Email and phone badges, reviews and experience levels.",
+        "title": "Verified members"
+      }
+    },
+    "moreHowItWorks": "Read more about how Jombo works",
+    "popularRoutes": "Popular routes",
+    "requestsText": "Post a ride request and let drivers come to you.",
+    "requestsTitle": "Can't find your route?"
+  },
+  "prefs": {
+    "chattiness": {
+      "chatty": "Loves to chat",
+      "normal": "A bit of chat",
+      "quiet": "Quiet ride"
+    },
+    "form": {
+      "chattiness": "Conversation",
+      "instant": "Instant booking",
+      "instantHelp": "Passengers are confirmed automatically. Turn off to approve each request yourself.",
+      "luggage": "Luggage per passenger",
+      "maxTwoBack": "Max. 2 in the back seat",
+      "maxTwoBackHelp": "More comfort for passengers",
+      "music": "Music during the ride",
+      "pets": "Pets are welcome",
+      "smoking": "Smoking allowed"
+    },
+    "instant": "Instant booking",
+    "luggage": {
+      "large": "Large suitcase",
+      "medium": "Medium suitcase",
+      "small": "Small bag"
+    },
+    "maxTwoBack": "Max 2 in the back",
+    "music": "Music on",
+    "noPets": "No pets",
+    "noSmoking": "No smoking",
+    "pets": "Pets OK",
+    "smoking": "Smoking OK",
+    "step": "Preferences and booking",
+    "title": "Preferences"
+  },
+  "price": {
+    "apply": "Use it",
+    "max": "max",
+    "suggested": "Suggested price",
+    "tooHigh": "The price is above the cost-sharing limit for this distance"
+  },
+  "rideRequests": {
+    "close": "I found a ride",
+    "created": "Request posted. We'll email you when a driver offers a ride.",
+    "days": "d",
+    "daysLong": "days",
+    "empty": "No ride requests here yet",
+    "emptyHint": "Be the first: post where you need to go and drivers will see it.",
+    "error": "Could not post the request",
+    "exactDate": "Exact date",
+    "flexible": "Flexibility",
+    "manage": "Manage my request",
+    "maxPrice": "Max price per seat (€, optional)",
+    "newSubtitle": "Tell drivers where and when you need to go. Matching rides are sent to your email.",
+    "newTitle": "Post a ride request",
+    "note": "Message to drivers (optional)",
+    "notePlaceholder": "E.g. I have a small backpack and can meet anywhere in the centre.",
+    "offer": "Offer a ride",
+    "post": "Post a ride request",
+    "submit": "Post request",
+    "subtitle": "Passengers post where they need to go. Driving that way? Offer your ride and fill your empty seats.",
+    "title": "Looking for a ride",
+    "upTo": "up to",
+    "status": {
+      "open": "Open",
+      "matched": "Matched",
+      "closed": "Closed"
+    }
+  },
+  "stops": {
+    "add": "Add stop",
+    "fullRoute": "Full route",
+    "help": "Passengers can get on or off at your stops and pay only for their part of the trip.",
+    "moveDown": "Move down",
+    "moveUp": "Move up",
+    "partOf": "Part of the ride",
+    "place": "Stop",
+    "placePlaceholder": "City or town",
+    "priceFromOrigin": "Price from origin",
+    "remove": "Remove stop",
+    "stop": "Stop",
+    "timeRequired": "Add a time for every stop",
+    "title": "Stops along the way",
+    "via": "via"
+  },
+  "trip": {
+    "departed": "Already departed",
+    "driverNotes": "Driver's notes",
+    "route": "Route",
+    "yourTrip": "This is your trip"
+  },
+  "verify": {
+    "code": "Code",
+    "codeSent": "Code sent by SMS.",
+    "confirm": "Confirm",
+    "email": "Email",
+    "emailConfirmedText": "Thanks! Your profile now shows a verified email badge.",
+    "emailConfirmedTitle": "Email confirmed",
+    "emailDone": "Your email is verified.",
+    "emailHelp": "We'll send you a link to confirm your address.",
+    "emailSent": "Check your inbox for the confirmation link.",
+    "error": "Something went wrong",
+    "findRide": "Find a ride",
+    "goProfile": "Go to my profile",
+    "linkInvalidText": "The link may have been used already. You can request a new one from your profile.",
+    "linkInvalidTitle": "This link is not valid",
+    "phone": "Phone",
+    "phoneAddFirst": "Add your phone number above and save to verify it.",
+    "phoneDone": "Your phone number is verified.",
+    "phoneHelp": "We'll text a 6-digit code to",
+    "phoneUnavailable": "Phone verification is coming soon.",
+    "sendCode": "Send code",
+    "sendLink": "Send link",
+    "subtitle": "Verified members get more bookings. Your phone number and email are never shown publicly.",
+    "title": "Trust and verification"
   }
 }

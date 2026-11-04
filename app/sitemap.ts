@@ -4,7 +4,15 @@ import { TOP_FINNISH_ROUTES } from '@/app/lib/constants/routes'
 
 export default function sitemap(): MetadataRoute.Sitemap {
   // Páginas estáticas
-  const staticPages = ['', '/terms', ...TOP_FINNISH_ROUTES.map((route) => `/kimppakyyti/${route.slug}`)]
+  const staticPages = [
+    '',
+    '/how-it-works',
+    '/safety',
+    '/ride-requests',
+    '/kimppakyyti',
+    '/terms',
+    ...TOP_FINNISH_ROUTES.map((route) => `/kimppakyyti/${route.slug}`),
+  ]
 
   const url = (lang: string, page: string) => `${SITE_URL}${localePath(lang, page) === '/' ? '' : localePath(lang, page)}`
 

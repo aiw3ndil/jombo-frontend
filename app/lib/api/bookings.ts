@@ -6,6 +6,9 @@ export interface Booking {
   trip_id: number;
   seats: number;
   status: "pending" | "confirmed" | "rejected" | "cancelled";
+  pickup_location?: string | null;
+  dropoff_location?: string | null;
+  price_per_seat?: number | string | null;
   created_at: string;
   updated_at: string;
   trip?: {
@@ -33,6 +36,8 @@ export interface Booking {
 export interface CreateBookingData {
   trip_id: number;
   seats: number;
+  pickup_location?: string;
+  dropoff_location?: string;
 }
 
 export async function createBooking(data: CreateBookingData): Promise<Booking> {
@@ -49,6 +54,8 @@ export async function createBooking(data: CreateBookingData): Promise<Booking> {
     body: JSON.stringify({
       booking: {
         seats: data.seats,
+        pickup_location: data.pickup_location,
+        dropoff_location: data.dropoff_location,
       },
     }),
   });

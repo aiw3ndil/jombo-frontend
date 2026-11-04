@@ -1,6 +1,10 @@
 import { Metadata } from 'next';
 import { localePath, langPrefix } from "@/app/lib/i18n/config";
-import { TOP_FINNISH_ROUTES } from '@/app/lib/constants/routes';
+import { TOP_FINNISH_ROUTES, relatedRoutes } from '@/app/lib/constants/routes';
+import { suggestedPriceFor } from '@/app/lib/api/trips';
+import { getRideRequests, type RideRequest } from '@/app/lib/api/rideRequests';
+import SearchAlertCta from '@/app/components/SearchAlertCta';
+import RouteFaq, { routeFaq } from '@/app/components/RouteFaq';
 import { searchTrips, Trip, ExternalOption, SearchResponse } from '@/app/lib/api/trips';
 import { notFound } from 'next/navigation';
 import { promises as fs } from 'fs';
@@ -72,16 +76,42 @@ export default async function RoutePage({ params }: Props) {
   }
 
   const t = await getTranslations(lang);
-  const response = await searchTrips(route.from, route.to);
+  // Si la API falla, la página se muestra igualmente (sin viajes)
+  let response: SearchResponse = { trips: [], external_options: [], source: 'local', is_fallback: false };
+  try {
+    response = await searchTrips(route.from, route.to);
+  } catch (error) {
+    console.error(`Route page ${slug}: could not load trips`, error);
+  }
+  let rideRequests: RideRequest[] = [];
+  try {
+    rideRequests = await getRideRequests({ from: route.from, to: route.to });
+  } catch {
+    rideRequests = [];
+  }
   const trips = response.trips;
   const externalOptions = response.external_options;
   const source = response.source;
+  const distanceKm = parseInt(route.distance || '0');
+  const suggested = suggestedPriceFor(distanceKm);
+  const related = relatedRoutes(slug);
+  const faq = routeFaq(lang, route.from, route.to, route.distance, route.duration, suggested);
 
   t.trips = t.trips || {};
 
   // Calcular CO2 ahorrado (aprox 120g por km)
   const distNum = parseInt(route.distance || "0");
   const co2Value = Math.round(distNum * 0.12);
+
+  const faqLd = {
+    "@context": "https://schema.org",
+    "@type": "FAQPage",
+    "mainEntity": faq.map((item) => ({
+      "@type": "Question",
+      "name": item.q,
+      "acceptedAnswer": { "@type": "Answer", "text": item.a },
+    })),
+  };
 
   const jsonLd = {
     "@context": "https://schema.org",
@@ -103,6 +133,10 @@ export default async function RoutePage({ params }: Props) {
       <script
         type="application/ld+json"
         dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
+      />
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(faqLd) }}
       />
       
       {/* ── HERO ── */}
@@ -183,6 +217,39 @@ export default async function RoutePage({ params }: Props) {
       {/* ── CONTENIDO ── */}
       <section className="py-12 px-4 bg-white relative -mt-8">
         <div className="max-w-5xl mx-auto">
+          {suggested !== null && (
+            <div className="mb-6 rounded-2xl border-2 border-[#c4d8b4] bg-[#f7fbf3] p-4 text-[var(--brand-dark)]">
+              💶 {lang === 'fi'
+                ? <>Tyypillinen hinta tällä reitillä: <strong>noin {suggested} € / paikka</strong> – matkustajat jakavat vain polttoaine- ja ajokustannukset.</>
+                : <>Typical price on this route: <strong>about {suggested} € per seat</strong> – passengers only share fuel and running costs.</>}
+            </div>
+          )}
+
+          <SearchAlertCta from={route.from} to={route.to} hasResults={trips.length > 0} />
+
+          {rideRequests.length > 0 && (
+            <div className="mb-8 rounded-2xl border-2 border-[#c4d8b4] bg-white p-5">
+              <h2 className="mb-3 text-lg font-bold text-[var(--brand-dark)]">
+                🙋 {lang === 'fi' ? `${rideRequests.length} matkustajaa etsii kyytiä tällä reitillä` : `${rideRequests.length} passenger(s) looking for a ride on this route`}
+              </h2>
+              <ul className="divide-y divide-[#e3eed9]">
+                {rideRequests.slice(0, 5).map((r) => (
+                  <li key={r.id} className="flex flex-wrap items-center justify-between gap-3 py-2">
+                    <span className="text-[var(--brand-dark)]">
+                      <strong>{new Date(r.departure_date).toLocaleDateString(lang === 'fi' ? 'fi-FI' : 'en-GB', { day: 'numeric', month: 'short' })}</strong>
+                      {' · '}{r.user.name} · {r.seats} {lang === 'fi' ? 'paikkaa' : 'seat(s)'}
+                    </span>
+                    <Link
+                      href={`${langPrefix(lang)}/create-trip?${new URLSearchParams({ ride_request: String(r.id), from: r.departure_location, to: r.arrival_location, date: r.departure_date, seats: String(r.seats) })}`}
+                      className="text-sm font-bold text-[var(--brand-blue)] underline"
+                    >
+                      {lang === 'fi' ? 'Tarjoa kyytiä' : 'Offer a ride'}
+                    </Link>
+                  </li>
+                ))}
+              </ul>
+            </div>
+          )}
           
           {source === 'digitransit' && (
             <div className="mb-10 p-6 bg-[#ebf3e2] border-2 border-[#c4d8b4] rounded-[1.75rem] flex items-center gap-8 shadow-xl shadow-green-900/5 border-l-8 border-l-green-600 relative overflow-hidden group">
@@ -235,7 +302,7 @@ export default async function RoutePage({ params }: Props) {
                   <span className="w-10 h-10 bg-[var(--brand-blue)] rounded-xl flex items-center justify-center text-white text-lg shadow-lg shadow-green-200">
                     {trips.length + externalOptions.length}
                   </span>
-                  {t.trips.optionsFound || 'Opciones encontradas'}
+                  {t.trips.optionsFound || (lang === 'fi' ? 'Vaihtoehtoa löytyi' : 'Options found')}
                 </h2>
               </div>
 
@@ -331,6 +398,23 @@ export default async function RoutePage({ params }: Props) {
               </Link>
             </div>
           </div>
+          <RouteFaq items={faq} title={lang === 'fi' ? 'Usein kysyttyä' : 'Frequently asked questions'} />
+
+          {related.length > 0 && (
+            <div className="mt-10">
+              <h2 className="mb-4 text-lg font-bold text-[var(--brand-dark)]">{lang === 'fi' ? 'Muita reittejä' : 'Related routes'}</h2>
+              <div className="flex flex-wrap gap-2">
+                {related.map((r) => (
+                  <Link key={r.slug} href={`${langPrefix(lang)}/kimppakyyti/${r.slug}`} className="rounded-full border-2 border-[#c4d8b4] bg-white px-4 py-2 text-sm font-semibold text-[var(--brand-dark)] hover:border-[var(--brand-blue)]">
+                    {r.from} → {r.to}
+                  </Link>
+                ))}
+                <Link href={`${langPrefix(lang)}/kimppakyyti`} className="rounded-full px-4 py-2 text-sm font-bold text-[var(--brand-blue)] underline">
+                  {lang === 'fi' ? 'Kaikki reitit' : 'All routes'}
+                </Link>
+              </div>
+            </div>
+          )}
         </div>
       </section>
     </div>

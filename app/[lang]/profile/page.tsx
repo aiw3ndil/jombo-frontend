@@ -6,6 +6,7 @@ import { useAuth } from "@/app/contexts/AuthContext";
 import { useTranslation } from "@/app/hooks/useTranslation";
 import { toast } from "sonner";
 import { deleteUser, changePassword } from "@/app/lib/api/auth";
+import VerificationPanel from "@/app/components/VerificationPanel";
 
 export default function ProfilePage({ params }: { params: Promise<{ lang: string }> }) {
   const router = useRouter();
@@ -15,7 +16,9 @@ export default function ProfilePage({ params }: { params: Promise<{ lang: string
   const [formData, setFormData] = useState({
     name: "",
     email: "",
-    language: "fi"
+    language: "fi",
+    bio: "",
+    phone: ""
   });
   const [passwordData, setPasswordData] = useState({
     current_password: "",
@@ -45,7 +48,9 @@ export default function ProfilePage({ params }: { params: Promise<{ lang: string
       setFormData({
         name: user.name || "",
         email: user.email || "",
-        language: user.language === "en" || user.language === "fi" ? user.language : lang
+        language: user.language === "en" || user.language === "fi" ? user.language : lang,
+        bio: user.bio || "",
+        phone: user.phone || ""
       });
       const pictureUrl = user.picture_url || user.picture;
       if (pictureUrl) {
@@ -83,6 +88,8 @@ export default function ProfilePage({ params }: { params: Promise<{ lang: string
       const formDataToSend = new FormData();
       formDataToSend.append("name", formData.name);
       formDataToSend.append("language", formData.language);
+      formDataToSend.append("bio", formData.bio);
+      formDataToSend.append("phone", formData.phone);
 
       if (pictureFile) {
         formDataToSend.append("picture", pictureFile);
@@ -103,7 +110,7 @@ export default function ProfilePage({ params }: { params: Promise<{ lang: string
         } catch (e) {
           throw new Error(`Server error: ${response.status}`);
         }
-        throw new Error(errorData.error || errorData.message || "Error updating profile");
+        throw new Error(errorData.errors?.join(", ") || errorData.error || errorData.message || "Error updating profile");
       }
 
       const data = responseText ? JSON.parse(responseText) : {};
@@ -119,7 +126,7 @@ export default function ProfilePage({ params }: { params: Promise<{ lang: string
     }
   };
 
-  const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>) => {
+  const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement | HTMLTextAreaElement>) => {
     setFormData({
       ...formData,
       [e.target.name]: e.target.value
@@ -306,6 +313,35 @@ export default function ProfilePage({ params }: { params: Promise<{ lang: string
                 </div>
               </div>
 
+              <div className="grid md:grid-cols-2 gap-8">
+                <div className="space-y-2 md:col-span-2">
+                  <label className="form-label">{t("profile.bio", "About you")}</label>
+                  <textarea
+                    name="bio"
+                    value={formData.bio}
+                    onChange={handleChange}
+                    maxLength={500}
+                    rows={3}
+                    className="form-input resize-y"
+                    placeholder={t("profile.bioPlaceholder", "E.g. I drive Tampere–Helsinki every Friday, love podcasts and coffee stops.")}
+                  />
+                  <p className="text-xs text-[var(--brand-neutral)]">{formData.bio.length}/500 · {t("profile.bioPublic", "Shown on your public profile")}</p>
+                </div>
+                <div className="space-y-2">
+                  <label className="form-label">{t("profile.phone", "Phone number")}</label>
+                  <input
+                    type="tel"
+                    name="phone"
+                    value={formData.phone}
+                    onChange={handleChange}
+                    className="form-input"
+                    placeholder="+358 40 123 4567"
+                    autoComplete="tel"
+                  />
+                  <p className="text-xs text-[var(--brand-neutral)]">{t("profile.phonePrivate", "Private. Only used for verification.")}</p>
+                </div>
+              </div>
+
               <div className="pt-4">
                 <button type="submit" disabled={loading} className="btn-primary w-full md:w-auto min-w-[240px]">
                   {loading ? (
@@ -318,6 +354,8 @@ export default function ProfilePage({ params }: { params: Promise<{ lang: string
               </div>
             </form>
           </div>
+
+          <VerificationPanel />
 
           {/* Sección: Seguridad */}
           <div className="form-card">

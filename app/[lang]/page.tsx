@@ -6,6 +6,8 @@ import { useRouter, useParams } from "next/navigation";
 import { toast } from "sonner";
 import LocationInput from "@/app/components/LocationInput";
 import Landscape from "@/app/components/Landscape";
+import Link from "next/link";
+import { TOP_FINNISH_ROUTES } from "@/app/lib/constants/routes";
 
 export default function Home() {
   const { t, loading } = useTranslation();
@@ -19,7 +21,7 @@ export default function Home() {
     return (
       <div className="min-h-screen bg-[var(--page-bg)] flex flex-col items-center justify-center">
         <div className="w-12 h-12 border-4 border-[#c4d8b4] border-t-[var(--brand-blue)] rounded-full animate-spin mb-6"></div>
-        <p className="text-[var(--brand-neutral)] text-base font-semibold">Loading...</p>
+        <p className="text-[var(--brand-neutral)] text-base font-semibold">…</p>
       </div>
     );
   }
@@ -117,6 +119,56 @@ export default function Home() {
                 <p className="text-[var(--brand-neutral)] leading-relaxed font-light">{step.desc}</p>
               </div>
             ))}
+          </div>
+          <div className="mt-8 text-center">
+            <Link href={`${langPrefix(lang)}/how-it-works`} className="font-bold text-[var(--brand-blue)] underline">
+              {t("home.moreHowItWorks", "Read more about how Jombo works")} →
+            </Link>
+          </div>
+        </div>
+      </section>
+
+      {/* ── FUNCIONES ── */}
+      <section className="py-12 px-6 bg-white">
+        <div className="max-w-6xl mx-auto grid gap-4 md:grid-cols-4">
+          {[
+            { icon: "📍", title: t("home.features.stops.title", "Rides with stops"), text: t("home.features.stops.text", "Hop on or off along the way and pay only for your part.") },
+            { icon: "⚡", title: t("home.features.instant.title", "Instant booking"), text: t("home.features.instant.text", "Many drivers confirm seats automatically.") },
+            { icon: "✅", title: t("home.features.verified.title", "Verified members"), text: t("home.features.verified.text", "Email and phone badges, reviews and experience levels.") },
+            { icon: "🔔", title: t("home.features.alerts.title", "Ride alerts"), text: t("home.features.alerts.text", "Get an email when a ride for your route is published.") },
+          ].map((f) => (
+            <div key={f.title} className="rounded-2xl border-2 border-[#c4d8b4] bg-[#f7fbf3] p-5">
+              <div className="mb-2 text-2xl" aria-hidden="true">{f.icon}</div>
+              <h3 className="font-bold text-[var(--brand-dark)]">{f.title}</h3>
+              <p className="text-sm text-[var(--brand-neutral)]">{f.text}</p>
+            </div>
+          ))}
+        </div>
+      </section>
+
+      {/* ── RUTAS POPULARES ── */}
+      <section className="py-12 px-6 bg-gradient-to-b from-white to-[#eef6e4]">
+        <div className="max-w-6xl mx-auto">
+          <div className="mb-6 flex flex-wrap items-end justify-between gap-3">
+            <h2 className="text-2xl font-bold text-[var(--brand-dark)]">{t("home.popularRoutes", "Popular routes")}</h2>
+            <Link href={`${langPrefix(lang)}/kimppakyyti`} className="font-bold text-[var(--brand-blue)] underline">
+              {t("footer.allRoutes", "All routes")} →
+            </Link>
+          </div>
+          <div className="grid gap-3 sm:grid-cols-2 lg:grid-cols-4">
+            {TOP_FINNISH_ROUTES.filter((_, i) => i % 2 === 0).slice(0, 8).map((r) => (
+              <Link key={r.slug} href={`${langPrefix(lang)}/kimppakyyti/${r.slug}`} className="rounded-xl border-2 border-[#c4d8b4] bg-white px-4 py-3 hover:border-[var(--brand-blue)]">
+                <span className="block font-semibold text-[var(--brand-dark)]">{r.from} → {r.to}</span>
+                <span className="text-sm text-[var(--brand-neutral)]">{r.distance} · {r.duration}</span>
+              </Link>
+            ))}
+          </div>
+          <div className="mt-8 flex flex-col items-center gap-3 rounded-2xl border-2 border-[#c4d8b4] bg-white p-6 text-center md:flex-row md:text-left">
+            <div className="flex-1">
+              <p className="font-bold text-[var(--brand-dark)]">🙋 {t("home.requestsTitle", "Can't find your route?")}</p>
+              <p className="text-sm text-[var(--brand-neutral)]">{t("home.requestsText", "Post a ride request and let drivers come to you.")}</p>
+            </div>
+            <Link href={`${langPrefix(lang)}/ride-requests`} className="btn-primary px-5 py-2.5">{t("menu.rideRequests", "Looking for a ride")}</Link>
           </div>
         </div>
       </section>

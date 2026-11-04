@@ -276,7 +276,13 @@
     "messages": "Viestit",
     "myBookings": "Varaukseni",
     "myTrips": "Matkani",
-    "logout": "Kirjaudu ulos"
+    "logout": "Kirjaudu ulos",
+    "alerts": "Hälytykset ja pyynnöt",
+    "howItWorks": "Näin se toimii",
+    "main": "Päävalikko",
+    "notifications": "Ilmoitukset",
+    "publish": "Tarjoa kyytiä",
+    "rideRequests": "Kyytiä etsitään"
   },
   "notifications": {
     "title": "Ilmoitukset",
@@ -325,7 +331,38 @@
     "avatarInfo": "Lataa selkeä kuva luottamuksen lisäämiseksi",
     "securityTitle": "Tilun Turvallisuus",
     "securityDescription": "Pidä tilisi suojatuna vahvalla salasanalla.",
-    "processing": "Käsitellään..."
+    "processing": "Käsitellään...",
+    "about": "Esittely",
+    "bioPublic": "Näkyy julkisessa profiilissasi",
+    "latestReviews": "Uusimmat arviot",
+    "memberSince": "Jäsen alkaen",
+    "noReviews": "Ei vielä arvioita",
+    "noUpcoming": "Ei tulevia kyytejä juuri nyt.",
+    "phonePrivate": "Yksityinen. Käytetään vain vahvistukseen.",
+    "reviews": "arviota",
+    "stats": {
+      "driven": "Ajetut kyydit",
+      "rating": "Arvosana",
+      "reviews": "Arviot",
+      "taken": "Kyydit matkustajana"
+    },
+    "upcoming": "Tulevat kyydit",
+    "verified": {
+      "email": "Sähköposti vahvistettu",
+      "google": "Google-tili",
+      "phone": "Puhelin vahvistettu"
+    },
+    "viewPublic": "Näytä julkinen profiilini",
+    "level": {
+      "new": "Uusi jäsen",
+      "regular": "Tuttu kuljettaja",
+      "experienced": "Kokenut kuljettaja",
+      "expert": "Huippukuljettaja"
+    },
+    "unverified": {
+      "email": "Sähköposti vahvistamatta",
+      "phone": "Puhelin vahvistamatta"
+    }
   },
   "trips": {
     "title": "Saatavilla olevat matkat",
@@ -366,7 +403,10 @@
     "madeWith": "Tehty ❤️ planeetalle",
     "trustedBy": "Yli 10 000 käyttäjän luottama",
     "dataDeletion": "Tietojen Poistaminen",
-    "rights": "Kaikki oikeudet pidätetään."
+    "rights": "Kaikki oikeudet pidätetään.",
+    "allRoutes": "Kaikki reitit",
+    "howItWorks": "Näin se toimii",
+    "safety": "Turvallisuus"
   },
   "terms": {
     "title": "Käyttöehdot",
@@ -514,5 +554,188 @@
       "beige": "Beige",
       "other": "Muu"
     }
+  },
+  "alerts": {
+    "anyDate": "Mikä tahansa päivä",
+    "create": "Luo hälytys",
+    "created": "Hälytys tallennettu. Kerromme, kun kyyti julkaistaan.",
+    "ctaText": "Lähetämme sähköpostin heti, kun joku julkaisee kyydin {{from}} → {{to}}.",
+    "ctaTitle": "Ei vielä kyytiä? Saat ilmoituksen.",
+    "ctaTitleResults": "Eikö aika sovi?",
+    "delete": "Poista",
+    "error": "Hälytyksen tallennus epäonnistui",
+    "loadError": "Hälytysten lataus epäonnistui",
+    "myRequests": "Omat kyytipyynnöt",
+    "noRequests": "Et ole julkaissut kyytipyyntöjä.",
+    "none": "Ei hälytyksiä. Hae reittiä ja napauta ”Luo hälytys”.",
+    "saved": "Hälytys päällä",
+    "searchAlerts": "Hakuhälytykset",
+    "subtitle": "Lähetämme sähköpostin, kun sopiva kyyti julkaistaan.",
+    "title": "Hälytykset ja pyynnöt"
+  },
+  "booking": {
+    "bookNow": "Varaa nyt",
+    "booked": "Varattu",
+    "confirmedNow": "Paikkasi on vahvistettu!",
+    "full": "Täynnä",
+    "instantInfo": "Pikavaraus: paikkasi vahvistuu heti.",
+    "requestInfo": "Kuljettaja käsittelee pyyntösi ja vahvistaa sen.",
+    "requested": "Pyydetty",
+    "sendRequest": "Lähetä pyyntö",
+    "total": "Yhteensä kuljettajalle"
+  },
+  "filters": {
+    "afternoon": "12–18",
+    "anySeats": "Kaikki paikat",
+    "anyTime": "Mihin aikaan tahansa",
+    "clear": "Tyhjennä",
+    "date": "Päivä",
+    "evening": "Klo 18 jälkeen",
+    "morning": "Ennen klo 12",
+    "noResultsFiltered": "Yksikään kyyti ei vastaa suodattimia. Kokeile poistaa joitakin.",
+    "seats": "Paikat",
+    "sort": "Järjestä",
+    "sortDuration": "Lyhin matka",
+    "sortPrice": "Halvin ensin",
+    "sortTime": "Aikaisin lähtö",
+    "timeOfDay": "Lähtöaika",
+    "title": "Suodattimet"
+  },
+  "home": {
+    "features": {
+      "alerts": {
+        "text": "Saat sähköpostin, kun reitillesi julkaistaan kyyti.",
+        "title": "Kyytihälytykset"
+      },
+      "instant": {
+        "text": "Monet kuljettajat vahvistavat paikat automaattisesti.",
+        "title": "Pikavaraus"
+      },
+      "stops": {
+        "text": "Nouse kyytiin tai jää pois matkan varrella ja maksa vain oma osuutesi.",
+        "title": "Kyydit välipysähdyksillä"
+      },
+      "verified": {
+        "text": "Sähköposti- ja puhelinvahvistukset, arviot ja kokemustasot.",
+        "title": "Vahvistetut jäsenet"
+      }
+    },
+    "moreHowItWorks": "Lue lisää Jombon toiminnasta",
+    "popularRoutes": "Suositut reitit",
+    "requestsText": "Julkaise kyytipyyntö, niin kuljettajat löytävät sinut.",
+    "requestsTitle": "Eikö reittiäsi löydy?"
+  },
+  "prefs": {
+    "chattiness": {
+      "chatty": "Tykkää jutella",
+      "normal": "Vähän juttelua",
+      "quiet": "Hiljainen kyyti"
+    },
+    "form": {
+      "chattiness": "Keskustelu",
+      "instant": "Pikavaraus",
+      "instantHelp": "Matkustajat vahvistetaan automaattisesti. Poista käytöstä, jos haluat hyväksyä jokaisen pyynnön itse.",
+      "luggage": "Matkatavarat per matkustaja",
+      "maxTwoBack": "Enintään 2 takapenkillä",
+      "maxTwoBackHelp": "Enemmän tilaa matkustajille",
+      "music": "Musiikkia matkalla",
+      "pets": "Lemmikit tervetulleita",
+      "smoking": "Tupakointi sallittu"
+    },
+    "instant": "Pikavaraus",
+    "luggage": {
+      "large": "Iso matkalaukku",
+      "medium": "Keskikokoinen laukku",
+      "small": "Pieni laukku"
+    },
+    "maxTwoBack": "Max 2 takana",
+    "music": "Musiikkia",
+    "noPets": "Ei lemmikkejä",
+    "noSmoking": "Savuton",
+    "pets": "Lemmikit OK",
+    "smoking": "Tupakointi OK",
+    "step": "Asetukset ja varaus",
+    "title": "Asetukset"
+  },
+  "price": {
+    "apply": "Käytä",
+    "max": "enintään",
+    "suggested": "Hintasuositus",
+    "tooHigh": "Hinta ylittää kulujenjaon rajan tälle matkalle"
+  },
+  "rideRequests": {
+    "close": "Löysin kyydin",
+    "created": "Pyyntö julkaistu. Saat sähköpostin, kun kuljettaja tarjoaa kyytiä.",
+    "days": "pv",
+    "daysLong": "päivää",
+    "empty": "Ei vielä kyytipyyntöjä",
+    "emptyHint": "Ole ensimmäinen: kerro minne olet menossa, niin kuljettajat näkevät sen.",
+    "error": "Pyynnön julkaisu epäonnistui",
+    "exactDate": "Tarkka päivä",
+    "flexible": "Joustavuus",
+    "manage": "Hallitse pyyntöäni",
+    "maxPrice": "Enimmäishinta per paikka (€, valinnainen)",
+    "newSubtitle": "Kerro kuljettajille minne ja milloin olet menossa. Sopivat kyydit lähetetään sähköpostiisi.",
+    "newTitle": "Julkaise kyytipyyntö",
+    "note": "Viesti kuljettajille (valinnainen)",
+    "notePlaceholder": "Esim. minulla on pieni reppu ja voin tavata missä tahansa keskustassa.",
+    "offer": "Tarjoa kyytiä",
+    "post": "Julkaise kyytipyyntö",
+    "submit": "Julkaise pyyntö",
+    "subtitle": "Matkustajat kertovat minne he ovat menossa. Ajatko samaan suuntaan? Tarjoa kyytiä ja täytä tyhjät paikat.",
+    "title": "Kyytiä etsitään",
+    "upTo": "enintään",
+    "status": {
+      "open": "Avoin",
+      "matched": "Löytyi",
+      "closed": "Suljettu"
+    }
+  },
+  "stops": {
+    "add": "Lisää pysähdys",
+    "fullRoute": "Koko reitti",
+    "help": "Matkustajat voivat nousta kyytiin tai jäädä pois pysähdyksillä ja maksaa vain oman osuutensa.",
+    "moveDown": "Siirrä alas",
+    "moveUp": "Siirrä ylös",
+    "partOf": "Osa kyydistä",
+    "place": "Pysähdys",
+    "placePlaceholder": "Kaupunki tai paikkakunta",
+    "priceFromOrigin": "Hinta lähtöpaikasta",
+    "remove": "Poista pysähdys",
+    "stop": "Pysähdys",
+    "timeRequired": "Lisää aika jokaiselle pysähdykselle",
+    "title": "Pysähdykset matkan varrella",
+    "via": "kautta"
+  },
+  "trip": {
+    "departed": "Jo lähtenyt",
+    "driverNotes": "Kuljettajan lisätiedot",
+    "route": "Reitti",
+    "yourTrip": "Tämä on oma kyytisi"
+  },
+  "verify": {
+    "code": "Koodi",
+    "codeSent": "Koodi lähetetty tekstiviestillä.",
+    "confirm": "Vahvista",
+    "email": "Sähköposti",
+    "emailConfirmedText": "Kiitos! Profiilissasi näkyy nyt vahvistetun sähköpostin merkki.",
+    "emailConfirmedTitle": "Sähköposti vahvistettu",
+    "emailDone": "Sähköpostisi on vahvistettu.",
+    "emailHelp": "Lähetämme linkin osoitteesi vahvistamiseksi.",
+    "emailSent": "Tarkista sähköpostisi vahvistuslinkkiä varten.",
+    "error": "Jokin meni pieleen",
+    "findRide": "Etsi kyyti",
+    "goProfile": "Siirry profiiliin",
+    "linkInvalidText": "Linkki on ehkä jo käytetty. Voit pyytää uuden profiilistasi.",
+    "linkInvalidTitle": "Linkki ei ole voimassa",
+    "phone": "Puhelin",
+    "phoneAddFirst": "Lisää puhelinnumerosi yllä ja tallenna, niin voit vahvistaa sen.",
+    "phoneDone": "Puhelinnumerosi on vahvistettu.",
+    "phoneHelp": "Lähetämme 6-numeroisen koodin numeroon",
+    "phoneUnavailable": "Puhelinvahvistus tulossa pian.",
+    "sendCode": "Lähetä koodi",
+    "sendLink": "Lähetä linkki",
+    "subtitle": "Vahvistetut jäsenet saavat enemmän varauksia. Puhelinnumeroasi ja sähköpostiasi ei koskaan näytetä julkisesti.",
+    "title": "Luottamus ja vahvistus"
   }
 }

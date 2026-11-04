@@ -12,7 +12,10 @@ import BookTripModal from "@/app/components/BookTripModal";
 import { toast } from "sonner";
 import LocationInput from "@/app/components/LocationInput";
 import ExternalTransportCard from "@/app/components/ExternalTransportCard";
-import { searchTrips, Trip, ExternalOption, SearchResponse } from "@/app/lib/api/trips";
+import { searchTrips, Trip, ExternalOption, SearchResponse, SearchFilters, FILTER_KEYS } from "@/app/lib/api/trips";
+import SearchFiltersBar, { filtersFromParams, activeFilterCount } from "@/app/components/SearchFiltersBar";
+import TripPreferences from "@/app/components/TripPreferences";
+import SearchAlertCta from "@/app/components/SearchAlertCta";
 
 export default function SearchPage() {
   const { t, loading: translationsLoading } = useTranslation();
@@ -22,6 +25,8 @@ export default function SearchPage() {
   const lang = (params?.lang as string) || "fi";
   const from = searchParams.get("from") || "";
   const to = searchParams.get("to") || "";
+  const queryKey = searchParams.toString();
+  const filters = filtersFromParams(new URLSearchParams(queryKey));
   const { user } = useAuth();
 
   const [trips, setTrips] = useState<Trip[]>([]);
@@ -48,7 +53,7 @@ export default function SearchPage() {
       try {
         setLoading(true);
         setError("");
-        const response: SearchResponse = await searchTrips(from, to);
+        const response: SearchResponse = await searchTrips(from, to, filtersFromParams(new URLSearchParams(queryKey)));
         setTrips(response.trips);
         setExternalOptions(response.external_options);
         setIsFallback(response.is_fallback);
@@ -72,7 +77,7 @@ export default function SearchPage() {
       }
     }
     fetchTrips();
-  }, [from, to, lang, router, user]);
+  }, [queryKey, lang, router, user]);
 
   if (translationsLoading) {
     return (
@@ -95,12 +100,33 @@ export default function SearchPage() {
     setBookTripModalOpen(true);
   };
 
+  const applyFilters = (next: SearchFilters) => {
+    const p = new URLSearchParams();
+    if (from) p.set("from", from);
+    if (to) p.set("to", to);
+    for (const key of FILTER_KEYS) {
+      const v = next[key];
+      if (v !== undefined && v !== "" && v !== false && v !== 0 && !(key === "sort" && v === "departure_time")) p.set(key, String(v));
+    }
+    router.replace(`${langPrefix(lang)}/search?${p.toString()}`, { scroll: false });
+  };
+
   const handleConfirmBooking = async (tripId: number, seatsNumber: number) => {
     setBookingLoading(tripId);
+    const bookedTrip = trips.find((tr) => tr.id === tripId);
     try {
-      await createBooking({ trip_id: tripId, seats: seatsNumber });
-      toast.success(t("page.search.bookingSuccess") || "Booking completed successfully");
-      const response = await searchTrips(from, to);
+      const booking = await createBooking({
+        trip_id: tripId,
+        seats: seatsNumber,
+        pickup_location: bookedTrip?.segment?.from,
+        dropoff_location: bookedTrip?.segment?.to,
+      });
+      toast.success(
+        booking.status === "confirmed"
+          ? t("booking.confirmedNow", "Your seat is confirmed!")
+          : t("page.search.bookingSuccess") || "Booking completed successfully"
+      );
+      const response = await searchTrips(from, to, filters);
       setTrips(response.trips);
       setExternalOptions(response.external_options);
       setSource(response.source);
@@ -247,6 +273,10 @@ export default function SearchPage() {
             </div>
           )}
 
+          <SearchFiltersBar value={filters} onChange={applyFilters} />
+
+          {from && to && <SearchAlertCta from={from} to={to} date={filters.date} hasResults={trips.length > 0} />}
+
           {/* Sin resultados */}
           {trips.length === 0 && externalOptions.length === 0 ? (
             <div className="text-center py-12 bg-[#ebf3e2]/30 rounded-[1.75rem] border-2 border-dashed border-[#c4d8b4]">
@@ -256,7 +286,11 @@ export default function SearchPage() {
                 </svg>
               </div>
               <h2 className="text-2xl font-bold text-[var(--brand-dark)] mb-4">{t("page.search.noResults") || "No trips found"}</h2>
-              <p className="text-[var(--brand-neutral)] text-lg mb-8 max-w-md mx-auto font-medium">{t("page.search.noResultsHint", "Try changing the cities or search again later.")}</p>
+              <p className="text-[var(--brand-neutral)] text-lg mb-8 max-w-md mx-auto font-medium">
+                {activeFilterCount(filters) > 0
+                  ? t("filters.noResultsFiltered", "No trips match these filters. Try removing some of them.")
+                  : t("page.search.noResultsHint", "Try changing the cities or search again later.")}
+              </p>
               <button onClick={() => router.push(localePath(lang))} className="btn-secondary px-8 py-4">
                 {t("page.search.back") || "Back"}
               </button>
@@ -272,6 +306,8 @@ export default function SearchPage() {
                   : null;
 
                 const bookingStatus = userBookings.get(trip.id);
+                const segmentTime = trip.segment?.departure_time ?? trip.departure_time;
+                const shownPrice = Number(trip.segment?.price ?? trip.price);
 
                 return (
                   <div key={trip.id} className="result-card group">
@@ -303,7 +339,14 @@ export default function SearchPage() {
                             </svg>
                           </div>
                         </div>
-                        <p className="mt-4 font-black text-[var(--brand-dark)] text-lg">{trip.driver.name}</p>
+                        <Link href={`${langPrefix(lang)}/users/${trip.driver.id}`} className="mt-4 font-black text-[var(--brand-dark)] text-lg hover:text-[var(--brand-blue)] hover:underline">
+                          {trip.driver.name}
+                        </Link>
+                        {!!trip.driver.total_reviews && (
+                          <p className="text-sm font-semibold text-[var(--brand-neutral)]">
+                            ★ {Number(trip.driver.average_rating).toFixed(1)} · {trip.driver.total_reviews}
+                          </p>
+                        )}
                         <button
                           onClick={() => handleOpenReviews(trip.driver.id, trip.driver.name)}
                           className="text-[var(--brand-blue)] hover:text-[var(--brand-dark)] text-sm font-bold uppercase tracking-widest mt-2 transition-colors cursor-pointer"
@@ -320,11 +363,11 @@ export default function SearchPage() {
                               <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z" />
                             </svg>
                             <span className="uppercase tracking-wider">
-                              {new Date(trip.departure_time).toLocaleDateString(lang, { day: 'numeric', month: 'long' })}
+                              {new Date(segmentTime).toLocaleDateString(lang, { day: 'numeric', month: 'long' })}
                             </span>
                             <span className="text-[var(--brand-neutral)] mx-1">|</span>
                             <span className="text-[var(--brand-dark)]">
-                              {new Date(trip.departure_time).toLocaleTimeString(lang, { hour: '2-digit', minute: '2-digit' })}h
+                              {new Date(segmentTime).toLocaleTimeString(lang, { hour: '2-digit', minute: '2-digit' })}
                             </span>
                           </div>
                           {trip.available_seats <= 2 && trip.available_seats > 0 && (
@@ -335,10 +378,20 @@ export default function SearchPage() {
                         </div>
 
                         <div>
-                          <h3 className="text-3xl font-black text-[var(--brand-dark)] leading-tight tracking-tight">
-                            {trip.departure_location} <span className="text-[var(--brand-neutral)] mx-2">→</span> {trip.arrival_location}
-                          </h3>
+                          <Link href={`${langPrefix(lang)}/trips/${trip.id}${trip.segment ? `?${new URLSearchParams({ from: trip.segment.from, to: trip.segment.to })}` : ""}`} className="block hover:text-[var(--brand-blue)]">
+                            <h3 className="text-2xl font-black text-[var(--brand-dark)] leading-tight tracking-tight hover:underline">
+                              {trip.segment?.from ?? trip.departure_location} <span className="text-[var(--brand-neutral)] mx-2">→</span> {trip.segment?.to ?? trip.arrival_location}
+                            </h3>
+                          </Link>
+                          {(trip.segment || (trip.stops && trip.stops.length > 0)) && (
+                            <p className="mt-1 text-sm text-[var(--brand-neutral)]">
+                              {t("stops.fullRoute", "Full route")}: {[trip.departure_location, ...(trip.stops || []).map((st) => st.location), trip.arrival_location].join(" → ")}
+                            </p>
+                          )}
                           <VehicleSummary vehicle={trip.vehicle} className="mt-3" />
+                          <div className="mt-3">
+                            <TripPreferences trip={trip} compact />
+                          </div>
                         </div>
 
                         <div className="grid grid-cols-2 gap-6">
@@ -350,7 +403,7 @@ export default function SearchPage() {
                           </div>
                           <div className="bg-[#ebf3e2]/50 border border-[#c4d8b4] rounded-2xl p-4">
                             <p className="text-xs font-bold text-[var(--brand-neutral)] uppercase tracking-widest mb-1">{t("page.search.price") || "Price"}</p>
-                            <p className="text-2xl font-black text-[var(--brand-neutral)] italic">€{Number(trip.price).toFixed(2)}</p>
+                            <p className="text-2xl font-black text-[var(--brand-dark)]">€{shownPrice.toFixed(2)}</p>
                           </div>
                         </div>
                       </div>
@@ -373,11 +426,13 @@ export default function SearchPage() {
                           {bookingLoading === trip.id
                             ? "..."
                             : bookingStatus === "pending"
-                            ? "SOLICITADO ✓"
+                            ? `${t("booking.requested", "Requested")} ✓`
                             : bookingStatus === "confirmed"
-                            ? "RESERVADO ✓"
+                            ? `${t("booking.booked", "Booked")} ✓`
                             : trip.available_seats === 0
-                            ? "COMPLETO"
+                            ? t("booking.full", "Full")
+                            : trip.instant_booking
+                            ? `⚡ ${t("booking.bookNow", "Book now")}`
                             : t("page.search.book") || "Book"}
                         </button>
                         

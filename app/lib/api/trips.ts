@@ -32,20 +32,72 @@ export interface ExternalOption {
   url: string;
 }
 
-export interface Trip {
+export type Chattiness = "quiet" | "normal" | "chatty";
+export type LuggageSize = "small" | "medium" | "large";
+
+export interface TripPreferencesData {
+  instant_booking: boolean;
+  pets_allowed: boolean;
+  smoking_allowed: boolean;
+  music_allowed: boolean;
+  max_two_back: boolean;
+  chattiness: Chattiness;
+  luggage_size: LuggageSize;
+}
+
+export const DEFAULT_PREFERENCES: TripPreferencesData = {
+  instant_booking: false,
+  pets_allowed: false,
+  smoking_allowed: false,
+  music_allowed: false,
+  max_two_back: false,
+  chattiness: "normal",
+  luggage_size: "medium",
+};
+
+export interface TripStop {
+  id?: number;
+  location: string;
+  position?: number;
+  departure_time: string;
+  price_from_origin: number | string;
+}
+
+/** Tramo del viaje que corresponde a la búsqueda (solo si no es el viaje completo) */
+export interface TripSegment {
+  from: string;
+  to: string;
+  departure_time: string;
+  arrival_time?: string | null;
+  price: number;
+  partial: boolean;
+}
+
+export interface TripDriver {
+  id: number;
+  name: string;
+  picture_url?: string | null;
+  average_rating?: number;
+  total_reviews?: number;
+  experience_level?: string;
+  verifications?: { email: boolean; phone: boolean; google: boolean };
+}
+
+export interface Trip extends Partial<TripPreferencesData> {
   id: number;
   departure_location: string;
   arrival_location: string;
   departure_time: string;
   available_seats: number;
   price: number;
-  driver: {
-    id: number;
-    name: string;
-    email: string;
-    picture_url?: string;
-  };
+  driver: TripDriver;
   description?: string | null;
+  stops?: TripStop[];
+  segment?: TripSegment;
+  distance_km?: number | null;
+  duration_minutes?: number | null;
+  max_price?: number | null;
+  suggested_price?: number | null;
   vehicle?: Vehicle | null;
   is_recurring?: boolean;
   parent_id?: number | null;
@@ -60,26 +112,41 @@ export interface SearchResponse {
   is_fallback: boolean;
 }
 
+export interface SearchFilters {
+  date?: string;
+  time_of_day?: "morning" | "afternoon" | "evening" | "";
+  min_seats?: number;
+  instant_booking?: boolean;
+  pets?: boolean;
+  no_smoking?: boolean;
+  max_two_back?: boolean;
+  max_price?: number;
+  sort?: "departure_time" | "price" | "duration" | "";
+}
+
+export const FILTER_KEYS: (keyof SearchFilters)[] = [
+  "date", "time_of_day", "min_seats", "instant_booking", "pets", "no_smoking", "max_two_back", "max_price", "sort",
+];
+
 export async function searchTrips(
   departureLocation?: string,
-  arrivalLocation?: string
+  arrivalLocation?: string,
+  filters: SearchFilters = {}
 ): Promise<SearchResponse> {
   const params = new URLSearchParams();
   if (departureLocation) params.set("departure_location", departureLocation);
   if (arrivalLocation) params.set("arrival_location", arrivalLocation);
-
-  let url = `${API_BASE}/api/v1/trips/search?${params.toString()}`;
-  if (departureLocation && arrivalLocation) {
-    // Si tenemos ambos, usamos la ruta SEO que es más específica
-    const from = encodeURIComponent(departureLocation.toLowerCase());
-    const to = encodeURIComponent(arrivalLocation.toLowerCase());
-    const seoPath = `${from}-${to}`;
-    url = `${API_BASE}/api/v1/trips/${seoPath}`;
+  for (const key of FILTER_KEYS) {
+    const value = filters[key];
+    if (value !== undefined && value !== "" && value !== false && value !== 0) params.set(key, String(value));
   }
+
+  const url = `${API_BASE}/api/v1/trips/search?${params.toString()}`;
 
   const res = await fetch(url, {
     method: "GET",
     credentials: "include",
+    cache: "no-store",
   });
 
   if (!res.ok) {
@@ -116,6 +183,24 @@ export async function searchTrips(
   };
   
   return response;
+}
+
+export async function getTrip(tripId: number | string): Promise<Trip | null> {
+  const res = await fetch(`${API_BASE}/api/v1/trips/${tripId}`, { credentials: "include", cache: "no-store" });
+  if (res.status === 404) return null;
+  if (!res.ok) throw new Error("Error loading trip");
+  return res.json();
+}
+
+/** Precio orientativo por plaza para compartir gastos (igual que el backend) */
+export function suggestedPriceFor(distanceKm?: number | null) {
+  if (!distanceKm) return null;
+  return Math.max(Math.round(distanceKm * 0.065), 1);
+}
+
+export function maxPriceFor(distanceKm?: number | null) {
+  if (!distanceKm) return null;
+  return Math.max(Math.ceil(distanceKm * 0.12), 2);
 }
 
 export async function getMyTrips(): Promise<Trip[]> {
@@ -165,7 +250,7 @@ export async function getTripBookings(tripId: number): Promise<any[]> {
   return data;
 }
 
-export interface CreateTripData {
+export type CreateTripData = {
   departure_location: string;
   arrival_location: string;
   departure_time: string;
@@ -179,7 +264,13 @@ export interface CreateTripData {
   is_recurring?: boolean;
   recurrence_pattern?: string;
   recurrence_until?: string;
-}
+  distance_km?: number | null;
+  duration_minutes?: number | null;
+  /** Lista completa de paradas; sustituye a las existentes */
+  stops?: Omit<TripStop, "id" | "position">[];
+  /** Petición de viaje a la que responde este viaje */
+  ride_request_id?: number;
+} & Partial<TripPreferencesData>;
 
 export async function createTrip(tripData: CreateTripData): Promise<Trip> {
   const url = `${API_BASE}/api/v1/trips`;

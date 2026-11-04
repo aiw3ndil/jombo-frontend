@@ -266,6 +266,12 @@ export default function TripDetails({ params }: { params: Promise<{ lang: string
                                                 <div className="text-xs font-bold text-[var(--brand-neutral)] uppercase tracking-widest bg-[#ebf3e2] px-4 py-1.5 rounded-full border border-[#c4d8b4]">
                                                     {booking.seats} {booking.seats === 1 ? t("page.myTrips.seat") : t("page.myTrips.seats")}
                                                 </div>
+                                                {booking.pickup_location && (booking.pickup_location !== trip.departure_location || booking.dropoff_location !== trip.arrival_location) && (
+                                                    <div className="text-xs font-bold text-[var(--brand-dark)] bg-white px-4 py-1.5 rounded-full border border-[#c4d8b4]">
+                                                        📍 {booking.pickup_location} → {booking.dropoff_location}
+                                                        {booking.price_per_seat != null && ` · ${Number(booking.price_per_seat).toFixed(2)} €`}
+                                                    </div>
+                                                )}
                                             </div>
                                         </div>
 
