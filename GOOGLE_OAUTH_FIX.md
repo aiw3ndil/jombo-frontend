@@ -133,7 +133,7 @@ bundle install
 ```bash
 # Frontend (.env.local)
 NEXT_PUBLIC_GOOGLE_CLIENT_ID=xxx.apps.googleusercontent.com
-NEXT_PUBLIC_API_BASE_URL=https://api.jombo.es
+NEXT_PUBLIC_API_BASE_URL=https://api.jombo.fi
 
 # Backend (.env)
 GOOGLE_CLIENT_ID=xxx.apps.googleusercontent.com
@@ -146,10 +146,10 @@ Deberías ver:
 ```
 🔵 [GoogleLogin] Credential received from Google { hasCredential: true, ... }
 🔵 [GoogleLogin] Sending credential to backend...
-🔵 API Request: { url: 'https://api.jombo.es/api/v1/auth/google', body: { credential: '...' } }
+🔵 API Request: { url: 'https://api.jombo.fi/api/v1/auth/google', body: { credential: '...' } }
 🔵 API Response status: 200
 🔵 [GoogleLogin] Backend login successful: { email: '...', name: '...' }
-🔵 [GoogleLogin] Redirecting to: /es
+🔵 [GoogleLogin] Redirecting to: /
 ```
 
 ### 3. Si hay errores
@@ -187,8 +187,8 @@ No cambia nada, solo verifica:
 1. **Authorized JavaScript origins:**
    ```
    http://localhost:3001
-   https://www.jombo.es
-   https://jombo.es
+   https://www.jombo.fi
+   https://jombo.fi
    ```
 
 2. **NO necesitas Authorized redirect URIs** para este flujo

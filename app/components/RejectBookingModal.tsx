@@ -33,7 +33,7 @@ const RejectBookingModal: React.FC<RejectBookingModalProps> = ({
         </div>
 
         <h3 className="text-3xl font-bold text-red-700 mb-6 font-serif italic">
-          {t("rejectBookingModalTitle") || "¿Rechazar Reserva?"}
+          {t("rejectBookingModalTitle") || "Reject booking?"}
         </h3>
         
         <div className="bg-red-50 p-6 rounded-2xl mb-10 border border-red-100">
@@ -41,7 +41,7 @@ const RejectBookingModal: React.FC<RejectBookingModalProps> = ({
             {t("rejectBookingModalMessage")
               .replace("{{userName}}", bookingDetails.userName)
               .replace("{{seats}}", String(bookingDetails.seats)) ||
-              `¿Estás seguro de rechazar la reserva de ${bookingDetails.userName} por ${bookingDetails.seats} plaza(s)?`}
+              `Are you sure you want to reject ${bookingDetails.userName}'s booking for ${bookingDetails.seats} seat(s)?`}
           </p>
           <p className="text-red-600/70 text-sm mt-4 font-medium italic">
             Esta acción liberará las plazas para otros viajeros.
@@ -54,14 +54,14 @@ const RejectBookingModal: React.FC<RejectBookingModalProps> = ({
             disabled={loading}
             className="flex-1 px-8 py-4 rounded-xl bg-gray-100 text-gray-500 font-bold hover:bg-gray-200 transition-all uppercase tracking-widest text-sm"
           >
-            {t("cancel") || "VOLVER"}
+            {t("cancel") || "Back"}
           </button>
           <button
             onClick={onConfirm}
             disabled={loading}
             className="flex-[1.5] px-8 py-4 rounded-xl bg-red-600 text-white font-bold hover:bg-red-700 transition-all shadow-lg uppercase tracking-widest text-sm"
           >
-            {loading ? (t("rejecting") || "CARGANDO...") : (t("reject") || "SÍ, RECHAZAR")}
+            {loading ? (t("rejecting") || "Rejecting...") : (t("reject") || "Reject")}
           </button>
         </div>
       </div>

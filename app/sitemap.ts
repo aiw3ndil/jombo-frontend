@@ -1,32 +1,31 @@
 import { MetadataRoute } from 'next'
- 
+import { SITE_URL, SUPPORTED_LANGS, localePath } from '@/app/lib/i18n/config'
+import { TOP_FINNISH_ROUTES } from '@/app/lib/constants/routes'
+
 export default function sitemap(): MetadataRoute.Sitemap {
-  const baseUrl = 'https://www.jombo.es'
-  const languages = ['es', 'en', 'fi']
-  
   // Páginas estáticas
-  const staticPages = ['', '/terms']
-  
-  // Generar URLs para cada idioma
+  const staticPages = ['', '/terms', ...TOP_FINNISH_ROUTES.map((route) => `/kimppakyyti/${route.slug}`)]
+
+  const url = (lang: string, page: string) => `${SITE_URL}${localePath(lang, page) === '/' ? '' : localePath(lang, page)}`
+
   const urls: MetadataRoute.Sitemap = []
-  
-  languages.forEach(lang => {
+
+  SUPPORTED_LANGS.forEach(lang => {
     staticPages.forEach(page => {
       urls.push({
-        url: `${baseUrl}/${lang}${page}`,
+        url: url(lang, page),
         lastModified: new Date(),
         changeFrequency: page === '' ? 'daily' : 'monthly',
         priority: page === '' ? 1 : 0.8,
         alternates: {
           languages: {
-            es: `${baseUrl}/es${page}`,
-            en: `${baseUrl}/en${page}`,
-            fi: `${baseUrl}/fi${page}`,
+            fi: url('fi', page),
+            en: url('en', page),
           },
         },
       })
     })
   })
-  
+
   return urls
 }

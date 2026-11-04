@@ -7,11 +7,11 @@ import { useEffect } from "react";
 export default function TermsPage() {
   const { t } = useTranslation();
   const params = useParams();
-  const lang = (params?.lang as string) || "es";
+  const lang = (params?.lang as string) || "fi";
 
   // Actualizar título y meta description
   useEffect(() => {
-    const title = t("terms.title") || "Términos y Condiciones";
+    const title = t("terms.title") || "Terms and Conditions of Use";
     document.title = `${title} | Jombo`;
 
     const metaDescription = document.querySelector('meta[name="description"]');

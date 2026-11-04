@@ -46,7 +46,8 @@
           "title": "Yhteisö",
           "description": "Tapaa uusia ihmisiä ja tee matkasta miellyttävämpi jakamalla kokemuksia."
         }
-      }
+      },
+      "fromRequired": "Syötä lähtöpaikka"
     },
     "search": {
       "searching": "Etsitään matkoja",
@@ -80,8 +81,10 @@
         "noReviews": "Tällä käyttäjällä ei ole vielä arvosteluja",
         "anonymous": "Anonyymi",
         "close": "Sulje"
-      }
-  },
+      },
+      "price": "Hinta",
+      "externalOptions": "Muut kulkuvaihtoehdot"
+    },
     "createTrip": {
       "title": "Julkaise matka",
       "from": "Lähtöpaikka",
@@ -92,9 +95,6 @@
       "time": "Aika",
       "availableSeats": "Vapaita paikkoja",
       "pricePerSeat": "Hinta per paikka (€)",
-      "region": "Matkan alue",
-      "regionSpain": "Espanja (ES)",
-      "regionFinland": "Suomi (FI)",
       "description": "Kuvaus (valinnainen)",
       "descriptionPlaceholder": "Lisää tietoja matkasta, tapaamispisteestä jne.",
       "submit": "Julkaise matka",
@@ -107,7 +107,12 @@
       "daily": "Päivittäin",
       "weekly": "Viikoittain",
       "until": "Toista asti",
-      "recurrenceInfo": "Tästä matkasta luodaan automaattisesti kopioita valitun toistuvuuden mukaan (enintään 3 kuukautta)."
+      "recurrenceInfo": "Tästä matkasta luodaan automaattisesti kopioita valitun toistuvuuden mukaan (enintään 3 kuukautta).",
+      "badge": "Uusi matka",
+      "subtitle": "Jaa reittisi, säästä kuluissa ja auta rakentamaan kestävämpää yhteisöä.",
+      "routeStep": "Reitin tiedot",
+      "timeStep": "Päivämäärä, aika ja hinta",
+      "additionalStep": "Lisäasetukset"
     },
     "messages": {
       "title": "Viestini",
@@ -122,7 +127,11 @@
       "deleting": "Poistetaan...",
       "confirmDelete": "Haluatko varmasti poistaa tämän keskustelun?",
       "deleteSuccess": "Keskustelu poistettu onnistuneesti",
-      "deleteError": "Virhe keskustelun poistamisessa"
+      "deleteError": "Virhe keskustelun poistamisessa",
+      "subtitle": "Keskustelut muiden matkustajien kanssa",
+      "loadError": "Viestejä ei voitu ladata",
+      "loadErrorHint": "Istuntosi on ehkä vanhentunut. Kirjaudu uudelleen sisään ja yritä uudestaan.",
+      "goToLogin": "Kirjaudu sisään"
     },
     "conversation": {
       "loading": "Ladataan...",
@@ -145,10 +154,10 @@
       "title": "Matkani",
       "back": "Takaisin",
       "loading": "Ladataan...",
-      "subtitle": "Hallinnoi julkaistuja matkailmoituksiasi",
-      "noTrips": "Et ole julkaissut matkoja",
+      "subtitle": "Hallitse julkaisemiasi matkoja ja aktivoi uusia reittejä.",
+      "noTrips": "Et ole vielä julkaissut mitään",
       "createTrip": "Julkaise matka",
-      "createTripInfo": "Julkaise ensimmäinen matkasi nyt!",
+      "createTripInfo": "Jaa autosi, säästä kuluja ja auta planeettaa julkaisemalla ensimmäinen matkasi.",
       "manageTrip": "Hallinnoi matkaa",
       "tripDetails": "Matkan tiedot",
       "yourTrips": "Matkasi",
@@ -183,9 +192,6 @@
       "deleteSuccess": "Matka poistettu onnistuneesti",
       "deleteError": "Virhe matkan poistamisessa",
       "badge": "Kuljettajan Paneeli",
-      "subtitle": "Hallitse julkaisemiasi matkoja ja aktivoi uusia reittejä.",
-      "noTrips": "Et ole vielä julkaissut mitään",
-      "createTripInfo": "Jaa autosi, säästä kuluja ja auta planeettaa julkaisemalla ensimmäinen matkasi.",
       "deleteConfirm": "Tämä toiminto poistaa matkan ja kaikki sen varaukset."
     },
     "myBookings": {
@@ -247,7 +253,8 @@
   },
   "notifications": {
     "title": "Ilmoitukset",
-    "empty": "Ei ilmoituksia"
+    "empty": "Ei ilmoituksia",
+    "viewAll": "Näytä kaikki"
   },
   "profile": {
     "title": "Profiilini",
@@ -256,9 +263,6 @@
     "phone": "Puhelin",
     "bio": "Biografia",
     "language": "Ilmoitusten kieli",
-    "region": "Oletushakualue",
-    "regionSpain": "Espanja (ES)",
-    "regionFinland": "Suomi (FI)",
     "picture": "Profiilikuva",
     "bioPlaceholder": "Kerro itsestäsi...",
     "emailNotEditable": "Sähköpostia ei voi muuttaa",
@@ -417,5 +421,9 @@
     "accept": "Hyväksy",
     "learnMore": "Lue lisää",
     "settings": "Asetukset"
+  },
+  "common": {
+    "seats": "paikkaa",
+    "cancel": "Peruuta"
   }
 }

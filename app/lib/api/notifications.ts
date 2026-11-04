@@ -24,7 +24,7 @@ export async function getNotifications(): Promise<NotificationsResponse> {
   });
 
   if (!res.ok) {
-    throw new Error("Error al obtener notificaciones");
+    throw new Error("Error fetching notifications");
   }
 
   const data = await res.json();
@@ -40,6 +40,6 @@ export async function markAsRead(notificationId: number): Promise<void> {
   });
 
   if (!res.ok) {
-    throw new Error("Error al marcar la notificación como leída");
+    throw new Error("Error marking notification as read");
   }
 }

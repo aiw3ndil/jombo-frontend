@@ -1,6 +1,7 @@
 "use client";
 
 import { useEffect, useState, useMemo, use } from "react";
+import { langPrefix } from "@/app/lib/i18n/config";
 import { useRouter } from "next/navigation";
 import Link from "next/link";
 import { getMyTrips, getTripBookings, Trip } from "@/app/lib/api/trips";
@@ -12,7 +13,7 @@ import RejectBookingModal from "@/app/components/RejectBookingModal";
 
 export default function TripDetails({ params }: { params: Promise<{ lang: string; id: string }> }) {
     const resolvedParams = use(params);
-    const lang = resolvedParams.lang || "es";
+    const lang = resolvedParams.lang || "fi";
     const tripIdStr = resolvedParams.id;
     const tripId = parseInt(tripIdStr, 10);
 
@@ -31,7 +32,7 @@ export default function TripDetails({ params }: { params: Promise<{ lang: string
 
     useEffect(() => {
         if (!authLoading && !user) {
-            router.push(`/${lang}/login?redirect=/${lang}/my-trips/${tripId}`);
+            router.push(`${langPrefix(lang)}/login?redirect=${langPrefix(lang)}/my-trips/${tripId}`);
             return;
         }
 
@@ -47,8 +48,8 @@ export default function TripDetails({ params }: { params: Promise<{ lang: string
             const currentTrip = trips.find(t => t.id === tripId);
 
             if (!currentTrip) {
-                toast.error("Viaje no encontrado");
-                router.push(`/${lang}/my-trips`);
+                toast.error("Trip not found");
+                router.push(`${langPrefix(lang)}/my-trips`);
                 return;
             }
 
@@ -56,7 +57,7 @@ export default function TripDetails({ params }: { params: Promise<{ lang: string
             await loadBookings();
         } catch (error) {
             console.error("Error loading trip data:", error);
-            toast.error("Error al cargar los datos del viaje");
+            toast.error("Error loading trip data");
         } finally {
             setLoading(false);
         }
@@ -69,7 +70,7 @@ export default function TripDetails({ params }: { params: Promise<{ lang: string
             setTripBookings(bookings);
         } catch (error) {
             console.error("Error loading bookings:", error);
-            toast.error(t("page.myTrips.errorLoadingBookings") || "Error al cargar las reservas");
+            toast.error(t("page.myTrips.errorLoadingBookings") || "Error loading bookings");
         } finally {
             setLoadingBookings(false);
         }
@@ -79,11 +80,11 @@ export default function TripDetails({ params }: { params: Promise<{ lang: string
         setActionLoading(bookingId);
         try {
             await confirmBooking(tripId, bookingId);
-            toast.success(t("page.myTrips.bookingConfirmed") || "Reserva confirmada");
+            toast.success(t("page.myTrips.bookingConfirmed") || "Booking confirmed");
             await loadBookings();
         } catch (error: any) {
             console.error("Error confirming booking:", error);
-            toast.error(error?.message || t("page.myTrips.errorConfirming") || "Error al confirmar la reserva");
+            toast.error(error?.message || t("page.myTrips.errorConfirming") || "Error confirming booking");
         } finally {
             setActionLoading(null);
         }
@@ -100,13 +101,13 @@ export default function TripDetails({ params }: { params: Promise<{ lang: string
         setActionLoading(selectedBookingToReject.id);
         try {
             await rejectBooking(tripId, selectedBookingToReject.id);
-            toast.success(t("page.myTrips.bookingRejected") || "Reserva rechazada");
+            toast.success(t("page.myTrips.bookingRejected") || "Booking rejected");
             await loadBookings();
             setRejectModalOpen(false);
             setSelectedBookingToReject(null);
         } catch (error: any) {
             console.error("Error rejecting booking:", error);
-            toast.error(error?.message || t("page.myTrips.errorRejecting") || "Error al rechazar la reserva");
+            toast.error(error?.message || t("page.myTrips.errorRejecting") || "Error rejecting booking");
         } finally {
             setActionLoading(null);
         }
@@ -124,10 +125,10 @@ export default function TripDetails({ params }: { params: Promise<{ lang: string
 
     const getStatusText = (status: string) => {
         switch (status) {
-            case "confirmed": return t("page.myTrips.statusConfirmed") || "CONFIRMADA";
-            case "pending": return t("page.myTrips.statusPending") || "PENDIENTE";
-            case "rejected": return t("page.myTrips.statusRejected") || "RECHAZADA";
-            case "cancelled": return t("page.myTrips.statusCancelled") || "CANCELADA";
+            case "confirmed": return t("page.myTrips.statusConfirmed") || "Confirmed";
+            case "pending": return t("page.myTrips.statusPending") || "Pending";
+            case "rejected": return t("page.myTrips.statusRejected") || "Rejected";
+            case "cancelled": return t("page.myTrips.statusCancelled") || "Cancelled";
             default: return status.toUpperCase();
         }
     };
@@ -148,15 +149,15 @@ export default function TripDetails({ params }: { params: Promise<{ lang: string
                 {/* Header HUD */}
                 <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-6 mb-6">
                     <button
-                        onClick={() => router.push(`/${lang}/my-trips`)}
+                        onClick={() => router.push(`${langPrefix(lang)}/my-trips`)}
                         className="flex items-center gap-2 text-[var(--brand-blue)] font-bold uppercase tracking-widest text-sm hover:text-[var(--brand-dark)] transition-all group"
                     >
                         <svg className="w-5 h-5 transition-transform group-hover:-translate-x-1" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={3} d="M15 19l-7-7 7-7" /></svg>
-                        {t("page.myTrips.back") || "Lista de viajes"}
+                        {t("page.myTrips.back") || "Back"}
                     </button>
                     <div className="text-right">
                         <h1 className="text-2xl md:text-3xl font-bold text-[var(--brand-dark)] mb-1">
-                            {t("page.myTrips.tripDetails") || "Detalle del Viaje"}
+                            {t("page.myTrips.tripDetails") || "Trip Details"}
                         </h1>
                         <p className="text-[var(--brand-neutral)] text-sm md:text-base uppercase tracking-wider font-medium">Gestión de pasajeros</p>
                     </div>
@@ -208,7 +209,7 @@ export default function TripDetails({ params }: { params: Promise<{ lang: string
                 <div className="relative">
                     <div className="flex items-center gap-6 mb-10">
                         <h2 className="text-3xl font-bold text-[var(--brand-dark)]">
-                            {t("page.myTrips.bookingsForTrip") || "Solicitudes de reserva"}
+                            {t("page.myTrips.bookingsForTrip") || "Trip bookings"}
                         </h2>
                         <div className="h-0.5 flex-1 bg-[#e2e8f0]"></div>
                         <span className="text-xs font-bold text-[var(--brand-blue)] uppercase tracking-widest bg-[#f0f4f8] px-4 py-1.5 rounded-full border-2 border-[#e2e8f0]">{tripBookings.length} TOTAL</span>
@@ -221,7 +222,7 @@ export default function TripDetails({ params }: { params: Promise<{ lang: string
                         </div>
                     ) : tripBookings.length === 0 ? (
                         <div className="bg-[#f0f4f8] rounded-[2.5rem] p-20 text-center border-2 border-[#e2e8f0] italic">
-                            <p className="text-[var(--brand-neutral)] text-xl font-bold uppercase tracking-widest">{t("page.myTrips.noBookings") || "Aún no hay solicitudes para este viaje"}</p>
+                            <p className="text-[var(--brand-neutral)] text-xl font-bold uppercase tracking-widest">{t("page.myTrips.noBookings") || "No bookings for this trip"}</p>
                         </div>
                     ) : (
                         <div className="grid grid-cols-1 gap-6">
@@ -266,14 +267,14 @@ export default function TripDetails({ params }: { params: Promise<{ lang: string
                                                     disabled={actionLoading === booking.id}
                                                     className="flex-1 md:flex-none btn-primary px-8 py-3.5 text-sm"
                                                 >
-                                                    {actionLoading === booking.id ? "..." : (t("page.myTrips.confirm") || "CONFIRMAR")}
+                                                    {actionLoading === booking.id ? "..." : (t("page.myTrips.confirm") || "Confirm")}
                                                 </button>
                                                 <button
                                                     onClick={() => handleRejectBooking(booking)}
                                                     disabled={actionLoading === booking.id}
                                                     className="flex-1 md:flex-none px-8 py-3.5 rounded-xl bg-white border-2 border-red-100 text-red-600 font-bold uppercase tracking-widest text-xs hover:bg-red-50 transition-all shadow-sm"
                                                 >
-                                                    {actionLoading === booking.id ? "..." : (t("page.myTrips.reject") || "RECHAZAR")}
+                                                    {actionLoading === booking.id ? "..." : (t("page.myTrips.reject") || "Reject")}
                                                 </button>
                                             </div>
                                         )}

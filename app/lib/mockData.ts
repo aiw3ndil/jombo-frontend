@@ -1,14 +1,14 @@
 export let mockTrips = [
   {
     id: 1,
-    departure_location: "Madrid",
-    arrival_location: "Barcelona",
+    departure_location: "Helsinki",
+    arrival_location: "Tampere",
     departure_time: "2025-12-01T09:00:00Z",
     available_seats: 3,
     price: 25.50,
     driver: {
       id: 1,
-      name: "Juan Pérez",
+      name: "Matti Virtanen",
       email: "juan@example.com"
     },
     created_at: "2025-11-20T08:00:00Z",
@@ -16,14 +16,14 @@ export let mockTrips = [
   },
   {
     id: 2,
-    departure_location: "Madrid",
-    arrival_location: "Valencia",
+    departure_location: "Turku",
+    arrival_location: "Helsinki",
     departure_time: "2025-12-01T14:00:00Z",
     available_seats: 2,
     price: 20.00,
     driver: {
       id: 2,
-      name: "María García",
+      name: "Aino Korhonen",
       email: "maria@example.com"
     },
     created_at: "2025-11-20T08:00:00Z",
@@ -31,14 +31,14 @@ export let mockTrips = [
   },
   {
     id: 3,
-    departure_location: "Barcelona",
-    arrival_location: "Valencia",
+    departure_location: "Tampere",
+    arrival_location: "Oulu",
     departure_time: "2025-12-02T10:00:00Z",
     available_seats: 4,
     price: 18.75,
     driver: {
       id: 3,
-      name: "Carlos López",
+      name: "Mikko Nieminen",
       email: "carlos@example.com"
     },
     created_at: "2025-11-20T08:00:00Z",

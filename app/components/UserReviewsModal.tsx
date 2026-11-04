@@ -27,7 +27,7 @@ export default function UserReviewsModal({
         setReviews(data);
       } catch (error: any) {
         console.error("Error fetching reviews:", error);
-        setError(error?.message || "Error al cargar las reseñas");
+        setError(error?.message || "Error loading reviews");
       } finally {
         setLoading(false);
       }
@@ -70,7 +70,7 @@ export default function UserReviewsModal({
         <div className="flex justify-between items-start p-6 border-b border-gray-200">
           <div>
             <h2 className="text-2xl font-bold text-gray-900">
-              {t("page.search.reviewsModal.title") || "Reseñas"} - {userName}
+              {t("page.search.reviewsModal.title") || "Reviews"} - {userName}
             </h2>
             {!loading && reviews.length > 0 && (
               <div className="flex items-center gap-3 mt-2">
@@ -80,8 +80,8 @@ export default function UserReviewsModal({
                 </span>
                 <span className="text-sm text-gray-600">
                   ({reviews.length} {reviews.length === 1 
-                    ? (t("page.search.reviewsModal.review") || "reseña") 
-                    : (t("page.search.reviewsModal.reviews") || "reseñas")})
+                    ? (t("page.search.reviewsModal.review") || "review") 
+                    : (t("page.search.reviewsModal.reviews") || "reviews")})
                 </span>
               </div>
             )}
@@ -108,7 +108,7 @@ export default function UserReviewsModal({
                 onClick={onClose}
                 className="bg-gray-600 text-white px-4 py-2 rounded hover:bg-gray-700"
               >
-                {t("page.search.reviewsModal.close") || "Cerrar"}
+                {t("page.search.reviewsModal.close") || "Close"}
               </button>
             </div>
           )}
@@ -116,7 +116,7 @@ export default function UserReviewsModal({
           {!loading && !error && reviews.length === 0 && (
             <div className="text-center py-12">
               <p className="text-gray-600 text-lg">
-                {t("page.search.reviewsModal.noReviews") || "Este usuario aún no tiene reseñas"}
+                {t("page.search.reviewsModal.noReviews") || "This user has no reviews yet"}
               </p>
             </div>
           )}
@@ -131,7 +131,7 @@ export default function UserReviewsModal({
                   <div className="flex items-start justify-between mb-2">
                     <div>
                       <p className="font-semibold text-gray-900">
-                        {review.reviewer?.name || t("page.search.reviewsModal.anonymous") || "Anónimo"}
+                        {review.reviewer?.name || t("page.search.reviewsModal.anonymous") || "Anonymous"}
                       </p>
                       <p className="text-sm text-gray-600">
                         {new Date(review.created_at).toLocaleDateString()}
@@ -153,7 +153,7 @@ export default function UserReviewsModal({
             onClick={onClose}
             className="w-full bg-gray-600 text-white px-4 py-2 rounded hover:bg-gray-700 transition-colors"
           >
-            {t("page.search.reviewsModal.close") || "Cerrar"}
+            {t("page.search.reviewsModal.close") || "Close"}
           </button>
         </div>
       </div>

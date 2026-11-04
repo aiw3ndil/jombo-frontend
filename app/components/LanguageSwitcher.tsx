@@ -1,38 +1,32 @@
 "use client";
-import { usePathname, useParams, useRouter, useSearchParams } from "next/navigation";
+import { useParams, useSearchParams } from "next/navigation";
 import React from "react";
+import { localePath, normalizeLang, stripLangPrefix } from "@/app/lib/i18n/config";
 
 const languages = [
-  { code: "es", label: "🇪🇸 Español" },
   { code: "fi", label: "🇫🇮 Suomi" },
   { code: "en", label: "🇬🇧 English" },
 ];
 
 export default function LanguageSwitcher() {
-  const pathname = usePathname();
   const params = useParams();
-  const router = useRouter();
   const searchParams = useSearchParams();
 
-  const currentPath = pathname?.split("/").slice(2).join("/") || "";
-  const selected = ((params as any)?.lang || "es") as string;
+  const selected = normalizeLang((params as any)?.lang);
 
   function handleChange(e: React.ChangeEvent<HTMLSelectElement>) {
     const lang = e.target.value;
-    // Save language preference to localStorage
-    if (typeof window !== "undefined") {
-      localStorage.setItem("preferredLanguage", lang);
-    }
-    
-    // Construir la nueva ruta preservando los query parameters
-    let newPath = currentPath ? `/${lang}/${currentPath}` : `/${lang}`;
-    
+
+    // Ruta actual sin prefijo de idioma (el finés no lleva prefijo)
+    const currentPath = typeof window !== "undefined" ? stripLangPrefix(window.location.pathname) : "/";
+    let newPath = localePath(lang, currentPath === "/" ? "" : currentPath);
+
     // Agregar los query parameters si existen
     const queryString = searchParams.toString();
     if (queryString) {
       newPath += `?${queryString}`;
     }
-    
+
     window.location.href = newPath;
   }
 

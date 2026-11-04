@@ -16,7 +16,7 @@
 ### Verificar:
 Abre la consola del navegador (F12) y busca errores como:
 ```
-Access to fetch at 'https://api.jombo.es/api/v1/auth/google' from origin 'https://www.jombo.es' has been blocked by CORS policy
+Access to fetch at 'https://api.jombo.fi/api/v1/auth/google' from origin 'https://www.jombo.fi' has been blocked by CORS policy
 ```
 
 ### Solución - Backend:
@@ -25,7 +25,7 @@ En `jombo-api/config/initializers/cors.rb`:
 ```ruby
 Rails.application.config.middleware.insert_before 0, Rack::Cors do
   allow do
-    origins 'https://www.jombo.es', 'https://jombo.es', 'http://localhost:3001'
+    origins 'https://www.jombo.fi', 'https://jombo.fi', 'http://localhost:3001'
     
     resource '*',
       headers: :any,
@@ -44,7 +44,7 @@ end
 ```bash
 # En producción, verifica que esté configurado:
 NEXT_PUBLIC_GOOGLE_CLIENT_ID=xxx.apps.googleusercontent.com
-NEXT_PUBLIC_API_BASE_URL=https://api.jombo.es
+NEXT_PUBLIC_API_BASE_URL=https://api.jombo.fi
 ```
 
 ### Verificar Backend:
@@ -71,14 +71,14 @@ En [Google Cloud Console](https://console.cloud.google.com/):
 2. Click en tu OAuth 2.0 Client ID
 3. Verifica que AMBOS dominios estén en **Authorized JavaScript origins**:
    ```
-   https://jombo.es
-   https://www.jombo.es
+   https://jombo.fi
+   https://www.jombo.fi
    ```
 
 4. Y también en **Authorized redirect URIs**:
    ```
-   https://jombo.es
-   https://www.jombo.es
+   https://jombo.fi
+   https://www.jombo.fi
    ```
 
 **NOTA:** Asegúrate de usar HTTPS, no HTTP.
@@ -113,7 +113,7 @@ net::ERR_CONNECTION_REFUSED
 2. Verifica que `NEXT_PUBLIC_API_BASE_URL` apunte a la URL correcta
 3. Prueba manualmente:
 ```bash
-curl https://api.jombo.es/health
+curl https://api.jombo.fi/health
 ```
 
 ## 6. Cookies Bloqueadas (SameSite)
@@ -132,7 +132,7 @@ cookie_opts = {
   same_site: :none,  # Permite cookies cross-site
   expires: 2.hours.from_now,
   path: "/",
-  domain: ".jombo.es"  # Permite compartir entre subdominios
+  domain: ".jombo.fi"  # Permite compartir entre subdominios
 }
 
 response.set_cookie("jwt", cookie_opts)
@@ -141,7 +141,7 @@ response.set_cookie("jwt", cookie_opts)
 **IMPORTANTE:** 
 - `secure: true` requiere HTTPS
 - `same_site: :none` requiere `secure: true`
-- `domain: ".jombo.es"` permite cookies en jombo.es y www.jombo.es
+- `domain: ".jombo.fi"` permite cookies en jombo.fi y www.jombo.fi
 
 ## 7. Logs para Debugging
 
@@ -157,7 +157,7 @@ Con el nuevo código, deberías ver:
 🔵 API Request: { url: ..., body: { token: ... } }
 🔵 API Response status: 200
 🔵 [GoogleLogin] Backend login successful: { ... }
-🔵 [GoogleLogin] Redirecting to: /es
+🔵 [GoogleLogin] Redirecting to: /
 ```
 
 Si ves un error, busca:
@@ -208,13 +208,13 @@ console.log('Frontend Client ID:', document.querySelector('[data-client-id]'));
 console.log('OAuth Context:', window.google);
 
 // 3. Verificar la URL del backend
-fetch('https://api.jombo.es/health')
+fetch('https://api.jombo.fi/health')
   .then(r => r.json())
   .then(d => console.log('Backend health:', d))
   .catch(e => console.error('Backend error:', e));
 
 // 4. Verificar CORS manualmente
-fetch('https://api.jombo.es/api/v1/me', { credentials: 'include' })
+fetch('https://api.jombo.fi/api/v1/me', { credentials: 'include' })
   .then(r => console.log('CORS OK:', r.status))
   .catch(e => console.error('CORS Error:', e));
 ```

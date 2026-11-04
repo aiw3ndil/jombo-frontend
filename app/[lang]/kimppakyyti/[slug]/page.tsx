@@ -1,4 +1,5 @@
 import { Metadata } from 'next';
+import { localePath, langPrefix } from "@/app/lib/i18n/config";
 import { TOP_FINNISH_ROUTES } from '@/app/lib/constants/routes';
 import { searchTrips, Trip, ExternalOption, SearchResponse } from '@/app/lib/api/trips';
 import { notFound } from 'next/navigation';
@@ -18,7 +19,6 @@ export async function generateStaticParams() {
   for (const route of TOP_FINNISH_ROUTES) {
     paths.push({ lang: 'fi', slug: route.slug });
     paths.push({ lang: 'en', slug: route.slug });
-    paths.push({ lang: 'es', slug: route.slug });
   }
   return paths;
 }
@@ -46,13 +46,11 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
 
   const titles: Record<string, string> = {
     fi: `Kimppakyyti ${from} – ${to} | Säästä rahaa | Jombo`,
-    es: `Viaje compartido ${from} – ${to} | Ahorra dinero | Jombo`,
     en: `Carpool ${from} – ${to} | Save money | Jombo`,
   };
 
   const descriptions: Record<string, string> = {
     fi: `Etsitkö halpaa kyytiä välille ${from} – ${to}? Löydä kimppakyyti Jombosta, jaa polttoainekulut ja matkusta ekologisesti.`,
-    es: `¿Buscas un viaje barato entre ${from} y ${to}? Encuentra un viaje compartido en Jombo, comparte gastos y viaja de forma ecológica.`,
     en: `Looking for a cheap ride between ${from} and ${to}? Find a carpool on Jombo, share fuel costs, and travel ecologically.`,
   };
 
@@ -60,7 +58,7 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
     title: titles[lang] || titles.fi,
     description: descriptions[lang] || descriptions.fi,
     alternates: {
-      canonical: `/${lang}/kimppakyyti/${slug}`,
+      canonical: `${langPrefix(lang)}/kimppakyyti/${slug}`,
     }
   };
 }
@@ -115,7 +113,7 @@ export default async function RoutePage({ params }: Props) {
 
         <div className="max-w-5xl mx-auto relative z-10">
           <nav className="flex items-center gap-2 text-sm font-bold text-white mb-4 uppercase tracking-widest">
-            <Link href={`/${lang}`} className="hover:opacity-80 transition-opacity">Jombo</Link>
+            <Link href={localePath(lang)} className="hover:opacity-80 transition-opacity">Jombo</Link>
             <svg className="w-4 h-4 text-white/50" fill="none" stroke="currentColor" viewBox="0 0 24 24">
               <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={3} d="M9 5l7 7-7 7" />
             </svg>
@@ -223,7 +221,7 @@ export default async function RoutePage({ params }: Props) {
                    `Ole ensimmäinen, joka ilmoittaa matkan välille ${route.from} ja ${route.to} ja aloita kulujen jakaminen muiden kanssa.`}
                 </p>
                 <Link 
-                  href={`/${lang}/create-trip?from=${route.from}&to=${route.to}`}
+                  href={`${langPrefix(lang)}/create-trip?from=${route.from}&to=${route.to}`}
                   className="btn-primary px-16 py-7 text-xl shadow-2xl shadow-green-700/20 hover:shadow-green-700/40"
                 >
                   {t.trips.publishFirst || t.page.home.publish || 'Ilmoita ensimmäinen matka'}
@@ -269,7 +267,7 @@ export default async function RoutePage({ params }: Props) {
                       </p>
                     </div>
                     <Link 
-                      href={`/${lang}/search?from=${route.from}&to=${route.to}`}
+                      href={`${langPrefix(lang)}/search?from=${route.from}&to=${route.to}`}
                       className="relative z-10 bg-white text-[var(--brand-dark)] px-16 py-7 rounded-[2rem] font-black uppercase tracking-widest text-sm hover:bg-[#f0f4f8] hover:scale-105 transition-all shadow-2xl whitespace-nowrap active:scale-95"
                     >
                       {t.page.home.search || 'Katso kaikki matkat'}
@@ -328,7 +326,7 @@ export default async function RoutePage({ params }: Props) {
               <p className="text-[var(--brand-dark)] font-bold text-xl text-center md:text-left">
                 {t.trips.joinThousands || 'Liity tuhansiin jotka jo säästävät kyydeistä.'}
               </p>
-              <Link href={`/${lang}/register`} className="btn-secondary px-10 py-5 whitespace-nowrap">
+              <Link href={`${langPrefix(lang)}/register`} className="btn-secondary px-10 py-5 whitespace-nowrap">
                 {t.trips.registerFree || 'Rekisteröidy ilmaiseksi'}
               </Link>
             </div>

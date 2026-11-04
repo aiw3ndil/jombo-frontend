@@ -1,5 +1,6 @@
 "use client";
 import { useEffect, useState, useRef } from "react";
+import { langPrefix } from "@/app/lib/i18n/config";
 import { useRouter, useParams } from "next/navigation";
 import { getConversation, sendMessage, deleteConversation, ConversationDetail, Message } from "@/app/lib/api/conversations";
 import { useTranslation } from "@/app/hooks/useTranslation";
@@ -10,7 +11,7 @@ export default function ConversationPage() {
   const { t } = useTranslation();
   const router = useRouter();
   const params = useParams();
-  const lang = (params?.lang as string) || "es";
+  const lang = (params?.lang as string) || "fi";
   const conversationId = parseInt(params?.id as string);
   const { user, loading: authLoading, refreshUser } = useAuth();
 
@@ -24,7 +25,7 @@ export default function ConversationPage() {
 
   useEffect(() => {
     if (!authLoading && !user) {
-      router.push(`/${lang}/login?redirect=/${lang}/messages/${conversationId}`);
+      router.push(`${langPrefix(lang)}/login?redirect=${langPrefix(lang)}/messages/${conversationId}`);
       return;
     }
 
@@ -53,8 +54,8 @@ export default function ConversationPage() {
         refreshUser();
         return;
       }
-      toast.error(error?.message || t("page.conversation.loadError") || "Error al cargar la conversación");
-      router.push(`/${lang}/messages`);
+      toast.error(error?.message || t("page.conversation.loadError") || "Error loading conversation");
+      router.push(`${langPrefix(lang)}/messages`);
     } finally {
       setLoading(false);
     }
@@ -72,25 +73,25 @@ export default function ConversationPage() {
       setNewMessage("");
     } catch (error: any) {
       console.error("Error sending message:", error);
-      toast.error(error?.message || t("page.conversation.sendError") || "Error al enviar el mensaje");
+      toast.error(error?.message || t("page.conversation.sendError") || "Error sending message");
     } finally {
       setSending(false);
     }
   };
 
   const handleDeleteConversation = async () => {
-    if (!confirm(t("page.conversation.confirmDelete") || "¿Estás seguro de eliminar esta conversación?")) {
+    if (!confirm(t("page.conversation.confirmDelete") || "Are you sure you want to delete this conversation?")) {
       return;
     }
 
     setDeleting(true);
     try {
       await deleteConversation(conversationId);
-      toast.success(t("page.conversation.deleteSuccess") || "Conversación eliminada exitosamente");
-      router.push(`/${lang}/messages`);
+      toast.success(t("page.conversation.deleteSuccess") || "Conversation deleted successfully");
+      router.push(`${langPrefix(lang)}/messages`);
     } catch (error: any) {
       console.error("Error deleting conversation:", error);
-      toast.error(error?.message || t("page.conversation.deleteError") || "Error al eliminar la conversación");
+      toast.error(error?.message || t("page.conversation.deleteError") || "Error deleting conversation");
       setDeleting(false);
     }
   };
@@ -135,14 +136,14 @@ export default function ConversationPage() {
                   disabled={deleting}
                   className="bg-white border-2 border-red-100 text-red-600 px-6 py-3 rounded-xl font-bold hover:bg-red-50 transition-all text-sm"
                 >
-                  {deleting ? "..." : (t("page.conversation.delete") || "BORRAR")}
+                  {deleting ? "..." : (t("page.conversation.delete") || "Delete")}
                 </button>
               )}
               <button
-                onClick={() => router.push(`/${lang}/messages`)}
+                onClick={() => router.push(`${langPrefix(lang)}/messages`)}
                 className="bg-[#e2e8f0] text-[var(--brand-dark)] border-2 border-[#e2e8f0] px-6 py-3 rounded-xl font-bold hover:bg-green-200 transition-all text-sm"
               >
-                {t("page.conversation.back") || "VOLVER"}
+                {t("page.conversation.back") || "Back"}
               </button>
             </div>
           </div>
@@ -154,7 +155,7 @@ export default function ConversationPage() {
             <div className="flex flex-col items-center justify-center h-full gap-4 py-20 opacity-30 italic">
               <svg className="w-16 h-16 text-[var(--brand-dark)]" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1} d="M8 12h.01M12 12h.01M16 12h.01M21 12c0 4.418-4.03 8-9 8a9.863 9.863 0 01-4.255-.949L3 20l1.395-3.72C3.512 15.042 3 13.574 3 12c0-4.418 4.03-8 9-8s9 3.582 9 8z" /></svg>
               <p className="uppercase tracking-widest text-sm font-bold text-[var(--brand-dark)]">
-                {t("page.conversation.noMessages") || "Di hola para empezar..."}
+                {t("page.conversation.noMessages") || "No messages yet. Send the first one!"}
               </p>
             </div>
           ) : (
@@ -201,7 +202,7 @@ export default function ConversationPage() {
               type="text"
               value={newMessage}
               onChange={(e) => setNewMessage(e.target.value)}
-              placeholder={t("page.conversation.messagePlaceholder") || "Escribe un mensaje..."}
+              placeholder={t("page.conversation.messagePlaceholder") || "Type a message..."}
               className="flex-1 bg-[#f0f4f8] border-2 border-[#e2e8f0] rounded-full px-8 py-4 text-[var(--brand-dark)] placeholder:text-[var(--brand-neutral)] focus:outline-none focus:border-green-400 transition-all font-bold text-base"
               disabled={sending}
             />

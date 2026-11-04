@@ -7,11 +7,11 @@ import { useEffect } from "react";
 export default function DataDeletionPage() {
     const { t } = useTranslation();
     const params = useParams();
-    const lang = (params?.lang as string) || "es";
+    const lang = (params?.lang as string) || "fi";
 
     // Actualizar título y meta description
     useEffect(() => {
-        const title = t("dataDeletion.title") || "Instrucciones de Eliminación de Datos";
+        const title = t("dataDeletion.title") || "Data Deletion Instructions";
         document.title = `${title} | Jombo`;
 
         const metaDescription = document.querySelector('meta[name="description"]');

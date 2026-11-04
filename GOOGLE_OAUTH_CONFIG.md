@@ -102,11 +102,11 @@ Desarrollo:
 http://localhost:3001
 
 Staging:
-https://staging.jombo.es
+https://staging.jombo.fi
 
 Producción:
-https://jombo.es
-https://www.jombo.es
+https://jombo.fi
+https://www.jombo.fi
 ```
 
 ## Flujo OAuth Simplificado
@@ -159,7 +159,7 @@ El popup de Google maneja todo automáticamente.
 ## Testing
 
 1. Limpia cookies y cache
-2. Ve a `http://localhost:3001/es/login`
+2. Ve a `http://localhost:3001/login`
 3. Click en "Continuar con Google"
 4. Deberías ver el popup de selección de cuenta de Google
 5. Selecciona tu cuenta

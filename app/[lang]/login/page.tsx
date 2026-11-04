@@ -1,5 +1,6 @@
 "use client";
 import { useTranslation } from "@/app/hooks/useTranslation";
+import { localePath, langPrefix } from "@/app/lib/i18n/config";
 import useAuth from "@/app/hooks/useAuth";
 import { useState, FormEvent } from "react";
 import { useRouter, useParams, useSearchParams } from "next/navigation";
@@ -10,7 +11,7 @@ export default function Login() {
   const { t, loading: translationsLoading } = useTranslation("login");
   const params = useParams();
   const searchParams = useSearchParams();
-  const lang = (params?.lang as string) || "es";
+  const lang = (params?.lang as string) || "fi";
   const redirect = searchParams.get("redirect");
   const { login, loading: isLoading, error } = useAuth() as any;
   const router = useRouter();
@@ -31,7 +32,7 @@ export default function Login() {
     e.preventDefault();
     try {
       await login(email, password);
-      const destination = redirect || `/${lang}`;
+      const destination = redirect || localePath(lang);
       window.location.href = destination;
     } catch (err) {
       console.error("Login error:", err);
@@ -48,13 +49,13 @@ export default function Login() {
       <section className="bg-[#f0f4f8] border-b-2 border-[#e2e8f0] py-8 px-4">
         <div className="max-w-5xl mx-auto text-center">
           <div className="inline-flex items-center gap-2 bg-[#e2e8f0] border border-[#e2e8f0] text-[var(--brand-dark)] px-4 py-1.5 rounded-full text-xs font-bold mb-3 uppercase tracking-wide">
-            {t("loginBadge") || "Bienvenido de nuevo"}
+            {t("loginBadge") || "Welcome back"}
           </div>
           <h1 className="text-2xl md:text-3xl font-black text-[var(--brand-dark)] leading-tight mb-2">
-            {t("loginTitle") || "Inicia sesión"}
+            {t("loginTitle") || "Log in"}
           </h1>
           <p className="text-sm md:text-base text-[var(--brand-neutral)] max-w-2xl mx-auto font-medium opacity-80">
-            {t("loginSubtitle") || "Accede a tu cuenta y continúa ahorrando con Jombo."}
+            {t("loginSubtitle") || "Access your account and keep saving with Jombo."}
           </p>
         </div>
       </section>
@@ -69,7 +70,7 @@ export default function Login() {
                 <GoogleLoginButton redirect={redirect} onError={handleOAuthError} />
                 <p className="text-center text-xs font-bold text-[var(--brand-neutral)] uppercase tracking-widest flex items-center gap-4">
                   <span className="flex-1 h-px bg-[#e2e8f0]"></span>
-                  {t("or") || "O accede con tu email"}
+                  {t("or") || "or"}
                   <span className="flex-1 h-px bg-[#e2e8f0]"></span>
                 </p>
               </div>
@@ -88,7 +89,7 @@ export default function Login() {
               <form className="space-y-8" onSubmit={handleSubmit}>
                 <div className="space-y-6">
                   <div>
-                    <label className="form-label">{t("email") || "Correo electrónico"}</label>
+                    <label className="form-label">{t("email") || "Email"}</label>
                     <div className="relative group">
                       <div className="absolute left-4 top-1/2 -translate-y-1/2 text-[var(--brand-neutral)] group-focus-within:text-[var(--brand-blue)] transition-colors z-10">
                         <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -108,12 +109,12 @@ export default function Login() {
 
                   <div>
                     <div className="flex justify-between items-center mb-1">
-                      <label className="form-label mb-0">{t("password") || "Contraseña"}</label>
+                      <label className="form-label mb-0">{t("password") || "Password"}</label>
                       <Link
-                        href={`/${lang}/forgot-password`}
+                        href={`${langPrefix(lang)}/forgot-password`}
                         className="text-[var(--brand-blue)] hover:text-[var(--brand-dark)] font-bold text-xs uppercase tracking-widest transition-colors"
                       >
-                        {t("forgotPassword") || "¿Olvidaste la clave?"}
+                        {t("forgotPassword") || "Forgot your password?"}
                       </Link>
                     </div>
                     <div className="relative group">
@@ -140,7 +141,7 @@ export default function Login() {
                   disabled={isLoading}
                 >
                   <span className={`flex items-center justify-center gap-3 transition-all duration-300 ${isLoading ? 'opacity-0 scale-90' : 'opacity-100 scale-100'}`}>
-                    {t("submit") || "Entrar en Jombo"}
+                    {t("submit") || "Create Account"}
                     <svg className="w-5 h-5 group-hover:translate-x-1 transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                       <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M14 5l7 7m0 0l-7 7m7-7H3" />
                     </svg>
@@ -155,9 +156,9 @@ export default function Login() {
 
               <div className="pt-6 border-t border-green-50 text-center">
                 <p className="text-[var(--brand-neutral)] font-medium">
-                  {t("noAccount") || "¿Aún no eres parte de Jombo?"}{" "}
-                  <Link href={`/${lang}/register`} className="text-[var(--brand-blue)] hover:text-[var(--brand-dark)] font-black underline decoration-2 underline-offset-4 transition-all">
-                    {t("registerLink") || "Crea tu cuenta gratis"}
+                  {t("noAccount") || "Don't have an account?"}{" "}
+                  <Link href={`${langPrefix(lang)}/register`} className="text-[var(--brand-blue)] hover:text-[var(--brand-dark)] font-black underline decoration-2 underline-offset-4 transition-all">
+                    {t("registerLink") || "Register here"}
                   </Link>
                 </p>
               </div>

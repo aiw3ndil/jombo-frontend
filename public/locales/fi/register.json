@@ -4,14 +4,12 @@
   "email": "Sähköposti",
   "password": "Salasana",
   "passwordConfirmation": "Vahvista salasana",
-  "region": "Alue",
-  "regionSelect": "Valitse alueesi",
-  "regionSpain": "Espanja (ES)",
-  "regionFinland": "Suomi (FI)",
   "submit": "Luo tili",
   "loading": "Ladataan...",
   "haveAccount": "Onko sinulla jo tili?",
   "loginLink": "Kirjaudu tästä",
   "continueWith": "Jatka {provider}lla",
-  "or": "tai"
+  "or": "tai",
+  "joinBadge": "Liity mukaan",
+  "subtitle": "Rekisteröidy Jomboon ja ala säästää jakamalla kyytejä luotettavien ihmisten kanssa."
 }

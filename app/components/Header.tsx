@@ -1,5 +1,6 @@
 "use client";
 import Link from "next/link";
+import { localePath, langPrefix } from "@/app/lib/i18n/config";
 import { useState, useEffect } from "react";
 import { useRouter } from "next/navigation";
 import LanguageSwitcher from "./LanguageSwitcher";
@@ -65,7 +66,7 @@ export default function Header({ lang }: { lang: string }) {
 
   return (
     <header className="px-6 py-4 bg-white flex justify-between items-center transition-all duration-300 relative z-[100] border-b-2 border-[#e2e8f0] shadow-sm">
-      <Link href={`/${lang}`} className="flex items-center gap-2 hover:opacity-85 transition-opacity">
+      <Link href={localePath(lang)} className="flex items-center gap-2 hover:opacity-85 transition-opacity">
         <img
           src="/JOMBO_LOGO_Secundario_RGB.png"
           alt="Jombo Secondary"
@@ -150,28 +151,28 @@ export default function Header({ lang }: { lang: string }) {
               {isDropdownOpen && (
                 <div className="absolute right-0 mt-2 w-60 bg-white rounded-xl shadow-xl py-2 z-50 border-2 border-[#e2e8f0]">
                   <Link
-                    href={`/${lang}/profile`}
+                    href={`${langPrefix(lang)}/profile`}
                     onClick={() => setIsDropdownOpen(false)}
                     className="flex items-center gap-3 px-5 py-3 text-[var(--brand-dark)] hover:bg-[#f0f4f8] transition-colors font-medium text-base"
                   >
                     {t("menu.profile")}
                   </Link>
                   <Link
-                    href={`/${lang}/messages`}
+                    href={`${langPrefix(lang)}/messages`}
                     onClick={() => setIsDropdownOpen(false)}
                     className="flex items-center gap-3 px-5 py-3 text-[var(--brand-dark)] hover:bg-[#f0f4f8] transition-colors font-medium text-base"
                   >
                     {t("menu.messages")}
                   </Link>
                   <Link
-                    href={`/${lang}/my-bookings`}
+                    href={`${langPrefix(lang)}/my-bookings`}
                     onClick={() => setIsDropdownOpen(false)}
                     className="flex items-center gap-3 px-5 py-3 text-[var(--brand-dark)] hover:bg-[#f0f4f8] transition-colors font-medium text-base"
                   >
                     {t("menu.myBookings")}
                   </Link>
                   <Link
-                    href={`/${lang}/my-trips`}
+                    href={`${langPrefix(lang)}/my-trips`}
                     onClick={() => setIsDropdownOpen(false)}
                     className="flex items-center gap-3 px-5 py-3 text-[var(--brand-dark)] hover:bg-[#f0f4f8] transition-colors font-medium text-base"
                   >
@@ -193,7 +194,7 @@ export default function Header({ lang }: { lang: string }) {
           </>
         ) : (
           <Link
-            href={`/${lang}/login`}
+            href={`${langPrefix(lang)}/login`}
             className="bg-[var(--brand-blue)] text-white px-7 py-3 rounded-xl hover:bg-[#003d85] transition-colors font-bold text-base shadow-sm active:scale-95"
           >
             Login

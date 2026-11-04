@@ -20,5 +20,9 @@
   "confirmPassword": "Vahvista salasana",
   "resetPasswordSubmit": "Vaihda salasana",
   "passwordResetSuccess": "Salasanasi on palautettu onnistuneesti.",
-  "errorGeneric": "Tapahtui virhe. Yritä uudelleen."
+  "errorGeneric": "Tapahtui virhe. Yritä uudelleen.",
+  "securityBadge": "Tilin turvallisuus",
+  "loginBadge": "Tervetuloa takaisin",
+  "loginTitle": "Kirjaudu sisään",
+  "loginSubtitle": "Kirjaudu tilillesi ja jatka säästämistä Jombon kanssa."
 }

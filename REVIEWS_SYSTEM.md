@@ -218,7 +218,7 @@ Las traducciones están en `public/locales/{lang}/common.json` bajo `page.myBook
 }
 ```
 
-Idiomas soportados: **Español (es)**, **Inglés (en)**, **Finlandés (fi)**
+Idiomas soportados: **Finlandés (fi)**, **Inglés (en)**
 
 ## Manejo de Errores
 

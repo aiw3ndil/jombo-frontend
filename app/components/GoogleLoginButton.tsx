@@ -1,5 +1,6 @@
 "use client";
 import { GoogleLogin, CredentialResponse } from '@react-oauth/google';
+import { localePath } from "@/app/lib/i18n/config";
 import { loginWithGoogle } from '@/app/lib/api/auth';
 import { useParams } from 'next/navigation';
 import { useTranslation } from '@/app/hooks/useTranslation';
@@ -13,7 +14,7 @@ interface GoogleLoginButtonProps {
 
 export default function GoogleLoginButton({ onSuccess, onError, redirect }: GoogleLoginButtonProps) {
   const params = useParams();
-  const lang = (params?.lang as string) || "es";
+  const lang = (params?.lang as string) || "fi";
   const { t } = useTranslation("login");
   const [isLoading, setIsLoading] = useState(false);
 
@@ -25,7 +26,7 @@ export default function GoogleLoginButton({ onSuccess, onError, redirect }: Goog
 
     if (!credentialResponse.credential) {
       console.error('❌ [GoogleLogin] No credential in response');
-      const errorMessage = 'No se recibió credencial de Google';
+      const errorMessage = 'No credential received from Google';
       if (onError) {
         onError(errorMessage);
       }
@@ -44,7 +45,7 @@ export default function GoogleLoginButton({ onSuccess, onError, redirect }: Goog
         onSuccess(user);
       }
       
-      const destination = redirect || `/${lang}`;
+      const destination = redirect || localePath(lang);
       console.log('🔵 [GoogleLogin] Redirecting to:', destination);
       window.location.href = destination;
     } catch (error: any) {
@@ -56,7 +57,7 @@ export default function GoogleLoginButton({ onSuccess, onError, redirect }: Goog
         status: error.status
       });
       
-      const errorMessage = error.message || 'Error al iniciar sesión con Google';
+      const errorMessage = error.message || 'Error signing in with Google';
       
       if (onError) {
         onError(errorMessage);
@@ -68,7 +69,7 @@ export default function GoogleLoginButton({ onSuccess, onError, redirect }: Goog
 
   const handleError = () => {
     console.error('❌ [GoogleLogin] OAuth error');
-    const errorMessage = 'Error al iniciar sesión con Google';
+    const errorMessage = 'Error signing in with Google';
     
     if (onError) {
       onError(errorMessage);

@@ -1,5 +1,6 @@
 "use client";
 import { useEffect, useState } from "react";
+import { localePath, langPrefix } from "@/app/lib/i18n/config";
 import { useRouter, useParams } from "next/navigation";
 import { getConversations, deleteConversation, Conversation } from "@/app/lib/api/conversations";
 import { useTranslation } from "@/app/hooks/useTranslation";
@@ -11,7 +12,7 @@ export default function MessagesPage() {
   const { t, loading: translationsLoading } = useTranslation();
   const router = useRouter();
   const params = useParams();
-  const lang = (params?.lang as string) || "es";
+  const lang = (params?.lang as string) || "fi";
   const { user, loading: authLoading, refreshUser } = useAuth();
 
   const [conversations, setConversations] = useState<Conversation[]>([]);
@@ -21,7 +22,7 @@ export default function MessagesPage() {
 
   useEffect(() => {
     if (!authLoading && !user) {
-      router.push(`/${lang}/login?redirect=/${lang}/messages`);
+      router.push(`${langPrefix(lang)}/login?redirect=${langPrefix(lang)}/messages`);
       return;
     }
 
@@ -48,17 +49,17 @@ export default function MessagesPage() {
   };
 
   const handleDeleteConversation = async (conversationId: number) => {
-    if (!confirm(t("page.messages.confirmDelete") || "¿Estás seguro de eliminar esta conversación?")) {
+    if (!confirm(t("page.messages.confirmDelete") || "Are you sure you want to delete this conversation?")) {
       return;
     }
 
     setDeletingId(conversationId);
     try {
       await deleteConversation(conversationId);
-      toast.success(t("page.messages.deleteSuccess") || "Conversación eliminada exitosamente");
+      toast.success(t("page.messages.deleteSuccess") || "Conversation deleted successfully");
       await loadConversations();
     } catch (error: any) {
-      toast.error(error?.message || t("page.messages.deleteError") || "Error al eliminar la conversación");
+      toast.error(error?.message || t("page.messages.deleteError") || "Error deleting conversation");
     } finally {
       setDeletingId(null);
     }
@@ -85,17 +86,17 @@ export default function MessagesPage() {
         <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-6 mb-6">
           <div>
             <h1 className="text-2xl md:text-3xl font-bold text-[var(--brand-dark)] mb-1">
-              {t("page.messages.title") || "Mis Mensajes"}
+              {t("page.messages.title") || "My Messages"}
             </h1>
             <p className="text-[var(--brand-neutral)] text-sm md:text-base">
-              {t("page.messages.subtitle") || "Conversaciones con otros viajeros"}
+              {t("page.messages.subtitle") || "Conversations with other travellers"}
             </p>
           </div>
           <button
-            onClick={() => router.push(`/${lang}`)}
+            onClick={() => router.push(localePath(lang))}
             className="bg-[#f0f4f8] text-[var(--brand-neutral)] border-2 border-[#e2e8f0] px-8 py-3 rounded-xl font-bold hover:bg-[#e2e8f0] transition-all shadow-sm"
           >
-            {t("page.messages.back") || "Volver"}
+            {t("page.messages.back") || "Back"}
           </button>
         </div>
 
@@ -107,16 +108,16 @@ export default function MessagesPage() {
               </svg>
             </div>
             <p className="text-2xl text-red-900 font-bold mb-4">
-              {t("page.messages.loadError") || "No se pudieron cargar los mensajes"}
+              {t("page.messages.loadError") || "Messages could not be loaded"}
             </p>
             <p className="text-red-600 font-medium mb-8">
-              {t("page.messages.loadErrorHint") || "Tu sesión puede haber caducado. Inicia sesión de nuevo e inténtalo."}
+              {t("page.messages.loadErrorHint") || "Your session may have expired. Log in again and try again."}
             </p>
             <button
-              onClick={() => router.push(`/${lang}/login?redirect=/${lang}/messages`)}
+              onClick={() => router.push(`${langPrefix(lang)}/login?redirect=${langPrefix(lang)}/messages`)}
               className="bg-[var(--brand-blue)] hover:bg-[var(--brand-blue)] text-white px-8 py-3 rounded-xl font-bold transition-colors"
             >
-              {t("page.messages.goToLogin") || "Iniciar sesión"}
+              {t("page.messages.goToLogin") || "Log in"}
             </button>
           </div>
         ) : conversations.length === 0 ? (
@@ -127,7 +128,7 @@ export default function MessagesPage() {
               </svg>
             </div>
             <p className="text-2xl text-[var(--brand-dark)] font-bold mb-4">
-              {t("page.messages.noConversations") || "No hay mensajes activos"}
+              {t("page.messages.noConversations") || "You have no conversations"}
             </p>
             <p className="text-[var(--brand-blue)] font-medium">
               Chatea con el conductor después de solicitar una reserva.
@@ -138,7 +139,7 @@ export default function MessagesPage() {
             {conversations.map((conversation) => (
               <div key={conversation.id} className="result-card hover:border-green-400 transition-all cursor-pointer group">
                 <div className="flex flex-col xl:flex-row justify-between gap-8">
-                  <Link href={`/${lang}/messages/${conversation.id}`} className="flex-1 space-y-4">
+                  <Link href={`${langPrefix(lang)}/messages/${conversation.id}`} className="flex-1 space-y-4">
                     <div className="flex flex-wrap items-center gap-4">
                       <span className="bg-[#e2e8f0] text-[var(--brand-neutral)] px-4 py-1.5 rounded-full text-xs font-bold uppercase tracking-widest border border-[#e2e8f0]">
                         CANAL ACTIVO
@@ -178,10 +179,10 @@ export default function MessagesPage() {
 
                   <div className="flex flex-col sm:flex-row xl:flex-col gap-3 min-w-[200px] justify-center">
                     <Link
-                      href={`/${lang}/messages/${conversation.id}`}
+                      href={`${langPrefix(lang)}/messages/${conversation.id}`}
                       className="bg-[var(--brand-blue)] hover:bg-[var(--brand-blue)] text-white px-8 py-4 rounded-xl font-bold text-center shadow-md transition-all"
                     >
-                      {t("page.messages.openChat") || "Abril Chat"}
+                      {t("page.messages.openChat") || "Open chat"}
                     </Link>
 
                     {isDriver(conversation) && (
@@ -190,7 +191,7 @@ export default function MessagesPage() {
                         disabled={deletingId === conversation.id}
                         className="bg-white border-2 border-red-100 text-red-600 px-8 py-4 rounded-xl font-bold hover:bg-red-50 transition-all font-bold"
                       >
-                        {deletingId === conversation.id ? "Eliminando..." : (t("page.messages.delete") || "Cerrar canal")}
+                        {deletingId === conversation.id ? "Eliminando..." : (t("page.messages.delete") || "Delete")}
                       </button>
                     )}
                   </div>

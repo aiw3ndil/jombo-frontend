@@ -1,6 +1,7 @@
 "use client";
 
 import { useState, useEffect } from "react";
+import { langPrefix } from "@/app/lib/i18n/config";
 import { useTranslation } from "@/app/hooks/useTranslation";
 import Link from "next/link";
 import { useParams } from "next/navigation";
@@ -9,7 +10,7 @@ export default function CookieConsent() {
   const [isVisible, setIsVisible] = useState(false);
   const { t } = useTranslation();
   const params = useParams();
-  const lang = (params?.lang as string) || "es";
+  const lang = (params?.lang as string) || "fi";
 
   useEffect(() => {
     // Check if user has already given consent
@@ -46,7 +47,7 @@ export default function CookieConsent() {
 
             <div className="flex flex-col sm:flex-row items-center gap-4 shrink-0 w-full sm:w-auto">
               <Link
-                href={`/${lang}/terms`}
+                href={`${langPrefix(lang)}/terms`}
                 className="text-[var(--brand-neutral)] font-semibold text-base hover:text-[var(--brand-dark)] transition-colors underline py-2 px-4"
               >
                 {t("cookies.learnMore")}

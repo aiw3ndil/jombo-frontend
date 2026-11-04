@@ -80,7 +80,7 @@ export function AuthProvider({ children }: { children: ReactNode }) {
   }, [refreshUser]);
 
   const register = useCallback(
-    async (name: string, email: string, password: string, passwordConfirmation: string, language: string = "es") => {
+    async (name: string, email: string, password: string, passwordConfirmation: string, language: string = "fi") => {
       setLoading(true);
       setError(null);
       try {

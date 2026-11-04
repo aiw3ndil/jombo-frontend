@@ -50,7 +50,7 @@ export async function createReview(bookingId: number, data: CreateReviewData): P
   console.log('📥 Review response status:', res.status);
 
   if (!res.ok) {
-    let errorMessage = "Error al crear la reseña";
+    let errorMessage = "Error creating review";
 
     try {
       const errorData = await res.json();
@@ -85,7 +85,7 @@ export async function getBookingReviews(bookingId: number): Promise<Review[]> {
   });
 
   if (!res.ok) {
-    throw new Error("Error al obtener las reseñas");
+    throw new Error("Error fetching reviews");
   }
 
   return await res.json();
@@ -100,7 +100,7 @@ export async function getUserReviews(userId: number): Promise<Review[]> {
   });
 
   if (!res.ok) {
-    throw new Error("Error al obtener las reseñas del usuario");
+    throw new Error("Error fetching user reviews");
   }
 
   return await res.json();

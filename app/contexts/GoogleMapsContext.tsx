@@ -24,8 +24,8 @@ const MapsScriptLoader = dynamic(
 
 export function GoogleMapsProvider({ 
     children, 
-    language = 'es',
-    region = 'ES' 
+    language = 'fi',
+    region = 'FI' 
 }: { 
     children: ReactNode;
     language?: string;

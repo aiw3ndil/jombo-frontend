@@ -20,5 +20,9 @@
   "confirmPassword": "Confirm password",
   "resetPasswordSubmit": "Change password",
   "passwordResetSuccess": "Your password has been reset successfully.",
-  "errorGeneric": "An error occurred. Please try again."
+  "errorGeneric": "An error occurred. Please try again.",
+  "securityBadge": "Account security",
+  "loginBadge": "Welcome back",
+  "loginTitle": "Log in",
+  "loginSubtitle": "Access your account and keep saving with Jombo."
 }

@@ -56,7 +56,7 @@ export async function createBooking(data: CreateBookingData): Promise<Booking> {
   console.log('📥 Booking response status:', res.status);
 
   if (!res.ok) {
-    let errorMessage = "Error al crear la reserva";
+    let errorMessage = "Error creating booking";
 
     try {
       const errorData = await res.json();
@@ -91,7 +91,7 @@ export async function getBookings(): Promise<Booking[]> {
   });
 
   if (!res.ok) {
-    throw new Error("Error al obtener las reservas");
+    throw new Error("Error fetching bookings");
   }
 
   return await res.json();
@@ -112,7 +112,7 @@ export async function confirmBooking(tripId: number, bookingId: number): Promise
     } catch (e) {
       console.error("Error parsing error response for confirmBooking:", e);
     }
-    throw new Error(errorData?.error || errorData?.errors?.join(", ") || "Error al confirmar la reserva");
+    throw new Error(errorData?.error || errorData?.errors?.join(", ") || "Error confirming booking");
   }
 
   // Handle 204 No Content for successful operations that don't return a body
@@ -124,7 +124,7 @@ export async function confirmBooking(tripId: number, bookingId: number): Promise
     return await res.json();
   } catch (e) {
     console.error("Error parsing success response for confirmBooking:", e);
-    throw new Error("Respuesta inválida del servidor al confirmar la reserva.");
+    throw new Error("Invalid server response when confirming the booking.");
   }
 }
 
@@ -143,7 +143,7 @@ export async function rejectBooking(tripId: number, bookingId: number): Promise<
     } catch (e) {
       console.error("Error parsing error response for rejectBooking:", e);
     }
-    throw new Error(errorData?.error || "Error al rechazar la reserva");
+    throw new Error(errorData?.error || "Error rejecting booking");
   }
 
   // Handle 204 No Content for successful operations that don't return a body
@@ -155,7 +155,7 @@ export async function rejectBooking(tripId: number, bookingId: number): Promise<
     return await res.json();
   } catch (e) {
     console.error("Error parsing success response for rejectBooking:", e);
-    throw new Error("Respuesta inválida del servidor al rechazar la reserva.");
+    throw new Error("Invalid server response when rejecting the booking.");
   }
 }
 
@@ -169,7 +169,7 @@ export async function cancelBooking(bookingId: number): Promise<void> {
 
   if (!res.ok) {
     const errorData = await res.json();
-    throw new Error(errorData.error || "Error al cancelar la reserva");
+    throw new Error(errorData.error || "Error cancelling booking");
   }
 }
 

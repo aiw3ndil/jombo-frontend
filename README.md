@@ -12,7 +12,7 @@ Jombo es una plataforma de carpooling que permite a los usuarios publicar y rese
 - 🔍 **Búsqueda de viajes** - Encuentra viajes disponibles desde tu ciudad de origen
 - 📅 **Reservar asientos** - Solicita reservas para los viajes que necesites
 - 📋 **Mis reservas** - Gestiona tus reservas activas, pendientes y confirmadas
-- 🌍 **Multiidioma** - Disponible en Español, Inglés y Finés
+- 🌍 **Multiidioma** - Disponible en finés e inglés
 
 ### Para Conductores
 - 🚗 **Publicar viajes** - Crea nuevos viajes indicando origen, destino, fecha, hora, asientos y precio
@@ -90,7 +90,6 @@ jombo-frontend/
 │       └── api/             # Funciones de API
 ├── public/
 │   └── locales/            # Archivos de traducción
-│       ├── es/
 │       ├── en/
 │       └── fi/
 └── middleware.ts           # Middleware de i18n
@@ -98,11 +97,10 @@ jombo-frontend/
 
 ## 🌐 Idiomas Soportados
 
-- 🇪🇸 Español (`es`)
-- 🇬🇧 Inglés (`en`)
-- 🇫🇮 Finés (`fi`)
+- 🇫🇮 Finés (`fi`) — idioma por defecto, servido en la raíz: `https://jombo.fi/...`
+- 🇬🇧 Inglés (`en`) — servido bajo `/en`: `https://jombo.fi/en/...`
 
-El idioma se detecta automáticamente desde la URL: `/es/`, `/en/`, `/fi/`
+Jombo solo opera en Finlandia (jombo.fi). `proxy.ts` reescribe internamente las URLs sin prefijo a la ruta `/fi` y redirige `/fi/...` y las antiguas `/es/...` a la URL sin prefijo. Para generar enlaces usa `localePath(lang, path)` de `app/lib/i18n/config.ts`.
 
 ## 🔌 API Backend
 

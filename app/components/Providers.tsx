@@ -5,17 +5,11 @@ import { NotificationsProvider } from "@/app/contexts/NotificationsContext";
 import { GoogleMapsProvider } from "@/app/contexts/GoogleMapsContext";
 import { ReactNode } from "react";
 
-const getRegionFromLang = (lang: string) => {
-  switch (lang) {
-    case 'fi': return 'FI';
-    case 'en': return 'US';
-    case 'es':
-    default: return 'ES';
-  }
-};
+// Jombo only operates in Finland
+const MAPS_REGION = 'FI';
 
-export function Providers({ children, lang = 'es' }: { children: ReactNode; lang?: string }) {
-  const region = getRegionFromLang(lang);
+export function Providers({ children, lang = 'fi' }: { children: ReactNode; lang?: string }) {
+  const region = MAPS_REGION;
   
   return (
     <AuthProvider>

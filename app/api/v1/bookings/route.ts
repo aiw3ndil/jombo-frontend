@@ -12,7 +12,7 @@ export async function GET(request: NextRequest) {
   } catch (error) {
     console.error('Get bookings error:', error);
     return NextResponse.json(
-      { error: 'Error al obtener las reservas' },
+      { error: 'Error fetching bookings' },
       { status: 500 }
     );
   }
@@ -61,7 +61,7 @@ export async function POST(request: NextRequest) {
   } catch (error) {
     console.error('Create booking error:', error);
     return NextResponse.json(
-      { error: 'Error al crear la reserva' },
+      { error: 'Error creating booking' },
       { status: 500 }
     );
   }

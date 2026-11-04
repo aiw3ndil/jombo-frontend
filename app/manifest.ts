@@ -2,9 +2,9 @@ import { MetadataRoute } from 'next'
  
 export default function manifest(): MetadataRoute.Manifest {
   return {
-    name: 'Jombo - Carpooling sin comisiones',
+    name: 'Jombo - Kimppakyydit ilman välityspalkkioita',
     short_name: 'Jombo',
-    description: 'Plataforma de carpooling sin comisiones.',
+    description: 'Kimppakyytipalvelu ilman välityspalkkioita.',
     start_url: '/',
     display: 'standalone',
     background_color: '#ffffff',

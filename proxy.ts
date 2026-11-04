@@ -21,12 +21,19 @@ const PUBLIC_FILE_SUFFIXES = [
   '.map',
 ];
 
+// Finnish is served at the root (jombo.fi/...), English under /en (jombo.fi/en/...).
+const DEFAULT_LANG = 'fi';
+const PREFIXED_LANGS = ['en'];
+// Prefixes that are no longer public and must redirect to the unprefixed (Finnish) URL.
+const LEGACY_PREFIXES = ['fi', 'es'];
+
+function withPathname(response: NextResponse, pathname: string) {
+  response.headers.set('x-pathname', pathname);
+  return response;
+}
+
 export function proxy(request: NextRequest) {
-  const { pathname } = request.nextUrl;
-
-  // Initialize a response that will be potentially modified or replaced
-  let response = NextResponse.next();
-
+  const { pathname, search } = request.nextUrl;
 
   // Ignorar rutas de archivos públicos y APIs
   if (
@@ -34,43 +41,28 @@ export function proxy(request: NextRequest) {
     pathname.startsWith('/api') ||
     pathname.startsWith('/_next')
   ) {
-    response.headers.set('x-pathname', pathname);
-    return response;
+    return withPathname(NextResponse.next(), pathname);
   }
 
-  const pathnameParts = pathname.split('/').filter(Boolean);
-  const currentLang = pathnameParts[0];
-  const supportedLangs = ['es', 'en', 'fi'];
+  const firstSegment = pathname.split('/').filter(Boolean)[0];
 
-  // Determine target language based on domain
-  const host = request.headers.get('host') || '';
-  let targetLang = 'es'; // Default fallback
-
-  if (host.includes('jombo.fi')) {
-    targetLang = 'fi';
-  } else if (host.includes('jombo.es')) {
-    targetLang = 'es';
+  // /fi/... and the old /es/... URLs -> canonical unprefixed URL
+  if (firstSegment && LEGACY_PREFIXES.includes(firstSegment)) {
+    const rest = pathname.slice(firstSegment.length + 1) || '/';
+    const url = new URL(`${rest}${search}`, request.url);
+    return NextResponse.redirect(url, 308);
   }
 
-  // If no language in URL or current language not supported, redirect to target language
-  if (!currentLang || !supportedLangs.includes(currentLang)) {
-    // If the path is already "/", redirect to "/[targetLang]"
-    if (pathname === '/') {
-      const redirectResponse = NextResponse.redirect(new URL(`/${targetLang}`, request.url));
-      redirectResponse.headers.set('x-pathname', `/${targetLang}`);
-      return redirectResponse;
-    }
-    // If the path is not "/", but has no valid language, insert the target language
-    const newUrl = new URL(`/${targetLang}${pathname}`, request.url);
-    const redirectResponse = NextResponse.redirect(newUrl);
-
-    redirectResponse.headers.set('x-pathname', `/${targetLang}${pathname}`);
-    return redirectResponse;
+  // English pages keep their /en prefix
+  if (firstSegment && PREFIXED_LANGS.includes(firstSegment)) {
+    return withPathname(NextResponse.next(), pathname);
   }
 
-  // If no redirection, proceed as normal and set x-pathname
-  response.headers.set('x-pathname', pathname);
-  return response;
+  // Everything else is Finnish: serve the internal /fi route without changing the URL
+  const internalPath = `/${DEFAULT_LANG}${pathname === '/' ? '' : pathname}`;
+  const url = request.nextUrl.clone();
+  url.pathname = internalPath;
+  return withPathname(NextResponse.rewrite(url), internalPath);
 }
 
 export const config = {

@@ -1,8 +1,9 @@
 "use client";
 
 import Link from "next/link";
+import { localePath, langPrefix } from "@/app/lib/i18n/config";
 import { useTranslation } from "@/app/hooks/useTranslation";
-import { TOP_FINNISH_ROUTES, TOP_SPANISH_ROUTES } from "@/app/lib/constants/routes";
+import { TOP_FINNISH_ROUTES } from "@/app/lib/constants/routes";
 
 interface FooterProps {
   lang: string;
@@ -11,12 +12,10 @@ interface FooterProps {
 export default function Footer({ lang }: FooterProps) {
   const { t } = useTranslation();
 
-  const supportEmail = lang === "fi" ? "tuki@jombo.fi" : "soporte@jombo.es";
+  const supportEmail = "tuki@jombo.fi";
 
-  // Determinamos qué rutas mostrar y el slug base según el idioma
-  const isFinnish = lang === "fi";
-  const featuredRoutes = isFinnish ? TOP_FINNISH_ROUTES.slice(0, 6) : TOP_SPANISH_ROUTES.slice(0, 6);
-  const routePrefix = isFinnish ? "kimppakyyti" : "viajes-compartidos";
+  const featuredRoutes = TOP_FINNISH_ROUTES.slice(0, 6);
+  const routePrefix = "kimppakyyti";
 
   return (
     <footer className="bg-[var(--brand-dark)] text-white mt-auto py-24 relative overflow-hidden">
@@ -27,7 +26,7 @@ export default function Footer({ lang }: FooterProps) {
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-5 gap-16 lg:gap-12">
           {/* Brand Column */}
           <div className="lg:col-span-1 space-y-8">
-            <Link href={`/${lang}`} className="inline-block hover:opacity-80 transition-all hover:scale-105 transform">
+            <Link href={localePath(lang)} className="inline-block hover:opacity-80 transition-all hover:scale-105 transform">
               <img
                 src="/JOMBO_LOGO_Princpal_RGB.png"
                 alt="Jombo"
@@ -42,13 +41,13 @@ export default function Footer({ lang }: FooterProps) {
           {/* Top Routes Column */}
           <div>
             <h3 className="text-white font-bold mb-8 text-sm uppercase tracking-[0.2em] opacity-60">
-              {isFinnish ? "Suosituimmat reitit" : "Rutas populares"}
+              {lang === "fi" ? "Suosituimmat reitit" : "Popular routes"}
             </h3>
             <ul className="space-y-4">
               {featuredRoutes.map((route) => (
                 <li key={route.slug}>
                   <Link
-                    href={`/${lang}/${routePrefix}/${route.slug}`}
+                    href={`${langPrefix(lang)}/${routePrefix}/${route.slug}`}
                     className="text-white hover:text-[var(--brand-accent-1)] text-base transition-all font-medium flex items-center gap-3 group"
                   >
                     <span className="w-1.5 h-1.5 bg-[var(--brand-accent-1)] rounded-full group-hover:bg-white transition-colors"></span>
@@ -78,12 +77,12 @@ export default function Footer({ lang }: FooterProps) {
             </h3>
             <ul className="space-y-4">
               <li>
-                <Link href={`/${lang}/terms`} className="text-white hover:text-[var(--brand-accent-1)] text-base transition-all font-medium">
+                <Link href={`${langPrefix(lang)}/terms`} className="text-white hover:text-[var(--brand-accent-1)] text-base transition-all font-medium">
                   {t("footer.terms")}
                 </Link>
               </li>
               <li>
-                <Link href={`/${lang}/data-deletion`} className="text-white hover:text-[var(--brand-accent-1)] text-base transition-all font-medium">
+                <Link href={`${langPrefix(lang)}/data-deletion`} className="text-white hover:text-[var(--brand-accent-1)] text-base transition-all font-medium">
                   {t("footer.dataDeletion")}
                 </Link>
               </li>

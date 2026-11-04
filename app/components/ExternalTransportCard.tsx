@@ -41,7 +41,6 @@ export default function ExternalTransportCard({ option, lang }: Props) {
   const getModeLabel = (mode: string) => {
     const labels: Record<string, Record<string, string>> = {
       fi: { RAIL: 'Juna', BUS: 'Bussi', SUBWAY: 'Metro', TRAM: 'Ratikka', WALK: 'Kävely' },
-      es: { RAIL: 'Tren', BUS: 'Autobús', SUBWAY: 'Metro', TRAM: 'Tranvía', WALK: 'Caminar' },
       en: { RAIL: 'Train', BUS: 'Bus', SUBWAY: 'Subway', TRAM: 'Tram', WALK: 'Walk' },
     };
     return labels[lang]?.[mode?.toUpperCase()] || mode;
@@ -93,12 +92,12 @@ export default function ExternalTransportCard({ option, lang }: Props) {
               <p className="text-3xl font-black text-[var(--brand-dark)] tracking-tightest">
                 {option.price && option.price > 0
                   ? `${option.currency === 'EUR' ? '€' : option.currency}${Number(option.price).toFixed(2)}`
-                  : (lang === 'fi' ? 'Säästä' : (lang === 'es' ? 'Ahorra' : 'Save'))}
+                  : (lang === 'fi' ? 'Säästä' : 'Save')}
               </p>
               <p className="text-xs font-black text-[var(--brand-blue)] uppercase tracking-widest leading-none">
                 {option.price && option.price > 0
-                  ? (lang === 'fi' ? 'Hinta alkaen' : (lang === 'es' ? 'Desde' : 'From'))
-                  : (lang === 'fi' ? 'Katso hinta' : (lang === 'es' ? 'Ver precio' : 'Check price'))}
+                  ? (lang === 'fi' ? 'Hinta alkaen' : 'From')
+                  : (lang === 'fi' ? 'Katso hinta' : 'Check price')}
               </p>
             </div>
           </div>
@@ -106,7 +105,7 @@ export default function ExternalTransportCard({ option, lang }: Props) {
           <div className="grid grid-cols-2 bg-[#f0f4f8]/60 rounded-3xl p-5 border border-[#e2e8f0] gap-4">
             <div className="space-y-1">
               <p className="text-xs font-black text-[var(--brand-blue)] uppercase tracking-widest">
-                {lang === 'fi' ? 'Lähtö' : (lang === 'es' ? 'Salida' : 'Departure')}
+                {lang === 'fi' ? 'Lähtö' : 'Departure'}
               </p>
               <p className="text-sm font-bold text-[var(--brand-dark)] italic">
                 {formatTime(option.start_time)} HS
@@ -114,7 +113,7 @@ export default function ExternalTransportCard({ option, lang }: Props) {
             </div>
             <div className="space-y-1">
               <p className="text-xs font-black text-[var(--brand-blue)] uppercase tracking-widest">
-                {lang === 'fi' ? 'Saapuminen' : (lang === 'es' ? 'Llegada' : 'Arrival')}
+                {lang === 'fi' ? 'Saapuminen' : 'Arrival'}
               </p>
               <p className="text-sm font-bold text-[var(--brand-dark)]">
                 {formatTime(option.end_time)} HS
@@ -145,7 +144,7 @@ export default function ExternalTransportCard({ option, lang }: Props) {
               rel="noopener noreferrer"
               className="btn-primary w-full"
             >
-              {lang === 'fi' ? 'Katso reitti ja aikataulut' : (lang === 'es' ? 'Ver ruta y horarios' : 'View route and schedules')}
+              {lang === 'fi' ? 'Katso reitti ja aikataulut' : 'View route and schedules'}
             </a>
           </div>
         </div>

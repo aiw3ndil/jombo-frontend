@@ -79,14 +79,12 @@ El botón de Google ya está integrado en `/[lang]/login/page.tsx` y **se traduc
 ```
 
 El botón mostrará:
-- **Español**: "Continuar con Google"
 - **English**: "Continue with Google"  
 - **Suomi**: "Jatka Googlella"
 
 ### Traducciones
 
 Las traducciones se gestionan en los archivos de locale:
-- `public/locales/es/login.json`
 - `public/locales/en/login.json`
 - `public/locales/fi/login.json`
 
@@ -122,7 +120,7 @@ interface GoogleLoginButtonProps {
 1. Configura `NEXT_PUBLIC_GOOGLE_CLIENT_ID` en `.env.local`
 2. Asegúrate de que el backend esté corriendo en `http://localhost:3000`
 3. Inicia el frontend: `npm run dev`
-4. Ve a `http://localhost:3001/es/login`
+4. Ve a `http://localhost:3001/login`
 5. Haz click en "Continuar con Google"
 
 ### Producción

@@ -1,5 +1,6 @@
 "use client";
 import { useState, useEffect } from "react";
+import { localePath, langPrefix } from "@/app/lib/i18n/config";
 import { useRouter } from "next/navigation";
 import { useAuth } from "@/app/contexts/AuthContext";
 import { useTranslation } from "@/app/hooks/useTranslation";
@@ -10,12 +11,11 @@ export default function ProfilePage({ params }: { params: Promise<{ lang: string
   const router = useRouter();
   const { user, updateUser, logout, loading: authLoading } = useAuth();
   const { t } = useTranslation();
-  const [lang, setLang] = useState("es");
+  const [lang, setLang] = useState("fi");
   const [formData, setFormData] = useState({
     name: "",
     email: "",
-    language: "es",
-    region: "es"
+    language: "fi"
   });
   const [passwordData, setPasswordData] = useState({
     current_password: "",
@@ -40,13 +40,12 @@ export default function ProfilePage({ params }: { params: Promise<{ lang: string
     if (authLoading) return;
 
     if (!user) {
-      router.push(`/${lang}/login`);
+      router.push(`${langPrefix(lang)}/login`);
     } else {
       setFormData({
         name: user.name || "",
         email: user.email || "",
-        language: user.language || lang,
-        region: user.region || (lang === "fi" ? "fi" : "es")
+        language: user.language === "en" || user.language === "fi" ? user.language : lang
       });
       const pictureUrl = user.picture_url || user.picture;
       if (pictureUrl) {
@@ -61,7 +60,7 @@ export default function ProfilePage({ params }: { params: Promise<{ lang: string
     if (file) {
       const maxSize = 5 * 1024 * 1024;
       if (file.size > maxSize) {
-        toast.error("La imagen es demasiado grande. El tamaño máximo es 5MB.");
+        toast.error("The image is too large. The maximum size is 5MB.");
         e.target.value = '';
         return;
       }
@@ -84,7 +83,6 @@ export default function ProfilePage({ params }: { params: Promise<{ lang: string
       const formDataToSend = new FormData();
       formDataToSend.append("name", formData.name);
       formDataToSend.append("language", formData.language);
-      formDataToSend.append("region", formData.region);
 
       if (pictureFile) {
         formDataToSend.append("picture", pictureFile);
@@ -103,18 +101,18 @@ export default function ProfilePage({ params }: { params: Promise<{ lang: string
         try {
           errorData = responseText ? JSON.parse(responseText) : {};
         } catch (e) {
-          throw new Error(`Error del servidor: ${response.status}`);
+          throw new Error(`Server error: ${response.status}`);
         }
-        throw new Error(errorData.error || errorData.message || "Error al actualizar el perfil");
+        throw new Error(errorData.error || errorData.message || "Error updating profile");
       }
 
       const data = responseText ? JSON.parse(responseText) : {};
       updateUser(data.user || data);
       setPictureFile(null);
-      setMessage({ type: "success", text: t("profile.updateSuccess") || "Perfil actualizado exitosamente" });
-      toast.success(t("profile.updateSuccess") || "Perfil actualizado");
+      setMessage({ type: "success", text: t("profile.updateSuccess") || "Profile updated successfully" });
+      toast.success(t("profile.updateSuccess") || "Profile updated successfully");
     } catch (error: any) {
-      setMessage({ type: "error", text: error.message || t("profile.updateError") || "Error al actualizar el perfil" });
+      setMessage({ type: "error", text: error.message || t("profile.updateError") || "Error updating profile" });
       toast.error(error.message);
     } finally {
       setLoading(false);
@@ -143,7 +141,7 @@ export default function ProfilePage({ params }: { params: Promise<{ lang: string
     if (passwordData.password !== passwordData.password_confirmation) {
       setPasswordMessage({ 
         type: "error", 
-        text: t("profile.passwordsDoNotMatch") || "Las contraseñas no coinciden" 
+        text: t("profile.passwordsDoNotMatch") || "Passwords do not match" 
       });
       setPasswordLoading(false);
       return;
@@ -157,18 +155,18 @@ export default function ProfilePage({ params }: { params: Promise<{ lang: string
       );
       setPasswordMessage({ 
         type: "success", 
-        text: t("profile.passwordUpdateSuccess") || "Contraseña actualizada exitosamente" 
+        text: t("profile.passwordUpdateSuccess") || "Password updated successfully" 
       });
       setPasswordData({
         current_password: "",
         password: "",
         password_confirmation: ""
       });
-      toast.success(t("profile.passwordUpdateSuccess") || "Contraseña actualizada");
+      toast.success(t("profile.passwordUpdateSuccess") || "Password updated successfully");
     } catch (error: any) {
       setPasswordMessage({ 
         type: "error", 
-        text: error.message || t("profile.passwordUpdateError") || "Error al actualizar la contraseña" 
+        text: error.message || t("profile.passwordUpdateError") || "Error updating password" 
       });
       toast.error(error.message);
     } finally {
@@ -181,10 +179,10 @@ export default function ProfilePage({ params }: { params: Promise<{ lang: string
     try {
       await deleteUser();
       await logout();
-      toast.success(t("profile.deleteAccountSuccess") || "Cuenta eliminada exitosamente.");
-      router.push(`/${lang}/`);
+      toast.success(t("profile.deleteAccountSuccess") || "Account deleted successfully.");
+      router.push(localePath(lang));
     } catch (error: any) {
-      toast.error(error.message || t("profile.deleteAccountError") || "Error al eliminar la cuenta.");
+      toast.error(error.message || t("profile.deleteAccountError") || "Error deleting account.");
     } finally {
       setDeleting(false);
       setShowDeleteModal(false);
@@ -293,26 +291,11 @@ export default function ProfilePage({ params }: { params: Promise<{ lang: string
                   />
                 </div>
                 <div className="space-y-2">
-                  <label className="form-label">{t("profile.language") || "Idioma de la APP"}</label>
+                  <label className="form-label">{t("profile.language") || "Notification language"}</label>
                   <div className="relative">
                     <select name="language" value={formData.language} onChange={handleChange} className="form-select">
-                      <option value="es">Español</option>
-                      <option value="en">English</option>
                       <option value="fi">Suomi</option>
-                    </select>
-                    <div className="absolute right-6 top-1/2 -translate-y-1/2 pointer-events-none text-[var(--brand-blue)]">
-                      <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 9l-7 7-7-7" />
-                      </svg>
-                    </div>
-                  </div>
-                </div>
-                <div className="space-y-2">
-                  <label className="form-label">{t("profile.region") || "Región / País"}</label>
-                  <div className="relative">
-                    <select name="region" value={formData.region} onChange={handleChange} className="form-select">
-                      <option value="es">{t("profile.regionSpain") || "España"}</option>
-                      <option value="fi">{t("profile.regionFinland") || "Finlandia"}</option>
+                      <option value="en">English</option>
                     </select>
                     <div className="absolute right-6 top-1/2 -translate-y-1/2 pointer-events-none text-[var(--brand-blue)]">
                       <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -328,9 +311,9 @@ export default function ProfilePage({ params }: { params: Promise<{ lang: string
                   {loading ? (
                     <span className="flex items-center gap-3">
                       <div className="w-5 h-5 border-3 border-white/30 border-t-white rounded-full animate-spin"></div>
-                      {t("profile.saving") || "Guardando..."}
+                      {t("profile.saving") || "Saving..."}
                     </span>
-                  ) : (t("profile.save") || "Actualizar Perfil")}
+                  ) : (t("profile.save") || "Save changes")}
                 </button>
               </div>
             </form>
@@ -353,7 +336,7 @@ export default function ProfilePage({ params }: { params: Promise<{ lang: string
 
             <form onSubmit={handlePasswordSubmit} className="space-y-8">
               <div className="max-w-md">
-                <label className="form-label">{t("profile.currentPassword") || "Contraseña Actual"}</label>
+                <label className="form-label">{t("profile.currentPassword") || "Current password"}</label>
                 <input 
                   type="password" 
                   name="current_password" 
@@ -366,7 +349,7 @@ export default function ProfilePage({ params }: { params: Promise<{ lang: string
               
               <div className="grid md:grid-cols-2 gap-8">
                 <div className="space-y-2">
-                  <label className="form-label">{t("profile.newPassword") || "Nueva Contraseña"}</label>
+                  <label className="form-label">{t("profile.newPassword") || "New password"}</label>
                   <input 
                     type="password" 
                     name="password" 
@@ -377,7 +360,7 @@ export default function ProfilePage({ params }: { params: Promise<{ lang: string
                   />
                 </div>
                 <div className="space-y-2">
-                  <label className="form-label">{t("profile.confirmNewPassword") || "Confirmar Nueva"}</label>
+                  <label className="form-label">{t("profile.confirmNewPassword") || "Confirm new password"}</label>
                   <input 
                     type="password" 
                     name="password_confirmation" 
@@ -408,16 +391,16 @@ export default function ProfilePage({ params }: { params: Promise<{ lang: string
             
             <div className="relative z-10 flex flex-col md:flex-row items-center justify-between gap-10">
               <div className="text-center md:text-left">
-                <h2 className="text-3xl font-black text-red-700 mb-4">{t("profile.dangerZone") || "Zona de Riesgo"}</h2>
+                <h2 className="text-3xl font-black text-red-700 mb-4">{t("profile.dangerZone") || "Danger Zone"}</h2>
                 <p className="text-red-600/80 text-lg max-w-xl font-medium leading-relaxed">
-                  {t("profile.deleteAccountWarning") || "Si eliminas tu cuenta, perderás todos tus datos de forma permanente. Esta acción es irreversible."}
+                  {t("profile.deleteAccountWarning") || "Deleting your account is a permanent action and cannot be undone."}
                 </p>
               </div>
               <button
                 onClick={() => setShowDeleteModal(true)}
                 className="bg-white border-2 border-red-200 text-red-600 px-10 py-5 rounded-2xl font-black hover:bg-red-600 hover:text-white hover:border-red-600 transition-all shadow-md active:scale-95 whitespace-nowrap"
               >
-                {t("profile.deleteAccountButton") || "Eliminar Cuenta"}
+                {t("profile.deleteAccountButton") || "Delete Account"}
               </button>
             </div>
           </div>
@@ -435,23 +418,23 @@ export default function ProfilePage({ params }: { params: Promise<{ lang: string
                 <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16" />
               </svg>
             </div>
-            <h3 className="text-4xl font-bold text-red-700 mb-6">{t("profile.deleteAccountModalTitle") || "¿Confirmar Eliminación?"}</h3>
+            <h3 className="text-4xl font-bold text-red-700 mb-6">{t("profile.deleteAccountModalTitle") || "Are you sure?"}</h3>
             <p className="text-gray-500 mb-12 text-xl leading-relaxed">
-              {t("profile.deleteAccountModalMessage") || "Esta acción es definitiva. Se borrarán tus viajes, mensajes y toda tu actividad en Jombo."}
+              {t("profile.deleteAccountModalMessage") || "This action is irreversible. All your data will be permanently deleted."}
             </p>
             <div className="flex flex-col sm:flex-row gap-4">
               <button
                 onClick={() => setShowDeleteModal(false)}
                 className="flex-1 px-8 py-5 rounded-2xl bg-gray-100 text-gray-700 font-bold hover:bg-gray-200 transition-all text-lg"
               >
-                {t("profile.deleteAccountCancel") || "Cancelar"}
+                {t("profile.deleteAccountCancel") || "Cancel"}
               </button>
               <button
                 onClick={handleDeleteAccount}
                 disabled={deleting}
                 className="flex-1 px-8 py-5 rounded-2xl bg-red-600 text-white font-bold hover:bg-red-700 transition-all shadow-lg text-lg active:scale-95"
               >
-                {deleting ? t("profile.deletingAccount") || "Procesando..." : t("profile.deleteAccountConfirm") || "Eliminar"}
+                {deleting ? t("profile.deletingAccount") || "Deleting..." : t("profile.deleteAccountConfirm") || "Yes, delete"}
               </button>
             </div>
           </div>

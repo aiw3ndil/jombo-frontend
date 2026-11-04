@@ -60,7 +60,7 @@ export async function getConversations(): Promise<Conversation[]> {
   });
 
   if (!res.ok) {
-    const error = new Error("Error al obtener las conversaciones");
+    const error = new Error("Error fetching conversations");
     (error as any).status = res.status;
     throw error;
   }
@@ -78,7 +78,7 @@ export async function getConversation(conversationId: number): Promise<Conversat
   });
 
   if (!res.ok) {
-    const error = new Error("Error al obtener la conversación");
+    const error = new Error("Error fetching conversation");
     (error as any).status = res.status;
     throw error;
   }
@@ -101,7 +101,7 @@ export async function getTripConversation(tripId: number): Promise<ConversationD
 
   if (!res.ok) {
     const errorData = await res.json();
-    throw new Error(errorData.error || "Error al obtener la conversación del viaje");
+    throw new Error(errorData.error || "Error fetching trip conversation");
   }
 
   const data = await res.json();
@@ -128,7 +128,7 @@ export async function sendMessage(conversationId: number, content: string): Prom
 
   if (!res.ok) {
     const errorData = await res.json();
-    throw new Error(errorData.errors?.join(", ") || "Error al enviar el mensaje");
+    throw new Error(errorData.errors?.join(", ") || "Error sending message");
   }
 
   return await res.json();
@@ -145,7 +145,7 @@ export async function deleteConversation(conversationId: number): Promise<void> 
 
   if (!res.ok) {
     const errorData = await res.json();
-    throw new Error(errorData.error || "Error al eliminar la conversación");
+    throw new Error(errorData.error || "Error deleting conversation");
   }
 }
 
@@ -160,7 +160,7 @@ export async function deleteMessage(conversationId: number, messageId: number): 
 
   if (!res.ok) {
     const errorData = await res.json();
-    throw new Error(errorData.error || "Error al eliminar el mensaje");
+    throw new Error(errorData.error || "Error deleting message");
   }
 }
 

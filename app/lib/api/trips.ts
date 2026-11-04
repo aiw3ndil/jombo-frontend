@@ -58,13 +58,11 @@ export interface SearchResponse {
 
 export async function searchTrips(
   departureLocation?: string,
-  arrivalLocation?: string,
-  region?: string
+  arrivalLocation?: string
 ): Promise<SearchResponse> {
   const params = new URLSearchParams();
   if (departureLocation) params.set("departure_location", departureLocation);
   if (arrivalLocation) params.set("arrival_location", arrivalLocation);
-  if (region) params.set("region", region);
 
   let url = `${API_BASE}/api/v1/trips/search?${params.toString()}`;
   if (departureLocation && arrivalLocation) {
@@ -81,7 +79,7 @@ export async function searchTrips(
   });
 
   if (!res.ok) {
-    throw new Error("Error al buscar viajes");
+    throw new Error("Error searching trips");
   }
 
   const data = await res.json();
@@ -137,7 +135,7 @@ export async function getMyTrips(): Promise<Trip[]> {
       errorDetail = await res.text();
     }
     console.error(`❌ getMyTrips failed with status ${status}:`, errorDetail);
-    throw new Error(`Error al obtener tus viajes (Status: ${status}) - ${errorDetail}`);
+    throw new Error(`Error fetching your trips (Status: ${status}) - ${errorDetail}`);
   }
 
   const data = await res.json();
@@ -156,7 +154,7 @@ export async function getTripBookings(tripId: number): Promise<any[]> {
   });
 
   if (!res.ok) {
-    throw new Error("Error al obtener las reservas del viaje");
+    throw new Error("Error fetching trip bookings");
   }
 
   const data = await res.json();
@@ -170,7 +168,6 @@ export interface CreateTripData {
   available_seats: number;
   price: number;
   description?: string;
-  region?: string;
   is_recurring?: boolean;
   recurrence_pattern?: string;
   recurrence_until?: string;
@@ -194,7 +191,7 @@ export async function createTrip(tripData: CreateTripData): Promise<Trip> {
   console.log('📥 Response status:', res.status);
 
   if (!res.ok) {
-    let errorMessage = "Error al crear el viaje";
+    let errorMessage = "Error creating trip";
 
     try {
       const errorData = await res.json();
@@ -236,7 +233,7 @@ export async function deleteTrip(tripId: number, allRecurring: boolean = false):
   });
 
   if (!res.ok) {
-    let errorMessage = "Error al eliminar el viaje";
+    let errorMessage = "Error deleting trip";
     try {
       const errorData = await res.json();
       errorMessage = errorData.error || errorData.message || errorMessage;

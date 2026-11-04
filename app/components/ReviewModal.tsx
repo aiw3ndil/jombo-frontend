@@ -30,7 +30,7 @@ export default function ReviewModal({
     e.preventDefault();
 
     if (rating === 0) {
-      setError(t("page.myBookings.reviewModal.ratingRequired") || "Por favor selecciona una calificación");
+      setError(t("page.myBookings.reviewModal.ratingRequired") || "Please select a rating");
       return;
     }
 
@@ -43,11 +43,11 @@ export default function ReviewModal({
         comment: comment.trim() || undefined,
       });
       
-      toast.success(t("page.myBookings.reviewModal.success") || "¡Reseña creada exitosamente!");
+      toast.success(t("page.myBookings.reviewModal.success") || "Review created successfully!");
       onSuccess();
     } catch (error: any) {
       console.error("Error creating review:", error);
-      setError(error?.message || t("page.myBookings.reviewModal.error") || "Error al crear la reseña");
+      setError(error?.message || t("page.myBookings.reviewModal.error") || "Error creating review");
     } finally {
       setIsSubmitting(false);
     }
@@ -102,7 +102,7 @@ export default function ReviewModal({
             </svg>
           </div>
           <h2 className="text-3xl font-bold text-[var(--brand-dark)]">
-            {t("page.myBookings.reviewModal.title") || "Calificar viaje"}
+            {t("page.myBookings.reviewModal.title") || "Rate trip"}
           </h2>
         </div>
 
@@ -125,30 +125,30 @@ export default function ReviewModal({
         <form onSubmit={handleSubmit}>
           <div className="mb-8">
             <label className="block text-sm font-bold text-[var(--brand-neutral)] mb-2 text-center uppercase tracking-widest">
-              {t("page.myBookings.reviewModal.ratingLabel") || "¿Cómo fue tu experiencia?"}
+              {t("page.myBookings.reviewModal.ratingLabel") || "How was your experience?"}
             </label>
             {renderStars()}
             {rating > 0 && (
               <p className="text-center text-lg font-bold text-[var(--brand-blue)] italic">
-                {rating === 1 && (t("page.myBookings.reviewModal.rating1") || "Para olvidar")}
-                {rating === 2 && (t("page.myBookings.reviewModal.rating2") || "Mejorable")}
-                {rating === 3 && (t("page.myBookings.reviewModal.rating3") || "Correcto")}
-                {rating === 4 && (t("page.myBookings.reviewModal.rating4") || "Muy bueno")}
-                {rating === 5 && (t("page.myBookings.reviewModal.rating5") || "Excelente")}
+                {rating === 1 && (t("page.myBookings.reviewModal.rating1") || "Very bad")}
+                {rating === 2 && (t("page.myBookings.reviewModal.rating2") || "Bad")}
+                {rating === 3 && (t("page.myBookings.reviewModal.rating3") || "Regular")}
+                {rating === 4 && (t("page.myBookings.reviewModal.rating4") || "Good")}
+                {rating === 5 && (t("page.myBookings.reviewModal.rating5") || "Excellent")}
               </p>
             )}
           </div>
 
           <div className="mb-8">
             <label className="block text-sm font-bold text-[var(--brand-neutral)] mb-3 uppercase tracking-widest">
-              {t("page.myBookings.reviewModal.commentLabel") || "Tu mensaje (opcional)"}
+              {t("page.myBookings.reviewModal.commentLabel") || "Comment (optional)"}
             </label>
             <textarea
               value={comment}
               onChange={(e) => setComment(e.target.value)}
               rows={4}
               className="w-full border-2 border-[#e2e8f0] rounded-2xl px-5 py-4 text-[var(--brand-dark)] focus:outline-none focus:border-[#e2e8f0] font-medium placeholder:text-[var(--brand-neutral)] transition-all resize-none"
-              placeholder={t("page.myBookings.reviewModal.commentPlaceholder") || "Cuéntanos detalles del viaje..."}
+              placeholder={t("page.myBookings.reviewModal.commentPlaceholder") || "Tell us more about your experience..."}
               maxLength={500}
             />
             <div className="flex justify-end mt-2">
@@ -171,7 +171,7 @@ export default function ReviewModal({
               className="flex-1 px-8 py-4 bg-gray-100 text-gray-500 rounded-xl font-bold hover:bg-gray-200 transition-all uppercase tracking-widest text-sm"
               disabled={isSubmitting}
             >
-              {t("page.myBookings.reviewModal.cancel") || "Cancelar"}
+              {t("page.myBookings.reviewModal.cancel") || "Cancel"}
             </button>
             <button
               type="submit"
@@ -179,8 +179,8 @@ export default function ReviewModal({
               className="flex-[1.5] btn-primary py-4 text-base"
             >
               {isSubmitting
-                ? (t("page.myBookings.reviewModal.submitting") || "ENVIANDO...")
-                : (t("page.myBookings.reviewModal.submit") || "PUBLICAR RESEÑA")}
+                ? (t("page.myBookings.reviewModal.submitting") || "Submitting...")
+                : (t("page.myBookings.reviewModal.submit") || "Submit review")}
             </button>
           </div>
         </form>

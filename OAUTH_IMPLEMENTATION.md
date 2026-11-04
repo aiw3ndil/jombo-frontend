@@ -79,7 +79,7 @@ npm run dev
 ```
 
 ### 4. Probar
-- Ve a `http://localhost:3001/es/login`
+- Ve a `http://localhost:3001/login`
 - Verás el botón "Continuar con Google"
 - Haz click y selecciona tu cuenta
 

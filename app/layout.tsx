@@ -7,6 +7,7 @@ import GoogleOAuthWrapper from "./components/GoogleOAuthWrapper";
 import CookieConsent from "./components/CookieConsent";
 import { Toaster } from "sonner";
 import "./globals.css";
+import { SITE_URL, normalizeLang } from "./lib/i18n/config";
 
 const ubuntu = localFont({
   src: [
@@ -35,7 +36,7 @@ export const metadata: Metadata = {
     address: false,
     telephone: false,
   },
-  metadataBase: new URL('https://www.jombo.es'),
+  metadataBase: new URL(SITE_URL),
   robots: {
     index: true,
     follow: true,
@@ -61,8 +62,7 @@ export default async function RootLayout({
 }>) {
   const headersList = await headers();
   const pathname = headersList.get("x-pathname") || "";
-  const lang = pathname.split("/")[1] || "es";
-  const currentLang = ["en", "es", "fi"].includes(lang) ? lang : "es";
+  const currentLang = normalizeLang(pathname.split("/")[1]);
 
   return (
     <html lang={currentLang} className={ubuntu.variable}>

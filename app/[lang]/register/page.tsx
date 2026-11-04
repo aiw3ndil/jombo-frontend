@@ -1,5 +1,6 @@
 "use client";
 import { useTranslation } from "@/app/hooks/useTranslation";
+import { localePath, langPrefix } from "@/app/lib/i18n/config";
 import useAuth from "@/app/hooks/useAuth";
 import { useState, FormEvent } from "react";
 import { useRouter, useParams, useSearchParams } from "next/navigation";
@@ -10,7 +11,7 @@ export default function Register() {
   const { t, loading: translationsLoading } = useTranslation("register");
   const params = useParams();
   const searchParams = useSearchParams();
-  const lang = (params?.lang as string) || "es";
+  const lang = (params?.lang as string) || "fi";
   const redirect = searchParams.get("redirect");
   const { register, loading: isLoading, error } = useAuth() as any;
   const router = useRouter();
@@ -19,7 +20,6 @@ export default function Register() {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [passwordConfirmation, setPasswordConfirmation] = useState("");
-  const [region, setRegion] = useState(lang === "fi" ? "fi" : "es");
   const [oauthError, setOauthError] = useState<string | null>(null);
 
   if (translationsLoading) {
@@ -33,8 +33,8 @@ export default function Register() {
   const handleSubmit = async (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     try {
-      await register(name, email, password, passwordConfirmation, lang, region);
-      window.location.href = `/${lang}`;
+      await register(name, email, password, passwordConfirmation, lang);
+      window.location.href = localePath(lang);
     } catch (err) {}
   };
 
@@ -48,13 +48,13 @@ export default function Register() {
       <section className="bg-[#f0f4f8] border-b-2 border-[#e2e8f0] py-8 px-4">
         <div className="max-w-5xl mx-auto text-center">
           <div className="inline-flex items-center gap-2 bg-[#e2e8f0] border border-[#e2e8f0] text-[var(--brand-dark)] px-4 py-1.5 rounded-full text-xs font-bold mb-3 uppercase tracking-wide">
-            {t("joinBadge") || "Únete a la revolución"}
+            {t("joinBadge") || "Join the movement"}
           </div>
           <h1 className="text-2xl md:text-3xl font-black text-[var(--brand-dark)] leading-tight mb-2">
-            {t("title") || "Tu viaje empieza aquí"}
+            {t("title") || "My Trips"}
           </h1>
           <p className="text-sm md:text-base text-[var(--brand-neutral)] max-w-2xl mx-auto font-medium opacity-80">
-            {t("subtitle") || "Regístrate en Jombo y empieza a ahorrar compartiendo trayectos con personas de confianza."}
+            {t("subtitle") || "Sign up for Jombo and start saving by sharing rides with people you trust."}
           </p>
         </div>
       </section>
@@ -69,7 +69,7 @@ export default function Register() {
                 <GoogleLoginButton redirect={redirect} onError={handleOAuthError} />
                 <p className="text-center text-xs font-bold text-[var(--brand-neutral)] uppercase tracking-widest flex items-center gap-4">
                   <span className="flex-1 h-px bg-[#e2e8f0]"></span>
-                  {t("or") || "O crea tu cuenta con email"}
+                  {t("or") || "or"}
                   <span className="flex-1 h-px bg-[#e2e8f0]"></span>
                 </p>
               </div>
@@ -88,7 +88,7 @@ export default function Register() {
               <form className="space-y-6" onSubmit={handleSubmit}>
                 <div className="space-y-5">
                   <div>
-                    <label className="form-label">{t("name") || "Nombre completo"}</label>
+                    <label className="form-label">{t("name") || "Name"}</label>
                     <div className="relative group">
                       <div className="absolute left-4 top-1/2 -translate-y-1/2 text-[var(--brand-neutral)] group-focus-within:text-[var(--brand-blue)] transition-colors z-10">
                         <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -100,14 +100,14 @@ export default function Register() {
                         value={name}
                         onChange={(e) => setName(e.target.value)}
                         className="form-input pl-12"
-                        placeholder="Juan Pérez"
+                        placeholder="Matti Meikäläinen"
                         required
                       />
                     </div>
                   </div>
 
                   <div>
-                    <label className="form-label">{t("email") || "Correo electrónico"}</label>
+                    <label className="form-label">{t("email") || "Email"}</label>
                     <div className="relative group">
                       <div className="absolute left-4 top-1/2 -translate-y-1/2 text-[var(--brand-neutral)] group-focus-within:text-[var(--brand-blue)] transition-colors z-10">
                         <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -119,35 +119,16 @@ export default function Register() {
                         value={email}
                         onChange={(e) => setEmail(e.target.value)}
                         className="form-input pl-12"
-                        placeholder="tu@email.com"
+                        placeholder="you@email.com"
                         required
                       />
                     </div>
                   </div>
 
-                  <div>
-                    <label className="form-label">{t("region") || "Región"}</label>
-                    <div className="relative">
-                      <select
-                        value={region}
-                        onChange={(e) => setRegion(e.target.value)}
-                        className="form-select pr-12 font-bold"
-                        required
-                      >
-                        <option value="es">🇪🇸 {t("regionSpain") || "España"}</option>
-                        <option value="fi">🇫🇮 {t("regionFinland") || "Finlandia"}</option>
-                      </select>
-                      <div className="absolute right-4 top-1/2 -translate-y-1/2 text-[var(--brand-blue)] pointer-events-none">
-                        <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 9l-7 7-7-7" />
-                        </svg>
-                      </div>
-                    </div>
-                  </div>
 
                   <div className="grid grid-cols-1 gap-5">
                     <div>
-                      <label className="form-label">{t("password") || "Contraseña"}</label>
+                      <label className="form-label">{t("password") || "Password"}</label>
                       <div className="relative group">
                         <div className="absolute left-4 top-1/2 -translate-y-1/2 text-[var(--brand-neutral)] group-focus-within:text-[var(--brand-blue)] transition-colors z-10">
                           <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -166,7 +147,7 @@ export default function Register() {
                     </div>
 
                     <div>
-                      <label className="form-label">{t("passwordConfirmation") || "Confirma tu contraseña"}</label>
+                      <label className="form-label">{t("passwordConfirmation") || "Confirm Password"}</label>
                       <div className="relative group">
                         <div className="absolute left-4 top-1/2 -translate-y-1/2 text-[var(--brand-neutral)] group-focus-within:text-[var(--brand-blue)] transition-colors z-10">
                           <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -193,7 +174,7 @@ export default function Register() {
                     disabled={isLoading}
                   >
                     <span className={`flex items-center justify-center gap-3 transition-all duration-300 ${isLoading ? 'opacity-0 scale-90' : 'opacity-100 scale-100'}`}>
-                      {t("submit") || "Crear mi cuenta"}
+                      {t("submit") || "Create Account"}
                       <svg className="w-5 h-5 group-hover:translate-x-1 transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                         <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M14 5l7 7m0 0l-7 7m7-7H3" />
                       </svg>
@@ -209,9 +190,9 @@ export default function Register() {
 
               <div className="pt-6 border-t border-green-50 text-center">
                 <p className="text-[var(--brand-neutral)] font-medium">
-                  {t("haveAccount") || "¿Ya usas Jombo?"}{" "}
-                  <Link href={`/${lang}/login`} className="text-[var(--brand-blue)] hover:text-[var(--brand-dark)] font-black underline decoration-2 underline-offset-4 transition-all">
-                    {t("loginLink") || "Inicia sesión aquí"}
+                  {t("haveAccount") || "Already have an account?"}{" "}
+                  <Link href={`${langPrefix(lang)}/login`} className="text-[var(--brand-blue)] hover:text-[var(--brand-dark)] font-black underline decoration-2 underline-offset-4 transition-all">
+                    {t("loginLink") || "Login here"}
                   </Link>
                 </p>
               </div>

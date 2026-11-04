@@ -1,12 +1,8 @@
 "use client";
 
-import { usePathname } from "next/navigation";
+import { useParams } from "next/navigation";
 import { useMemo } from "react";
 
-import esCommon from "@/public/locales/es/common.json";
-import esLogin from "@/public/locales/es/login.json";
-import esRegister from "@/public/locales/es/register.json";
-import esMyTrips from "@/public/locales/es/myTrips.json";
 import enCommon from "@/public/locales/en/common.json";
 import enLogin from "@/public/locales/en/login.json";
 import enRegister from "@/public/locales/en/register.json";
@@ -14,23 +10,22 @@ import enMyTrips from "@/public/locales/en/myTrips.json";
 import fiCommon from "@/public/locales/fi/common.json";
 import fiLogin from "@/public/locales/fi/login.json";
 import fiRegister from "@/public/locales/fi/register.json";
+import fiMyTrips from "@/public/locales/fi/myTrips.json";
+import { normalizeLang } from "@/app/lib/i18n/config";
 
 type Translations = Record<string, any>;
-
-const SUPPORTED_LANGS = ["es", "en", "fi"];
 
 // Traducciones empaquetadas en el build: disponibles de forma síncrona en
 // servidor y cliente, sin depender de fetch en tiempo de ejecución.
 const FILES: Record<string, Record<string, Translations>> = {
-  es: { common: esCommon, login: esLogin, register: esRegister, myTrips: esMyTrips },
   en: { common: enCommon, login: enLogin, register: enRegister, myTrips: enMyTrips },
-  fi: { common: fiCommon, login: fiLogin, register: fiRegister },
+  fi: { common: fiCommon, login: fiLogin, register: fiRegister, myTrips: fiMyTrips },
 };
 
 export function useTranslation(namespaces?: string | string[]) {
-  const pathname = usePathname();
-  const pathLang = pathname?.split("/")[1] || "es";
-  const lang = SUPPORTED_LANGS.includes(pathLang) ? pathLang : "es";
+  // Finnish pages have no URL prefix, so read the language from the route params
+  const params = useParams();
+  const lang = normalizeLang((params as any)?.lang);
 
   const translations = useMemo(() => {
     const requested = namespaces
@@ -38,7 +33,7 @@ export function useTranslation(namespaces?: string | string[]) {
         ? namespaces
         : [namespaces]
       : ["common"];
-    const files = FILES[lang] ?? FILES.es;
+    const files = FILES[lang] ?? FILES.fi;
 
     return requested.reduce<Translations>(
       (acc, ns) => ({ ...acc, ...(files[ns] ?? {}) }),

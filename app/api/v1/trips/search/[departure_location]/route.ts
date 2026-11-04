@@ -30,7 +30,7 @@ export async function GET(
       const errorDetail = await res.text();
       console.error(`Backend search trips failed with status ${res.status}:`, errorDetail);
       return NextResponse.json(
-        { error: `Error al buscar viajes en el backend: ${errorDetail}` },
+        { error: `Error searching trips in the backend: ${errorDetail}` },
         { status: res.status }
       );
     }
@@ -40,7 +40,7 @@ export async function GET(
   } catch (error) {
     console.error('Search trips API route error:', error);
     return NextResponse.json(
-      { error: 'Error interno del servidor al buscar viajes' },
+      { error: 'Internal server error while searching trips' },
       { status: 500 }
     );
   }

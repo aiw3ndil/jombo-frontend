@@ -1,5 +1,6 @@
 "use client";
 import { useEffect, useState } from "react";
+import { localePath, langPrefix } from "@/app/lib/i18n/config";
 import { useRouter, useParams } from "next/navigation";
 import { getBookings, cancelBooking, Booking } from "@/app/lib/api/bookings";
 import { getBookingReviews } from "@/app/lib/api/reviews";
@@ -12,7 +13,7 @@ export default function MyBookings() {
   const { t, loading: translationsLoading } = useTranslation();
   const router = useRouter();
   const params = useParams();
-  const lang = (params?.lang as string) || "es";
+  const lang = (params?.lang as string) || "fi";
   const { user, loading: authLoading } = useAuth();
 
   const [bookings, setBookings] = useState<Booking[]>([]);
@@ -24,7 +25,7 @@ export default function MyBookings() {
 
   useEffect(() => {
     if (!authLoading && !user) {
-      router.push(`/${lang}/login?redirect=/${lang}/my-bookings`);
+      router.push(`${langPrefix(lang)}/login?redirect=${langPrefix(lang)}/my-bookings`);
       return;
     }
 
@@ -63,17 +64,17 @@ export default function MyBookings() {
   };
 
   const handleCancelBooking = async (bookingId: number) => {
-    if (!confirm(t("page.myBookings.confirmCancel") || "¿Estás seguro de cancelar esta reserva?")) {
+    if (!confirm(t("page.myBookings.confirmCancel") || "Are you sure you want to cancel this booking?")) {
       return;
     }
 
     setCancellingId(bookingId);
     try {
       await cancelBooking(bookingId);
-      toast.success(t("page.myBookings.cancelSuccess") || "Reserva cancelada exitosamente");
+      toast.success(t("page.myBookings.cancelSuccess") || "Booking cancelled successfully");
       await loadBookings();
     } catch (error: any) {
-      toast.error(error?.message || t("page.myBookings.cancelError") || "Error al cancelar la reserva");
+      toast.error(error?.message || t("page.myBookings.cancelError") || "Error cancelling booking");
     } finally {
       setCancellingId(null);
     }
@@ -131,13 +132,13 @@ export default function MyBookings() {
   const getStatusText = (status: string) => {
     switch (status) {
       case "confirmed":
-        return t("page.myBookings.statusConfirmed") || "CONFIRMADA";
+        return t("page.myBookings.statusConfirmed") || "Confirmed";
       case "pending":
-        return t("page.myBookings.statusPending") || "PENDIENTE";
+        return t("page.myBookings.statusPending") || "Pending";
       case "rejected":
-        return t("page.myBookings.statusRejected") || "RECHAZADA";
+        return t("page.myBookings.statusRejected") || "Rejected";
       case "cancelled":
-        return t("page.myBookings.statusCancelled") || "CANCELADA";
+        return t("page.myBookings.statusCancelled") || "Cancelled";
       default:
         return status.toUpperCase();
     }
@@ -151,23 +152,23 @@ export default function MyBookings() {
           <div className="flex-1">
             <div className="inline-flex items-center gap-2 bg-[#e2e8f0] border border-[#e2e8f0] text-[var(--brand-dark)] px-4 py-1.5 rounded-full text-xs font-bold mb-3 uppercase tracking-wide">
               <span className="w-2 h-2 rounded-full bg-[var(--brand-blue)]"></span>
-              {t("page.myBookings.badge") || "Mis Viajes"}
+              {t("page.myBookings.badge") || "My Trips"}
             </div>
             <h1 className="text-2xl md:text-3xl font-bold text-[var(--brand-dark)] leading-tight mb-2">
-              {t("page.myBookings.title") || "Mis Reservas"}
+              {t("page.myBookings.title") || "My Bookings"}
             </h1>
             <p className="text-sm md:text-base text-[var(--brand-neutral)] max-w-2xl leading-relaxed font-normal">
-              {t("page.myBookings.subtitle") || "Gestiona tus solicitudes de viaje y consulta tus trayectos confirmados."}
+              {t("page.myBookings.subtitle") || "Manage your trip requests and view your confirmed routes."}
             </p>
           </div>
           <button
-            onClick={() => router.push(`/${lang}`)}
+            onClick={() => router.push(localePath(lang))}
             className="btn-secondary px-10 py-4 shadow-md bg-white hover:bg-[#f0f4f8]"
           >
             <svg className="w-5 h-5 mr-3" fill="none" stroke="currentColor" viewBox="0 0 24 24">
               <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M10 19l-7-7m0 0l7-7m-7 7h18" />
             </svg>
-            {t("page.myBookings.back") || "Volver al inicio"}
+            {t("page.myBookings.back") || "Back"}
           </button>
         </div>
       </section>
@@ -183,16 +184,16 @@ export default function MyBookings() {
                 </svg>
               </div>
               <h2 className="text-3xl font-bold text-[var(--brand-dark)] mb-4">
-                {t("page.myBookings.noBookings") || "Aún no tienes reservas"}
+                {t("page.myBookings.noBookings") || "You have no bookings"}
               </h2>
               <p className="text-[var(--brand-neutral)] text-lg mb-12 max-w-md mx-auto">
-                {t("page.myBookings.noBookingsInfo") || "Busca un viaje que te interese y reserva tu plaza de forma gratuita."}
+                {t("page.myBookings.noBookingsInfo") || "Search for a trip you're interested in and book your seat for free."}
               </p>
               <button
-                onClick={() => router.push(`/${lang}`)}
+                onClick={() => router.push(localePath(lang))}
                 className="btn-primary px-12 py-5 shadow-lg"
               >
-                {t("page.myBookings.searchTrips") || "Buscar viajes ahora"}
+                {t("page.myBookings.searchTrips") || "Search trips"}
               </button>
             </div>
           ) : (
@@ -240,7 +241,7 @@ export default function MyBookings() {
                             )}
                           </div>
                           <div>
-                            <p className="text-xs font-bold text-[var(--brand-neutral)] uppercase tracking-widest">{t("page.myBookings.driver") || "Conductor"}</p>
+                            <p className="text-xs font-bold text-[var(--brand-neutral)] uppercase tracking-widest">{t("page.myBookings.driver") || "Driver"}</p>
                             <p className="font-bold text-[var(--brand-dark)] text-lg">
                               {booking.trip?.driver?.name}
                             </p>
@@ -252,7 +253,7 @@ export default function MyBookings() {
                         <div className="bg-[#f0f4f8]/30 border-2 border-[#e2e8f0] rounded-[1.5rem] p-5 hover:bg-white hover:border-[#e2e8f0] transition-all shadow-sm">
                           <p className="text-xs font-bold text-[var(--brand-neutral)] uppercase tracking-widest mb-2 flex items-center gap-2">
                              <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z" /></svg>
-                             {t("page.myBookings.departure") || "HORARIO"}
+                             {t("page.myBookings.departure") || "Departure"}
                           </p>
                           <p className="font-bold text-[var(--brand-dark)] text-base">
                             {booking.trip?.departure_time ? (
@@ -265,12 +266,12 @@ export default function MyBookings() {
                         <div className="bg-[#f0f4f8]/30 border-2 border-[#e2e8f0] rounded-[1.5rem] p-5 hover:bg-white hover:border-[#e2e8f0] transition-all shadow-sm">
                           <p className="text-xs font-bold text-[var(--brand-neutral)] uppercase tracking-widest mb-2 flex items-center gap-2">
                              <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z" /></svg>
-                             {t("page.myBookings.seats") || "ASIENTOS"}
+                             {t("page.myBookings.seats") || "Seats"}
                           </p>
-                          <p className="font-bold text-[var(--brand-dark)] text-base underline decoration-green-300 underline-offset-4 decoration-2">{booking.seats} {t("common.seats") || "plazas"}</p>
+                          <p className="font-bold text-[var(--brand-dark)] text-base underline decoration-green-300 underline-offset-4 decoration-2">{booking.seats} {t("common.seats") || "seats"}</p>
                         </div>
                         <div className="bg-[#f0f4f8] border-2 border-[#e2e8f0] rounded-[1.5rem] p-5 shadow-inner">
-                          <p className="text-xs font-bold text-[var(--brand-neutral)] uppercase tracking-widest mb-2">{t("page.myBookings.totalPrice") || "PAGO TOTAL"}</p>
+                          <p className="text-xs font-bold text-[var(--brand-neutral)] uppercase tracking-widest mb-2">{t("page.myBookings.totalPrice") || "Total price"}</p>
                           <p className="font-black text-[var(--brand-neutral)] text-2xl">
                             €{booking.trip?.price ? (Number(booking.trip.price) * booking.seats).toFixed(2) : "0.00"}
                           </p>
@@ -286,7 +287,7 @@ export default function MyBookings() {
                               onClick={() => handleOpenReview(booking)}
                               className="btn-primary w-full shadow-lg"
                             >
-                              <span className="text-xl mr-2">⭐</span> {t("page.myBookings.review") || "Calificar viaje"}
+                              <span className="text-xl mr-2">⭐</span> {t("page.myBookings.review") || "Review"}
                             </button>
                           )}
                           {bookingReviews[booking.id] && (
@@ -294,7 +295,7 @@ export default function MyBookings() {
                               <svg className="w-6 h-6 text-[var(--brand-blue)]" fill="currentColor" viewBox="0 0 20 20">
                                 <path fillRule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clipRule="evenodd" />
                               </svg>
-                              {t("page.myBookings.reviewed") || "CALIFICADO"}
+                              {t("page.myBookings.reviewed") || "Reviewed"}
                             </div>
                           )}
 
@@ -308,7 +309,7 @@ export default function MyBookings() {
                                 <div className="w-5 h-5 border-3 border-red-200 border-t-red-600 rounded-full animate-spin"></div>
                                 Procesando...
                               </span>
-                            ) : (t("page.myBookings.cancel") || "Cancelar reserva")}
+                            ) : (t("page.myBookings.cancel") || "Cancel booking")}
                           </button>
                         </>
                       )}
@@ -317,7 +318,7 @@ export default function MyBookings() {
                            <svg className="w-8 h-8 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                               <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 8v4m0 4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
                            </svg>
-                          <span className="text-sm font-bold text-gray-400 uppercase tracking-widest italic">{t("page.myBookings.inactive") || "Reserva Finalizada"}</span>
+                          <span className="text-sm font-bold text-gray-400 uppercase tracking-widest italic">{t("page.myBookings.inactive") || "Booking Finished"}</span>
                         </div>
                       )}
                     </div>

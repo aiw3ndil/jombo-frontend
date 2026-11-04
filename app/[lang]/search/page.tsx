@@ -1,5 +1,6 @@
 "use client";
 import { useEffect, useState } from "react";
+import { localePath, langPrefix } from "@/app/lib/i18n/config";
 import { useSearchParams, useRouter, useParams } from "next/navigation";
 import Link from "next/link";
 import { createBooking, getBookings } from "@/app/lib/api/bookings";
@@ -17,7 +18,7 @@ export default function SearchPage() {
   const router = useRouter();
   const searchParams = useSearchParams();
   const params = useParams();
-  const lang = (params?.lang as string) || "es";
+  const lang = (params?.lang as string) || "fi";
   const from = searchParams.get("from") || "";
   const to = searchParams.get("to") || "";
   const { user } = useAuth();
@@ -39,7 +40,7 @@ export default function SearchPage() {
 
   useEffect(() => {
     if (!from && !to) {
-      router.push(`/${lang}`);
+      router.push(localePath(lang));
       return;
     }
     async function fetchTrips() {
@@ -64,7 +65,7 @@ export default function SearchPage() {
           } catch (err) {}
         }
       } catch (err) {
-        setError(err instanceof Error ? err.message : "Error al buscar viajes");
+        setError(err instanceof Error ? err.message : "Error searching trips");
       } finally {
         setLoading(false);
       }
@@ -82,11 +83,11 @@ export default function SearchPage() {
 
   const handleBookTrip = async (trip: Trip) => {
     if (!user) {
-      router.push(`/${lang}/login?redirect=${encodeURIComponent(window.location.pathname + window.location.search)}`);
+      router.push(`${langPrefix(lang)}/login?redirect=${encodeURIComponent(window.location.pathname + window.location.search)}`);
       return;
     }
     if (user.id === trip.driver.id) {
-      toast.error(t("page.search.cannotBookOwnTrip") || "No puedes reservar tu propio viaje.");
+      toast.error(t("page.search.cannotBookOwnTrip") || "You cannot book your own trip.");
       return;
     }
     setSelectedTripForBooking(trip);
@@ -97,7 +98,7 @@ export default function SearchPage() {
     setBookingLoading(tripId);
     try {
       await createBooking({ trip_id: tripId, seats: seatsNumber });
-      toast.success(t("page.search.bookingSuccess") || "¡Solicitud enviada! Pendiente de confirmación");
+      toast.success(t("page.search.bookingSuccess") || "Booking completed successfully");
       const response = await searchTrips(from, to);
       setTrips(response.trips);
       setExternalOptions(response.external_options);
@@ -114,7 +115,7 @@ export default function SearchPage() {
       setBookTripModalOpen(false);
       setSelectedTripForBooking(null);
     } catch (error: any) {
-      toast.error(error?.message || t("page.search.bookingError") || "Error al realizar la reserva");
+      toast.error(error?.message || t("page.search.bookingError") || "Error making booking");
     } finally {
       setBookingLoading(null);
     }
@@ -136,14 +137,14 @@ export default function SearchPage() {
     const p = new URLSearchParams();
     if (searchFrom.trim()) p.set("from", searchFrom);
     if (searchTo.trim()) p.set("to", searchTo);
-    router.push(`/${lang}/search?${p.toString()}`);
+    router.push(`${langPrefix(lang)}/search?${p.toString()}`);
   };
 
   if (loading) {
     return (
       <div className="min-h-screen bg-white flex flex-col items-center justify-center gap-4">
         <div className="spinner"></div>
-        <p className="text-[var(--brand-neutral)] font-semibold text-lg">{t("page.search.searching") || "Buscando viajes"}...</p>
+        <p className="text-[var(--brand-neutral)] font-semibold text-lg">{t("page.search.searching") || "Searching trips"}...</p>
       </div>
     );
   }
@@ -158,10 +159,10 @@ export default function SearchPage() {
         </div>
         <p className="text-red-700 text-xl font-semibold text-center">{error}</p>
         <button
-          onClick={() => router.push(`/${lang}`)}
+          onClick={() => router.push(localePath(lang))}
           className="bg-[var(--brand-blue)] hover:bg-[var(--brand-blue)] text-white px-8 py-3 rounded-xl font-bold text-base transition-colors"
         >
-          {t("page.search.back") || "Volver al inicio"}
+          {t("page.search.back") || "Back"}
         </button>
       </div>
     );
@@ -179,7 +180,7 @@ export default function SearchPage() {
               {from} <span className="text-[var(--brand-neutral)] mx-2">→</span> {to}
             </h1>
             <p className="text-sm md:text-base text-[var(--brand-neutral)] font-medium">
-              {t("page.search.results") || "Explora las mejores opciones para tu trayecto"}
+              {t("page.search.results") || "Search results from"}
             </p>
           </div>
 
@@ -193,7 +194,7 @@ export default function SearchPage() {
               <LocationInput
                 value={searchFrom}
                 onChange={(val: string) => setSearchFrom(val)}
-                placeholder={t("page.home.from") || "Origen"}
+                placeholder={t("page.home.from") || "From"}
                 className="form-input pl-12 border-transparent bg-[#f0f4f8]/30 focus:bg-white"
               />
             </div>
@@ -206,7 +207,7 @@ export default function SearchPage() {
               <LocationInput
                 value={searchTo}
                 onChange={(val: string) => setSearchTo(val)}
-                placeholder={t("page.home.to") || "Destino"}
+                placeholder={t("page.home.to") || "To"}
                 className="form-input pl-12 border-transparent bg-[#f0f4f8]/30 focus:bg-white"
               />
             </div>
@@ -217,7 +218,7 @@ export default function SearchPage() {
               <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                 <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" />
               </svg>
-              {t("page.home.search") || "Actualizar"}
+              {t("page.home.search") || "Search trip"}
             </button>
           </form>
         </div>
@@ -236,10 +237,10 @@ export default function SearchPage() {
               </div>
               <div>
                 <p className="text-[var(--brand-dark)] font-black text-lg">
-                  {lang === "fi" ? "Ei kimppakyytejä löytynyt" : lang === "es" ? "No se encontraron viajes compartidos" : "No carpools found"}
+                  {lang === "fi" ? "Ei kimppakyytejä löytynyt" : "No carpools found"}
                 </p>
                 <p className="text-[var(--brand-neutral)] text-lg font-medium opacity-80">
-                  {lang === "fi" ? "Näytetään julkisen liikenteen vaihtoehdot" : lang === "es" ? "Mostrando alternativas de transporte público" : "Showing public transport alternatives"}
+                  {lang === "fi" ? "Näytetään julkisen liikenteen vaihtoehdot" : "Showing public transport alternatives"}
                 </p>
               </div>
             </div>
@@ -253,10 +254,10 @@ export default function SearchPage() {
                   <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9.172 9.172a4 4 0 015.656 0M9 10h.01M15 10h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
                 </svg>
               </div>
-              <h2 className="text-3xl font-bold text-[var(--brand-dark)] mb-4">{t("page.search.noResults") || "No hay viajes disponibles"}</h2>
+              <h2 className="text-3xl font-bold text-[var(--brand-dark)] mb-4">{t("page.search.noResults") || "No trips found"}</h2>
               <p className="text-[var(--brand-neutral)] text-lg mb-8 max-w-md mx-auto font-medium">Intenta cambiar las ciudades o busca de nuevo más tarde.</p>
-              <button onClick={() => router.push(`/${lang}`)} className="btn-secondary px-8 py-4">
-                {t("page.search.back") || "Ver otros trayectos"}
+              <button onClick={() => router.push(localePath(lang))} className="btn-secondary px-8 py-4">
+                {t("page.search.back") || "Back"}
               </button>
             </div>
           ) : (
@@ -306,7 +307,7 @@ export default function SearchPage() {
                           onClick={() => handleOpenReviews(trip.driver.id, trip.driver.name)}
                           className="text-[var(--brand-blue)] hover:text-[var(--brand-dark)] text-sm font-bold uppercase tracking-widest mt-2 transition-colors cursor-pointer"
                         >
-                          {t("page.search.seeReviews") || "Reseñas"}
+                          {t("page.search.seeReviews") || "See reviews"}
                         </button>
                       </div>
 
@@ -340,13 +341,13 @@ export default function SearchPage() {
 
                         <div className="grid grid-cols-2 gap-6">
                            <div className="bg-[#f0f4f8]/50 border border-[#e2e8f0] rounded-2xl p-4">
-                            <p className="text-xs font-bold text-[var(--brand-neutral)] uppercase tracking-widest mb-1">{t("page.search.availableSeats") || "Plazas Libres"}</p>
+                            <p className="text-xs font-bold text-[var(--brand-neutral)] uppercase tracking-widest mb-1">{t("page.search.availableSeats") || "Available seats"}</p>
                             <p className={`text-xl font-black ${trip.available_seats === 0 ? "text-red-500" : "text-[var(--brand-dark)]"}`}>
                               {trip.available_seats} <span className="text-sm font-bold text-[var(--brand-neutral)]/60 lowercase">disponibles</span>
                             </p>
                           </div>
                           <div className="bg-[#f0f4f8]/50 border border-[#e2e8f0] rounded-2xl p-4">
-                            <p className="text-xs font-bold text-[var(--brand-neutral)] uppercase tracking-widest mb-1">{t("page.search.price") || "Precio"}</p>
+                            <p className="text-xs font-bold text-[var(--brand-neutral)] uppercase tracking-widest mb-1">{t("page.search.price") || "Price"}</p>
                             <p className="text-2xl font-black text-[var(--brand-neutral)] italic">€{Number(trip.price).toFixed(2)}</p>
                           </div>
                         </div>
@@ -375,12 +376,12 @@ export default function SearchPage() {
                             ? "RESERVADO ✓"
                             : trip.available_seats === 0
                             ? "COMPLETO"
-                            : t("page.search.book") || "RESERVAR AHORA"}
+                            : t("page.search.book") || "Book"}
                         </button>
                         
                         {bookingStatus && (
                           <Link 
-                            href={`/${lang}/my-bookings`} 
+                            href={`${langPrefix(lang)}/my-bookings`} 
                             className="text-center text-sm font-bold text-[var(--brand-blue)] hover:text-[var(--brand-dark)] transition-colors uppercase tracking-widest underline decoration-2 underline-offset-4"
                           >
                             Ver mis reservas
@@ -399,7 +400,7 @@ export default function SearchPage() {
                     <svg className="w-8 h-8 text-[var(--brand-blue)]" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                       <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M8 7h12m0 0l-4-4m4 4l-4 4m0 6H4m0 0l4 4m-4-4l4-4" />
                     </svg>
-                    {t("page.search.externalOptions") || "Otras alternativas de transporte"}
+                    {t("page.search.externalOptions") || "Other transport options"}
                   </h2>
                   <div className="space-y-6">
                     {externalOptions.map((option, idx) => (

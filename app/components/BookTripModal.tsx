@@ -38,15 +38,15 @@ const BookTripModal: React.FC<BookTripModalProps> = ({
     <div className="fixed inset-0 bg-gray-600 bg-opacity-50 flex justify-center items-center p-4 z-50">
       <div className="bg-white rounded-lg shadow-xl p-6 w-full max-w-sm">
         <h3 className="text-lg font-bold text-gray-900 mb-4">
-          {t("page.search.bookTripModalTitle") || "Reservar Viaje"}
+          {t("page.search.bookTripModalTitle") || "Book Trip"}
         </h3>
         <p className="text-gray-700 mb-4">
-          {t("page.search.bookTripModalMessage").replace("{{from}}", trip.departure_location).replace("{{to}}", trip.arrival_location) || `¿Cuántos asientos quieres reservar para el viaje de ${trip.departure_location} a ${trip.arrival_location}?`}
+          {t("page.search.bookTripModalMessage").replace("{{from}}", trip.departure_location).replace("{{to}}", trip.arrival_location) || `How many seats do you want to book for the trip from ${trip.departure_location} to ${trip.arrival_location}?`}
         </p>
 
         <div className="mb-6">
           <label htmlFor="seats-select" className="block text-sm font-medium text-gray-700 mb-2">
-            {t("page.search.selectSeats") || "Seleccionar número de asientos:"}
+            {t("page.search.selectSeats") || "Select number of seats:"}
           </label>
           <select
             id="seats-select"
@@ -69,14 +69,14 @@ const BookTripModal: React.FC<BookTripModalProps> = ({
             disabled={loading}
             className="px-4 py-2 rounded-lg border border-gray-300 text-gray-700 hover:bg-gray-50 disabled:opacity-50 disabled:cursor-not-allowed"
           >
-            {t("page.search.cancel") || "Cancelar"}
+            {t("page.search.cancel") || "Cancel"}
           </button>
           <button
             onClick={handleConfirmClick}
             disabled={loading}
             className="px-4 py-2 rounded-lg bg-blue-600 text-white hover:bg-blue-700 disabled:opacity-50 disabled:cursor-not-allowed"
           >
-            {loading ? (t("page.search.booking") || "Reservando...") : (t("page.search.book") || "Reservar")}
+            {loading ? (t("page.search.booking") || "Booking...") : (t("page.search.book") || "Book")}
           </button>
         </div>
       </div>

@@ -1,5 +1,6 @@
 "use client";
 import { useTranslation } from "@/app/hooks/useTranslation";
+import { langPrefix } from "@/app/lib/i18n/config";
 import { useState, FormEvent } from "react";
 import { useParams } from "next/navigation";
 import Link from "next/link";
@@ -8,7 +9,7 @@ import { forgotPassword } from "@/app/lib/api/auth";
 export default function ForgotPassword() {
   const { t, loading: translationsLoading } = useTranslation("login");
   const params = useParams();
-  const lang = (params?.lang as string) || "es";
+  const lang = (params?.lang as string) || "fi";
 
   const [email, setEmail] = useState("");
   const [isLoading, setIsLoading] = useState(false);
@@ -31,7 +32,7 @@ export default function ForgotPassword() {
       await forgotPassword(email);
       setSuccess(true);
     } catch (err: any) {
-      setError(err.message || t("errorGeneric") || "Ha ocurrido un error");
+      setError(err.message || t("errorGeneric") || "An error occurred. Please try again.");
     } finally {
       setIsLoading(false);
     }
@@ -43,13 +44,13 @@ export default function ForgotPassword() {
       <section className="bg-[#f0f4f8] border-b-2 border-[#e2e8f0] py-8 px-4">
         <div className="max-w-5xl mx-auto text-center">
           <div className="inline-flex items-center gap-2 bg-[#e2e8f0] border border-[#e2e8f0] text-[var(--brand-dark)] px-4 py-1.5 rounded-full text-xs font-bold mb-3 uppercase tracking-wide">
-            {t("securityBadge") || "Seguridad de tu cuenta"}
+            {t("securityBadge") || "Account security"}
           </div>
           <h1 className="text-2xl md:text-3xl font-black text-[var(--brand-dark)] leading-tight mb-2">
-            {t("forgotPasswordTitle") || "¿Necesitas una nueva clave?"}
+            {t("forgotPasswordTitle") || "Recover password"}
           </h1>
           <p className="text-sm md:text-base text-[var(--brand-neutral)] max-w-2xl mx-auto font-medium opacity-80">
-            {t("forgotPasswordDescription") || "No te preocupes, nos pasa a todos. Introduce tu email y te ayudaremos a recuperarla."}
+            {t("forgotPasswordDescription") || "Enter your email and we'll send you instructions."}
           </p>
         </div>
       </section>
@@ -76,22 +77,22 @@ export default function ForgotPassword() {
                     </svg>
                   </div>
                   <div className="space-y-2">
-                    <p className="text-[var(--brand-dark)] font-black text-2xl">{t("instructionsSent") || "¡Correo enviado!"}</p>
+                    <p className="text-[var(--brand-dark)] font-black text-2xl">{t("instructionsSent") || "Instructions have been sent to your email."}</p>
                     <p className="text-[var(--brand-neutral)] font-medium">Revisa tu bandeja de entrada para seguir los pasos.</p>
                   </div>
                 </div>
                 <Link
-                  href={`/${lang}/login`}
+                  href={`${langPrefix(lang)}/login`}
                   className="btn-secondary w-full py-6 text-lg"
                 >
-                  {t("backToLogin") || "Volver al inicio"}
+                  {t("backToLogin") || "Back to login"}
                 </Link>
               </div>
             ) : (
               <form className="space-y-8" onSubmit={handleSubmit}>
                 <div className="space-y-6">
                   <div>
-                    <label className="form-label">{t("email") || "Tu correo electrónico"}</label>
+                    <label className="form-label">{t("email") || "Email"}</label>
                     <div className="relative group">
                       <div className="absolute left-4 top-1/2 -translate-y-1/2 text-[var(--brand-neutral)] group-focus-within:text-[var(--brand-blue)] transition-colors z-10">
                         <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -103,7 +104,7 @@ export default function ForgotPassword() {
                         value={email}
                         onChange={(e) => setEmail(e.target.value)}
                         className="form-input pl-12"
-                        placeholder="ejemplo@jombo.es"
+                        placeholder="example@email.com"
                         required
                       />
                     </div>
@@ -117,7 +118,7 @@ export default function ForgotPassword() {
                     disabled={isLoading}
                   >
                     <span className={`flex items-center justify-center gap-3 transition-all duration-300 ${isLoading ? 'opacity-0 scale-90' : 'opacity-100 scale-100'}`}>
-                      {t("sendInstructions") || "Recuperar mi cuenta"}
+                      {t("sendInstructions") || "Send instructions"}
                       <svg className="w-5 h-5 group-hover:translate-x-1 transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                         <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M14 5l7 7m0 0l-7 7m7-7H3" />
                       </svg>
@@ -130,10 +131,10 @@ export default function ForgotPassword() {
                   </button>
 
                   <Link
-                    href={`/${lang}/login`}
+                    href={`${langPrefix(lang)}/login`}
                     className="inline-block text-[var(--brand-blue)] hover:text-[var(--brand-dark)] font-black text-sm uppercase tracking-widest underline decoration-2 underline-offset-8 decoration-green-200 hover:decoration-green-600 transition-all"
                   >
-                    {t("backToLogin") || "O inicia sesión"}
+                    {t("backToLogin") || "Back to login"}
                   </Link>
                 </div>
               </form>

@@ -12,14 +12,14 @@ export function OrganizationSchema() {
     '@context': 'https://schema.org',
     '@type': 'Organization',
     name: 'Jombo',
-    url: 'https://www.jombo.es',
-    logo: 'https://www.jombo.es/images/jombo-logo.svg',
-    description: 'Plataforma gratuita de carpooling sin comisiones',
+    url: 'https://jombo.fi',
+    logo: 'https://jombo.fi/images/jombo-logo.svg',
+    description: 'Ilmainen kimppakyytipalvelu ilman välityspalkkioita',
     contactPoint: {
       '@type': 'ContactPoint',
-      email: 'soporte@jombo.es',
+      email: 'tuki@jombo.fi',
       contactType: 'customer support',
-      availableLanguage: ['Spanish', 'English', 'Finnish'],
+      availableLanguage: ['Finnish', 'English'],
     },
     sameAs: [
       // Añadir redes sociales si las hay
@@ -34,12 +34,12 @@ export function WebSiteSchema() {
     '@context': 'https://schema.org',
     '@type': 'WebSite',
     name: 'Jombo',
-    url: 'https://www.jombo.es',
+    url: 'https://jombo.fi',
     potentialAction: {
       '@type': 'SearchAction',
       target: {
         '@type': 'EntryPoint',
-        urlTemplate: 'https://www.jombo.es/es/search?from={search_term_string}',
+        urlTemplate: 'https://jombo.fi/search?from={search_term_string}',
       },
       'query-input': 'required name=search_term_string',
     },

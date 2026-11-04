@@ -27,5 +27,8 @@
   "statusConfirmed": "Confirmed",
   "statusPending": "Pending",
   "statusRejected": "Rejected",
-  "statusCancelled": "Cancelled"
+  "statusCancelled": "Cancelled",
+  "rejectBookingModalTitle": "Reject booking?",
+  "cancel": "Back",
+  "rejectBookingModalMessage": "Are you sure you want to reject {{userName}}'s booking for {{seats}} seat(s)?"
 }

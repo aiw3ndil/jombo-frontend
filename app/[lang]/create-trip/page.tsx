@@ -1,5 +1,6 @@
 "use client";
 import { useState, useEffect } from "react";
+import { localePath, langPrefix } from "@/app/lib/i18n/config";
 import { useTranslation } from "@/app/hooks/useTranslation";
 import { useRouter, useParams } from "next/navigation";
 import { createTrip } from "@/app/lib/api/trips";
@@ -11,7 +12,7 @@ export default function CreateTrip() {
   const { t, loading: translationsLoading } = useTranslation();
   const router = useRouter();
   const params = useParams();
-  const lang = (params?.lang as string) || "es";
+  const lang = (params?.lang as string) || "fi";
   const { user, loading: authLoading } = useAuth();
 
   const [formData, setFormData] = useState({
@@ -22,7 +23,6 @@ export default function CreateTrip() {
     availableSeats: 1,
     pricePerSeat: 0,
     description: "",
-    region: "",
     is_recurring: false,
     recurrence_pattern: "daily",
     recurrence_until: "",
@@ -31,11 +31,9 @@ export default function CreateTrip() {
 
   useEffect(() => {
     if (!authLoading && !user) {
-      router.push(`/${lang}/login?redirect=/${lang}/create-trip`);
-    } else if (user && !formData.region) {
-      setFormData((prev) => ({ ...prev, region: user.region || (lang === "fi" ? "fi" : "es") }));
+      router.push(`${langPrefix(lang)}/login?redirect=${langPrefix(lang)}/create-trip`);
     }
-  }, [user, authLoading, router, lang, formData.region]);
+  }, [user, authLoading, router, lang]);
 
   if (translationsLoading || authLoading) {
     return (
@@ -56,11 +54,11 @@ export default function CreateTrip() {
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     if (!formData.from || !formData.to || !formData.date || !formData.time) {
-      toast.error(t("page.createTrip.requiredFields") || "Por favor completa todos los campos requeridos");
+      toast.error(t("page.createTrip.requiredFields") || "Please complete all required fields");
       return;
     }
     if (formData.is_recurring && !formData.recurrence_until) {
-      toast.error("Por favor indica hasta cuándo se repite el viaje");
+      toast.error("Please specify until when the trip repeats");
       return;
     }
     setLoading(true);
@@ -73,7 +71,6 @@ export default function CreateTrip() {
         available_seats: Number(formData.availableSeats),
         price: Number(formData.pricePerSeat),
         description: formData.description || undefined,
-        region: formData.region,
         is_recurring: formData.is_recurring,
         recurrence_pattern: formData.is_recurring ? formData.recurrence_pattern : undefined,
         recurrence_until:
@@ -81,10 +78,10 @@ export default function CreateTrip() {
             ? `${formData.recurrence_until}T${formData.time}:00`
             : undefined,
       });
-      toast.success(t("page.createTrip.success") || "Viaje creado exitosamente");
-      router.push(`/${lang}`);
+      toast.success(t("page.createTrip.success") || "Trip published successfully");
+      router.push(localePath(lang));
     } catch (error) {
-      const errorMessage = (error as any)?.message || t("page.createTrip.error") || "Error al crear el viaje";
+      const errorMessage = (error as any)?.message || t("page.createTrip.error") || "Error publishing trip";
       toast.error(errorMessage);
     } finally {
       setLoading(false);
@@ -98,13 +95,13 @@ export default function CreateTrip() {
         <div className="max-w-5xl mx-auto text-center">
           <div className="inline-flex items-center gap-2 bg-[#e2e8f0] border border-[#e2e8f0] text-[var(--brand-dark)] px-4 py-1.5 rounded-full text-xs font-bold mb-3 uppercase tracking-wide">
             <span className="w-2 h-2 rounded-full bg-[var(--brand-blue)] animate-pulse"></span>
-            {t("page.createTrip.badge") || "Nuevo Trayecto"}
+            {t("page.createTrip.badge") || "New trip"}
           </div>
           <h1 className="text-2xl md:text-3xl font-bold text-[var(--brand-dark)] leading-tight mb-2">
-            {t("page.createTrip.title") || "Publicar un viaje"}
+            {t("page.createTrip.title") || "Publish a trip"}
           </h1>
           <p className="text-sm md:text-base text-[var(--brand-neutral)] max-w-3xl mx-auto leading-relaxed font-normal">
-            {t("page.createTrip.subtitle") || "Comparte tu ruta, ahorra gastos y ayuda a construir una comunidad más sostenible."}
+            {t("page.createTrip.subtitle") || "Share your route, save on costs and help build a more sustainable community."}
           </p>
         </div>
       </section>
@@ -119,12 +116,12 @@ export default function CreateTrip() {
                 <div className="space-y-6">
                   <div className="flex items-center gap-4 mb-2">
                     <div className="w-10 h-10 rounded-full bg-[var(--brand-blue)] flex items-center justify-center text-white font-bold shadow-md">1</div>
-                    <h2 className="text-2xl font-bold text-[var(--brand-dark)]">{t("page.createTrip.routeStep") || "Detalles de la ruta"}</h2>
+                    <h2 className="text-2xl font-bold text-[var(--brand-dark)]">{t("page.createTrip.routeStep") || "Route details"}</h2>
                   </div>
                   
                   <div className="grid md:grid-cols-2 gap-8">
                     <div>
-                      <label className="form-label">{t("page.createTrip.from") || "Punto de Origen"} *</label>
+                      <label className="form-label">{t("page.createTrip.from") || "Origin"} *</label>
                       <div className="relative group">
                         <div className="absolute left-4 top-1/2 -translate-y-1/2 text-[var(--brand-neutral)] group-focus-within:text-[var(--brand-blue)] transition-colors z-10">
                           <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -136,14 +133,14 @@ export default function CreateTrip() {
                           value={formData.from}
                           onChange={(val: string) => setFormData((prev) => ({ ...prev, from: val }))}
                           className="form-input pl-14"
-                          placeholder={t("page.createTrip.fromPlaceholder") || "¿Desde dónde sales?"}
+                          placeholder={t("page.createTrip.fromPlaceholder") || "Origin city"}
                           required
                         />
                       </div>
                     </div>
 
                     <div>
-                      <label className="form-label">{t("page.createTrip.to") || "Punto de Destino"} *</label>
+                      <label className="form-label">{t("page.createTrip.to") || "Destination"} *</label>
                       <div className="relative group">
                         <div className="absolute left-4 top-1/2 -translate-y-1/2 text-[var(--brand-neutral)] group-focus-within:text-[var(--brand-blue)] transition-colors z-10">
                           <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -155,7 +152,7 @@ export default function CreateTrip() {
                           value={formData.to}
                           onChange={(val: string) => setFormData((prev) => ({ ...prev, to: val }))}
                           className="form-input pl-14"
-                          placeholder={t("page.createTrip.toPlaceholder") || "¿A dónde vas?"}
+                          placeholder={t("page.createTrip.toPlaceholder") || "Destination city"}
                           required
                         />
                       </div>
@@ -169,12 +166,12 @@ export default function CreateTrip() {
                 <div className="space-y-6">
                   <div className="flex items-center gap-4 mb-2">
                     <div className="w-10 h-10 rounded-full bg-[var(--brand-blue)] flex items-center justify-center text-white font-bold shadow-md">2</div>
-                    <h2 className="text-2xl font-bold text-[var(--brand-dark)]">{t("page.createTrip.timeStep") || "Fecha, hora y precio"}</h2>
+                    <h2 className="text-2xl font-bold text-[var(--brand-dark)]">{t("page.createTrip.timeStep") || "Date, time and price"}</h2>
                   </div>
 
                   <div className="grid md:grid-cols-4 gap-6">
                     <div className="md:col-span-1">
-                      <label className="form-label">{t("page.createTrip.date") || "Fecha"} *</label>
+                      <label className="form-label">{t("page.createTrip.date") || "Date"} *</label>
                       <input 
                         type="date" 
                         name="date" 
@@ -185,7 +182,7 @@ export default function CreateTrip() {
                       />
                     </div>
                     <div className="md:col-span-1">
-                      <label className="form-label">{t("page.createTrip.time") || "Hora"} *</label>
+                      <label className="form-label">{t("page.createTrip.time") || "Time"} *</label>
                       <input 
                         type="time" 
                         name="time" 
@@ -196,7 +193,7 @@ export default function CreateTrip() {
                       />
                     </div>
                     <div className="md:col-span-1">
-                      <label className="form-label">{t("page.createTrip.availableSeats") || "Asientos"} *</label>
+                      <label className="form-label">{t("page.createTrip.availableSeats") || "Available seats"} *</label>
                       <div className="relative">
                          <input 
                           type="number" 
@@ -211,7 +208,7 @@ export default function CreateTrip() {
                       </div>
                     </div>
                     <div className="md:col-span-1">
-                      <label className="form-label">{t("page.createTrip.pricePerSeat") || "Precio"} *</label>
+                      <label className="form-label">{t("page.createTrip.pricePerSeat") || "Price per seat (€)"} *</label>
                       <div className="relative group">
                         <span className="absolute left-5 top-1/2 -translate-y-1/2 text-[var(--brand-blue)] font-black text-xl z-10 group-focus-within:text-[var(--brand-dark)] transition-colors">€</span>
                         <input 
@@ -235,40 +232,19 @@ export default function CreateTrip() {
                 <div className="space-y-6">
                   <div className="flex items-center gap-4 mb-2">
                     <div className="w-10 h-10 rounded-full bg-[var(--brand-blue)] flex items-center justify-center text-white font-bold shadow-md">3</div>
-                    <h2 className="text-2xl font-bold text-[var(--brand-dark)]">{t("page.createTrip.additionalStep") || "Configuración avanzada"}</h2>
+                    <h2 className="text-2xl font-bold text-[var(--brand-dark)]">{t("page.createTrip.additionalStep") || "Advanced settings"}</h2>
                   </div>
 
-                  <div className="grid md:grid-cols-2 gap-8">
+                  <div className="grid gap-8">
                     <div>
-                      <label className="form-label">{t("page.createTrip.region") || "Región del viaje"} *</label>
-                      <div className="relative">
-                        <select 
-                          name="region" 
-                          value={formData.region} 
-                          onChange={handleChange} 
-                          className="form-select pr-12 font-bold"
-                          required
-                        >
-                          <option value="es">🇪🇸 {t("page.createTrip.regionSpain") || "España"}</option>
-                          <option value="fi">🇫🇮 {t("page.createTrip.regionFinland") || "Finlandia"}</option>
-                        </select>
-                        <div className="absolute right-4 top-1/2 -translate-y-1/2 text-[var(--brand-blue)] pointer-events-none">
-                          <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 9l-7 7-7-7" />
-                          </svg>
-                        </div>
-                      </div>
-                    </div>
-
-                    <div>
-                      <label className="form-label">{t("page.createTrip.description") || "Mensaje para pasajeros"}</label>
+                      <label className="form-label">{t("page.createTrip.description") || "Description (optional)"}</label>
                       <textarea
                         name="description"
                         value={formData.description}
                         onChange={handleChange}
                         rows={1}
                         className="form-input resize-none py-4"
-                        placeholder={t("page.createTrip.descriptionPlaceholder") || "¿Algo que deban saber?"}
+                        placeholder={t("page.createTrip.descriptionPlaceholder") || "Add details about the trip, meeting point, etc."}
                       />
                     </div>
                   </div>
@@ -281,9 +257,9 @@ export default function CreateTrip() {
                           <svg className="w-6 h-6 text-[var(--brand-blue)]" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                             <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4 4v5h.582m15.356 2A8.001 8.001 0 004.582 9m0 0H9m11 11v-5h-.581m0 0a8.003 8.003 0 01-15.357-2m15.357 2H15" />
                           </svg>
-                          {t("page.createTrip.recurring") || "Viaje recurrente"}
+                          {t("page.createTrip.recurring") || "Recurring trip"}
                         </h3>
-                        <p className="text-[var(--brand-neutral)] font-medium">{t("page.createTrip.recurrenceInfo") || "Automatiza la publicación de este viaje según una frecuencia."}</p>
+                        <p className="text-[var(--brand-neutral)] font-medium">{t("page.createTrip.recurrenceInfo") || "Copies of this trip will be created automatically based on chosen frequency (max. 3 months)."}</p>
                       </div>
                       <label className="relative inline-flex items-center cursor-pointer scale-125">
                         <input
@@ -300,7 +276,7 @@ export default function CreateTrip() {
                     {formData.is_recurring && (
                       <div className="grid md:grid-cols-2 gap-8 mt-10 pt-8 border-t border-[#e2e8f0] animate-in fade-in slide-in-from-top-4 duration-300">
                         <div>
-                          <label className="form-label">{t("page.createTrip.recurrencePattern") || "Frecuencia"}</label>
+                          <label className="form-label">{t("page.createTrip.recurrencePattern") || "Frequency"}</label>
                           <div className="relative">
                             <select 
                               name="recurrence_pattern" 
@@ -308,8 +284,8 @@ export default function CreateTrip() {
                               onChange={handleChange} 
                               className="form-select pr-12 font-bold"
                             >
-                              <option value="daily">{t("page.createTrip.daily") || "Todos los días"}</option>
-                              <option value="weekly">{t("page.createTrip.weekly") || "Una vez a la semana"}</option>
+                              <option value="daily">{t("page.createTrip.daily") || "Daily"}</option>
+                              <option value="weekly">{t("page.createTrip.weekly") || "Weekly"}</option>
                             </select>
                             <div className="absolute right-4 top-1/2 -translate-y-1/2 text-[var(--brand-blue)] pointer-events-none">
                               <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -319,7 +295,7 @@ export default function CreateTrip() {
                           </div>
                         </div>
                         <div>
-                          <label className="form-label">{t("page.createTrip.until") || "Finalizar repetición"}</label>
+                          <label className="form-label">{t("page.createTrip.until") || "Repeat until"}</label>
                           <input
                             type="date"
                             name="recurrence_until"
@@ -347,7 +323,7 @@ export default function CreateTrip() {
                   <svg className="w-5 h-5 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                     <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M10 19l-7-7m0 0l7-7m-7 7h18" />
                   </svg>
-                  {t("page.createTrip.cancel") || "Volver atrás"}
+                  {t("page.createTrip.cancel") || "Cancel"}
                 </button>
                 <button
                   type="submit"
@@ -358,7 +334,7 @@ export default function CreateTrip() {
                     <svg className="w-6 h-6 group-hover:rotate-12 transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                       <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 19l9 2-9-18-9 18 9-2zm0 0v-8" />
                     </svg>
-                    {t("page.createTrip.submit") || "Publicar mi viaje"}
+                    {t("page.createTrip.submit") || "Publish trip"}
                   </span>
                   {loading && (
                     <span className="absolute inset-0 flex items-center justify-center">

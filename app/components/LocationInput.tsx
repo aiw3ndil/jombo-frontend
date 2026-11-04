@@ -3,7 +3,6 @@
 import React, { useRef, useMemo } from "react";
 import { Autocomplete } from "@react-google-maps/api";
 import { useGoogleMaps } from "@/app/contexts/GoogleMapsContext";
-import { useParams } from "next/navigation";
 
 interface LocationInputProps {
     value: string;
@@ -23,20 +22,11 @@ export default function LocationInput({
     required,
 }: LocationInputProps) {
     const { isLoaded, loadError } = useGoogleMaps();
-    const params = useParams();
-    const lang = (params?.lang as string) || "es";
 
     const autocompleteRef = useRef<google.maps.places.Autocomplete | null>(null);
 
-    // Get country code from lang
-    const countryCode = useMemo(() => {
-        switch (lang) {
-            case 'fi': return 'FI';
-            case 'en': return 'US';
-            case 'es':
-            default: return 'ES';
-        }
-    }, [lang]);
+    // Jombo only operates in Finland
+    const countryCode = 'FI';
 
     const options = useMemo(() => ({
         componentRestrictions: { country: countryCode },
@@ -102,7 +92,7 @@ export default function LocationInput({
                 <input
                     type="text"
                     disabled
-                    placeholder="Cargando mapa..."
+                    placeholder="Loading map..."
                     className={`${className} opacity-50`}
                 />
             </div>

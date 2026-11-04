@@ -1,5 +1,6 @@
 "use client";
 import { useTranslation } from "@/app/hooks/useTranslation";
+import { langPrefix } from "@/app/lib/i18n/config";
 import { useState, FormEvent, useEffect } from "react";
 import { useParams, useSearchParams, useRouter } from "next/navigation";
 import Link from "next/link";
@@ -10,7 +11,7 @@ export default function ResetPassword() {
   const params = useParams();
   const searchParams = useSearchParams();
   const router = useRouter();
-  const lang = (params?.lang as string) || "es";
+  const lang = (params?.lang as string) || "fi";
   const token = searchParams.get("token");
 
   const [password, setPassword] = useState("");
@@ -21,7 +22,7 @@ export default function ResetPassword() {
 
   useEffect(() => {
     if (!token && !translationsLoading) {
-      setError("Token de recuperación inválido o expirado.");
+      setError("Invalid or expired recovery token.");
     }
   }, [token, translationsLoading]);
 
@@ -36,11 +37,11 @@ export default function ResetPassword() {
   const handleSubmit = async (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     if (password !== confirmPassword) {
-      setError("Las contraseñas no coinciden.");
+      setError("Passwords do not match.");
       return;
     }
     if (!token) {
-      setError("Token de recuperación no encontrado.");
+      setError("Recovery token not found.");
       return;
     }
     setIsLoading(true);
@@ -48,9 +49,9 @@ export default function ResetPassword() {
     try {
       await resetPassword(token, password);
       setSuccess(true);
-      setTimeout(() => { router.push(`/${lang}/login`); }, 3000);
+      setTimeout(() => { router.push(`${langPrefix(lang)}/login`); }, 3000);
     } catch (err: any) {
-      setError(err.message || t("errorGeneric") || "Ha ocurrido un error");
+      setError(err.message || t("errorGeneric") || "An error occurred. Please try again.");
     } finally {
       setIsLoading(false);
     }
@@ -62,13 +63,13 @@ export default function ResetPassword() {
       <section className="bg-[#f0f4f8] border-b-2 border-[#e2e8f0] py-8 px-4">
         <div className="max-w-5xl mx-auto text-center">
           <div className="inline-flex items-center gap-2 bg-[#e2e8f0] border border-[#e2e8f0] text-[var(--brand-dark)] px-4 py-1.5 rounded-full text-xs font-bold mb-3 uppercase tracking-wide">
-            {t("securityBadge") || "Actualización de seguridad"}
+            {t("securityBadge") || "Account security"}
           </div>
           <h1 className="text-2xl md:text-3xl font-black text-[var(--brand-dark)] leading-tight mb-2">
-            {t("resetPasswordTitle") || "Establece tu nueva clave"}
+            {t("resetPasswordTitle") || "New password"}
           </h1>
           <p className="text-sm md:text-base text-[var(--brand-neutral)] max-w-2xl mx-auto font-medium opacity-80">
-            {t("resetPasswordDescription") || "Elige una contraseña que no hayas usado antes y sea difícil de adivinar."}
+            {t("resetPasswordDescription") || "Enter your new password."}
           </p>
         </div>
       </section>
@@ -95,7 +96,7 @@ export default function ResetPassword() {
                     </svg>
                   </div>
                   <div className="space-y-2">
-                    <p className="text-[var(--brand-dark)] font-black text-2xl">{t("passwordResetSuccess") || "¡Clave actualizada!"}</p>
+                    <p className="text-[var(--brand-dark)] font-black text-2xl">{t("passwordResetSuccess") || "Your password has been reset successfully."}</p>
                     <p className="text-[var(--brand-neutral)] font-medium">Te estamos redirigiendo para que entres a tu cuenta...</p>
                   </div>
                 </div>
@@ -104,7 +105,7 @@ export default function ResetPassword() {
               <form className="space-y-8" onSubmit={handleSubmit}>
                 <div className="space-y-6">
                   <div>
-                    <label className="form-label">{t("newPassword") || "Nueva contraseña"}</label>
+                    <label className="form-label">{t("newPassword") || "New password"}</label>
                     <div className="relative group">
                       <div className="absolute left-4 top-1/2 -translate-y-1/2 text-[var(--brand-neutral)] group-focus-within:text-[var(--brand-blue)] transition-colors z-10">
                         <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -124,7 +125,7 @@ export default function ResetPassword() {
                   </div>
 
                   <div>
-                    <label className="form-label">{t("confirmPassword") || "Repite la nueva contraseña"}</label>
+                    <label className="form-label">{t("confirmPassword") || "Confirm password"}</label>
                     <div className="relative group">
                       <div className="absolute left-4 top-1/2 -translate-y-1/2 text-[var(--brand-neutral)] group-focus-within:text-[var(--brand-blue)] transition-colors z-10">
                         <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -151,7 +152,7 @@ export default function ResetPassword() {
                     disabled={isLoading || !token}
                   >
                     <span className={`flex items-center justify-center gap-3 transition-all duration-300 ${isLoading ? 'opacity-0 scale-90' : 'opacity-100 scale-100'}`}>
-                      {t("resetPasswordSubmit") || "Cambiar contraseña"}
+                      {t("resetPasswordSubmit") || "Change password"}
                       <svg className="w-5 h-5 group-hover:rotate-12 transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                         <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z" />
                       </svg>

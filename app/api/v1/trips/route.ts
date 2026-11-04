@@ -11,7 +11,7 @@ export async function POST(request: NextRequest) {
     // Simulate driver ID for now (e.g., from an authenticated user session)
     // In a real application, this would come from the authentication context
     const driverId = 1; 
-    const driverName = "Juan Pérez"; // Placeholder
+    const driverName = "Matti Virtanen"; // Placeholder
     const driverEmail = "juan@example.com"; // Placeholder
 
     const newTrip = {
@@ -40,7 +40,7 @@ export async function POST(request: NextRequest) {
   } catch (error) {
     console.error('Create trip error:', error);
     return NextResponse.json(
-      { error: 'Error al crear el viaje' },
+      { error: 'Error creating trip' },
       { status: 500 }
     );
   }
