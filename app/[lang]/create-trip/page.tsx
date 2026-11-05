@@ -1,12 +1,12 @@
 "use client";
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import { localePath, langPrefix } from "@/app/lib/i18n/config";
 import { useTranslation } from "@/app/hooks/useTranslation";
 import { useRouter, useParams, useSearchParams } from "next/navigation";
-import { createTrip, CreateTripData } from "@/app/lib/api/trips";
+import { createTrip, CreateTripData, getTrip } from "@/app/lib/api/trips";
 import { useAuth } from "@/app/contexts/AuthContext";
 import { toast } from "sonner";
-import TripForm from "@/app/components/TripForm";
+import TripForm, { returnTripInitial, type TripFormInitial } from "@/app/components/TripForm";
 
 export default function CreateTrip() {
   const { t, loading: translationsLoading } = useTranslation();
@@ -16,12 +16,25 @@ export default function CreateTrip() {
   const { user, loading: authLoading } = useAuth();
   const query = useSearchParams();
   const rideRequestId = query.get("ride_request");
-  const initialValues = {
-    from: query.get("from") || undefined,
-    to: query.get("to") || undefined,
-    date: query.get("date") || undefined,
-    seats: query.get("seats") ? Number(query.get("seats")) : undefined,
-  };
+  const returnOf = query.get("return_of");
+
+  // Viaje de vuelta: se carga el viaje de ida y se invierte; null mientras carga
+  const [returnInitial, setReturnInitial] = useState<TripFormInitial | null>(null);
+  useEffect(() => {
+    if (!returnOf) return;
+    getTrip(returnOf)
+      .then((trip) => setReturnInitial(trip && trip.driver.id === user?.id ? returnTripInitial(trip) : {}))
+      .catch(() => setReturnInitial({}));
+  }, [returnOf, user?.id]);
+
+  const initialValues: TripFormInitial = returnOf
+    ? returnInitial ?? {}
+    : {
+        from: query.get("from") || undefined,
+        to: query.get("to") || undefined,
+        date: query.get("date") || undefined,
+        seats: query.get("seats") ? Number(query.get("seats")) : undefined,
+      };
 
   useEffect(() => {
     if (!authLoading && !user) {
@@ -29,7 +42,7 @@ export default function CreateTrip() {
     }
   }, [user, authLoading, router, lang]);
 
-  if (translationsLoading || authLoading) {
+  if (translationsLoading || authLoading || (returnOf && returnInitial === null && user)) {
     return (
       <div className="min-h-screen flex items-center justify-center bg-white">
         <div className="spinner"></div>
@@ -45,5 +58,13 @@ export default function CreateTrip() {
     router.push(localePath(lang));
   };
 
-  return <TripForm mode="create" onSubmit={handleSubmit} onCancel={() => router.back()} initialValues={initialValues} />;
+  return (
+    <TripForm
+      key={returnOf ?? "new"}
+      mode="create"
+      onSubmit={handleSubmit}
+      onCancel={() => router.back()}
+      initialValues={initialValues}
+    />
+  );
 }

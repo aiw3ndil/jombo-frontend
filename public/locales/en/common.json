@@ -203,7 +203,9 @@
       "deleteSuccess": "Trip deleted successfully",
       "deleteError": "Error deleting trip",
       "recurringBadge": "Recurring",
-      "free": "free"
+      "free": "free",
+      "statusExpired": "Expired",
+      "returnTrip": "Publish return trip"
     },
     "myBookings": {
       "badge": "My Trips",
@@ -251,7 +253,8 @@
         "success": "Review created successfully!",
         "error": "Error creating review"
       },
-      "processing": "Processing..."
+      "processing": "Processing...",
+      "statusExpired": "Expired"
     },
     "review": {
       "person": "Driver",
@@ -731,5 +734,9 @@
       "title": "Verify your email to book",
       "text": "To keep Jombo safe, passengers confirm their email address before booking. We'll send you a link — open it and come back to book."
     }
+  },
+  "calendar": {
+    "add": "Add to calendar",
+    "ics": "Apple / Outlook (.ics)"
   }
 }

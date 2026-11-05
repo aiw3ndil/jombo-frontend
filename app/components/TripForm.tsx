@@ -18,7 +18,36 @@ import {
 type StopRow = { location: string; date: string; time: string; price: string };
 
 /** Valores iniciales opcionales (p. ej. al responder a una petición de viaje) */
-export type TripFormInitial = { from?: string; to?: string; date?: string; seats?: number };
+export type TripFormInitial = {
+  from?: string;
+  to?: string;
+  date?: string;
+  seats?: number;
+  price?: number;
+  description?: string;
+  preferences?: Partial<TripPreferencesData>;
+  /** Paradas intermedias (solo el lugar; hora y precio los pone el conductor) */
+  stops?: string[];
+  vehicleId?: number | null;
+};
+
+/** Valores iniciales para publicar el viaje de vuelta de `trip`: ruta y paradas al revés, sin fecha */
+export function returnTripInitial(trip: Trip): TripFormInitial {
+  const preferences: Partial<TripPreferencesData> = {};
+  (Object.keys(DEFAULT_PREFERENCES) as (keyof TripPreferencesData)[]).forEach((k) => {
+    if (trip[k] !== undefined && trip[k] !== null) (preferences as any)[k] = trip[k];
+  });
+  return {
+    from: trip.arrival_location,
+    to: trip.departure_location,
+    seats: trip.vehicle?.seats ? Math.max(trip.vehicle.seats - 1, 1) : Math.max(trip.available_seats, 1),
+    price: Number(trip.price),
+    description: trip.description ?? undefined,
+    preferences,
+    stops: (trip.stops || []).map((s) => s.location).reverse(),
+    vehicleId: trip.vehicle?.id ?? null,
+  };
+}
 
 /** Distancia (km) y duración (min) por tramo con Google Directions */
 function useRouteMetrics(points: string[]) {
@@ -94,8 +123,8 @@ export default function TripForm({
     date: initial.date || initialValues?.date || "",
     time: initial.time,
     availableSeats: trip?.available_seats ?? initialValues?.seats ?? 1,
-    pricePerSeat: trip ? Number(trip.price) : 0,
-    description: trip?.description ?? "",
+    pricePerSeat: trip ? Number(trip.price) : initialValues?.price ?? 0,
+    description: trip?.description ?? initialValues?.description ?? "",
     is_recurring: false,
     recurrence_pattern: "daily",
     recurrence_until: "",
@@ -103,17 +132,19 @@ export default function TripForm({
   const [loading, setLoading] = useState(false);
   const [vehicleChoice, setVehicleChoice] = useState<VehicleChoice>(null);
   const [prefs, setPrefs] = useState<TripPreferencesData>(() => {
-    const base = { ...DEFAULT_PREFERENCES };
+    const base = { ...DEFAULT_PREFERENCES, ...initialValues?.preferences };
     if (trip) (Object.keys(base) as (keyof TripPreferencesData)[]).forEach((k) => {
       if (trip[k] !== undefined && trip[k] !== null) (base as any)[k] = trip[k];
     });
     return base;
   });
   const [stops, setStops] = useState<StopRow[]>(() =>
-    (trip?.stops || []).map((s) => {
-      const parts = toLocalParts(s.departure_time);
-      return { location: s.location, date: parts.date, time: parts.time, price: String(Number(s.price_from_origin)) };
-    })
+    trip
+      ? (trip.stops || []).map((s) => {
+          const parts = toLocalParts(s.departure_time);
+          return { location: s.location, date: parts.date, time: parts.time, price: String(Number(s.price_from_origin)) };
+        })
+      : (initialValues?.stops || []).map((location) => ({ location, date: "", time: "", price: "" }))
   );
 
   const legs = useRouteMetrics([formData.from, ...stops.map((s) => s.location), formData.to]);
@@ -451,7 +482,7 @@ export default function TripForm({
                     <div className="w-10 h-10 rounded-full bg-[var(--brand-blue)] flex items-center justify-center text-white font-bold shadow-md">3</div>
                     <h2 className="text-2xl font-bold text-[var(--brand-dark)]">{t("vehicle.step", "Vehicle")}</h2>
                   </div>
-                  <VehicleSelector value={vehicleChoice} onChange={handleVehicleChange} initialVehicleId={trip?.vehicle?.id ?? null} />
+                  <VehicleSelector value={vehicleChoice} onChange={handleVehicleChange} initialVehicleId={trip?.vehicle?.id ?? initialValues?.vehicleId ?? null} />
                 </div>
 
                 <div className="h-px bg-[#ebf3e2] w-full"></div>

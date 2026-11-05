@@ -203,7 +203,9 @@
       "badge": "Kuljettajan Paneeli",
       "deleteConfirm": "Tämä toiminto poistaa matkan ja kaikki sen varaukset.",
       "recurringBadge": "Toistuva",
-      "free": "vapaana"
+      "free": "vapaana",
+      "statusExpired": "Vanhentunut",
+      "returnTrip": "Julkaise paluukyyti"
     },
     "myBookings": {
       "badge": "Matkat",
@@ -251,7 +253,8 @@
         "success": "Arvostelu luotu onnistuneesti!",
         "error": "Virhe arvostelun luomisessa"
       },
-      "processing": "Käsitellään..."
+      "processing": "Käsitellään...",
+      "statusExpired": "Vanhentunut"
     },
     "review": {
       "person": "Kuljettaja",
@@ -731,5 +734,9 @@
       "title": "Vahvista sähköpostisi varataksesi",
       "text": "Jombon turvallisuuden vuoksi matkustajat vahvistavat sähköpostiosoitteensa ennen varaamista. Lähetämme sinulle linkin — avaa se ja palaa sitten varaamaan."
     }
+  },
+  "calendar": {
+    "add": "Lisää kalenteriin",
+    "ics": "Apple / Outlook (.ics)"
   }
 }

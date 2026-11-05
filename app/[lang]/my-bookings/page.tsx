@@ -5,6 +5,7 @@ import { useRouter, useParams } from "next/navigation";
 import { getBookings, cancelBooking, Booking } from "@/app/lib/api/bookings";
 import { getBookingReviews } from "@/app/lib/api/reviews";
 import { useTranslation } from "@/app/hooks/useTranslation";
+import AddToCalendar from "@/app/components/AddToCalendar";
 import { useAuth } from "@/app/contexts/AuthContext";
 import ReviewModal from "@/app/components/ReviewModal";
 import { toast } from "sonner";
@@ -124,6 +125,8 @@ export default function MyBookings() {
       case "rejected":
       case "cancelled":
         return "bg-red-100 text-red-700 border-red-200";
+      case "expired":
+        return "bg-gray-100 text-gray-600 border-gray-200";
       default:
         return "bg-gray-100 text-gray-700 border-gray-200";
     }
@@ -139,6 +142,8 @@ export default function MyBookings() {
         return t("page.myBookings.statusRejected") || "Rejected";
       case "cancelled":
         return t("page.myBookings.statusCancelled") || "Cancelled";
+      case "expired":
+        return t("page.myBookings.statusExpired", "Expired");
       default:
         return status.toUpperCase();
     }
@@ -277,10 +282,23 @@ export default function MyBookings() {
                           </p>
                         </div>
                       </div>
+                      {booking.status === "confirmed" && booking.trip && new Date(booking.trip.departure_time) > new Date() && (
+                        <AddToCalendar
+                          event={{
+                            uid: `booking-${booking.id}`,
+                            title: `Jombo: ${booking.pickup_location || booking.trip.departure_location} → ${booking.dropoff_location || booking.trip.arrival_location}`,
+                            start: new Date(booking.trip.departure_time),
+                            durationMinutes: booking.trip.duration_minutes,
+                            location: booking.pickup_location || booking.trip.departure_location,
+                            description: `${t("page.myBookings.driver") || "Driver"}: ${booking.trip.driver?.name ?? ""}`,
+                            url: `${window.location.origin}${langPrefix(lang)}/trips/${booking.trip.id}`,
+                          }}
+                        />
+                      )}
                     </div>
 
                     <div className="flex flex-col sm:flex-row xl:flex-col gap-4 min-w-[240px] justify-center items-stretch">
-                      {booking.status !== "cancelled" && booking.status !== "rejected" && (
+                      {!["cancelled", "rejected", "expired"].includes(booking.status) && (
                         <>
                           {canReview(booking) && (
                             <button

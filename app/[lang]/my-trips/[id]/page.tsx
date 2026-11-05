@@ -12,6 +12,7 @@ import { useAuth } from "@/app/contexts/AuthContext";
 import { toast } from "sonner";
 import RejectBookingModal from "@/app/components/RejectBookingModal";
 import VerifiedBadges, { ExperienceBadge } from "@/app/components/VerifiedBadges";
+import AddToCalendar from "@/app/components/AddToCalendar";
 
 export default function TripDetails({ params }: { params: Promise<{ lang: string; id: string }> }) {
     const resolvedParams = use(params);
@@ -121,6 +122,7 @@ export default function TripDetails({ params }: { params: Promise<{ lang: string
             case "pending": return "bg-yellow-100 text-yellow-700 border-yellow-200";
             case "rejected":
             case "cancelled": return "bg-red-100 text-red-700 border-red-200";
+            case "expired": return "bg-gray-100 text-gray-600 border-gray-200";
             default: return "bg-gray-100 text-gray-700 border-gray-200";
         }
     };
@@ -131,6 +133,7 @@ export default function TripDetails({ params }: { params: Promise<{ lang: string
             case "pending": return t("page.myTrips.statusPending") || "Pending";
             case "rejected": return t("page.myTrips.statusRejected") || "Rejected";
             case "cancelled": return t("page.myTrips.statusCancelled") || "Cancelled";
+            case "expired": return t("page.myTrips.statusExpired", "Expired");
             default: return status.toUpperCase();
         }
     };
@@ -185,6 +188,26 @@ export default function TripDetails({ params }: { params: Promise<{ lang: string
                                 {trip.arrival_location}
                             </h2>
                             <VehicleSummary vehicle={trip.vehicle} />
+                            <div className="flex flex-wrap gap-3">
+                                {new Date(trip.departure_time) > new Date() && (
+                                    <AddToCalendar
+                                        event={{
+                                            uid: `trip-${trip.id}`,
+                                            title: `Jombo: ${trip.departure_location} → ${trip.arrival_location}`,
+                                            start: new Date(trip.departure_time),
+                                            durationMinutes: trip.duration_minutes,
+                                            location: trip.departure_location,
+                                            url: `${window.location.origin}${langPrefix(lang)}/my-trips/${trip.id}`,
+                                        }}
+                                    />
+                                )}
+                                <Link
+                                    href={`${langPrefix(lang)}/create-trip?return_of=${trip.id}`}
+                                    className="rounded-full border-2 border-[var(--brand-blue)] bg-white px-4 py-1 text-sm font-bold text-[var(--brand-blue)] hover:bg-[#f3f7ed]"
+                                >
+                                    ↩ {t("page.myTrips.returnTrip", "Publish return trip")}
+                                </Link>
+                            </div>
                             <div className="flex items-center gap-4 p-5 bg-white rounded-2xl border-2 border-[#c4d8b4] shadow-sm">
                                 <svg className="w-6 h-6 text-[var(--brand-blue)]" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z" /></svg>
                                 <p className="text-[var(--brand-dark)] font-bold text-lg">

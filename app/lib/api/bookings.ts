@@ -7,7 +7,7 @@ export interface Booking {
   user_id: number;
   trip_id: number;
   seats: number;
-  status: "pending" | "confirmed" | "rejected" | "cancelled";
+  status: "pending" | "confirmed" | "rejected" | "cancelled" | "expired";
   pickup_location?: string | null;
   dropoff_location?: string | null;
   price_per_seat?: number | string | null;
@@ -20,6 +20,7 @@ export interface Booking {
     departure_time: string;
     available_seats: number;
     price: number;
+    duration_minutes?: number | null;
     driver: {
       id: number;
       name: string;
