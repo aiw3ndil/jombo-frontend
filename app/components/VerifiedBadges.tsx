@@ -22,7 +22,7 @@ export function ExperienceBadge({ level }: { level?: ExperienceLevel | string })
 }
 
 /**
- * Insignias de verificación (email, Google).
+ * Insignias de verificación (email).
  * `compact`: una sola insignia para tarjetas pequeñas ("Verified", o los iconos de lo verificado).
  */
 export default function VerifiedBadges({
@@ -38,8 +38,7 @@ export default function VerifiedBadges({
   if (!verifications) return null;
   const items = [
     { key: "email", icon: "✉️", ok: verifications.email, label: t("profile.verified.email", "Email verified") },
-    { key: "google", icon: "G", ok: verifications.google, label: t("profile.verified.google", "Google account") },
-  ].filter((i) => i.ok || (showMissing && i.key !== "google"));
+  ].filter((i) => i.ok || showMissing);
   if (items.length === 0) return null;
 
   if (compact) {

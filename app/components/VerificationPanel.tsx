@@ -17,7 +17,7 @@ export default function VerificationPanel() {
   const [busy, setBusy] = useState(false);
 
   if (!user) return null;
-  const v: Verifications = user.verifications || { email: false, google: false };
+  const v: Verifications = user.verifications || { email: false };
 
   const sendLink = async () => {
     setBusy(true);

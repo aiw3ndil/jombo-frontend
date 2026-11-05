@@ -4,7 +4,6 @@ export type ExperienceLevel = "new" | "regular" | "experienced" | "expert";
 
 export interface Verifications {
   email: boolean;
-  google: boolean;
   /** Email verificado */
   verified?: boolean;
 }
