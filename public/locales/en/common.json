@@ -350,14 +350,15 @@
     "verified": {
       "email": "Email verified",
       "google": "Google account",
-      "phone": "Phone verified"
+      "phone": "Phone verified",
+      "member": "Verified"
     },
     "viewPublic": "View my public profile",
     "level": {
       "new": "New member",
-      "regular": "Regular driver",
-      "experienced": "Experienced driver",
-      "expert": "Expert driver"
+      "regular": "Regular member",
+      "experienced": "Experienced member",
+      "expert": "Expert member"
     },
     "unverified": {
       "email": "Email not verified",
@@ -599,7 +600,8 @@
     "sortPrice": "Lowest price",
     "sortTime": "Earliest departure",
     "timeOfDay": "Departure time",
-    "title": "Filters"
+    "title": "Filters",
+    "verified": "Verified drivers"
   },
   "home": {
     "features": {
@@ -737,5 +739,17 @@
     "sendLink": "Send link",
     "subtitle": "Verified members get more bookings. Your phone number and email are never shown publicly.",
     "title": "Trust and verification"
+  },
+  "gate": {
+    "email": {
+      "title": "Verify your email to book",
+      "text": "To keep Jombo safe, passengers confirm their email address before booking. We'll send you a link — open it and come back to book."
+    },
+    "phone": {
+      "title": "Verify your phone to publish trips",
+      "text": "Passengers trust drivers with a verified phone number. It is never shown publicly.",
+      "addFirst": "Add your number in your profile first.",
+      "goToProfile": "Go to my profile"
+    }
   }
 }

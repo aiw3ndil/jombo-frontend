@@ -1,3 +1,5 @@
+import type { ExperienceLevel, Verifications } from "./users";
+
 const API_BASE = process.env.NEXT_PUBLIC_API_BASE_URL || "";
 
 export interface Booking {
@@ -21,15 +23,19 @@ export interface Booking {
     driver: {
       id: number;
       name: string;
-      email: string;
       picture_url?: string;
     };
   };
+  /** Pasajero (visto por el conductor): datos de confianza, sin email */
   user?: {
     id: number;
     name: string;
-    email: string;
-    picture_url?: string;
+    picture_url?: string | null;
+    average_rating?: number;
+    total_reviews?: number;
+    experience_level?: ExperienceLevel;
+    verifications?: Verifications;
+    rides_taken?: number;
   };
 }
 

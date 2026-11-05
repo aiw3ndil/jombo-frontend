@@ -11,6 +11,7 @@ import { useTranslation } from "@/app/hooks/useTranslation";
 import { useAuth } from "@/app/contexts/AuthContext";
 import { toast } from "sonner";
 import RejectBookingModal from "@/app/components/RejectBookingModal";
+import VerifiedBadges, { ExperienceBadge } from "@/app/components/VerifiedBadges";
 
 export default function TripDetails({ params }: { params: Promise<{ lang: string; id: string }> }) {
     const resolvedParams = use(params);
@@ -251,12 +252,22 @@ export default function TripDetails({ params }: { params: Promise<{ lang: string
                                                     </div>
                                                 </div>
                                                 <div>
-                                                    <div className="font-bold text-[var(--brand-dark)] text-2xl leading-tight">
-                                                        {booking.user?.name || booking.user?.email || t("guestUser", "Guest user")}
-                                                    </div>
-                                                    <div className="text-xs font-bold text-[var(--brand-neutral)] uppercase tracking-widest mt-1">
-                                                        {t("passengerId", "Passenger ID")}: <span className="text-[var(--brand-blue)] font-mono">#{String(booking.user?.id).padStart(4, '0')}</span>
-                                                    </div>
+                                                    {booking.user ? (
+                                                        <Link href={`${langPrefix(lang)}/users/${booking.user.id}`} className="font-bold text-[var(--brand-dark)] text-2xl leading-tight hover:text-[var(--brand-blue)] hover:underline">
+                                                            {booking.user.name}
+                                                        </Link>
+                                                    ) : (
+                                                        <div className="font-bold text-[var(--brand-dark)] text-2xl leading-tight">{t("guestUser", "Guest user")}</div>
+                                                    )}
+                                                    {booking.user && (
+                                                        <div className="mt-1 flex flex-wrap items-center gap-1.5 text-sm font-semibold text-[var(--brand-neutral)]">
+                                                            {!!booking.user.total_reviews && (
+                                                                <span>★ {Number(booking.user.average_rating).toFixed(1)} · {booking.user.total_reviews}</span>
+                                                            )}
+                                                            <ExperienceBadge level={booking.user.experience_level} />
+                                                            <VerifiedBadges verifications={booking.user.verifications} compact />
+                                                        </div>
+                                                    )}
                                                 </div>
                                             </div>
                                             <div className="flex items-center gap-4">
@@ -317,7 +328,7 @@ export default function TripDetails({ params }: { params: Promise<{ lang: string
                         loading={actionLoading === selectedBookingToReject.id}
                         t={t}
                         bookingDetails={{
-                            userName: selectedBookingToReject.user?.name || selectedBookingToReject.user?.email || 'N/A',
+                            userName: selectedBookingToReject.user?.name || 'N/A',
                             seats: selectedBookingToReject.seats,
                         }}
                     />

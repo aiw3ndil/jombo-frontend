@@ -16,12 +16,13 @@ export function filtersFromParams(params: URLSearchParams): SearchFilters {
     no_smoking: bool("no_smoking"),
     max_two_back: bool("max_two_back"),
     max_price: num("max_price"),
+    verified: bool("verified"),
     sort: (params.get("sort") as SearchFilters["sort"]) || undefined,
   };
 }
 
 export function activeFilterCount(f: SearchFilters) {
-  return [f.date, f.time_of_day, f.min_seats, f.instant_booking, f.pets, f.no_smoking, f.max_two_back, f.max_price].filter(Boolean).length;
+  return [f.date, f.time_of_day, f.min_seats, f.instant_booking, f.pets, f.no_smoking, f.max_two_back, f.max_price, f.verified].filter(Boolean).length;
 }
 
 const chip = (active: boolean) =>
@@ -83,6 +84,9 @@ export default function SearchFiltersBar({ value, onChange }: { value: SearchFil
               </option>
             ))}
           </select>
+          <button type="button" className={chip(!!value.verified)} onClick={() => set("verified", !value.verified)}>
+            ✓ {t("filters.verified", "Verified drivers")}
+          </button>
           <button type="button" className={chip(!!value.instant_booking)} onClick={() => set("instant_booking", !value.instant_booking)}>
             ⚡ {t("prefs.instant", "Instant booking")}
           </button>

@@ -16,6 +16,7 @@ import { searchTrips, Trip, ExternalOption, SearchResponse, SearchFilters, FILTE
 import SearchFiltersBar, { filtersFromParams, activeFilterCount } from "@/app/components/SearchFiltersBar";
 import TripPreferences from "@/app/components/TripPreferences";
 import SearchAlertCta from "@/app/components/SearchAlertCta";
+import VerifiedBadges, { ExperienceBadge } from "@/app/components/VerifiedBadges";
 
 export default function SearchPage() {
   const { t, loading: translationsLoading } = useTranslation();
@@ -347,6 +348,10 @@ export default function SearchPage() {
                             ★ {Number(trip.driver.average_rating).toFixed(1)} · {trip.driver.total_reviews}
                           </p>
                         )}
+                        <div className="mt-2 flex flex-wrap justify-center gap-1.5">
+                          <ExperienceBadge level={trip.driver.experience_level} />
+                          <VerifiedBadges verifications={trip.driver.verifications} compact />
+                        </div>
                         <button
                           onClick={() => handleOpenReviews(trip.driver.id, trip.driver.name)}
                           className="text-[var(--brand-blue)] hover:text-[var(--brand-dark)] text-sm font-bold uppercase tracking-widest mt-2 transition-colors cursor-pointer"

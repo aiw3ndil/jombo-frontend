@@ -1,4 +1,5 @@
 import type { Vehicle, VehicleInput } from "./vehicles";
+import type { ExperienceLevel, Verifications } from "./users";
 
 const API_BASE = process.env.NEXT_PUBLIC_API_BASE_URL || "";
 
@@ -79,8 +80,8 @@ export interface TripDriver {
   picture_url?: string | null;
   average_rating?: number;
   total_reviews?: number;
-  experience_level?: string;
-  verifications?: { email: boolean; phone: boolean; google: boolean };
+  experience_level?: ExperienceLevel;
+  verifications?: Verifications;
 }
 
 export interface Trip extends Partial<TripPreferencesData> {
@@ -121,11 +122,12 @@ export interface SearchFilters {
   no_smoking?: boolean;
   max_two_back?: boolean;
   max_price?: number;
+  verified?: boolean;
   sort?: "departure_time" | "price" | "duration" | "";
 }
 
 export const FILTER_KEYS: (keyof SearchFilters)[] = [
-  "date", "time_of_day", "min_seats", "instant_booking", "pets", "no_smoking", "max_two_back", "max_price", "sort",
+  "date", "time_of_day", "min_seats", "instant_booking", "pets", "no_smoking", "max_two_back", "max_price", "verified", "sort",
 ];
 
 export async function searchTrips(

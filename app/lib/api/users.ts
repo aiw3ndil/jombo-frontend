@@ -6,6 +6,8 @@ export interface Verifications {
   email: boolean;
   phone: boolean;
   google: boolean;
+  /** Email y (si hay SMS) teléfono verificados */
+  verified?: boolean;
 }
 
 export interface PublicProfile {

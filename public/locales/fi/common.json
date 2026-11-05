@@ -350,14 +350,15 @@
     "verified": {
       "email": "Sähköposti vahvistettu",
       "google": "Google-tili",
-      "phone": "Puhelin vahvistettu"
+      "phone": "Puhelin vahvistettu",
+      "member": "Vahvistettu"
     },
     "viewPublic": "Näytä julkinen profiilini",
     "level": {
       "new": "Uusi jäsen",
-      "regular": "Tuttu kuljettaja",
-      "experienced": "Kokenut kuljettaja",
-      "expert": "Huippukuljettaja"
+      "regular": "Tuttu jäsen",
+      "experienced": "Kokenut jäsen",
+      "expert": "Huippujäsen"
     },
     "unverified": {
       "email": "Sähköposti vahvistamatta",
@@ -599,7 +600,8 @@
     "sortPrice": "Halvin ensin",
     "sortTime": "Aikaisin lähtö",
     "timeOfDay": "Lähtöaika",
-    "title": "Suodattimet"
+    "title": "Suodattimet",
+    "verified": "Vahvistetut kuljettajat"
   },
   "home": {
     "features": {
@@ -737,5 +739,17 @@
     "sendLink": "Lähetä linkki",
     "subtitle": "Vahvistetut jäsenet saavat enemmän varauksia. Puhelinnumeroasi ja sähköpostiasi ei koskaan näytetä julkisesti.",
     "title": "Luottamus ja vahvistus"
+  },
+  "gate": {
+    "email": {
+      "title": "Vahvista sähköpostisi varataksesi",
+      "text": "Jombon turvallisuuden vuoksi matkustajat vahvistavat sähköpostiosoitteensa ennen varaamista. Lähetämme sinulle linkin — avaa se ja palaa sitten varaamaan."
+    },
+    "phone": {
+      "title": "Vahvista puhelinnumerosi julkaistaksesi kyytejä",
+      "text": "Matkustajat luottavat kuljettajiin, joiden puhelinnumero on vahvistettu. Numeroa ei koskaan näytetä julkisesti.",
+      "addFirst": "Lisää ensin numerosi profiiliisi.",
+      "goToProfile": "Siirry profiiliini"
+    }
   }
 }
