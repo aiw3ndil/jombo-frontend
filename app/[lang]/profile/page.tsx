@@ -17,8 +17,7 @@ export default function ProfilePage({ params }: { params: Promise<{ lang: string
     name: "",
     email: "",
     language: "fi",
-    bio: "",
-    phone: ""
+    bio: ""
   });
   const [passwordData, setPasswordData] = useState({
     current_password: "",
@@ -49,8 +48,7 @@ export default function ProfilePage({ params }: { params: Promise<{ lang: string
         name: user.name || "",
         email: user.email || "",
         language: user.language === "en" || user.language === "fi" ? user.language : lang,
-        bio: user.bio || "",
-        phone: user.phone || ""
+        bio: user.bio || ""
       });
       const pictureUrl = user.picture_url || user.picture;
       if (pictureUrl) {
@@ -89,7 +87,6 @@ export default function ProfilePage({ params }: { params: Promise<{ lang: string
       formDataToSend.append("name", formData.name);
       formDataToSend.append("language", formData.language);
       formDataToSend.append("bio", formData.bio);
-      formDataToSend.append("phone", formData.phone);
 
       if (pictureFile) {
         formDataToSend.append("picture", pictureFile);
@@ -313,8 +310,8 @@ export default function ProfilePage({ params }: { params: Promise<{ lang: string
                 </div>
               </div>
 
-              <div className="grid md:grid-cols-2 gap-8">
-                <div className="space-y-2 md:col-span-2">
+              <div className="grid gap-8">
+                <div className="space-y-2">
                   <label className="form-label">{t("profile.bio", "About you")}</label>
                   <textarea
                     name="bio"
@@ -326,19 +323,6 @@ export default function ProfilePage({ params }: { params: Promise<{ lang: string
                     placeholder={t("profile.bioPlaceholder", "E.g. I drive Tampere–Helsinki every Friday, love podcasts and coffee stops.")}
                   />
                   <p className="text-xs text-[var(--brand-neutral)]">{formData.bio.length}/500 · {t("profile.bioPublic", "Shown on your public profile")}</p>
-                </div>
-                <div className="space-y-2">
-                  <label className="form-label">{t("profile.phone", "Phone number")}</label>
-                  <input
-                    type="tel"
-                    name="phone"
-                    value={formData.phone}
-                    onChange={handleChange}
-                    className="form-input"
-                    placeholder="+358 40 123 4567"
-                    autoComplete="tel"
-                  />
-                  <p className="text-xs text-[var(--brand-neutral)]">{t("profile.phonePrivate", "Private. Only used for verification.")}</p>
                 </div>
               </div>
 

@@ -11,9 +11,9 @@ const content = {
     platform: "Mitä Jombo tekee",
     tips: "Vinkit matkalle",
     a: [
-      { icon: "✅", title: "Vahvistetut profiilit", text: "Jäsenet voivat vahvistaa sähköpostin ja puhelinnumeron. Merkit näkyvät profiilissa, numero ei koskaan." },
+      { icon: "✅", title: "Vahvistetut profiilit", text: "Jäsenet vahvistavat sähköpostiosoitteensa. Merkki näkyy profiilissa, yhteystiedot eivät koskaan." },
       { icon: "⭐", title: "Arviot", text: "Jokaisen matkan jälkeen kuljettaja ja matkustaja arvioivat toisensa. Arviot näkyvät julkisessa profiilissa." },
-      { icon: "🏅", title: "Kokemustaso", text: "Kuljettajan taso kasvaa toteutuneiden matkojen ja hyvien arvioiden myötä." },
+      { icon: "🏅", title: "Kokemustaso", text: "Jäsenen taso kasvaa toteutuneiden matkojen (kuljettajana tai matkustajana) ja hyvien arvioiden myötä." },
       { icon: "💬", title: "Viestit palvelussa", text: "Sovi tapaamispaikasta Jombon viesteillä ennen matkaa – yhteystietoja ei tarvitse jakaa." },
     ],
     b: [
@@ -30,9 +30,9 @@ const content = {
     platform: "What Jombo does",
     tips: "Tips for the trip",
     a: [
-      { icon: "✅", title: "Verified profiles", text: "Members can verify their email and phone number. The badges show on the profile – the number never does." },
+      { icon: "✅", title: "Verified profiles", text: "Members verify their email address. The badge shows on the profile – contact details never do." },
       { icon: "⭐", title: "Reviews", text: "After every trip, drivers and passengers review each other. Reviews appear on the public profile." },
-      { icon: "🏅", title: "Experience level", text: "A driver's level grows with completed trips and good reviews." },
+      { icon: "🏅", title: "Experience level", text: "A member's level grows with completed trips (as driver or passenger) and good reviews." },
       { icon: "💬", title: "In-app messages", text: "Agree on the meeting point with Jombo messages before the trip – no need to share contact details." },
     ],
     b: [

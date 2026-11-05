@@ -134,7 +134,7 @@ export default function Home() {
           {[
             { icon: "📍", title: t("home.features.stops.title", "Rides with stops"), text: t("home.features.stops.text", "Hop on or off along the way and pay only for your part.") },
             { icon: "⚡", title: t("home.features.instant.title", "Instant booking"), text: t("home.features.instant.text", "Many drivers confirm seats automatically.") },
-            { icon: "✅", title: t("home.features.verified.title", "Verified members"), text: t("home.features.verified.text", "Email and phone badges, reviews and experience levels.") },
+            { icon: "✅", title: t("home.features.verified.title", "Verified members"), text: t("home.features.verified.text", "Verified email, reviews and experience levels.") },
             { icon: "🔔", title: t("home.features.alerts.title", "Ride alerts"), text: t("home.features.alerts.text", "Get an email when a ride for your route is published.") },
           ].map((f) => (
             <div key={f.title} className="rounded-2xl border-2 border-[#c4d8b4] bg-[#f7fbf3] p-5">

@@ -293,7 +293,6 @@
     "title": "Profiilini",
     "name": "Nimi",
     "email": "Sähköposti",
-    "phone": "Puhelin",
     "bio": "Biografia",
     "language": "Ilmoitusten kieli",
     "picture": "Profiilikuva",
@@ -338,7 +337,6 @@
     "memberSince": "Jäsen alkaen",
     "noReviews": "Ei vielä arvioita",
     "noUpcoming": "Ei tulevia kyytejä juuri nyt.",
-    "phonePrivate": "Yksityinen. Käytetään vain vahvistukseen.",
     "reviews": "arviota",
     "stats": {
       "driven": "Ajetut kyydit",
@@ -350,7 +348,6 @@
     "verified": {
       "email": "Sähköposti vahvistettu",
       "google": "Google-tili",
-      "phone": "Puhelin vahvistettu",
       "member": "Vahvistettu"
     },
     "viewPublic": "Näytä julkinen profiilini",
@@ -361,8 +358,7 @@
       "expert": "Huippujäsen"
     },
     "unverified": {
-      "email": "Sähköposti vahvistamatta",
-      "phone": "Puhelin vahvistamatta"
+      "email": "Sähköposti vahvistamatta"
     }
   },
   "trips": {
@@ -618,7 +614,7 @@
         "title": "Kyydit välipysähdyksillä"
       },
       "verified": {
-        "text": "Sähköposti- ja puhelinvahvistukset, arviot ja kokemustasot.",
+        "text": "Vahvistettu sähköposti, arviot ja kokemustasot.",
         "title": "Vahvistetut jäsenet"
       }
     },
@@ -716,9 +712,6 @@
     "yourTrip": "Tämä on oma kyytisi"
   },
   "verify": {
-    "code": "Koodi",
-    "codeSent": "Koodi lähetetty tekstiviestillä.",
-    "confirm": "Vahvista",
     "email": "Sähköposti",
     "emailConfirmedText": "Kiitos! Profiilissasi näkyy nyt vahvistetun sähköpostin merkki.",
     "emailConfirmedTitle": "Sähköposti vahvistettu",
@@ -730,26 +723,14 @@
     "goProfile": "Siirry profiiliin",
     "linkInvalidText": "Linkki on ehkä jo käytetty. Voit pyytää uuden profiilistasi.",
     "linkInvalidTitle": "Linkki ei ole voimassa",
-    "phone": "Puhelin",
-    "phoneAddFirst": "Lisää puhelinnumerosi yllä ja tallenna, niin voit vahvistaa sen.",
-    "phoneDone": "Puhelinnumerosi on vahvistettu.",
-    "phoneHelp": "Lähetämme 6-numeroisen koodin numeroon",
-    "phoneUnavailable": "Puhelinvahvistus tulossa pian.",
-    "sendCode": "Lähetä koodi",
     "sendLink": "Lähetä linkki",
-    "subtitle": "Vahvistetut jäsenet saavat enemmän varauksia. Puhelinnumeroasi ja sähköpostiasi ei koskaan näytetä julkisesti.",
+    "subtitle": "Vahvistetut jäsenet saavat enemmän varauksia. Sähköpostiasi ei koskaan näytetä julkisesti.",
     "title": "Luottamus ja vahvistus"
   },
   "gate": {
     "email": {
       "title": "Vahvista sähköpostisi varataksesi",
       "text": "Jombon turvallisuuden vuoksi matkustajat vahvistavat sähköpostiosoitteensa ennen varaamista. Lähetämme sinulle linkin — avaa se ja palaa sitten varaamaan."
-    },
-    "phone": {
-      "title": "Vahvista puhelinnumerosi julkaistaksesi kyytejä",
-      "text": "Matkustajat luottavat kuljettajiin, joiden puhelinnumero on vahvistettu. Numeroa ei koskaan näytetä julkisesti.",
-      "addFirst": "Lisää ensin numerosi profiiliisi.",
-      "goToProfile": "Siirry profiiliini"
     }
   }
 }

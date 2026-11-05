@@ -294,7 +294,6 @@
     "title": "My Profile",
     "name": "Name",
     "email": "Email",
-    "phone": "Phone",
     "bio": "Bio",
     "language": "Notification language",
     "picture": "Profile picture",
@@ -338,7 +337,6 @@
     "memberSince": "Member since",
     "noReviews": "No reviews yet",
     "noUpcoming": "No upcoming rides right now.",
-    "phonePrivate": "Private. Only used for verification.",
     "reviews": "reviews",
     "stats": {
       "driven": "Rides driven",
@@ -350,7 +348,6 @@
     "verified": {
       "email": "Email verified",
       "google": "Google account",
-      "phone": "Phone verified",
       "member": "Verified"
     },
     "viewPublic": "View my public profile",
@@ -361,8 +358,7 @@
       "expert": "Expert member"
     },
     "unverified": {
-      "email": "Email not verified",
-      "phone": "Phone not verified"
+      "email": "Email not verified"
     }
   },
   "footer": {
@@ -618,7 +614,7 @@
         "title": "Rides with stops"
       },
       "verified": {
-        "text": "Email and phone badges, reviews and experience levels.",
+        "text": "Verified email, reviews and experience levels.",
         "title": "Verified members"
       }
     },
@@ -716,9 +712,6 @@
     "yourTrip": "This is your trip"
   },
   "verify": {
-    "code": "Code",
-    "codeSent": "Code sent by SMS.",
-    "confirm": "Confirm",
     "email": "Email",
     "emailConfirmedText": "Thanks! Your profile now shows a verified email badge.",
     "emailConfirmedTitle": "Email confirmed",
@@ -730,26 +723,14 @@
     "goProfile": "Go to my profile",
     "linkInvalidText": "The link may have been used already. You can request a new one from your profile.",
     "linkInvalidTitle": "This link is not valid",
-    "phone": "Phone",
-    "phoneAddFirst": "Add your phone number above and save to verify it.",
-    "phoneDone": "Your phone number is verified.",
-    "phoneHelp": "We'll text a 6-digit code to",
-    "phoneUnavailable": "Phone verification is coming soon.",
-    "sendCode": "Send code",
     "sendLink": "Send link",
-    "subtitle": "Verified members get more bookings. Your phone number and email are never shown publicly.",
+    "subtitle": "Verified members get more bookings. Your email is never shown publicly.",
     "title": "Trust and verification"
   },
   "gate": {
     "email": {
       "title": "Verify your email to book",
       "text": "To keep Jombo safe, passengers confirm their email address before booking. We'll send you a link — open it and come back to book."
-    },
-    "phone": {
-      "title": "Verify your phone to publish trips",
-      "text": "Passengers trust drivers with a verified phone number. It is never shown publicly.",
-      "addFirst": "Add your number in your profile first.",
-      "goToProfile": "Go to my profile"
     }
   }
 }

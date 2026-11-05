@@ -4,9 +4,8 @@ export type ExperienceLevel = "new" | "regular" | "experienced" | "expert";
 
 export interface Verifications {
   email: boolean;
-  phone: boolean;
   google: boolean;
-  /** Email y (si hay SMS) teléfono verificados */
+  /** Email verificado */
   verified?: boolean;
 }
 
@@ -47,8 +46,4 @@ export async function getPublicProfile(id: number | string): Promise<PublicProfi
 export const sendEmailVerification = () => apiFetch<{ message: string }>("/api/v1/verification/email", { method: "POST" });
 export const confirmEmail = (token: string) =>
   apiFetch<{ message: string; verifications: Verifications }>("/api/v1/verification/email/confirm", { method: "POST", json: { token } });
-export const sendPhoneCode = () => apiFetch<{ message: string }>("/api/v1/verification/phone", { method: "POST" });
-export const confirmPhoneCode = (code: string) =>
-  apiFetch<{ message: string; verifications: Verifications }>("/api/v1/verification/phone/confirm", { method: "POST", json: { code } });
 
-export const getAppConfig = () => apiFetch<{ sms_enabled: boolean }>("/api/v1/config");
