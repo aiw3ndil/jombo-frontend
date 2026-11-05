@@ -3,6 +3,7 @@ import { useEffect, useState } from "react";
 import { useTranslation } from "@/app/hooks/useTranslation";
 import { toast } from "sonner";
 import LocationInput from "@/app/components/LocationInput";
+import MeetingPointInput, { type MeetingPoint } from "@/app/components/MeetingPointInput";
 import VehicleSelector, { VehicleChoice, isVehicleInputComplete } from "@/app/components/VehicleSelector";
 import TripPreferencesFields from "@/app/components/TripPreferencesFields";
 import { useGoogleMaps } from "@/app/contexts/GoogleMapsContext";
@@ -129,6 +130,11 @@ export default function TripForm({
     recurrence_pattern: "daily",
     recurrence_until: "",
   });
+  const [meetingPoint, setMeetingPoint] = useState<MeetingPoint>(() => ({
+    address: trip?.meeting_point ?? "",
+    lat: trip?.meeting_lat != null ? Number(trip.meeting_lat) : null,
+    lng: trip?.meeting_lng != null ? Number(trip.meeting_lng) : null,
+  }));
   const [loading, setLoading] = useState(false);
   const [vehicleChoice, setVehicleChoice] = useState<VehicleChoice>(null);
   const [prefs, setPrefs] = useState<TripPreferencesData>(() => {
@@ -234,6 +240,9 @@ export default function TripForm({
         available_seats: Number(formData.availableSeats),
         price: Number(formData.pricePerSeat),
         description: formData.description || (isEdit ? "" : undefined),
+        meeting_point: meetingPoint.address.trim() || (isEdit ? "" : undefined),
+        meeting_lat: meetingPoint.address.trim() ? meetingPoint.lat : null,
+        meeting_lng: meetingPoint.address.trim() ? meetingPoint.lng : null,
         ...(vehicleChoice.mode === "existing"
           ? { vehicle_id: vehicleChoice.vehicle.id }
           : { vehicle: vehicleChoice.vehicle }),
@@ -506,6 +515,17 @@ export default function TripForm({
                   </div>
 
                   <div className="grid gap-8">
+                    <div>
+                      <label className="form-label">{t("meeting.label", "Exact meeting point (optional)")}</label>
+                      <MeetingPointInput
+                        value={meetingPoint}
+                        onChange={setMeetingPoint}
+                        placeholder={t("meeting.placeholder", "E.g. Kamppi shopping centre, Helsinki")}
+                      />
+                      <p className="mt-1 text-xs text-[var(--brand-neutral)]">
+                        {t("meeting.hint", "Shown publicly on the trip page. Choose a public place such as a station or shopping centre — never your home address.")}
+                      </p>
+                    </div>
                     <div>
                       <label className="form-label">{t("page.createTrip.description") || "Description (optional)"}</label>
                       <textarea

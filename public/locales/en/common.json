@@ -713,7 +713,8 @@
     "driverNotes": "Driver's notes",
     "route": "Route",
     "yourTrip": "This is your trip",
-    "cancelled": "Cancelled by the driver"
+    "cancelled": "Cancelled by the driver",
+    "mapTitle": "Route map"
   },
   "verify": {
     "email": "Email",
@@ -779,5 +780,12 @@
     "button": "Share trip with a contact",
     "copied": "Trip details copied — paste them to a friend or family member.",
     "error": "Could not share the trip"
+  },
+  "meeting": {
+    "label": "Exact meeting point (optional)",
+    "placeholder": "E.g. Kamppi shopping centre, Helsinki",
+    "hint": "Shown publicly on the trip page. Choose a public place such as a station or shopping centre — never your home address.",
+    "title": "Meeting point",
+    "openMaps": "Open in Google Maps"
   }
 }

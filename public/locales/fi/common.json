@@ -713,7 +713,8 @@
     "driverNotes": "Kuljettajan lisätiedot",
     "route": "Reitti",
     "yourTrip": "Tämä on oma kyytisi",
-    "cancelled": "Kuljettaja perui kyydin"
+    "cancelled": "Kuljettaja perui kyydin",
+    "mapTitle": "Reittikartta"
   },
   "verify": {
     "email": "Sähköposti",
@@ -779,5 +780,12 @@
     "button": "Jaa kyyti läheiselle",
     "copied": "Kyydin tiedot kopioitu – liitä ne ystävälle tai perheenjäsenelle.",
     "error": "Kyydin jakaminen epäonnistui"
+  },
+  "meeting": {
+    "label": "Tarkka kohtaamispaikka (valinnainen)",
+    "placeholder": "Esim. Kauppakeskus Kamppi, Helsinki",
+    "hint": "Näkyy julkisesti kyydin sivulla. Valitse julkinen paikka, kuten asema tai kauppakeskus – älä koskaan kotiosoitettasi.",
+    "title": "Kohtaamispaikka",
+    "openMaps": "Avaa Google Mapsissa"
   }
 }

@@ -104,6 +104,10 @@ export interface Trip extends Partial<TripPreferencesData> {
   is_recurring?: boolean;
   parent_id?: number | null;
   cancelled_at?: string | null;
+  meeting_point?: string | null;
+  meeting_lat?: number | string | null;
+  meeting_lng?: number | string | null;
+  meeting_point_url?: string | null;
   created_at: string;
   updated_at: string;
 }
@@ -274,6 +278,10 @@ export type CreateTripData = {
   stops?: Omit<TripStop, "id" | "position">[];
   /** Petición de viaje a la que responde este viaje */
   ride_request_id?: number;
+  /** Punto de encuentro exacto (público); vacío para quitarlo */
+  meeting_point?: string;
+  meeting_lat?: number | null;
+  meeting_lng?: number | null;
 } & Partial<TripPreferencesData>;
 
 export async function createTrip(tripData: CreateTripData): Promise<Trip> {

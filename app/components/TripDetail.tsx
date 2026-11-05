@@ -15,6 +15,7 @@ import { VehicleSummary } from "@/app/components/VehicleSelector";
 import Avatar from "@/app/components/Avatar";
 import VerifiedBadges, { ExperienceBadge } from "@/app/components/VerifiedBadges";
 import ReliabilityInfo from "@/app/components/ReliabilityInfo";
+import RouteMap from "@/app/components/RouteMap";
 
 /** Página pública de un viaje */
 export default function TripDetail({ trip, from, to }: { trip: Trip; from?: string; to?: string }) {
@@ -85,6 +86,29 @@ export default function TripDetail({ trip, from, to }: { trip: Trip; from?: stri
                   {trip.duration_minutes ? ` · ⏱️ ${Math.floor(trip.duration_minutes / 60)} h ${trip.duration_minutes % 60} min` : ""}
                 </p>
               ) : null}
+              {trip.meeting_point && (
+                <div className="mt-4 rounded-xl border-2 border-[#c4d8b4] bg-[#f3f7ed] p-4">
+                  <p className="text-sm font-bold text-[var(--brand-dark)]">📍 {t("meeting.title", "Meeting point")}</p>
+                  <p className="text-[var(--brand-dark)]">{trip.meeting_point}</p>
+                  {trip.meeting_point_url && (
+                    <a href={trip.meeting_point_url} target="_blank" rel="noopener noreferrer" className="mt-1 inline-block text-sm font-bold text-[var(--brand-blue)] underline">
+                      {t("meeting.openMaps", "Open in Google Maps")}
+                    </a>
+                  )}
+                </div>
+              )}
+              <div className="mt-4">
+                <RouteMap
+                  from={trip.departure_location}
+                  to={trip.arrival_location}
+                  stops={(trip.stops || []).map((s) => s.location)}
+                  origin={
+                    trip.meeting_lat != null && trip.meeting_lng != null
+                      ? { lat: Number(trip.meeting_lat), lng: Number(trip.meeting_lng) }
+                      : null
+                  }
+                />
+              </div>
             </div>
 
             <div className="rounded-2xl border-2 border-[#c4d8b4] bg-white p-5">
