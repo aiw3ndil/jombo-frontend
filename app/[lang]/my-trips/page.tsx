@@ -224,7 +224,7 @@ export default function MyTrips() {
                   {deleteModal.trip?.is_recurring ? "Delete recurring trip?" : "Delete trip?"}
                 </h2>
                 <p className="text-gray-600 text-lg">
-                  {t("page.myTrips.deleteConfirm") || "This action will delete the trip and all its bookings."}
+                  {t("page.myTrips.deleteConfirmNotify", "If the trip has bookings, it will be cancelled and the passengers will be notified by email. Cancellations count towards your reliability on your profile.")}
                 </p>
                 <div className="text-[var(--brand-dark)] font-bold bg-[#ebf3e2] p-3 rounded-xl inline-block mt-4 border border-[#c4d8b4]">
                   {deleteModal.trip?.departure_location} → {deleteModal.trip?.arrival_location}

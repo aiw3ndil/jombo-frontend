@@ -12,13 +12,11 @@ export interface Review {
   reviewer?: {
     id: number;
     name: string;
-    email: string;
     picture_url?: string;
   };
   reviewee?: {
     id: number;
     name: string;
-    email: string;
     picture_url?: string;
   };
 }

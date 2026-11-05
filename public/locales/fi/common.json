@@ -205,7 +205,8 @@
       "recurringBadge": "Toistuva",
       "free": "vapaana",
       "statusExpired": "Vanhentunut",
-      "returnTrip": "Julkaise paluukyyti"
+      "returnTrip": "Julkaise paluukyyti",
+      "deleteConfirmNotify": "Jos kyydillä on varauksia, kyyti perutaan ja matkustajille ilmoitetaan sähköpostilla. Perumiset näkyvät luotettavuutena profiilissasi."
     },
     "myBookings": {
       "badge": "Matkat",
@@ -711,7 +712,8 @@
     "departed": "Jo lähtenyt",
     "driverNotes": "Kuljettajan lisätiedot",
     "route": "Reitti",
-    "yourTrip": "Tämä on oma kyytisi"
+    "yourTrip": "Tämä on oma kyytisi",
+    "cancelled": "Kuljettaja perui kyydin"
   },
   "verify": {
     "email": "Sähköposti",
@@ -738,5 +740,44 @@
   "calendar": {
     "add": "Lisää kalenteriin",
     "ics": "Apple / Outlook (.ics)"
+  },
+  "reliability": {
+    "withinHour": "Vastaa yleensä tunnin sisällä",
+    "withinHours": "Vastaa yleensä {{n}} tunnin sisällä",
+    "withinDays": "Vastaa yleensä {{n}} päivän sisällä",
+    "neverCancelled": "Ei ole koskaan perunut kyytiä",
+    "cancelled": "Perunut {{n}} % kyydeistä"
+  },
+  "report": {
+    "button": "Ilmoita",
+    "title": "Ilmoita jäsenestä",
+    "subtitle": "Ilmoitukset ovat luottamuksellisia: jäsen ei saa tietää, kuka ilmoitti.",
+    "who": "Kenestä haluat ilmoittaa?",
+    "reason": "Mitä tapahtui?",
+    "comment": "Lisätiedot (valinnainen)",
+    "emergency": "Hätätilanteessa soita 112.",
+    "send": "Lähetä ilmoitus",
+    "sent": "Kiitos – tiimimme käsittelee ilmoituksesi.",
+    "error": "Ilmoituksen lähettäminen epäonnistui",
+    "reasons": {
+      "no_show": "Ei saapunut paikalle",
+      "unsafe_driving": "Vaarallinen ajotapa",
+      "inappropriate": "Epäasiallinen käytös",
+      "fake_profile": "Valeprofiili",
+      "other": "Jokin muu"
+    }
+  },
+  "block": {
+    "block": "Estä",
+    "unblock": "Poista esto",
+    "confirm": "Estetäänkö {{name}}? Ette voi varata toistenne kyytejä ettekä lähettää viestejä.",
+    "done": "Jäsen estetty",
+    "undone": "Esto poistettu"
+  },
+  "share": {
+    "title": "Jombo-kyytini",
+    "button": "Jaa kyyti läheiselle",
+    "copied": "Kyydin tiedot kopioitu – liitä ne ystävälle tai perheenjäsenelle.",
+    "error": "Kyydin jakaminen epäonnistui"
   }
 }

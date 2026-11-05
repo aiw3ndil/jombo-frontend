@@ -1,5 +1,5 @@
 import type { Vehicle, VehicleInput } from "./vehicles";
-import type { ExperienceLevel, Verifications } from "./users";
+import type { ExperienceLevel, Reliability, Verifications } from "./users";
 
 const API_BASE = process.env.NEXT_PUBLIC_API_BASE_URL || "";
 
@@ -82,6 +82,7 @@ export interface TripDriver {
   total_reviews?: number;
   experience_level?: ExperienceLevel;
   verifications?: Verifications;
+  reliability?: Reliability;
 }
 
 export interface Trip extends Partial<TripPreferencesData> {
@@ -102,6 +103,7 @@ export interface Trip extends Partial<TripPreferencesData> {
   vehicle?: Vehicle | null;
   is_recurring?: boolean;
   parent_id?: number | null;
+  cancelled_at?: string | null;
   created_at: string;
   updated_at: string;
 }

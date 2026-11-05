@@ -7,7 +7,6 @@ export interface Message {
   user: {
     id: number;
     name: string;
-    email: string;
     picture_url?: string;
   };
 }
@@ -24,14 +23,12 @@ export interface Conversation {
     driver: {
       id: number;
       name: string;
-      email: string;
       picture_url?: string;
     };
   };
   participants: Array<{
     id: number;
     name: string;
-    email: string;
     picture_url?: string;
   }>;
   last_message?: {

@@ -6,6 +6,8 @@ import { langPrefix } from "@/app/lib/i18n/config";
 import type { PublicProfile } from "@/app/lib/api/users";
 import Avatar from "@/app/components/Avatar";
 import VerifiedBadges, { ExperienceBadge } from "@/app/components/VerifiedBadges";
+import ReliabilityInfo from "@/app/components/ReliabilityInfo";
+import UserSafetyActions from "@/app/components/UserSafetyActions";
 
 export default function PublicProfileView({ profile }: { profile: PublicProfile }) {
   const { t } = useTranslation();
@@ -32,7 +34,9 @@ export default function PublicProfileView({ profile }: { profile: PublicProfile 
               <ExperienceBadge level={profile.experience_level} />
               <VerifiedBadges verifications={profile.verifications} showMissing />
             </div>
+            <ReliabilityInfo reliability={profile.reliability} className="mt-2" />
           </div>
+          <UserSafetyActions userId={profile.id} userName={profile.name} />
         </div>
       </section>
 

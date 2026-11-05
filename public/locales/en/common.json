@@ -205,7 +205,8 @@
       "recurringBadge": "Recurring",
       "free": "free",
       "statusExpired": "Expired",
-      "returnTrip": "Publish return trip"
+      "returnTrip": "Publish return trip",
+      "deleteConfirmNotify": "If the trip has bookings, it will be cancelled and the passengers will be notified by email. Cancellations count towards your reliability on your profile."
     },
     "myBookings": {
       "badge": "My Trips",
@@ -711,7 +712,8 @@
     "departed": "Already departed",
     "driverNotes": "Driver's notes",
     "route": "Route",
-    "yourTrip": "This is your trip"
+    "yourTrip": "This is your trip",
+    "cancelled": "Cancelled by the driver"
   },
   "verify": {
     "email": "Email",
@@ -738,5 +740,44 @@
   "calendar": {
     "add": "Add to calendar",
     "ics": "Apple / Outlook (.ics)"
+  },
+  "reliability": {
+    "withinHour": "Usually replies within an hour",
+    "withinHours": "Usually replies within {{n}} h",
+    "withinDays": "Usually replies within {{n}} days",
+    "neverCancelled": "Has never cancelled a ride",
+    "cancelled": "Cancelled {{n}}% of rides"
+  },
+  "report": {
+    "button": "Report",
+    "title": "Report a member",
+    "subtitle": "Reports are confidential: the member won't know who reported them.",
+    "who": "Who do you want to report?",
+    "reason": "What happened?",
+    "comment": "Details (optional)",
+    "emergency": "In an emergency, call 112.",
+    "send": "Send report",
+    "sent": "Thanks — our team will review your report.",
+    "error": "Could not send the report",
+    "reasons": {
+      "no_show": "Didn't show up",
+      "unsafe_driving": "Unsafe driving",
+      "inappropriate": "Inappropriate behaviour",
+      "fake_profile": "Fake profile",
+      "other": "Something else"
+    }
+  },
+  "block": {
+    "block": "Block",
+    "unblock": "Unblock",
+    "confirm": "Block {{name}}? You won't be able to book each other's rides or send messages.",
+    "done": "Member blocked",
+    "undone": "Member unblocked"
+  },
+  "share": {
+    "title": "My Jombo ride",
+    "button": "Share trip with a contact",
+    "copied": "Trip details copied — paste them to a friend or family member.",
+    "error": "Could not share the trip"
   }
 }

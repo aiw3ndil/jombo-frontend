@@ -21,6 +21,7 @@ export interface Booking {
     available_seats: number;
     price: number;
     duration_minutes?: number | null;
+    vehicle?: { brand?: string; model?: string; color?: string } | null;
     driver: {
       id: number;
       name: string;

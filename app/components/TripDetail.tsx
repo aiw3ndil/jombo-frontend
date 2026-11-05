@@ -14,6 +14,7 @@ import TripPreferences from "@/app/components/TripPreferences";
 import { VehicleSummary } from "@/app/components/VehicleSelector";
 import Avatar from "@/app/components/Avatar";
 import VerifiedBadges, { ExperienceBadge } from "@/app/components/VerifiedBadges";
+import ReliabilityInfo from "@/app/components/ReliabilityInfo";
 
 /** Página pública de un viaje */
 export default function TripDetail({ trip, from, to }: { trip: Trip; from?: string; to?: string }) {
@@ -114,6 +115,7 @@ export default function TripDetail({ trip, from, to }: { trip: Trip; from?: stri
                   <ExperienceBadge level={trip.driver.experience_level} />
                   <VerifiedBadges verifications={trip.driver.verifications} />
                 </div>
+                <ReliabilityInfo reliability={trip.driver.reliability} className="mt-2" />
               </div>
               <span className="text-[var(--brand-blue)]" aria-hidden="true">→</span>
             </Link>
@@ -129,10 +131,12 @@ export default function TripDetail({ trip, from, to }: { trip: Trip; from?: stri
             <button
               type="button"
               onClick={openBooking}
-              disabled={isPast || isOwn || seatsLeft === 0 || !!booked}
+              disabled={isPast || isOwn || seatsLeft === 0 || !!booked || !!trip.cancelled_at}
               className="btn-primary mt-4 w-full py-3"
             >
-              {booked === "confirmed"
+              {trip.cancelled_at
+                ? t("trip.cancelled", "Cancelled by the driver")
+                : booked === "confirmed"
                 ? `${t("booking.booked", "Booked")} ✓`
                 : booked
                 ? `${t("booking.requested", "Requested")} ✓`

@@ -6,6 +6,7 @@ import { getBookings, cancelBooking, Booking } from "@/app/lib/api/bookings";
 import { getBookingReviews } from "@/app/lib/api/reviews";
 import { useTranslation } from "@/app/hooks/useTranslation";
 import AddToCalendar from "@/app/components/AddToCalendar";
+import ShareTripButton from "@/app/components/ShareTripButton";
 import { useAuth } from "@/app/contexts/AuthContext";
 import ReviewModal from "@/app/components/ReviewModal";
 import { toast } from "sonner";
@@ -283,6 +284,16 @@ export default function MyBookings() {
                         </div>
                       </div>
                       {booking.status === "confirmed" && booking.trip && new Date(booking.trip.departure_time) > new Date() && (
+                        <div className="space-y-3">
+                        <ShareTripButton
+                          url={`${window.location.origin}${langPrefix(lang)}/trips/${booking.trip.id}`}
+                          text={[
+                            `🚗 Jombo: ${booking.pickup_location || booking.trip.departure_location} → ${booking.dropoff_location || booking.trip.arrival_location}`,
+                            `🕒 ${new Date(booking.trip.departure_time).toLocaleString(lang, { weekday: "short", day: "numeric", month: "short", hour: "2-digit", minute: "2-digit" })}`,
+                            `👤 ${t("page.myBookings.driver") || "Driver"}: ${booking.trip.driver?.name ?? ""}`,
+                            booking.trip.vehicle ? `🚙 ${[booking.trip.vehicle.brand, booking.trip.vehicle.model, booking.trip.vehicle.color].filter(Boolean).join(" · ")}` : "",
+                          ].filter(Boolean).join("\n")}
+                        />
                         <AddToCalendar
                           event={{
                             uid: `booking-${booking.id}`,
@@ -294,6 +305,7 @@ export default function MyBookings() {
                             url: `${window.location.origin}${langPrefix(lang)}/trips/${booking.trip.id}`,
                           }}
                         />
+                        </div>
                       )}
                     </div>
 

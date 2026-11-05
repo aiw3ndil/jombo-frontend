@@ -1,5 +1,6 @@
 "use client";
 import { useEffect, useState, useRef } from "react";
+import ReportUserModal from "@/app/components/ReportUserModal";
 import { langPrefix } from "@/app/lib/i18n/config";
 import { useRouter, useParams } from "next/navigation";
 import { getConversation, sendMessage, deleteConversation, ConversationDetail, Message } from "@/app/lib/api/conversations";
@@ -21,6 +22,7 @@ export default function ConversationPage() {
   const [newMessage, setNewMessage] = useState("");
   const [sending, setSending] = useState(false);
   const [deleting, setDeleting] = useState(false);
+  const [reporting, setReporting] = useState(false);
   const messagesEndRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
@@ -130,6 +132,12 @@ export default function ConversationPage() {
               </div>
             </div>
             <div className="flex gap-3">
+              <button
+                onClick={() => setReporting(true)}
+                className="bg-white border-2 border-red-100 text-red-600 px-4 py-3 rounded-xl font-bold hover:bg-red-50 transition-all text-sm"
+              >
+                ⚑ {t("report.button", "Report")}
+              </button>
               {isDriver && (
                 <button
                   onClick={handleDeleteConversation}
@@ -218,6 +226,12 @@ export default function ConversationPage() {
           </div>
         </form>
       </div>
+      {reporting && (
+        <ReportUserModal
+          users={conversation.participants.filter((p) => p.id !== user.id).map((p) => ({ id: p.id, name: p.name }))}
+          onClose={() => setReporting(false)}
+        />
+      )}
     </div>
   );
 }

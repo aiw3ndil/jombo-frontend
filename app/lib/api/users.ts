@@ -8,6 +8,12 @@ export interface Verifications {
   verified?: boolean;
 }
 
+/** Fiabilidad como conductor (null si aún no hay datos suficientes) */
+export interface Reliability {
+  cancellation_rate: number | null;
+  response_hours: number | null;
+}
+
 export interface PublicProfile {
   id: number;
   name: string;
@@ -20,6 +26,8 @@ export interface PublicProfile {
   trips_driven: number;
   rides_taken: number;
   verifications: Verifications;
+  reliability?: Reliability;
+  blocked?: boolean;
   upcoming_trips: {
     id: number;
     departure_location: string;
